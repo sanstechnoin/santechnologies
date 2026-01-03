@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>SAN Technologies Visiting Card</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700&display=swap');
+
+        body { 
+            background: #f0f0f0; 
+            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 50px; 
+            gap: 40px;
+        }
+
+        /* CARD CONTAINER (Standard Euro Size 85mm x 55mm) */
+        .card {
+            width: 85mm;
+            height: 55mm;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* --- FRONT SIDE DESIGN --- */
+        .front {
+            background: white;
+            color: #333;
+        }
+        
+        /* Left Accent Bar */
+        .front::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 6px; background: #00BCD4; /* Cyan Accent */
+        }
+
+        .front-content {
+            padding: 8mm 6mm 6mm 10mm; /* Extra left padding for accent */
+            display: flex; flex-direction: column; justify-content: center; width: 100%;
+        }
+
+        .logo { 
+            font-weight: 700; color: #006064; font-size: 9pt; letter-spacing: 1px; margin-bottom: 2mm; 
+        }
+
+        .name { 
+            font-size: 13pt; font-weight: 700; color: #222; margin: 0; line-height: 1.1; 
+        }
+        .title { 
+            font-size: 7.5pt; color: #00BCD4; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-bottom: 5mm; 
+        }
+
+        .contact-info { font-size: 7pt; line-height: 1.6; color: #555; }
+        .contact-row { display: flex; align-items: center; gap: 6px; }
+        .icon { color: #006064; font-weight: bold; width: 12px; }
+
+        /* --- BACK SIDE DESIGN --- */
+        .back {
+            background: linear-gradient(135deg, #006064 0%, #004d50 100%);
+            color: white;
+            align-items: center;
+            padding: 0 6mm;
+        }
+
+        .back-content {
+            flex: 1;
+        }
+
+        .tagline {
+            font-size: 10pt; font-weight: 700; margin-bottom: 3mm; line-height: 1.2;
+        }
+        
+        .services-list {
+            font-size: 7pt; color: rgba(255,255,255,0.9); list-style: none; padding: 0; margin: 0; line-height: 1.5;
+        }
+        .services-list li::before {
+            content: '•'; color: #00BCD4; margin-right: 5px;
+        }
+
+        .qr-box {
+            width: 22mm; height: 22mm;
+            background: white;
+            display: flex; align-items: center; justify-content: center;
+            color: #333; font-size: 6pt; text-align: center;
+            border-radius: 4px;
+        }
+
+        /* Labels for display only */
+        .label { font-size: 14px; color: #666; margin-bottom: -30px; text-transform: uppercase; letter-spacing: 1px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="label">Front Side</div>
+    <div class="card front">
+        <div class="front-content">
+            <div class="logo">SAN TECHNOLOGIES</div>
+            
+            <div class="name">Avinash Vivekananthan</div>
+            <div class="title">Freelance Software Engineer</div>
+            
+            <div class="contact-info">
+                <div class="contact-row"><span class="icon">📞</span> +49 2251 9599741</div>
+                <div class="contact-row"><span class="icon">📧</span> avinash@santechnologies.de</div>
+                <div class="contact-row"><span class="icon">🌐</span> www.santechnologies.de</div>
+                <div class="contact-row" style="margin-top:2px; color:#888;">📍 Euskirchen, Deutschland</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="label">Back Side</div>
+    <div class="card back">
+        <div class="back-content">
+            <div class="tagline">Ihr Geschäft transformieren –<br>mit Code.</div>
+            <ul class="services-list">
+                <li>Web & D2C E-Commerce</li>
+                <li>Gastro-Software (KDS/POS)</li>
+                <li>Systemintegration & IT</li>
+            </ul>
+        </div>
+        <div class="qr-box">
+            QR<br>CODE
+        </div>
+    </div>
+
+</body>
+</html
