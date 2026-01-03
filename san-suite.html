@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="suite_page_title">SAN Suite | Detailed Overview</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <style>
+        /* --- CSS VARIABLES (Synced with index.html) --- */
+        :root {
+            --primary: #006064;
+            --accent: #00BCD4;
+            --dark: #333333;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --bg-suite: #f0f4f8; 
+            --container-width: 1150px;
+        }
+
+        /* --- GLOBAL RESET & LAYOUT --- */
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            color: var(--dark); 
+            line-height: 1.6; 
+            background-color: var(--white); 
+            scroll-behavior: smooth;
+        }
+        
+        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; width: 100%; }
+        h1, h2, h3, h4 { font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; margin-top: 0; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        p { margin: 0 0 20px 0; }
+
+        /* --- HEADER (Simplified) --- */
+        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo img { height: 65px; width: auto; }
+        .nav-right { display: flex; align-items: center; gap: 30px; }
+        .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; }
+        .nav-desktop a:hover { color: var(--primary); }
+
+        /* --- LANG TOGGLE --- */
+        .lang-switch-container { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 2px solid #ddd; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 2px; background-color: var(--primary); transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #E0F7FA; border-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .flag-icon { height: 14px; width: auto; vertical-align: middle; }
+
+        /* --- SECTIONS --- */
+        section { padding: 80px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; max-width: 900px; margin-left: auto; margin-right: auto; }
+
+        /* --- HERO --- */
+        .suite-hero { 
+            background: linear-gradient(135deg, var(--primary) 0%, #003d40 100%); 
+            color: var(--white); text-align: center; padding: 100px 0;
+        }
+        .suite-hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        .hero-subline { font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 30px; }
+        .trust-line { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.9); font-weight: 800; }
+
+        /* --- FILTER BLOCKS --- */
+        .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .filter-card { padding: 40px; border-radius: 20px; background: var(--light); text-align: left; }
+        .filter-card.ideal { border-top: 5px solid #4CAF50; }
+        .filter-card.not-ideal { border-top: 5px solid #FF5252; opacity: 0.8; }
+        .filter-card ul { padding: 0; list-style: none; margin-top: 20px; }
+        .filter-card li { margin-bottom: 12px; display: flex; gap: 10px; }
+
+        /* --- PLAIN EXPLANATION --- */
+        .plain-box { background: var(--bg-suite); padding: 50px; border-radius: 25px; text-align: center; margin: 40px 0; }
+        .integration-note { background: var(--white); padding: 20px 30px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; margin-top: 20px; }
+
+        /* --- TIER DEEP DIVE --- */
+        .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 40px; }
+        .tier-card { 
+            background: var(--white); border-radius: 20px; padding: 50px 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: left;
+display: flex; 
+    flex-direction: column; 
+    /* Professional subtle border to start */
+    border: 2px solid #eee; 
+    /* Smooth transition for hover effect */
+    transition: all 0.3s ease-in-out;
+        }
+        .tier-card.prime { border: 2px solid var(--accent); background: #f0fbff; }
+	/* Hover Effect: Card lifts and border highlights */
+.tier-card:hover { 
+    transform: translateY(-12px); /* Lifts the card upwards */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1); /* Deeper shadow for "floating" look */
+}
+
+/* Specific Hover for CORE: gains brand Cyan border */
+.tier-card:not(.prime):hover {
+    border-color: var(--accent);
+}
+
+/* Icon subtle scale on hover */
+.tier-card:hover .tier-icon {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+        .tier-icon { font-size: 3.5rem; margin-bottom: 20px; display: block; }
+        .feature-list { list-style: none; padding: 0; margin: 30px 0; }
+        .feature-list li { margin-bottom: 12px; display: flex; gap: 10px; }
+        .legal-tag { font-size: 0.75rem; color: #888; font-style: italic; display: block; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
+
+        /* --- EXTENSIONS --- */
+        .ext-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; }
+        .ext-card { padding: 30px; background: var(--light); border-radius: 15px; text-align: center; transition: 0.3s; }
+        .ext-card:hover { transform: translateY(-5px); background: var(--white); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .ext-card span { font-size: 2.5rem; display: block; margin-bottom: 15px; }
+
+        /* --- PROCESS STEPS --- */
+        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; text-align: center; margin-top: 40px; }
+        .step { padding: 20px; border-radius: 12px; background: var(--bg-suite); font-weight: bold; }
+        .step span { color: var(--accent); display: block; font-size: 1.5rem; margin-bottom: 5px; }
+
+        /* --- CTA --- */
+        .cta-section { text-align: center; background: #111; color: white; padding: 100px 0; }
+        .btn { display: inline-block; background: var(--accent); color: white; padding: 18px 45px; border-radius: 50px; font-weight: bold; margin-top: 30px; }
+
+        footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; }
+
+        @media (max-width: 900px) { .suite-hero h1 { font-size: 2.5rem; } .tier-grid { grid-template-columns: 1fr; } }
+
+	/* --- MOBILE HEADER FIX --- */
+        @media (max-width: 600px) {
+            /* 1. Reduce logo size slightly to save space */
+            .logo img { height: 45px; } 
+            
+            /* 2. Reduce the gap between the Back button and the Lang switch */
+            .nav-right { gap: 15px; } 
+            
+            /* 3. Hide the text "Startseite zurück" / "Back to Home" */
+            .nav-desktop a span[data-translate="nav_back"] { display: none; }
+            
+            /* 4. Make the arrow larger so it's easier to tap */
+            .nav-desktop a span:first-child { 
+                font-size: 1.8rem; 
+                line-height: 1;
+            }
+            
+            /* 5. Ensure the container padding doesn't pinch too much */
+            .header-content { padding: 0 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Logo"></a></div>
+            <div class="nav-right">
+                <nav class="nav-desktop">
+                    <a href="index.html"><span>←</span> <span data-translate="nav_back">Startseite zurück</span></a>
+                </nav>
+                <div class="lang-switch-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
+                    <label class="switch"><input type="checkbox" class="lang-toggle-input"><span class="slider"></span></label>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="suite-hero">
+        <div class="container">
+            <span class="trust-line" data-translate="trust_line">Entwickelt & betrieben in Deutschland · DSGVO-konform</span>
+            <h1 data-translate="suite_hero_title">SAN Suite</h1>
+            <p class="hero-subline" data-translate="suite_hero_sub">Das modulare Restaurant-System für moderne Gastronomie</p>
+            <p data-translate="suite_hero_desc">Ein eigenständiges Restaurant-System für Betriebe ohne bestehende Software – mit optionaler Kassen- & Zahlungsintegration bei Bedarf.</p>
+
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="filter_title">Für wen ist die SAN Suite?</h2>
+                <p data-translate="filter_subtitle">Ideal für Restaurants, Cafés und Imbisse ohne bestehendes Kassensystem oder mit dem Wunsch nach einer modernen Komplettlösung.</p>
+            </div>
+            <div class="filter-grid">
+                <div class="filter-card ideal">
+                    <h4 data-translate="ideal_t">✅ Ideal für...</h4>
+                    <ul data-translate="ideal_list">
+                        <li>• Gastronomie ohne bestehendes System</li>
+                        <li>• Betriebe mit Zettel- oder WhatsApp-Chaos</li>
+                        <li>• Gründer & kleine Ketten</li>
+                        <li>• Betreiber gegen hohe Plattform-Gebühren</li>
+                    </ul>
+                </div>
+                <div class="filter-card not-ideal">
+                    <h4 data-translate="not_ideal_t">❌ Weniger geeignet für...</h4>
+                    <ul data-translate="not_ideal_list">
+                        <li>• Große Franchise-Ketten mit festem ERP</li>
+                        <li>• Reine Hardware-Käufer</li>
+                        <li>• Kunden ohne Individualisierungswunsch</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background-color: var(--bg-suite);">
+        <div class="container">
+            <div class="plain-box">
+                <h2 data-translate="plain_t">Was ist die SAN Suite eigentlich?</h2>
+                <p data-translate="plain_p">SAN Suite ist kein Plugin und kein Add-on für Fremdsysteme. Es ist ein vollständig eigenständiges Restaurant-System, das Bestellungen, Küche, Online-Kanäle und Auswertungen zentral steuert.</p>
+                <div class="integration-note">
+                    <p data-translate="plain_note">💡 Falls bereits ein modernes Kassensystem vorhanden ist, kann SAN Suite optional für die finale Zahlungsabwicklung integriert werden.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="edition_title">Zwei Editionen. Eine klare Entscheidung.</h2>
+            </div>
+            <div class="tier-grid">
+                <div class="tier-card">
+                    <span class="tier-icon">🧱</span>
+                    <h3 data-translate="tier_core_title">SAN Suite CORE</h3>
+                    <p data-translate="tier_core_pos"><strong>Der digitale Einstieg.</strong> Ideal für Betriebe mit externer Kasse oder manueller Zahlungsabwicklung.</p>
+                    <ul class="feature-list" data-translate="core_features">
+                        <li>✓ Digitale Bestellerfassung</li>
+                        <li>✓ Küchen- & Workflow-Steuerung</li>
+                        <li>✓ Digitale Speisekarte</li>
+                        <li>✓ WhatsApp-Benachrichtigungen</li>
+                    </ul>
+                    <span class="legal-tag" data-translate="legal_note_core">SAN Suite CORE ist kein Kassensystem im rechtlichen Sinne und erfordert ein separates, gesetzeskonformes Kassensystem für Zahlungen.</span>
+                </div>
+                <div class="tier-card prime">
+                    <span class="tier-icon">⚖️</span>
+                    <h3 data-translate="tier_prime_title">SAN Suite PRIME</h3>
+                    <p data-translate="tier_prime_pos"><strong>Rechtssicher & vollständig.</strong> Für Betriebe, die eine vollständige digitale Kassenlösung benötigen.</p>
+                    <ul class="feature-list" data-translate="prime_features">
+                        <li>✓ Inklusive aller CORE Funktionen</li>
+                        <li>✓ Cloud-TSE (Fiskaly Integration)</li>
+                        <li>✓ Gesetzeskonforme Belege & QR-Codes</li>
+                        <li>✓ 10-Jahres Revisionssicheres Archiv</li>
+                    </ul>
+                    <span class="legal-tag" data-translate="legal_note_prime">SAN Suite PRIME erfüllt die gesetzlichen Anforderungen gemäß KassenSichV durch Cloud-TSE (z. B. Fiskaly).</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background-color: var(--bg-suite);">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="ext_title">Modular erweiterbar – nur was Sie brauchen</h2>
+                <p data-translate="ext_sub">Alle Module sind optional & kombinierbar mit CORE oder PRIME.</p>
+            </div>
+            <div class="ext-grid">
+                <div class="ext-card"><span>📦</span><p data-translate="ext1">Delivery & Logistik</p></div>
+                <div class="ext-card"><span>🕒</span><p data-translate="ext2">Click & Collect</p></div>
+                <div class="ext-card"><span>📱</span><p data-translate="ext3">Dine-In QR Order</p></div>
+                <div class="ext-card"><span>🍳</span><p data-translate="ext4">Kitchen Display (KDS)</p></div>
+                <div class="ext-card"><span>📈</span><p data-translate="ext5">Reporting & Insights</p></div>
+                <div class="ext-card"><span>🎟️</span><p data-translate="ext6">Coupon-System</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="proc_t">Implementation & Prozess</h2>
+            </div>
+            <div class="process-grid">
+                <div class="step"><span>1</span><p data-translate="s1">Beratung</p></div>
+                <div class="step"><span>2</span><p data-translate="s2">Setup</p></div>
+                <div class="step"><span>3</span><p data-translate="s3">Anpassung</p></div>
+                <div class="step"><span>4</span><p data-translate="s4">Testbetrieb</p></div>
+                <div class="step"><span>5</span><p data-translate="s5">Go-Live</p></div>
+                <div class="step"><span>6</span><p data-translate="s6">Support</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2 data-translate="cta_t">Starten Sie mit CORE – wachsen Sie zur Suite</h2>
+            <p data-translate="cta_desc">Keine Massenlösung · Keine Verträge von der Stange · Direkter Support</p>
+            <a href="index.html#contact" class="btn" data-translate="cta_btn">Beratung anfragen</a>
+        </div>
+    </section>
+
+ <footer>
+        <div class="container">
+            <p>
+                &copy; 2025 SAN Technologies. 
+                <span style="margin: 0 8px; color: #444;">|</span> 
+                
+                <a href="datenschutz.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_privacy">Datenschutz</a>
+                
+                <span style="margin: 0 8px; color: #444;">|</span> 
+                
+                <a href="impressum.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_impressum">Impressum</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            'de': {
+                'suite_page_title': 'SAN Suite | Die Restaurant-Komplettlösung',
+                'nav_back': 'Startseite zurück',
+                'trust_line': 'Entwickelt & betrieben in Deutschland · DSGVO-konform',
+                'suite_hero_title': 'SAN Suite',
+                'suite_hero_sub': 'Das modulare Restaurant-System für moderne Gastronomie',
+                'suite_hero_desc': 'Ein eigenständiges Restaurant-System für Betriebe ohne bestehende Software – mit optionaler Kassen- & Zahlungsintegration.',
+                'filter_title': 'Für wen ist die SAN Suite?',
+                'filter_subtitle': 'Ideal für Restaurants, Cafés und Imbisse ohne bestehendes Kassensystem oder mit dem Wunsch nach einer modernen Komplettlösung.',
+                'ideal_t': '✅ Ideal für...',
+                'ideal_list': '<li>• Gastronomie ohne bestehendes System</li><li>• Betriebe mit Zettel- oder WhatsApp-Chaos</li><li>• Gründer & kleine Ketten</li><li>• Betreiber gegen hohe Plattform-Gebühren</li>',
+                'not_ideal_t': '❌ Weniger geeignet für...',
+                'not_ideal_list': '<li>• Große Franchise-Ketten mit festem ERP</li><li>• Reine Hardware-Käufer</li><li>• Kunden ohne Individualisierungswunsch</li>',
+                'plain_t': 'Was ist die SAN Suite eigentlich?',
+                'plain_p': 'SAN Suite ist kein Plugin und kein Add-on für Fremdsysteme. Es ist ein vollständig eigenständiges Restaurant-System, das Bestellungen, Küche, Online-Kanäle und Auswertungen zentral steuert.',
+                'plain_note': '💡 Falls bereits ein modernes Kassensystem vorhanden ist, kann SAN Suite optional für die finale Zahlungsabwicklung integriert werden.',
+                'edition_title': 'Zwei Editionen. Eine klare Entscheidung.',
+                'tier_core_title': 'SAN Suite CORE',
+                'tier_core_pos': 'Der digitale Einstieg. Ideal für Betriebe mit externer Kasse oder manueller Zahlungsabwicklung.',
+                'core_features': '<li>✓ Digitale Bestellerfassung</li><li>✓ Küchen- & Workflow-Steuerung</li><li>✓ Digitale Speisekarte</li><li>✓ WhatsApp-Benachrichtigungen</li>',
+                'legal_note_core': 'SAN Suite CORE ist kein Kassensystem im rechtlichen Sinne und erfordert ein separates, gesetzeskonformes Kassensystem für Zahlungen.',
+                'tier_prime_title': 'SAN Suite PRIME',
+                'tier_prime_pos': 'Rechtssicher & vollständig. Für Betriebe, die eine vollständige digitale Kassenlösung benötigen.',
+                'prime_features': '<li>✓ Inklusive aller CORE Funktionen</li><li>✓ Cloud-TSE (Fiskaly Integration)</li><li>✓ Gesetzeskonforme Belege & QR-Codes</li><li>✓ 10-Jahres Revisionssicheres Archiv</li>',
+                'legal_note_prime': 'SAN Suite PRIME erfüllt die gesetzlichen Anforderungen gemäß KassenSichV durch Cloud-TSE (z. B. Fiskaly).',
+                'ext_title': 'Modular erweiterbar – nur was Sie brauchen',
+                'ext_sub': 'Alle Module sind optional & kombinierbar mit CORE oder PRIME.',
+                'ext1': 'Delivery & Logistik', 'ext2': 'Click & Collect', 'ext3': 'Dine-In QR Order', 'ext4': 'Kitchen Display (KDS)', 'ext5': 'Reporting & Insights', 'ext6': 'Coupon-System',
+                'proc_t': 'Implementation & Prozess',
+                's1': 'Beratung', 's2': 'Setup', 's3': 'Anpassung', 's4': 'Testbetrieb', 's5': 'Go-Live', 's6': 'Support',
+                'cta_t': 'Starten Sie mit CORE – wachsen Sie zur Suite',
+                'cta_desc': 'Keine Massenlösung · Keine Verträge von der Stange · Direkter Support',
+		'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
+                'cta_btn': 'Beratung anfragen'
+            },
+            'en': {
+                'suite_page_title': 'SAN Suite | The All-in-One Restaurant Solution',
+                'nav_back': 'Back to Home',
+                'trust_line': 'Developed & operated in Germany · GDPR compliant',
+                'suite_hero_title': 'SAN Suite',
+                'suite_hero_sub': 'The modular restaurant system for modern gastronomy',
+                'suite_hero_desc': 'A standalone restaurant system for businesses without existing software – with optional checkout & payment integration.',
+                'filter_title': 'Who is SAN Suite for?',
+                'filter_subtitle': 'Designed for restaurants that want a modern all-in-one system without legacy hardware.',
+                'ideal_t': '✅ Ideal for...',
+                'ideal_list': '<li>• Restaurants without existing systems</li><li>• Businesses with paper or WhatsApp chaos</li><li>• Founders & small chains</li><li>• Owners avoiding high platform fees</li>',
+                'not_ideal_t': '❌ Not ideal for...',
+                'not_ideal_list': '<li>• Large franchise chains with fixed ERP</li><li>• Customers looking only for hardware</li><li>• Clients not wanting customization</li>',
+                'plain_t': 'What is SAN Suite actually?',
+                'plain_p': 'SAN Suite is not a plugin or an add-on for third-party systems. It is a fully standalone restaurant system that centrally controls orders, kitchen, online channels, and analytics.',
+                'plain_note': '💡 If a modern cash register system already exists, SAN Suite can optionally be integrated for final payment processing.',
+                'edition_title': 'Two Editions. One clear decision.',
+                'tier_core_title': 'SAN Suite CORE',
+                'tier_core_pos': 'The digital entry. Ideal for businesses with external registers or manual payment processing.',
+                'core_features': '<li>✓ Digital Order Capture</li><li>✓ Kitchen & Workflow Control</li><li>✓ Digital Menu</li><li>✓ WhatsApp Notifications</li>',
+                'legal_note_core': 'SAN Suite CORE is not a POS system in the legal sense and requires a separate, legally compliant POS system for payments.',
+                'tier_prime_title': 'SAN Suite PRIME',
+                'tier_prime_pos': 'Legally secure & complete. For businesses requiring a full digital checkout solution.',
+                'prime_features': '<li>✓ Includes all CORE functions</li><li>✓ Cloud-TSE (Fiskaly Integration)</li><li>✓ Legal Receipts & QR Codes</li><li>✓ 10-Year Audit Archive</li>',
+                'legal_note_prime': 'SAN Suite PRIME meets the legal requirements according to KassenSichV through Cloud-TSE (e.g., Fiskaly).',
+                'ext_title': 'Modularly expandable – only what you need',
+                'ext_sub': 'All modules are optional & combinable with CORE or PRIME.',
+                'ext1': 'Delivery & Logistics', 'ext2': 'Click & Collect', 'ext3': 'Dine-In QR Order', 'ext4': 'Kitchen Display (KDS)', 'ext5': 'Reporting & Insights', 'ext6': 'Coupon System',
+                'proc_t': 'Implementation & Process',
+                's1': 'Consulting', 's2': 'Setup', 's3': 'Customization', 's4': 'Test phase', 's5': 'Go-Live', 's6': 'Support',
+                'cta_t': 'Start with CORE – grow into the Suite',
+                'cta_desc': 'No mass solution · No off-the-shelf contracts · Direct support',
+		'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
+                'cta_btn': 'Request Consultation'
+            }
+        };
+
+        const toggles = document.querySelectorAll('.lang-toggle-input');
+        function updateLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            document.documentElement.lang = lang;
+        }
+
+        toggles.forEach(t => t.addEventListener('change', e => {
+            const isChecked = e.target.checked;
+            toggles.forEach(box => box.checked = isChecked);
+            updateLanguage(isChecked ? 'en' : 'de');
+        }));
+
+        updateLanguage('de'); // Default
+    </script>
+</body>
+</html>

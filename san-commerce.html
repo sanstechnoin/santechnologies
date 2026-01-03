@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="comm_page_title">SAN Commerce | High-Performance D2C</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <style>
+        /* --- CSS VARIABLES (Synced with index.html) --- */
+        :root {
+            --primary: #006064;
+            --accent: #00BCD4;
+            --dark: #333333;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --bg-suite: #f0f4f8; 
+            --container-width: 1150px;
+        }
+
+        /* --- GLOBAL RESET & LAYOUT --- */
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            color: var(--dark); 
+            line-height: 1.6; 
+            background-color: var(--white); 
+            scroll-behavior: smooth;
+        }
+        
+        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; width: 100%; }
+        h1, h2, h3, h4 { font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; margin-top: 0; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        p { margin: 0 0 20px 0; }
+
+        /* --- HEADER --- */
+        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo img { height: 65px; width: auto; }
+        .nav-right { display: flex; align-items: center; gap: 30px; }
+        .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; }
+        .nav-desktop a:hover { color: var(--primary); }
+
+        /* --- LANG TOGGLE --- */
+        .lang-switch-container { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 2px solid #ddd; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 2px; background-color: var(--primary); transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #E0F7FA; border-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .flag-icon { height: 14px; width: auto; vertical-align: middle; }
+
+        /* --- SECTIONS --- */
+        section { padding: 80px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; max-width: 900px; margin-left: auto; margin-right: auto; }
+
+        /* --- HERO (UPDATED TO MATCH BRAND) --- */
+        .comm-hero { 
+            /* REVERTED TO SAN SUITE BRAND COLORS */
+            background: linear-gradient(135deg, var(--primary) 0%, #003d40 100%); 
+            color: var(--white); text-align: center; padding: 100px 0;
+        }
+        .comm-hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        .hero-subline { font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 30px; }
+        
+        /* UPDATED VISIBILITY FOR TOP TEXT */
+        .trust-line { 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            color: rgba(255,255,255,0.9); /* Changed to White for better visibility */
+            font-weight: 800; 
+        }
+
+        /* --- FILTER BLOCKS --- */
+        .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .filter-card { padding: 40px; border-radius: 20px; background: var(--light); text-align: left; }
+        .filter-card.ideal { border-top: 5px solid #4CAF50; }
+        .filter-card.not-ideal { border-top: 5px solid #FF5252; opacity: 0.8; }
+        .filter-card ul { padding: 0; list-style: none; margin-top: 20px; }
+        .filter-card li { margin-bottom: 12px; display: flex; gap: 10px; }
+
+        /* --- PLAIN EXPLANATION --- */
+        .plain-box { background: var(--bg-suite); padding: 50px; border-radius: 25px; text-align: center; margin: 40px 0; }
+        .integration-note { background: var(--white); padding: 20px 30px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; margin-top: 20px; }
+
+        /* --- TIER DEEP DIVE --- */
+        .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 40px; }
+        .tier-card { 
+            background: var(--white); border-radius: 20px; padding: 50px 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: left;
+            display: flex; flex-direction: column; border: 2px solid #eee; transition: all 0.3s ease-in-out;
+        }
+        /* Highlight the PRIME card */
+        .tier-card.prime { border: 2px solid var(--accent); background: #f0fbff; }
+        
+        .tier-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .tier-card:not(.prime):hover { border-color: var(--accent); }
+        .tier-card:hover .tier-icon { transform: scale(1.05); transition: transform 0.3s ease; }
+
+        .tier-icon { font-size: 3.5rem; margin-bottom: 20px; display: block; }
+        .feature-list { list-style: none; padding: 0; margin: 30px 0; }
+        .feature-list li { margin-bottom: 12px; display: flex; gap: 10px; }
+        .legal-tag { font-size: 0.75rem; color: #888; font-style: italic; display: block; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
+
+        /* --- EXTENSIONS --- */
+        .ext-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; }
+        .ext-card { padding: 30px; background: var(--light); border-radius: 15px; text-align: center; transition: 0.3s; }
+        .ext-card:hover { transform: translateY(-5px); background: var(--white); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .ext-card span { font-size: 2.5rem; display: block; margin-bottom: 15px; }
+
+        /* --- PROCESS STEPS --- */
+        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; text-align: center; margin-top: 40px; }
+        .step { padding: 20px; border-radius: 12px; background: var(--bg-suite); font-weight: bold; }
+        .step span { color: var(--accent); display: block; font-size: 1.5rem; margin-bottom: 5px; }
+
+        /* --- CTA --- */
+        .cta-section { text-align: center; background: #111; color: white; padding: 100px 0; }
+        .btn { display: inline-block; background: var(--accent); color: white; padding: 18px 45px; border-radius: 50px; font-weight: bold; margin-top: 30px; }
+
+        footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; }
+
+        /* --- MOBILE HEADER FIX (From Index) --- */
+        @media (max-width: 600px) {
+            .logo img { height: 45px; } 
+            .nav-right { gap: 15px; } 
+            .nav-desktop a span[data-translate="nav_back"] { display: none; }
+            .nav-desktop a span:first-child { font-size: 1.8rem; line-height: 1; }
+            .header-content { padding: 0 15px; }
+        }
+        @media (max-width: 900px) { .comm-hero h1 { font-size: 2.5rem; } .tier-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Logo"></a></div>
+            <div class="nav-right">
+                <nav class="nav-desktop">
+                    <a href="index.html">
+                        <span>←</span> 
+                        <span data-translate="nav_back">Startseite zurück</span>
+                    </a>
+                </nav>
+                <div class="lang-switch-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
+                    <label class="switch"><input type="checkbox" class="lang-toggle-input"><span class="slider"></span></label>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="comm-hero">
+        <div class="container">
+            <span class="trust-line" data-translate="comm_trust_line">Performance First · Maßgeschneiderte Logik · Scalable</span>
+            <h1 data-translate="comm_hero_title">SAN Commerce</h1>
+            <p class="hero-subline" data-translate="comm_hero_sub">Das Betriebssystem für Direct-to-Consumer (D2C) Marken</p>
+            <p data-translate="comm_hero_desc">Keine Baukästen. Keine Kompromisse. Eine E-Commerce Plattform, die sich exakt an Ihre Logistik und Verkaufsregeln anpasst.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="comm_filter_title">Ist SAN Commerce das Richtige?</h2>
+                <p data-translate="comm_filter_subtitle">Entwickelt für Marken, die aus Standard-Shop-Lösungen herausgewachsen sind.</p>
+            </div>
+            <div class="filter-grid">
+                <div class="filter-card ideal">
+                    <h4 data-translate="comm_ideal_t">✅ Ideal für...</h4>
+                    <ul data-translate="comm_ideal_list">
+                        <li>• D2C Marken mit eigenem Inventar</li>
+                        <li>• Komplexe Versand- oder Bundle-Regeln</li>
+                        <li>• Fokus auf Ladezeit & SEO-Performance</li>
+                        <li>• Wunsch nach eigener Datenhoheit</li>
+                    </ul>
+                </div>
+                <div class="filter-card not-ideal">
+                    <h4 data-translate="comm_not_ideal_t">❌ Nicht geeignet für...</h4>
+                    <ul data-translate="comm_not_ideal_list">
+                        <li>• Klassisches Dropshipping</li>
+                        <li>• "Schnell reich werden" Shops</li>
+                        <li>• Händler ohne spezifische Anforderungen</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background-color: var(--bg-suite);">
+        <div class="container">
+            <div class="plain-box">
+                <h2 data-translate="comm_plain_t">Warum Custom Development?</h2>
+                <p data-translate="comm_plain_p">Standard-Plattformen zwingen Sie in ihre Logik. SAN Commerce kehrt das Prinzip um: Die Software passt sich Ihrem Geschäftsprozess an – von der Kalkulation des ROI bis zur automatischen Zuweisung von Versanddienstleistern.</p>
+                <div class="integration-note">
+                    <p data-translate="comm_plain_note">💡 Das Ergebnis: Höhere Conversion-Rates durch Performance und massive Zeitersparnis im Backoffice.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="comm_edition_title">Zwei Säulen Ihres Erfolgs</h2>
+            </div>
+            <div class="tier-grid">
+                
+                <div class="tier-card">
+                    <span class="tier-icon">🛍️</span>
+                    <h3 data-translate="tier_store_title">SAN Commerce CORE</h3>
+                    <p data-translate="tier_store_pos"><strong>Das Kundenerlebnis.</strong> Blitzschnell, mobil-optimiert und conversion-stark.</p>
+                    <ul class="feature-list" data-translate="store_features">
+                        <li>✓ Next-Gen Tech Stack (React/Node)</li>
+                        <li>✓ < 1 Sekunde Ladezeit</li>
+                        <li>✓ Individuelles UX/UI Design</li>
+                        <li>✓ SEO-Optimierte Struktur</li>
+                    </ul>
+                    <span class="legal-tag" data-translate="note_store">Der "sichtbare" Teil Ihres Shops – gebaut um zu verkaufen.</span>
+                </div>
+
+                <div class="tier-card prime">
+                    <span class="tier-icon">🚀</span>
+                    <h3 data-translate="tier_admin_title">SAN Commerce PRIME</h3>
+                    <p data-translate="tier_admin_pos"><strong>Das Gehirn (Merchant OS).</strong> Ein Admin-Panel, das Ihre operativen Probleme löst.</p>
+                    <ul class="feature-list" data-translate="admin_features">
+                        <li>✓ Individuelle Bestellverwaltung (OMS)</li>
+                        <li>✓ Automatische Versand-Logik</li>
+                        <li>✓ Echtzeit ROI & Profit Rechner</li>
+                        <li>✓ Inventar- & Lager-Management</li>
+                    </ul>
+                    <span class="legal-tag" data-translate="note_admin">Das Backend, das Ihre täglichen Abläufe automatisiert.</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section style="background-color: var(--bg-suite);">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="comm_ext_title">Features, die den Unterschied machen</h2>
+                <p data-translate="comm_ext_sub">Funktionen, die in Standard-Shops teure Apps erfordern, sind hier nativ integriert.</p>
+            </div>
+            <div class="ext-grid">
+                <div class="ext-card"><span>🚚</span><p data-translate="cext1">Smarte Logistik</p></div>
+                <div class="ext-card"><span>💬</span><p data-translate="cext2">WhatsApp Updates</p></div>
+                <div class="ext-card"><span>📊</span><p data-translate="cext3">Profit Analytics</p></div>
+                <div class="ext-card"><span>🎁</span><p data-translate="cext4">Dynamic Bundles</p></div>
+                <div class="ext-card"><span>💳</span><p data-translate="cext5">UPI / Payments</p></div>
+                <div class="ext-card"><span>🏷️</span><p data-translate="cext6">Coupon Engine</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="proc_t">Implementation & Prozess</h2>
+            </div>
+            <div class="process-grid">
+                <div class="step"><span>1</span><p data-translate="cs1">Analyse</p></div>
+                <div class="step"><span>2</span><p data-translate="cs2">Architektur</p></div>
+                <div class="step"><span>3</span><p data-translate="cs3">Development</p></div>
+                <div class="step"><span>4</span><p data-translate="cs4">Migration</p></div>
+                <div class="step"><span>5</span><p data-translate="cs5">Launch</p></div>
+                <div class="step"><span>6</span><p data-translate="cs6">Scaling</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2 data-translate="ccta_t">Bereit für den nächsten Schritt?</h2>
+            <p data-translate="ccta_desc">Lassen Sie uns besprechen, wie wir Ihre manuellen Prozesse automatisieren können.</p>
+            <a href="index.html#contact" class="btn" data-translate="ccta_btn">Projekt anfragen</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>
+                &copy; 2025 SAN Technologies. 
+                <span style="margin: 0 8px; color: #444;">|</span> 
+                
+                <a href="datenschutz.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_privacy">Datenschutz</a>
+                
+                <span style="margin: 0 8px; color: #444;">|</span> 
+                
+                <a href="impressum.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_impressum">Impressum</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            'de': {
+                'nav_back': 'Startseite zurück',
+                'comm_page_title': 'SAN Commerce | High-Performance D2C',
+                'comm_trust_line': 'Performance First · Maßgeschneiderte Logik · Scalable',
+                'comm_hero_title': 'SAN Commerce',
+                'comm_hero_sub': 'Das Betriebssystem für Direct-to-Consumer (D2C) Marken',
+                'comm_hero_desc': 'Keine Baukästen. Keine Kompromisse. Eine E-Commerce Plattform, die sich exakt an Ihre Logistik und Verkaufsregeln anpasst.',
+                
+                'comm_filter_title': 'Ist SAN Commerce das Richtige?',
+                'comm_filter_subtitle': 'Entwickelt für Marken, die aus Standard-Shop-Lösungen herausgewachsen sind.',
+                'comm_ideal_t': '✅ Ideal für...',
+                'comm_ideal_list': '<li>• D2C Marken mit eigenem Inventar</li><li>• Komplexe Versand- oder Bundle-Regeln</li><li>• Fokus auf Ladezeit & SEO-Performance</li><li>• Wunsch nach eigener Datenhoheit</li>',
+                'comm_not_ideal_t': '❌ Nicht geeignet für...',
+                'comm_not_ideal_list': '<li>• Klassisches Dropshipping</li><li>• "Schnell reich werden" Shops</li><li>• Händler ohne spezifische Anforderungen</li>',
+                
+                'comm_plain_t': 'Warum Custom Development?',
+                'comm_plain_p': 'Standard-Plattformen zwingen Sie in ihre Logik. SAN Commerce kehrt das Prinzip um: Die Software passt sich Ihrem Geschäftsprozess an – von der Kalkulation des ROI bis zur automatischen Zuweisung von Versanddienstleistern.',
+                'comm_plain_note': '💡 Das Ergebnis: Höhere Conversion-Rates durch Performance und massive Zeitersparnis im Backoffice.',
+                
+                'comm_edition_title': 'Zwei Säulen Ihres Erfolgs',
+                
+                'tier_store_title': 'SAN Commerce CORE',
+                'tier_store_pos': 'Das Kundenerlebnis. Blitzschnell, mobil-optimiert und conversion-stark.',
+                'store_features': '<li>✓ Next-Gen Tech Stack (React/Node)</li><li>✓ < 1 Sekunde Ladezeit</li><li>✓ Individuelles UX/UI Design</li><li>✓ SEO-Optimierte Struktur</li>',
+                'note_store': 'Der "sichtbare" Teil Ihres Shops – gebaut um zu verkaufen.',
+                
+                'tier_admin_title': 'SAN Commerce PRIME',
+                'tier_admin_pos': 'Das Gehirn (Merchant OS). Ein Admin-Panel, das Ihre operativen Probleme löst.',
+                'admin_features': '<li>✓ Individuelle Bestellverwaltung (OMS)</li><li>✓ Automatische Versand-Logik</li><li>✓ Echtzeit ROI & Profit Rechner</li><li>✓ Inventar- & Lager-Management</li>',
+                'note_admin': 'Das Backend, das Ihre täglichen Abläufe automatisiert.',
+
+                'comm_ext_title': 'Features, die den Unterschied machen',
+                'comm_ext_sub': 'Funktionen, die in Standard-Shops teure Apps erfordern, sind hier nativ integriert.',
+                'cext1': 'Smarte Logistik', 'cext2': 'WhatsApp Updates', 'cext3': 'Profit Analytics', 
+                'cext4': 'Dynamic Bundles', 'cext5': 'UPI / Payments', 'cext6': 'Coupon Engine',
+                
+                'proc_t': 'Implementation & Prozess',
+                'cs1': 'Analyse', 'cs2': 'Architektur', 'cs3': 'Development', 'cs4': 'Migration', 'cs5': 'Launch', 'cs6': 'Scaling',
+                
+                'ccta_t': 'Bereit für den nächsten Schritt?',
+                'ccta_desc': 'Lassen Sie uns besprechen, wie wir Ihre manuellen Prozesse automatisieren können.',
+		'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
+                'ccta_btn': 'Projekt anfragen'
+            },
+            'en': {
+                'nav_back': 'Back to Home',
+                'comm_page_title': 'SAN Commerce | High-Performance D2C',
+                'comm_trust_line': 'Performance First · Custom Logic · Scalable',
+                'comm_hero_title': 'SAN Commerce',
+                'comm_hero_sub': 'The Operating System for Direct-to-Consumer (D2C) Brands',
+                'comm_hero_desc': 'No templates. No compromises. An E-Commerce platform that adapts exactly to your logistics and sales rules.',
+                
+                'comm_filter_title': 'Is SAN Commerce right for you?',
+                'comm_filter_subtitle': 'Designed for brands that have outgrown standard shop solutions.',
+                'comm_ideal_t': '✅ Ideal for...',
+                'comm_ideal_list': '<li>• D2C brands with own inventory</li><li>• Complex shipping or bundle rules</li><li>• Focus on load time & SEO performance</li><li>• Desire for full data ownership</li>',
+                'comm_not_ideal_t': '❌ Not suitable for...',
+                'comm_not_ideal_list': '<li>• Classic Dropshipping</li><li>• "Get rich quick" stores</li><li>• Merchants without specific needs</li>',
+                
+                'comm_plain_t': 'Why Custom Development?',
+                'comm_plain_p': 'Standard platforms force you into their logic. SAN Commerce reverses the principle: The software adapts to your business process – from ROI calculation to automatic carrier assignment.',
+                'comm_plain_note': '💡 The result: Higher conversion rates through performance and massive time savings in the back office.',
+                
+                'comm_edition_title': 'Two Pillars of Success',
+                
+                'tier_store_title': 'SAN Commerce CORE',
+                'tier_store_pos': 'The Customer Experience. Lightning fast, mobile-optimized, and conversion-strong.',
+                'store_features': '<li>✓ Next-Gen Tech Stack (React/Node)</li><li>✓ < 1 Second Load Time</li><li>✓ Custom UX/UI Design</li><li>✓ SEO-Optimized Structure</li>',
+                'note_store': 'The "visible" part of your shop – built to sell.',
+                
+                'tier_admin_title': 'SAN Commerce PRIME',
+                'tier_admin_pos': 'The Brain (Merchant OS). An Admin Panel that solves your operational headaches.',
+                'admin_features': '<li>✓ Custom Order Mgmt (OMS)</li><li>✓ Automatic Shipping Logic</li><li>✓ Real-time ROI & Profit Calc</li><li>✓ Inventory & Warehouse Mgmt</li>',
+                'note_admin': 'The backend that automates your daily workflows.',
+
+                'comm_ext_title': 'Features that make the difference',
+                'comm_ext_sub': 'Features that require expensive apps in standard shops are integrated natively here.',
+                'cext1': 'Smart Logistics', 'cext2': 'WhatsApp Updates', 'cext3': 'Profit Analytics', 
+                'cext4': 'Dynamic Bundles', 'cext5': 'UPI / Payments', 'cext6': 'Coupon Engine',
+                
+                'proc_t': 'Implementation & Process',
+                'cs1': 'Analysis', 'cs2': 'Architecture', 'cs3': 'Development', 'cs4': 'Migration', 'cs5': 'Launch', 'cs6': 'Scaling',
+                
+                'ccta_t': 'Ready for the next step?',
+                'ccta_desc': 'Let\'s discuss how we can automate your manual processes.',
+		'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
+                'ccta_btn': 'Request Project'
+            }
+        };
+
+        const toggles = document.querySelectorAll('.lang-toggle-input');
+        function updateLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            document.documentElement.lang = lang;
+        }
+
+        toggles.forEach(t => t.addEventListener('change', e => {
+            const isChecked = e.target.checked;
+            toggles.forEach(box => box.checked = isChecked);
+            updateLanguage(isChecked ? 'en' : 'de');
+        }));
+
+        updateLanguage('de'); // Default
+    </script>
+</body>
+</html>

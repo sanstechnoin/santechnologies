@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="page_title">SAN Technologies | Avinash Vivekananthan</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+
+        <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --primary: #006064;
+            --accent: #00BCD4;
+            --dark: #333333;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --bg-suite: #f0f4f8; 
+            --container-width: 1150px;
+        }
+
+        /* --- GLOBAL RESET & LAYOUT --- */
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            color: var(--dark); 
+            line-height: 1.6; 
+            background-color: var(--light); 
+            scroll-behavior: smooth;
+            overflow-x: hidden; 
+        }
+        
+        h1, h2, h3, h4 { font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; margin-top: 0; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        img { max-width: 100%; display: block; }
+        p { margin: 0 0 20px 0; }
+
+        /* --- 1. PAGE LOADER --- */
+        #page-loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--white); z-index: 99999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+        #page-loader.loader-hidden { opacity: 0; visibility: hidden; }
+        #page-loader img { width: 100px; animation: breathe 1.5s infinite ease-in-out; }
+        @keyframes breathe {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- 2. SITE CONTENT FADE --- */
+        .site-content { opacity: 0; transition: opacity 1.5s ease-in-out; }
+        .content-visible { opacity: 1 !important; }
+
+        /* --- GLOBAL CONTAINER --- */
+        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; width: 100%; }
+
+        /* --- HEADER --- */
+        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo a { display: flex; align-items: center; cursor: pointer; }
+        .logo img { height: 65px; width: auto; }
+
+        /* --- NAVIGATION --- */
+        .nav-right { display: flex; align-items: center; gap: 30px; }
+        .nav-desktop ul { display: flex; gap: 30px; }
+        .nav-desktop a { font-weight: 600; font-size: 0.95rem; position: relative; color: #555; }
+        .nav-desktop a:hover { color: var(--primary); }
+        .nav-desktop a:after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--accent); transition: 0.3s; }
+        .nav-desktop a:hover:after { width: 100%; }
+
+        /* --- HAMBURGER --- */
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 1001; }
+        .bar { width: 25px; height: 3px; background-color: var(--dark); transition: 0.3s; }
+        
+        /* --- MOBILE MENU --- */
+        .mobile-menu {
+            position: fixed; top: 90px; left: 0; width: 100%; background: var(--white);
+            box-shadow: 0 10px 10px rgba(0,0,0,0.1); padding: 20px;
+            transform: translateY(-150%); transition: transform 0.3s ease-in-out;
+            text-align: center; z-index: 999;
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+        }
+        .mobile-menu.active { transform: translateY(0); }
+        .mobile-menu li { margin: 15px 0; }
+        .mobile-menu a { font-size: 1.2rem; font-weight: bold; }
+
+        /* --- LANG TOGGLE (Universal) --- */
+        .lang-switch-container { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 2px solid #ddd; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 2px; background-color: var(--primary); transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #E0F7FA; border-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .flag-icon { height: 14px; width: auto; vertical-align: middle; }
+
+        /* --- BACK TO TOP --- */
+        #backToTop {
+            display: none; position: fixed; bottom: 40px; right: 30px; z-index: 99;
+            border: none; outline: none; background-color: var(--primary); color: white;
+            cursor: pointer; padding: 12px 18px; border-radius: 12px; font-size: 20px;
+            font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease;
+        }
+        #backToTop:hover { background-color: var(--accent); transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+
+        /* --- SECTIONS --- */
+        section { padding: 90px 0; }
+
+        /* --- HERO --- */
+        .hero { 
+            background: linear-gradient(135deg, var(--primary) 0%, #003d40 100%); 
+            color: var(--white); text-align: center; min-height: 65vh;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .hero-intro { font-size: 1rem; color: var(--accent); font-weight: 800; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase; }
+        .hero p { font-size: 1.3rem; opacity: 0.95; max-width: 750px; margin-bottom: 40px; font-weight: 300; line-height: 1.6; margin-left: auto; margin-right: auto; }
+        .btn { display: inline-block; background: var(--accent); color: var(--white); padding: 15px 45px; border-radius: 50px; font-weight: bold; font-size: 1rem; box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3); }
+        .btn:hover { transform: translateY(-3px); background-color: #00acc1; }
+
+        /* --- SHOWCASE SLIDER --- */
+        .showcase { padding: 0; position: relative; overflow: hidden; }
+        .slider-wrapper { display: flex; width: 100%; transition: transform 0.6s ease-in-out; }
+        .slide { min-width: 100%; padding: 90px 0; box-sizing: border-box; }
+        .slide-1 { background: var(--white); }
+        .slide-2 { background: #E0F2F1; } 
+        .showcase-grid { display: flex; align-items: center; gap: 60px; }
+        .showcase-text { flex: 1; min-width: 300px; }
+        .showcase-image { 
+            flex: 1.3; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            border: 1px solid #eee; 
+            height: 400px; 
+            background: white; 
+        }
+        .showcase-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+        .slider-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; transform: translateY(-50%); padding: 0 20px; pointer-events: none; }
+        .slider-btn { background: rgba(0,0,0,0.1); color: var(--primary); border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 24px; cursor: pointer; pointer-events: auto; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+        .slider-btn:hover { background: var(--accent); color: white; }
+        .tag { background: #E0F7FA; color: var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 15px; }
+        .checklist { margin: 25px 0; padding-left: 0; }
+        .checklist li { margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px; text-align: left; }
+        .checklist li span.check { color: var(--accent); font-weight: bold; font-size: 1.2rem; line-height: 1.4; min-width: 20px; }
+
+/* --- SAN SUITE SECTION--- */
+        .san-suite-section {
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--bg-suite) 0%, #ffffff 100%);
+            color: var(--dark);
+            text-align: center;
+            border-top: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
+            scroll-margin-top: 80px;
+        }
+
+        .suite-header { 
+            margin-bottom: 60px; 
+            max-width: 900px; /* Constrain width for neatness */
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+
+        .suite-header h2 { 
+            font-size: 2.8rem; 
+            font-weight: 800; 
+            margin: 0 0 20px 0; /* More space below icon */
+            color: #1a1a1a; 
+            letter-spacing: -1px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .suite-header h3 { 
+            font-size: 1.1rem; 
+            font-weight: 600; 
+            color: var(--accent); 
+            margin: 0 0 40px 0; /* Space between cyan subtitle and text */
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+        }
+
+        /* Container for the text blocks */
+        .suite-intro-text { 
+            max-width: 780px; 
+            margin: 0 auto; 
+            text-align: center;
+        }
+
+        /* The Main Bold Description */
+        .suite-main-desc {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: #222;
+            font-weight: 600; /* Semi-bold for clarity */
+            margin-bottom: 25px; /* Distinct separation */
+            display: block;
+        }
+
+        /* The Optional Integration Text */
+        .suite-sub-desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 0;
+            display: block;
+        }
+        
+        /* The Disclaimer - Neatly separated */
+        .suite-disclaimer {
+            display: block;
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 35px; /* Push it down significantly */
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0; /* Adds a neat subtle divider line */
+            font-style: normal;
+            font-weight: 400;
+            max-width: 650px; /* Keep disclaimer narrow */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .suite-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .suite-card {
+            background: #fff;
+            border: 1px solid #fff;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+        .suite-card:hover { 
+            transform: translateY(-7px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08); 
+            border-color: var(--accent); 
+        }
+        
+        .card-icon { 
+            font-size: 3.5rem; 
+            margin-bottom: 20px; 
+            display: block;
+            line-height: 1;
+            transition: transform 0.3s ease;
+        }
+        .suite-card:hover .card-icon { 
+            transform: scale(1.1); 
+        }
+
+        .suite-card h4 { font-size: 1.25rem; margin: 0 0 15px 0; color: #111; font-weight: 700; }
+        .suite-card p { font-size: 1rem; color: #666; line-height: 1.6; margin: 0; }
+
+        .suite-extensions {
+            background-color: #fff;
+            border: 1px solid #e1e1e1;
+            border-radius: 16px;
+            padding: 50px;
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .ext-title { font-weight: 700; margin-bottom: 25px; display: block; text-transform: uppercase; font-size: 0.9rem; color: #888; letter-spacing: 1px; }
+        .ext-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; list-style: none; padding: 0; margin: 0; }
+        .ext-item { background: #f8f9fa; border: 1px solid #ddd; padding: 12px 25px; border-radius: 50px; font-size: 1rem; color: #444; font-weight: 500; }
+        .suite-legal { font-size: 0.85rem; color: #888; max-width: 700px; margin: 0 auto 40px auto; font-style: italic; border-top: 1px solid #ccc; padding-top: 25px; line-height: 1.5; }
+        .suite-btn { display: inline-block; background-color: #111; color: #fff; padding: 18px 40px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: background-color 0.3s; }
+        .suite-btn:hover { background-color: var(--accent); color: #fff; }
+
+        /* --- TECH STACK --- */
+        .tech-stack { background: var(--white); text-align: center; padding: 50px 0; border-bottom: 1px solid #ddd; }
+        .tech-header { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; color: #888; font-weight: bold; }
+        .tech-logos { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; font-weight: 600; color: #555; font-size: 1.1rem; }
+        .tech-item { display: flex; align-items: center; gap: 10px; padding: 12px 25px; background: #f8f9fa; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        /* --- SERVICES --- */
+        .section-header { text-align: center; margin-bottom: 70px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .card { background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; border-bottom: 4px solid transparent; text-align: center; display: flex; flex-direction: column; align-items: center; height: 100%; }
+        .card:hover { transform: translateY(-7px); border-bottom-color: var(--accent); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .icon { font-size: 3.5rem; margin-bottom: 25px; display: block; color: var(--primary); line-height: 1; }
+
+        /* --- ABOUT & CONTACT --- */
+        .about-contact { background: #222; color: var(--white); }
+        .ac-grid { display: flex; flex-wrap: wrap; gap: 80px; align-items: flex-start; }
+        .ac-col { flex: 1; min-width: 300px; }
+        .ac-col h2 { color: var(--accent); margin-bottom: 30px; border-bottom: 2px solid #444; display: inline-block; padding-bottom: 10px; }
+        .profile-img { width: 150px; height: 150px; border-radius: 25px; object-fit: cover; border: 4px solid var(--accent); margin: 0 auto 30px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.4); display: block; }
+        .bio-text { font-size: 1.1rem; color: #ccc; line-height: 1.7; margin-bottom: 30px; text-align: left; }
+        .contact-item { display: flex; items-center; gap: 15px; margin-bottom: 20px; font-size: 1.1rem; }
+        .contact-icon { min-width: 40px; height: 40px; background: rgba(0, 188, 212, 0.1); display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--accent); }
+
+        /* --- FORM --- */
+        .contact-form { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 12px; border: 1px solid #444; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: bold; color: #ccc; }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 14px; border-radius: 6px; border: 1px solid #555; background: #333; color: white; font-family: inherit; font-size: 1rem; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--accent); background: #444; }
+        .form-textarea { height: 130px; resize: vertical; }
+        .form-btn { width: 100%; cursor: pointer; border: none; font-size: 1.1rem; padding: 15px; }
+
+        /* --- FOOTER --- */
+        footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; }
+        .footer-grid { display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; }
+        .impressum p { margin-bottom: 8px; }
+
+        /* --- COOKIE BANNER --- */
+        #cookieBanner {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: #222; color: white;
+            padding: 15px 20px; display: flex; justify-content: center; align-items: center; gap: 20px;
+            z-index: 2000; border-top: 2px solid var(--accent); box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+        }
+        .cookie-btn { background: var(--accent); color: white; border: none; padding: 8px 25px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        /* --- MOBILE RESPONSIVE LOGIC --- */
+        .desktop-lang { display: flex; }
+        .mobile-lang { display: none; }
+
+        @media (max-width: 900px) {
+            .nav-desktop { display: none; }
+            .hamburger { display: flex; }
+            .desktop-lang { display: none; }
+            .mobile-lang { display: flex; margin-top: 20px; }
+            .hero h1 { font-size: 2.2rem; }
+            .showcase-grid { flex-direction: column-reverse; }
+            .ac-grid { gap: 50px; flex-direction: column; }
+            #cookieBanner { flex-direction: column; gap: 15px; text-align: center; }
+            .nav-right { gap: 20px; }
+            .slider-nav { padding: 0 10px; }
+            .slider-btn { width: 40px; height: 40px; font-size: 18px; }
+            .showcase-image { height: 250px; }
+            
+            /* Suite Mobile */
+            .suite-header h2 { font-size: 2.2rem; }
+            .suite-grid { grid-template-columns: 1fr; }
+            .ext-list { flex-direction: column; }
+        }
+
+	/* --- DROPDOWN MENU (Desktop) --- */
+.dropdown { 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+    height: 100%; /* Helps hit target */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    
+    /* 1. POSITIONING & ALIGNMENT FIX */
+    top: 100%; /* Starts exactly at the bottom of the text container */
+    left: 50%; /* Move to the middle */
+    transform: translateX(-50%); /* Center perfectly relative to "Produkte" */
+    
+    /* 2. VISUAL STYLING */
+    background-color: var(--white);
+    min-width: 240px; /* Slightly wider for better reading */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    border-radius: 12px;
+    z-index: 2000;
+    padding: 8px 0; /* Neat padding inside the box */
+    border: 1px solid #eee;
+    
+    /* 3. VISUAL GAP (Space between header and menu) */
+    margin-top: 15px; 
+}
+
+/* 4. THE INVISIBLE BRIDGE (Prevents Disappearing) */
+/* This creates an invisible block that fills the gap so the mouse doesn't "fall through" */
+.dropdown-content::before {
+    content: "";
+    position: absolute;
+    top: -20px; /* Reach up to the header */
+    left: 0;
+    width: 100%;
+    height: 20px; /* Height of the gap */
+    background: transparent;
+}
+
+/* Show on hover */
+.dropdown:hover .dropdown-content { 
+    display: block; 
+    animation: fadeIn 0.3s ease; 
+}
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translate(-50%, 10px); } 
+    to { opacity: 1; transform: translate(-50%, 0); } 
+}
+
+/* Dropdown Links */
+.dropdown-content a {
+    color: var(--dark);
+    padding: 12px 25px;
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+.dropdown-content a:hover { 
+    background-color: #f0fbfc; 
+    color: var(--primary); 
+    padding-left: 30px; 
+}
+
+/* --- ALIGNMENT FIX --- */
+/* This targets the 'Produkte' link specifically */
+.dropdown .dropbtn {
+    position: relative; 
+    top: 1px; /* Pushes the text down 2px to match neighbors */
+}
+
+/* Mobile Indentation */
+.mobile-sub-link { font-size: 1rem !important; color: #666; font-weight: normal !important; }
+
+/* --- TESTIMONIALS (Minimalist) --- */
+.testimonial-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; /* Side-by-side */
+    gap: 80px; /* Generous spacing */
+    max-width: 1000px; 
+    margin: 0 auto; 
+}
+
+.testimonial-item p { 
+    font-size: 1.15rem; 
+    line-height: 1.6; 
+    color: #444; 
+    font-style: italic; 
+    margin-bottom: 15px; 
+    font-family: Georgia, 'Times New Roman', Times, serif; /* Serif font for "voice" */
+}
+
+.testimonial-attr { 
+    font-size: 0.85rem; 
+    color: #999; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    display: block; 
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Back to Sans-Serif */
+}
+
+/* Mobile Stack */
+@media (max-width: 768px) {
+    .testimonial-grid { 
+        grid-template-columns: 1fr; /* Stack vertically */
+        gap: 50px; 
+        text-align: center; /* Center align on mobile */
+    }
+}
+
+/* --- SUCCESS MODAL --- */
+.modal {
+    display: none; 
+    position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; 
+    background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s ease;
+}
+.modal.show { display: flex; opacity: 1; }
+.modal-content {
+    background-color: #fff; padding: 40px; border-radius: 12px; 
+    text-align: center; max-width: 500px; width: 90%; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: scale(0.8); transition: transform 0.3s ease;
+}
+.modal.show .modal-content { transform: scale(1); }
+.success-icon { font-size: 50px; color: var(--accent); margin-bottom: 20px; display: block; }
+.close-modal-btn {
+    background: var(--primary); color: white; border: none; padding: 10px 30px; 
+    border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 20px;
+}
+.close-modal-btn:hover { background: var(--accent); }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="page-loader">
+        <img src="favicon.png" alt="Loading...">
+    </div>
+
+    <div class="site-content" id="siteContent">
+
+        <div id="cookieBanner">
+            <span data-translate="cookie_text">Wir verwenden Cookies, um Ihre Erfahrung zu verbessern.</span>
+            <button class="cookie-btn" onclick="acceptCookies()" data-translate="cookie_btn">Akzeptieren</button>
+        </div>
+
+        <button onclick="topFunction()" id="backToTop" title="Go to top">↑</button>
+
+        <header>
+            <div class="container header-content">
+                <div class="logo">
+                    <a href="#" onclick="topFunction(); return false;">
+                        <img src="logo.png" alt="SAN Technologies Logo">
+                    </a>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="nav-desktop">
+                        <nav>
+                            <ul>
+                                <li><a href="#showcase" data-translate="nav_work">Referenzen</a></li>
+                                <li class="dropdown">
+    					<a href="javascript:void(0)" class="dropbtn">
+						<span data-translate="nav_products">Produkte</span> ▾
+					</a>
+				<div class="dropdown-content">
+			        <a href="san-suite.html">SAN Suite (Gastro)</a>
+			        <a href="san-commerce.html">SAN Commerce (Retail)</a>
+				</div>
+				</li>
+                                <li><a href="#services" data-translate="nav_services">Leistungen</a></li>
+                                <li><a href="#about" data-translate="nav_about">Über Mich</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    
+                    <div class="lang-switch-container desktop-lang">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
+                        <span style="margin-left:4px;">DE</span>
+                        <label class="switch" style="margin: 0 8px;">
+                            <input type="checkbox" class="lang-toggle-input">
+                            <span class="slider"></span>
+                        </label>
+                        <span style="margin-right:4px;">EN</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
+                    </div>
+
+                    <div class="hamburger" id="hamburgerBtn">
+                        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <ul style="display: flex; flex-direction: column; gap: 20px; padding: 0; margin: 0; list-style: none;">
+                <li><a href="#showcase" onclick="toggleMenu()" data-translate="nav_work">Referenzen</a></li>
+
+                <li style="border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 0; margin-top: 10px;">
+                    <span style="font-size: 0.85rem; color: #999; text-transform: uppercase; letter-spacing: 1px;" data-translate="nav_products">Produkte</span>
+                </li>
+                
+                <li style="margin-top: 0;"><a href="san-suite.html" onclick="toggleMenu()">SAN Suite (Gastro)</a></li>
+                <li style="margin-top: 0;"><a href="san-commerce.html" onclick="toggleMenu()">SAN Commerce (Retail)</a></li>
+
+                <li style="margin-top: 10px;"><a href="#services" onclick="toggleMenu()" data-translate="nav_services">Leistungen</a></li>
+                <li><a href="#about" onclick="toggleMenu()" data-translate="nav_about">Über Mich</a></li>
+                <li><a href="#contact" onclick="toggleMenu()" style="color: var(--primary);">Kontakt</a></li>
+            </ul>
+
+            <div class="lang-switch-container mobile-lang">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
+                <span style="margin-left:4px;">DE</span>
+                <label class="switch" style="margin: 0 8px;">
+                    <input type="checkbox" class="lang-toggle-input">
+                    <span class="slider"></span>
+                </label>
+                <span style="margin-right:4px;">EN</span>
+                <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
+            </div>
+        </div>
+
+        <section class="hero">
+            <div class="container">
+                <span class="hero-intro" data-translate="hero_intro">AVINASH VIVEKANANTHAN — FREELANCE SOFTWARE ENGINEER</span>
+                <h1 data-translate="hero_title">Ihr Geschäft transformieren – mit maßgeschneidertem Code.</h1>
+                <p data-translate="hero_sub">Deutsche Ingenieurskunst trifft auf globale digitale Expertise. Direkter Zugang zum Entwickler für leistungsstarke Web- und Softwarelösungen.</p>
+         
+            </div>
+        </section>
+
+        <section id="showcase" class="showcase">
+            <div class="slider-wrapper" id="sliderWrapper">
+                
+                <div class="slide slide-1">
+                    <div class="container showcase-grid">
+                        <div class="showcase-text">
+                            <span class="tag" data-translate="kds_tag">Featured Project</span>
+                            <h2 data-translate="kds_title">Das SAN Kitchen Display System (KDS)</h2>
+                            <p data-translate="kds_desc">Ein Beispiel meiner Arbeit: Ich habe dieses KDS entwickelt, um Papierbons in der Gastronomie durch intelligente Echtzeit-Workflows zu ersetzen.</p>
+                            
+                            <ul class="checklist">
+                                <li>
+                                    <span class="check">✓</span>
+                                    <div><strong data-translate="kds_li1_title">Echtzeit-Synchronisation:</strong> <span data-translate="kds_li1_desc">Sofortige Übertragung vom POS in die Küche.</span></div>
+                                </li>
+                                <li>
+                                    <span class="check">✓</span>
+                                    <div><strong data-translate="kds_li2_title">Zero Latency:</strong> <span data-translate="kds_li2_desc">Gebaut auf modernster WebSocket-Technologie.</span></div>
+                                </li>
+                                <li>
+                                    <span class="check">✓</span>
+                                    <div><strong data-translate="kds_li3_title">Skalierbar:</strong> <span data-translate="kds_li3_desc">Vom Foodtruck bis zum Fine Dining Restaurant.</span></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="showcase-image">
+                            <img src="pos-screen.jpg" alt="SAN KDS Dashboard">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide slide-2">
+                    <div class="container showcase-grid">
+                        <div class="showcase-text">
+                            <span class="tag" data-translate="pos_tag">Erweiterung</span>
+                            <h2 data-translate="pos_title">Das SAN Point of Sale System (POS)</h2>
+                            <p data-translate="pos_desc">Die perfekte Ergänzung zum KDS. Eine blitzschnelle Kassenoberfläche, die speziell für High-Speed-Umgebungen entwickelt wurde.</p>
+                            
+                            <ul class="checklist">
+                                <li>
+                                    <span class="check">✓</span>
+                                    <div><strong data-translate="pos_li1_title">Intuitive UI:</strong> <span data-translate="pos_li1_desc">Schulungsaufwand minimiert durch smartes Design.</span></div>
+                                </li>
+                                <li>
+                                    <span class="check">✓</span>
+                                    <div><strong data-translate="pos_li2_title">Cloud-Sync:</strong> <span data-translate="pos_li2_desc">Alle Verkaufsdaten sicher und live in der Cloud.</span></div>
+                                </li>
+                                <li>
+                                    <span class="check">✓</span>
+                                    <div><strong data-translate="pos_li3_title">Nahtlose Integration:</strong> <span data-translate="pos_li3_desc">Direkte Verbindung zum KDS und Buchhaltung.</span></div>
+                                </li>
+                                <li>
+                                    <span class="check">✓</span>
+                                    <div><strong data-translate="pos_li4_title">100% Finanzamt-konform:</strong> <span data-translate="pos_li4_desc">Inklusive zertifizierter TSE (KassenSichV) für rechtssicheres Arbeiten.</span></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="showcase-image">
+                            <img src="pos-screen-2.jpg" alt="SAN POS Dashboard">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="slider-nav">
+                <button class="slider-btn prev" onclick="moveSlide(-1); stopSlideShow();">&#10094;</button>
+                <button class="slider-btn next" onclick="moveSlide(1); stopSlideShow();">&#10095;</button>
+            </div>
+        </section>
+
+<section id="san-suite" class="san-suite-section" style="padding: 100px 0; text-align: center; background-color: var(--bg-suite);">
+    <div class="container">
+        <h2 data-translate="suite_teaser_title" style="font-size: 2.5rem; margin-bottom: 20px; color: var(--dark);">
+            SAN Suite – Modulare Software für Gastronomie & Handel
+        </h2>
+        
+        <p class="suite-main-desc" style="max-width: 800px; margin: 0 auto 30px; font-size: 1.2rem; color: #555;" data-translate="suite_teaser_sub">
+            Ein eigenständiges System für Restaurants und Direct-to-Consumer-Geschäfte – flexibel erweiterbar, rechtssicher und individuell angepasst.
+        </p>
+
+        <ul style="list-style: none; padding: 0; margin: 0 auto 40px auto; max-width: 600px; text-align: left; display: inline-block;">
+            <li style="margin-bottom: 12px; display: flex; gap: 12px; font-size: 1.1rem; color: #333;">
+                <span style="color: var(--accent); font-weight: bold;">✓</span> 
+                <span data-translate="suite_bullet_1">Eigenständiges Restaurant- & Bestellsystem</span>
+            </li>
+            <li style="margin-bottom: 12px; display: flex; gap: 12px; font-size: 1.1rem; color: #333;">
+                <span style="color: var(--accent); font-weight: bold;">✓</span>
+                <span data-translate="suite_bullet_2">Optional integrierbare Kassensysteme & Zahlungen</span>
+            </li>
+            <li style="margin-bottom: 12px; display: flex; gap: 12px; font-size: 1.1rem; color: #333;">
+                <span style="color: var(--accent); font-weight: bold;">✓</span>
+                <span data-translate="suite_bullet_3">Skalierbar von Einzellösung bis Komplettplattform</span>
+            </li>
+        </ul>
+
+        <div>
+            <a href="san-suite.html" class="suite-btn" style="padding: 15px 40px; font-size: 1.1rem;" data-translate="suite_teaser_btn">
+                SAN Suite entdecken
+            </a>
+        </div>
+    </div>
+</section>
+<section id="solutions" style="background-color: var(--white); padding: 80px 0; border-bottom: 1px solid #eee;">
+    <div class="container">
+        <div class="section-header" style="margin-bottom: 50px;">
+            <h2 data-translate="sol_title">Weitere Lösungen & Projekte</h2>
+        </div>
+        
+        <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            
+            <div class="card" style="align-items: flex-start; text-align: left; padding: 35px; border: 1px solid #eee; box-shadow: none; background: #f9f9f9;">
+                <h3 style="margin-bottom: 10px; color: var(--primary);" data-translate="sol_c1_title">Gastronomie-Systeme</h3>
+                <p style="margin-bottom: 25px; color: #666;" data-translate="sol_c1_text">KDS, POS, QR-Ordering, Reporting</p>
+                <a href="san-suite.html" style="color: var(--dark); font-weight: bold; margin-top: auto; display: inline-flex; align-items: center; gap: 5px;" data-translate="sol_c1_btn">
+                    Mehr erfahren <span style="color: var(--accent);">→</span>
+                </a>
+            </div>
+
+            <div class="card" style="align-items: flex-start; text-align: left; padding: 35px; border: 1px solid #eee; box-shadow: none; background: #f9f9f9;">
+                <h3 style="margin-bottom: 10px; color: var(--primary);" data-translate="sol_c2_title">E-Commerce & D2C Systeme</h3>
+                <p style="margin-bottom: 25px; color: #666;" data-translate="sol_c2_text">Shops, Admin Panels, Bestell- & Versandlogik</p>
+                <a href="san-commerce.html" style="color: var(--dark); font-weight: bold; margin-top: auto; display: inline-flex; align-items: center; gap: 5px;" data-translate="sol_c2_btn">
+                    Referenzen ansehen <span style="color: var(--accent);">→</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section id="testimonials" style="background-color: var(--white); padding: 60px 0;">
+    <div class="container">
+        <h3 data-translate="testi_title" style="text-align: center; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: #999; margin: 0 auto 40px auto; max-width: 600px;">
+            Ergebnisse aus der Praxis
+        </h3>
+
+        <div class="testimonial-grid">
+            
+            <div class="testimonial-item">
+                <p data-translate="testi_1">
+                    "Seit der Umstellung auf das digitale KDS ist das Zettelchaos in der Küche Geschichte. Die Abläufe sind ruhiger und die Wartezeiten für Gäste haben sich spürbar verkürzt."
+                </p>
+                <span class="testimonial-attr" data-translate="testi_1_attr">Inhaber, Restaurant</span>
+            </div>
+
+            <div class="testimonial-item">
+                <p data-translate="testi_2">
+                    "Wir sparen täglich Stunden bei der Logistik, weil das System unsere komplexen Versandregeln automatisch steuert. Endlich können wir ohne technisches Kopfzerbrechen wachsen."
+                </p>
+                <span class="testimonial-attr" data-translate="testi_2_attr">Gründer, D2C-Marke</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+        <div class="tech-stack">
+            <div class="container">
+                <div class="tech-header" data-translate="stack_title">Tech Stack & Tools</div>
+                <div class="tech-logos">
+                    <div class="tech-item"><span>⚛️</span> React.js</div>
+                    <div class="tech-item"><span>🟩</span> Node.js</div>
+                    <div class="tech-item"><span>🚀</span> ServiceNow</div>
+                    <div class="tech-item"><span>☁️</span> AWS / Cloud</div>
+                    <div class="tech-item"><span>🔄</span> WebSocket</div>
+                </div>
+            </div>
+        </div>
+
+        <section id="services" class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-translate="services_title">Meine Kernkompetenzen</h2>
+                    <p data-translate="services_sub">Als Full-Stack Entwickler biete ich mehr als nur Websites. Ich baue digitale Werkzeuge, die Ihr Unternehmen effizienter machen.</p>
+                </div>
+                <div class="grid">
+                    <div class="card">
+                        <span class="icon">💻</span>
+                        <h3 data-translate="srv1_title">Maßgeschneiderte Webentwicklung</h3>
+                        <p data-translate="srv1_desc">Keine Baukästen. Ich entwickle schnelle, sichere und skalierbare Webanwendungen mit modernen Technologien wie React und Node.js.</p>
+                    </div>
+                    <div class="card">
+                        <span class="icon">🔌</span>
+                        <h3 data-translate="srv2_title">API & Systemintegration</h3>
+                        <p data-translate="srv2_desc">Verbinden Sie Ihre Tools. Ich baue Brücken zwischen Ihrem CRM, Buchhaltungssystem und Inventar, um manuelle Arbeitsprozesse zu automatisieren.</p>
+                    </div>
+                    <div class="card">
+                        <span class="icon">🚀</span>
+                        <h3 data-translate="srv3_title">Digitale Transformation</h3>
+                        <p data-translate="srv3_desc">Weg von Stift und Papier, hin zur Cloud. Ich analysiere Ihre Geschäftsprozesse und digitalisiere sie für maximale Effizienz.</p>
+                    </div>
+                    <div class="card">
+                        <span class="icon">🏢</span>
+                        <h3 data-translate="srv4_title">IT-Infrastruktur Beratung</h3>
+                        <p data-translate="srv4_desc">Mit Erfahrung im Enterprise-ITSM sorge ich für stabile und sichere IT-Umgebungen, damit Ihr Unternehmen ohne Ausfälle wachsen kann.</p>
+                    </div>
+                    <div class="card">
+                        <span class="icon">🛒</span>
+                        <h3 data-translate="srv5_title">E-Commerce & POS Lösungen</h3>
+                        <p data-translate="srv5_desc">Vom Online-Shop bis zum Kassensystem: Ich entwickle integrierte Verkaufslösungen, die Bestellungen und Lagerbestände synchron halten.</p>
+                    </div>
+                    <div class="card">
+                        <span class="icon">🛠️</span>
+                        <h3 data-translate="srv6_title">Wartung & Cloud-Hosting</h3>
+                        <p data-translate="srv6_desc">Ich kümmere mich um Updates, Backups und Cloud-Hosting (AWS), damit Ihre digitalen Anwendungen immer sicher und performant laufen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="about-contact">
+            <div class="container ac-grid">
+                
+                <div class="ac-col" id="about">
+                    <h2 data-translate="about_title">Persönlich & Professionell</h2>
+                    
+                    <img src="profile.jpg" alt="Avinash Vivekananthan" class="profile-img">
+                    
+                    <div class="bio-text">
+                        <p data-translate="about_p1">Mit meiner Erfahrung als IT-Cluster Lead sorge ich für Stabilität und Sicherheit. Ich entwickle nicht nur Software, sondern digitale Effizienz – und verwandle komplexe Geschäftsprozesse in intuitive Webanwendungen.</p>
+                    </div>
+                    
+                    <div style="font-style: italic; border-left: 3px solid var(--accent); padding-left: 15px; margin-bottom: 30px; color: #bbb;" data-translate="about_quote">
+                        "Ich verbinde technologische Exzellenz mit einem tiefen Verständnis für geschäftliche Anforderungen."
+                    </div>
+                    
+                    <div>
+                        <div class="contact-item"><div class="contact-icon">📍</div><span data-translate="location">Euskirchen, Deutschland</span></div>
+                        <div class="contact-item"><div class="contact-icon">📞</div><a href="tel:+4922519599741">+49 2251 9599741</a></div>
+                        <div class="contact-item"><div class="contact-icon">📧</div><a href="mailto:avinash@santechnologies.de">avinash@santechnologies.de</a></div>
+                    </div>
+                </div>
+
+                <div class="ac-col">
+                    <h2 data-translate="form_title">Projektanfrage senden</h2>
+                    
+                    <form name="contact" method="POST" data-netlify="true" class="contact-form">
+                        <input type="hidden" name="form-name" value="contact">
+
+                        <div class="form-group">
+                            <label class="form-label" data-translate="form_name">Name / Firma</label>
+                            <input type="text" name="name" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" data-translate="form_email">E-Mail Adresse</label>
+                            <input type="email" name="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" data-translate="form_type">Projekttyp</label>
+                            <select name="project_type" class="form-select">
+                                <option value="Web Development" data-translate="opt_web">Web Entwicklung</option>
+                                <option value="POS/KDS System" data-translate="opt_pos">POS/KDS System</option>
+                                <option value="IT Consulting" data-translate="opt_it">IT Beratung</option>
+                                <option value="Other" data-translate="opt_other">Anderes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" data-translate="form_msg">Nachricht</label>
+                            <textarea name="message" class="form-textarea" required></textarea>
+                        </div>
+                        <button type="submit" class="btn form-btn" data-translate="form_btn">Anfrage Absenden</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container footer-grid">
+                <div>
+                    <h3 style="color: #fff; font-size: 1rem; margin-bottom: 20px;" data-translate="footer_header_san">SAN Technologies</h3>
+                    <div class="impressum">
+                        <p><strong data-translate="footer_legal_tmg">Angaben gemäß § 5 TMG:</strong></p>
+                        <p>Jahnstraße 10<br>53879 Euskirchen<br><span data-translate="footer_country">Deutschland</span></p>
+                    </div>
+                </div>
+                <div>
+                     <h3 style="color: #fff; font-size: 1rem; margin-bottom: 20px;" data-translate="footer_header_contact">Kontakt & Inhaber</h3>
+                     <p><span data-translate="footer_rep_by">Vertreten durch:</span><br>Avinash Vivekananthan</p>
+                     <p>E-Mail: avinash@santechnologies.de<br>Tel: +49 2251 9599741</p>
+                </div>
+            </div>
+            <div class="container" style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #333;">
+                 <p data-translate="footer_disclaimer" style="font-size: 0.75rem;">Haftungsausschluss: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links.</p>
+                
+                <p style="margin-top:10px;">
+                    &copy; 2025 SAN Technologies. <span data-translate="footer_rights">Alle Rechte vorbehalten.</span>
+                    
+                    <span style="margin: 0 8px; color: #444;">|</span> 
+                    
+                    <a href="datenschutz.html" style="color: #888; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'" data-translate="footer_privacy">Datenschutz</a>
+                    
+                    <span style="margin: 0 8px; color: #444;">|</span> 
+                    
+                    <a href="impressum.html" style="color: #888; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'" data-translate="footer_impressum">Impressum</a>
+                </p>
+            </div>
+        </footer>
+
+    </div>
+
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <span class="success-icon">✓</span>
+        <h3 data-translate="modal_title">Vielen Dank!</h3>
+        <p data-translate="modal_text">Wir haben Ihre Anfrage erhalten und melden uns schnellstmöglich bei Ihnen.</p>
+        <button class="close-modal-btn" onclick="closeModal()" data-translate="modal_close">Schließen</button>
+    </div>
+</div>
+
+	<script>
+       // --- 1. PAGE LOADER LOGIC (Session Based) ---
+        const loader = document.getElementById('page-loader');
+        const siteContent = document.getElementById('siteContent');
+
+        // Check if the user has already visited in this session
+        if (sessionStorage.getItem('hasVisited')) {
+            // 1. If visited: Hide loader immediately & show content instantly (no pulse)
+            loader.style.display = 'none';
+            siteContent.style.transition = 'none'; // Disable fade-in transition for instant load
+            siteContent.style.opacity = '1';
+            document.body.style.overflow = 'auto'; 
+
+        } else {
+            // 2. If NOT visited: Run the full animation
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    loader.style.opacity = '0';
+                    siteContent.style.opacity = '1';
+                    setTimeout(() => {
+                        document.body.style.overflow = 'auto'; 
+                        loader.style.display = 'none';
+                        
+                        // Mark this session as visited
+                        sessionStorage.setItem('hasVisited', 'true');
+                    }, 1200);
+                }, 2000); 
+            });
+        }
+
+        // --- 2. SLIDER LOGIC ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        let slideInterval;
+
+        function moveSlide(n) {
+            currentSlide = (currentSlide + n + slides.length) % slides.length;
+            sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function startSlideShow() {
+            stopSlideShow(); 
+            slideInterval = setInterval(() => { moveSlide(1); }, 5000); 
+        }
+
+        function stopSlideShow() { clearInterval(slideInterval); }
+
+        const showcaseSection = document.getElementById('showcase');
+        showcaseSection.addEventListener('mouseenter', stopSlideShow);
+        showcaseSection.addEventListener('mouseleave', startSlideShow);
+        showcaseSection.addEventListener('touchstart', stopSlideShow);
+        showcaseSection.addEventListener('touchend', startSlideShow);
+
+        startSlideShow(); // Init
+
+        // --- 3. GENERAL UI LOGIC ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() { mobileMenu.classList.toggle('active'); }
+        hamburgerBtn.addEventListener('click', toggleMenu);
+
+        var mybutton = document.getElementById("backToTop");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                mybutton.style.display = "block";
+            } else { mybutton.style.display = "none"; }
+        };
+        function topFunction() { document.body.scrollTop = 0; document.documentElement.scrollTop = 0; }
+
+        function acceptCookies() {
+            document.getElementById("cookieBanner").style.display = "none";
+            localStorage.setItem("cookiesAccepted", "true");
+        }
+        if (localStorage.getItem("cookiesAccepted") === "true") {
+            document.getElementById("cookieBanner").style.display = "none";
+        }
+
+    // --- 4. TRANSLATIONS & DUAL SWITCH SYNC ---
+        const translations = {
+    'de': {
+        'page_title': 'SAN Technologies | Avinash Vivekananthan - Softwareberater',
+        'nav_work': 'Referenzen', 'nav_services': 'Leistungen', 'nav_about': 'Über Mich',
+	'nav_products': 'Produkte',
+        'hero_intro': 'AVINASH VIVEKANANTHAN — FREIBERUFLICHER SOTFWAREENTWICKLER',
+        'hero_title': 'Ihr Geschäft transformieren – mit maßgeschneidertem Code.',
+        'hero_sub': 'Deutsche Ingenieurskunst trifft auf globale digitale Expertise. Direkter Zugang zum Entwickler für leistungsstarke Web- und Softwarelösungen.',
+        'hero_btn': 'Mehr Information',
+	'suite_teaser_title': 'SAN Suite – Modulare Software für Gastronomie & Handel',
+        'suite_teaser_sub': 'Ein eigenständiges System für Restaurants und Direct-to-Consumer-Geschäfte – flexibel erweiterbar, rechtssicher und individuell angepasst.',
+        'suite_bullet_1': 'Eigenständiges Restaurant- & Bestellsystem',
+        'suite_bullet_2': 'Optional integrierbare Kassensysteme & Zahlungen',
+        'suite_bullet_3': 'Skalierbar von Einzellösung bis Komplettplattform',
+        'suite_teaser_btn': 'SAN Suite entdecken',
+	'sol_title': 'Weitere Lösungen & Projekte',
+        'sol_c1_title': 'Gastronomie-Systeme',
+        'sol_c1_text': 'KDS, POS, QR-Ordering, Reporting',
+        'sol_c1_btn': 'Mehr erfahren',
+        'sol_c2_title': 'E-Commerce & D2C Systeme',
+        'sol_c2_text': 'Shops, Admin Panels, Bestell- & Versandlogik',
+        'sol_c2_btn': 'Referenzen ansehen',
+        'kds_tag': 'Reale Kundenlösung', 'kds_title': 'Das SAN Kitchen Display System (KDS)',
+        'kds_desc': 'Ein Beispiel meiner Arbeit: Ich habe dieses KDS entwickelt, um Papierbons in der Gastronomie durch intelligente Echtzeit-Workflows zu ersetzen.',
+        'kds_li1_title': 'Echtzeit-Synchronisation:', 'kds_li1_desc': 'Sofortige Übertragung vom POS in die Küche.',
+        'kds_li2_title': 'Zero Latency Architektur:', 'kds_li2_desc': 'Gebaut auf modernster WebSocket-Technologie.',
+        'kds_li3_title': 'Skalierbar:', 'kds_li3_desc': 'Vom Foodtruck bis zum Fine Dining Restaurant.',
+        'pos_tag': 'Erweiterung', 'pos_title': 'Das SAN Point of Sale System (POS)',
+        'pos_desc': 'Die perfekte Ergänzung zum KDS. Eine blitzschnelle Kassenoberfläche, die speziell für High-Speed-Umgebungen entwickelt wurde.',
+        'pos_li1_title': 'Intuitive UI:', 'pos_li1_desc': 'Schulungsaufwand minimiert durch smartes Design.',
+        'pos_li2_title': 'Cloud-Sync:', 'pos_li2_desc': 'Alle Verkaufsdaten sicher und live in der Cloud.',
+        'pos_li3_title': 'Nahtlose Integration:', 'pos_li3_desc': 'Direkte Verbindung zum KDS und Buchhaltung.',
+        'pos_li4_title': '100% Finanzamt-konform:', 'pos_li4_desc': 'Inklusive zertifizierter TSE (KassenSichV) für rechtssicheres Arbeiten.',
+        'suite_sub': 'Ein eigenständiges Restaurant-System – mit optionaler Kassenanbindung',
+        'suite_intro_main': 'SAN Suite ist ein vollständig eigenständiges System für Restaurants, die eine moderne, zentrale Lösung suchen. Bestellungen, Küchenabläufe, Online-Bestellungen und Auswertungen werden vollständig innerhalb der SAN Suite abgebildet.',
+        'suite_intro_sub': 'Optional kann SAN Suite an moderne Kassensysteme angebunden werden, ausschließlich für die finale Zahlungsabwicklung und gesetzliche Anforderungen.',
+        'suite_disclaimer': 'SAN Suite ist ein proprietäres Restaurant-Management-System von SAN Technologies. Zahlungsabwicklung erfolgt – sofern gesetzlich erforderlich – über zertifizierte Drittanbieter.',
+        'tier_core_title': 'SAN Suite CORE',
+        'tier_core_desc': 'Ideal für Betriebe mit bestehender Kasse (z.B. SumUp), die interne Abläufe digitalisieren wollen.',
+        'core_warning': '* SAN Suite CORE ist kein zertifiziertes Kassensystem und ersetzt nicht die TSE-Kasse.',
+        'tier_prime_title': 'SAN Suite PRIME',
+        'tier_prime_desc': 'Das vollständig TSE-konforme Cloud-Kassensystem. Ersetzt veraltete Hardware restlos.',
+	'suite_subtitle': 'Ideal für Restaurants, Cafés und Imbisse ohne bestehendes Kassensystem oder mit dem Wunsch nach einer modernen Komplettlösung.',
+	'legal_note_core': 'SAN Suite CORE ist kein Kassensystem im rechtlichen Sinne und erfordert ein separates, gesetzeskonformes Kassensystem für Zahlungen.',
+	'legal_note_prime': 'SAN Suite PRIME erfüllt die gesetzlichen Anforderungen gemäß KassenSichV durch Cloud-TSE (z. B. Fiskaly).',
+        'ext_title': 'Modulare Erweiterungen',
+	'suite_li_menu': 'Interaktive digitale Speisekarte', 'suite_li_order': 'Live-Bestellsystem', 'suite_li_kds': 'KDS-Küchensynchronisation',
+	'suite_prime_li_tse': 'Cloud-TSE (Fiskaly Integration)', 'suite_prime_li_belege': 'Finanzamt-konforme Belege', 'suite_prime_li_archiv': 'Revisionssicheres Archiv',
+        'ext1_t': 'Logistik', 'ext2_t': 'Abholung', 'ext3_t': 'QR-Bestellung', 'ext4_t': 'Einblicke',
+        'suite_btn': 'Beratung anfragen',
+	'testi_title': 'Ergebnisse aus der Praxis',
+        'testi_1': '"Seit der Umstellung auf das digitale KDS ist das Zettelchaos in der Küche Geschichte. Die Abläufe sind ruhiger und die Wartezeiten für Gäste haben sich spürbar verkürzt."',
+        'testi_1_attr': 'Inhaber, Restaurant',
+        'testi_2': '"Wir sparen täglich Stunden bei der Logistik, weil das System unsere komplexen Versandregeln automatisch steuert. Endlich können wir ohne technisches Kopfzerbrechen wachsen."',
+        'testi_2_attr': 'Gründer, D2C-Marke',
+        'stack_title': 'Tech Stack & Tools', 'services_title': 'Meine Kernkompetenzen',
+        'services_sub': 'Als Full-Stack Entwickler biete ich mehr als nur Websites. Ich baue digitale Werkzeuge, die Ihr Unternehmen effizienter machen.',
+        'srv1_title': 'Maßgeschneiderte Webentwicklung', 'srv1_desc': 'Keine Baukästen. Schnelle, sichere Webanwendungen mit React und Node.js.',
+        'srv2_title': 'API & Systemintegration', 'srv2_desc': 'Verbinden Sie CRM, Buchhaltung und Inventar zur Automatisierung.',
+        'srv3_title': 'Digitale Transformation', 'srv3_desc': 'Weg von Stift und Papier. Digitalisierung für maximale Effizienz.',
+        'srv4_title': 'IT-Infrastruktur Beratung', 'srv4_desc': 'Stabile und sichere IT-Umgebungen basierend auf Enterprise-Erfahrung.',
+        'srv5_title': 'E-Commerce & POS Lösungen', 'srv5_desc': 'Integrierte Verkaufslösungen für Shop und Kasse.',
+        'srv6_title': 'Wartung & Cloud-Hosting', 'srv6_desc': 'Updates, Backups und sicheres AWS Hosting.',
+        'about_title': 'Persönlich & Professionell',
+        'about_p1': 'Mit meiner Erfahrung als IT-Cluster Lead sorge ich für Stabilität und Sicherheit. Ich entwickle nicht nur Software, sondern digitale Effizienz – und verwandle komplexe Geschäftsprozesse in intuitive Webanwendungen.',
+        'about_quote': '"Ich verbinde technologische Exzellenz mit einem tiefen Verständnis für geschäftliche Anforderungen."',
+        'location': 'Euskirchen, Deutschland',
+        'form_title': 'Projektanfrage senden', 'form_name': 'Name / Firma', 'form_email': 'E-Mail Adresse', 'form_type': 'Projekttyp', 'form_msg': 'Nachricht', 'form_btn': 'Anfrage Absenden',
+        'opt_web': 'Web Entwicklung', 'opt_pos': 'POS/KDS System', 'opt_it': 'IT Beratung', 'opt_other': 'Anderes',
+        'footer_header_san': 'SAN Technologies', 'footer_header_contact': 'Kontakt & Inhaber',
+        'footer_legal_tmg': 'Angaben gemäß § 5 TMG:', 'footer_country': 'Deutschland', 'footer_rep_by': 'Vertreten durch:',
+        'footer_disclaimer': 'Haftungsausschluss: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links.',
+        'footer_rights': 'Alle Rechte vorbehalten.',
+        'cookie_text': 'Wir verwenden Cookies, um Ihre Erfahrung zu verbessern.', 'cookie_btn': 'Akzeptieren',
+	'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
+	'modal_title': 'Vielen Dank!',
+	'modal_text': 'Wir haben Ihre Anfrage erhalten und melden uns schnellstmöglich bei Ihnen.',
+	'modal_close': 'Schließen',
+	'proprietary_note': 'SAN Suite ist ein proprietäres Restaurant-Management-System von SAN Technologies. Zahlungsabwicklung erfolgt über zertifizierte Drittanbieter.'
+    },
+    'en': {
+        'page_title': 'SAN Technologies | Avinash Vivekananthan - Software Consultant',
+        'nav_work': 'Work', 'nav_services': 'Services', 'nav_about': 'About Me',
+	'nav_products': 'Products',
+        'hero_intro': 'AVINASH VIVEKANANTHAN — FREELANCE SOFTWARE ENGINEER',
+        'hero_title': 'Transforming Business through Custom Code.',
+        'hero_sub': 'German engineering meets global digital expertise. Direct access to the developer.',
+        'hero_btn': 'More Information',
+	'suite_teaser_title': 'SAN Suite – Modular Software for Gastronomy & Retail',
+        'suite_teaser_sub': 'A standalone system for restaurants and direct-to-consumer businesses – flexible, compliant, and customizable.',
+        'suite_bullet_1': 'Standalone Restaurant & Ordering System',
+        'suite_bullet_2': 'Optional Integrated POS & Payments',
+        'suite_bullet_3': 'Scalable from Single Solution to Complete Platform',
+        'suite_teaser_btn': 'Discover SAN Suite',
+	'sol_title': 'Further Solutions & Projects',
+        'sol_c1_title': 'Gastronomy Systems',
+        'sol_c1_text': 'KDS, POS, QR-Ordering, Reporting',
+        'sol_c1_btn': 'Learn More',
+        'sol_c2_title': 'E-Commerce & D2C Systems',
+        'sol_c2_text': 'Shops, Admin Panels, Order & Shipping Logic',
+        'sol_c2_btn': 'View References',
+        'kds_tag': 'Featured Project', 'kds_title': 'The SAN Kitchen Display System (KDS)',
+        'kds_desc': 'An example of my capabilities: I developed this KDS to replace paper tickets in gastronomy with intelligent real-time workflows.',
+        'kds_li1_title': 'Real-time Sync:', 'kds_li1_desc': 'Instant transmission from POS to Kitchen.',
+        'kds_li2_title': 'Zero Latency Architecture:', 'kds_li2_desc': 'Built on modern WebSocket technology.',
+        'kds_li3_title': 'Scalable:', 'kds_li3_desc': 'From food trucks to fine dining restaurants.',
+        'pos_tag': 'Extension', 'pos_title': 'The SAN Point of Sale System (POS)',
+        'pos_desc': 'The perfect complement to the KDS. A lightning-fast checkout interface designed for high-speed environments.',
+        'pos_li1_title': 'Intuitive UI:', 'pos_li1_desc': 'Minimized training time thanks to smart design.',
+        'pos_li2_title': 'Cloud-Sync:', 'pos_li2_desc': 'All sales data secure and live in the cloud.',
+        'pos_li3_title': 'Seamless Integration:', 'pos_li3_desc': 'Direct connection to KDS and accounting.',
+        'pos_li4_title': '100% Fiscal Compliance:', 'pos_li4_desc': 'Includes certified TSE (KassenSichV) for full legal compliance in Germany.',
+        'suite_sub': 'A standalone restaurant system with optional payment integration',
+        'suite_intro_main': 'SAN Suite is a fully standalone restaurant system designed to manage orders, kitchen workflows, and reporting from a single platform.',
+        'suite_intro_sub': 'Optionally, SAN Suite can integrate with modern cash or payment systems solely for final payment processing and legal compliance.',
+        'suite_disclaimer': 'SAN Suite is a proprietary restaurant management system developed and operated by SAN Technologies. Payment processing via certified providers.',
+        'tier_core_title': 'SAN Suite CORE',
+        'tier_core_desc': 'Designed for restaurants that already operate a compliant cash register and want to modernize workflows.',
+        'core_warning': '* SAN Suite CORE is not a certified register and does not replace the TSE register.',
+        'tier_prime_title': 'SAN Suite PRIME',
+        'tier_prime_desc': 'A fully compliant digital cash register solution with Cloud-TSE, legal receipts, and audit storage.',
+	'suite_subtitle': 'Designed for restaurants that want a modern all-in-one system without legacy hardware.',
+	'legal_note_core': 'SAN Suite CORE is not a POS system in the legal sense and requires a separate, legally compliant POS system for payments.',
+	'legal_note_prime': 'SAN Suite PRIME meets the legal requirements according to KassenSichV through Cloud-TSE (e.g., Fiskaly).',
+        'ext_title': 'Modular Extensions',
+	'suite_li_menu': 'Interactive Digital Menu', 'suite_li_order': 'Live Ordering System', 'suite_li_kds': 'KDS Kitchen Synchronization',
+	'suite_prime_li_tse': 'Cloud-TSE (Fiskaly Integration)', 'suite_prime_li_belege': 'Legal Receipts & QR Codes', 'suite_prime_li_archiv': '10-Year Audit Archive',
+        'ext1_t': 'Logistics', 'ext2_t': 'Pickup', 'ext3_t': 'QR-Order', 'ext4_t': 'Insights',
+        'suite_btn': 'Request Consultation',
+	'testi_title': 'Results from the Field',
+        'testi_1': '"Since switching to the digital KDS, the paper chaos in the kitchen is history. Workflows are calmer, and guest wait times have noticeably decreased."',
+        'testi_1_attr': 'Owner, Restaurant',
+        'testi_2': '"We save hours on logistics daily because the system automatically manages our complex shipping rules. Finally, we can grow without technical headaches."',
+        'testi_2_attr': 'Founder, D2C Brand',
+        'stack_title': 'Tech Stack & Tools', 'services_title': 'Core Competencies',
+        'services_sub': 'As a full-stack developer, I offer more than just websites. I build digital tools.',
+        'srv1_title': 'Custom Web Development', 'srv1_desc': 'No website builders. Fast, secure web apps using React and Node.js.',
+        'srv2_title': 'API & System Integration', 'srv2_desc': 'Connect your CRM, accounting, and inventory to automate workflows.',
+        'srv3_title': 'Digital Transformation', 'srv3_desc': 'Moving from pen and paper to the cloud. Maximize efficiency.',
+        'srv4_title': 'IT Infrastructure Consulting', 'srv4_desc': 'Stable and secure IT environments based on enterprise experience.',
+        'srv5_title': 'E-Commerce & POS Solutions', 'srv5_desc': 'Integrated sales solutions for online shops and checkouts.',
+        'srv6_title': 'Maintenance & Cloud Hosting', 'srv6_desc': 'Updates, backups, and secure AWS hosting.',
+        'about_title': 'Personal & Professional',
+        'about_p1': 'With my experience as an IT Cluster Lead, I ensure stability and security. I don\'t just write code; I build digital efficiency—transforming complex business processes into intuitive web applications.',
+        'about_quote': '"Bridging technological excellence with a deep understanding of business requirements."',
+        'location': 'Euskirchen, Germany',
+        'form_title': 'Send Project Enquiry', 'form_name': 'Name / Company', 'form_email': 'Email Address', 'form_type': 'Project Type', 'form_msg': 'Message', 'form_btn': 'Send Enquiry',
+        'opt_web': 'Web Development', 'opt_pos': 'POS/KDS System', 'opt_it': 'IT Consulting', 'opt_other': 'Other',
+        'footer_header_san': 'SAN Technologies', 'footer_header_contact': 'Contact & Owner',
+        'footer_legal_tmg': 'Information pursuant to § 5 TMG:', 'footer_country': 'Germany', 'footer_rep_by': 'Represented by:',
+        'footer_disclaimer': 'Disclaimer: Despite careful content control, we assume no liability for the content of external links.',
+        'footer_rights': 'All rights reserved.',
+        'cookie_text': 'We use cookies to improve your experience.', 'cookie_btn': 'Accept',
+	'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
+	'modal_title': 'Thank You!',
+	'modal_text': 'We have received your enquiry and will get back to you as soon as possible.',
+	'modal_close': 'Close',
+	'proprietary_note': 'SAN Suite is a proprietary restaurant management system from SAN Technologies. Payment processing is handled through certified third-party providers.'
+    }
+};
+
+        const toggles = document.querySelectorAll('.lang-toggle-input');
+        const translatableElements = document.querySelectorAll('[data-translate]');
+
+        function updateLanguage(lang) {
+            translatableElements.forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) { el.innerHTML = translations[lang][key]; }
+            });
+            document.documentElement.lang = lang;
+        }
+
+        // Sync all toggles
+        toggles.forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const isChecked = this.checked;
+                // Sync all other checkboxes
+                toggles.forEach(t => t.checked = isChecked);
+                
+                if(isChecked) { updateLanguage('en'); } else { updateLanguage('de'); }
+            });
+        });
+
+        // Default: German
+        toggles.forEach(t => t.checked = false);
+        updateLanguage('de');
+
+
+// --- SAFE FORM HANDLING (AJAX) ---
+document.addEventListener("DOMContentLoaded", function() {
+    
+    const modal = document.getElementById('successModal');
+    const contactForm = document.querySelector('.contact-form'); 
+
+    // Function to close modal
+    window.closeModal = function() { 
+        modal.classList.remove('show');
+        setTimeout(() => { modal.style.display = 'none'; }, 300);
+    }
+
+    // Close modal when clicking outside box
+    window.onclick = function(event) {
+        if (event.target == modal) { window.closeModal(); }
+    }
+
+    // Intercept the form submission
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // STOP the redirect
+            
+            const formData = new FormData(contactForm);
+            
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                // Show Modal on Success
+                modal.style.display = 'flex';
+                // Small delay to allow 'display:flex' to apply before adding opacity class
+                setTimeout(() => { modal.classList.add('show'); }, 10); 
+                contactForm.reset(); // Clear the form inputs
+            })
+            .catch((error) => {
+                alert('Error submitting form. Please check your connection.');
+            });
+        });
+    } else {
+        console.error("Form not found! Check if the <form> tag has class='contact-form'");
+    }
+});
+
+    </script>
+</body>
+</html>

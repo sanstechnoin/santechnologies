@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutzerklärung | SAN Technologies</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <style>
+        /* --- CSS VARIABLES (Synced with index.html) --- */
+        :root {
+            --primary: #006064;
+            --accent: #00BCD4;
+            --dark: #333333;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --bg-suite: #f0f4f8; 
+            --container-width: 900px; /* Narrower for reading text */
+        }
+
+        /* --- GLOBAL RESET & LAYOUT --- */
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            color: var(--dark); 
+            line-height: 1.6; 
+            background-color: var(--white); 
+            scroll-behavior: smooth;
+        }
+        
+        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; width: 100%; }
+        h1, h2, h3, h4 { font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; margin-top: 30px; }
+        h1 { margin-top: 0; font-size: 2.5rem; color: var(--primary); }
+        h2 { font-size: 1.5rem; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        h3 { font-size: 1.2rem; color: #555; }
+        a { text-decoration: none; color: var(--primary); transition: 0.3s; }
+        a:hover { color: var(--accent); }
+        p { margin: 0 0 15px 0; color: #444; }
+        ul { margin-bottom: 15px; padding-left: 20px; color: #444; }
+        li { margin-bottom: 5px; }
+
+        /* --- HEADER --- */
+        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo img { height: 65px; width: auto; }
+        .nav-right { display: flex; align-items: center; gap: 30px; }
+        .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; text-decoration: none; }
+        .nav-desktop a:hover { color: var(--primary); }
+
+        /* --- MAIN CONTENT --- */
+        .legal-content { padding: 80px 0; }
+        .legal-box { background: var(--light); padding: 40px; border-radius: 12px; border: 1px solid #eee; }
+
+        /* --- FOOTER --- */
+        footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; margin-top: 50px; }
+
+        /* --- MOBILE --- */
+        @media (max-width: 600px) {
+            .logo img { height: 45px; } 
+            .nav-desktop a span:last-child { display: none; } /* Hide text on mobile */
+            .nav-desktop a span:first-child { font-size: 1.5rem; }
+            h1 { font-size: 2rem; }
+            .legal-box { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Logo"></a></div>
+            <div class="nav-right">
+                <nav class="nav-desktop">
+                    <a href="index.html">
+                        <span>←</span> 
+                        <span>Startseite zurück</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="legal-content">
+        <div class="container">
+            <h1>Datenschutzerklärung</h1>
+            
+            <div class="legal-box">
+                <h2>1. Datenschutz auf einen Blick</h2>
+                <h3>Allgemeine Hinweise</h3>
+                <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+
+                <h3>Datenerfassung auf dieser Website</h3>
+                <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong><br>
+                Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Abschnitt "Hinweis zur verantwortlichen Stelle" in dieser Datenschutzerklärung entnehmen.</p>
+
+                <p><strong>Wie erfassen wir Ihre Daten?</strong><br>
+                Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, die Sie in unser Kontaktformular eingeben.<br>
+                Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs).</p>
+
+                <p><strong>Wofür nutzen wir Ihre Daten?</strong><br>
+                Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden. Daten aus dem Kontaktformular nutzen wir ausschließlich zur Beantwortung Ihrer Anfrage.</p>
+
+                <h2>2. Hosting und Content Delivery Networks (CDN)</h2>
+                <h3>Hosting bei Netlify</h3>
+                <p>Wir hosten unsere Website bei Netlify, Inc., 2325 3rd Street, Suite 296, San Francisco, California 94107, USA (nachfolgend: Netlify).</p>
+                <p>Netlify ist ein Dienst zum Hosten von Websites und zur Bereitstellung von Inhalten. Wenn Sie unsere Website besuchen, erfasst Netlify verschiedene Logfiles inklusive Ihrer IP-Adressen. Dies ist technisch notwendig, um Ihnen unsere Website anzuzeigen und deren Stabilität und Sicherheit zu gewährleisten (Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO).</p>
+                <p>Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier: <a href="https://www.netlify.com/privacy/" target="_blank">https://www.netlify.com/privacy/</a>.</p>
+
+                <h2>3. Allgemeine Hinweise und Pflichtinformationen</h2>
+                <h3>Datenschutz</h3>
+                <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
+
+                <h3>Hinweis zur verantwortlichen Stelle</h3>
+                <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
+                <p>
+                    <strong>SAN Technologies</strong><br>
+                    Avinash Vivekananthan<br>
+                    Jahnstraße 10<br>
+                    53879 Euskirchen<br>
+                    Deutschland
+                </p>
+                <p>
+                    Telefon: +49 2251 9599741<br>
+                    E-Mail: avinash@santechnologies.de
+                </p>
+
+                <h3>SSL- bzw. TLS-Verschlüsselung</h3>
+                <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte, wie zum Beispiel Bestellungen oder Anfragen, die Sie an uns als Seitenbetreiber senden, eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://“ auf „https://“ wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.</p>
+
+                <h2>4. Datenerfassung auf dieser Website</h2>
+                <h3>Cookies</h3>
+                <p>Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Textdateien und richten auf Ihrem Endgerät keinen Schaden an. Sie werden entweder vorübergehend für die Dauer einer Sitzung (Session-Cookies) oder dauerhaft (permanente Cookies) auf Ihrem Endgerät gespeichert.</p>
+                <p>Wir setzen technisch notwendige Cookies ein, um die Grundfunktionen der Website zu gewährleisten. Soweit wir andere Cookies (z. B. für Analysefunktionen) einsetzen, informieren wir Sie hierüber in dieser Datenschutzerklärung gesondert bzw. fragen Ihre Einwilligung über unser Cookie-Banner ab.</p>
+
+                <h3>Kontaktformular (Netlify Forms)</h3>
+                <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+                <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde.</p>
+                <p>Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</p>
+                <p>Wir nutzen für die Formularverarbeitung den Dienst "Netlify Forms". Die eingegebenen Daten werden auf Servern von Netlify verarbeitet. Hinweise zum Datenschutz bei Netlify finden Sie unter: <a href="https://www.netlify.com/privacy/" target="_blank">https://www.netlify.com/privacy/</a>.</p>
+
+                <h3>Anfrage per E-Mail oder Telefon</h3>
+                <p>Wenn Sie uns per E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+
+                <h2>5. Ihre Rechte</h2>
+                <p>Sie haben jederzeit das Recht:</p>
+                <ul>
+                    <li>Auskunft über Ihre gespeicherten personenbezogenen Daten zu erhalten (Art. 15 DSGVO).</li>
+                    <li>Die Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO).</li>
+                    <li>Die Löschung Ihrer Daten zu verlangen (Art. 17 DSGVO).</li>
+                    <li>Die Einschränkung der Verarbeitung Ihrer Daten zu verlangen (Art. 18 DSGVO).</li>
+                    <li>Ihre Daten in einem gängigen Format zu erhalten (Datenübertragbarkeit, Art. 20 DSGVO).</li>
+                    <li>Jederzeit gegen die Verarbeitung Ihrer Daten Widerspruch einzulegen (Art. 21 DSGVO).</li>
+                </ul>
+                <p>Möchten Sie von Ihren Rechten Gebrauch machen, genügt eine E-Mail an: <strong>avinash@santechnologies.de</strong></p>
+            </div>
+        </div>
+    </section>
+
+ <footer>
+        <div class="container">
+            <p>
+                &copy; 2025 SAN Technologies. 
+                <span style="margin: 0 8px; color: #444;">|</span> 
+                
+                <a href="datenschutz.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_privacy">Datenschutz</a>
+                
+                <span style="margin: 0 8px; color: #444;">|</span> 
+                
+                <a href="impressum.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_impressum">Impressum</a>
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
