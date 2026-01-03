@@ -1,145 +1,261 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SAN Technologies Pamphlet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>SAN Technologies Pamphlet (DE & EN)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@300;400;700&display=swap');
         
-        body { background: #e0e0e0; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 40px; -webkit-print-color-adjust: exact; }
-        
-        /* A4 Landscape Dimensions */
-        .page {
-            width: 297mm;
-            height: 210mm;
+        /* --- GLOBAL SETUP --- */
+        body { 
+            background: #555; 
+            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            margin: 0; 
+            padding: 40px; 
+            /* Fix for "Cutting on the left" on mobile screens */
+            display: block; 
+            overflow-x: auto; 
+            text-align: center;
+        }
+
+        /* --- SHEET SETUP (A4 Landscape) --- */
+        .sheet {
+            width: 297mm;  /* Exact A4 Width */
+            height: 209mm; /* Exact A4 Height (-1mm to prevent overflow) */
             background: white;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             position: relative;
+            margin: 0 auto 50px auto; /* Centered with spacing */
+            text-align: left;
+            overflow: hidden; /* Ensures no content spills out */
         }
 
-        /* Fold Lines */
-        .page::after, .page::before {
-            content: ''; position: absolute; top: 0; bottom: 0; width: 1px; background: #eee;
-            border-left: 1px dashed #ccc; z-index: 10;
+        /* FOLD LINES (Visual Guide only) */
+        .sheet::after, .sheet::before {
+            content: ''; position: absolute; top: 0; bottom: 0; width: 0; 
+            border-left: 1px dashed #e0e0e0; z-index: 10;
         }
-        .page::after { left: 33.33%; }
-        .page::before { left: 66.66%; }
+        .sheet::after { left: 33.33%; }
+        .sheet::before { left: 66.66%; }
 
-        .panel { padding: 40px 30px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
-        
-        h2 { color: #006064; font-size: 1.6rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
-        h3 { color: #00BCD4; font-size: 1.1rem; margin-bottom: 10px; font-weight: bold; }
-        p, li { font-size: 0.95rem; line-height: 1.5; color: #444; margin-bottom: 12px; }
-        ul { padding-left: 20px; margin-top: 0; }
-        
-        /* --- SIDE A (OUTSIDE) --- */
-        /* Panel 1: Inside Flap (About) */
-        .panel-flap { background: #f8f9fa; }
-        .profile-placeholder { width: 100px; height: 100px; background: #ddd; border-radius: 50%; margin-bottom: 20px; border: 4px solid #00BCD4; display: flex; align-items: center; justify-content: center; color: #888; font-size: 0.7rem; }
-        .quote { font-style: italic; border-left: 3px solid #00BCD4; padding-left: 15px; color: #555; margin-top: 20px; }
+        /* --- PANELS --- */
+        .panel { 
+            padding: 40px 35px; /* Added padding for safety */
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            position: relative; 
+        }
 
-        /* Panel 2: Back Cover (Contact) */
-        .panel-back { background: #222; color: white; text-align: center; }
-        .panel-back h2, .panel-back p { color: white; }
-        .contact-box { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin-top: 20px; }
-        .contact-item { margin-bottom: 10px; display: block; }
+        /* TYPOGRAPHY */
+        h1 { font-size: 2.6rem; line-height: 1.1; margin-bottom: 20px; color: white; }
+        h2 { color: #006064; font-size: 1.5rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; margin-top: 0; }
+        h3 { color: #00BCD4; font-size: 1.1rem; margin-bottom: 10px; font-weight: bold; margin-top: 0; }
+        p, li { font-size: 0.95rem; line-height: 1.6; color: #444; margin-bottom: 12px; margin-top: 0; }
+        ul { padding-left: 18px; margin-top: 0; margin-bottom: 15px; }
         
-        /* Panel 3: Front Cover */
-        .panel-front { background: linear-gradient(135deg, #006064 0%, #003d40 100%); color: white; text-align: left; }
-        .panel-front h1 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 20px; }
-        .panel-front h2 { color: #00BCD4; font-size: 1rem; margin-top: 0; }
-        .logo-placeholder { font-weight: bold; letter-spacing: 2px; border: 2px solid #00BCD4; padding: 10px; display: inline-block; margin-bottom: 40px; color: white; }
-
-        /* --- SIDE B (INSIDE) --- */
-        /* Panel 4: Web & D2C */
-        .panel-white { background: white; }
+        /* --- STYLES FOR SPECIFIC PANELS --- */
         
-        /* Panel 5: SAN Suite (Center) */
-        .panel-highlight { background: #E0F7FA; border-left: 1px solid #fff; border-right: 1px solid #fff; }
+        /* 1. FLAP (About) */
+        .bg-light { background: #f8f9fa; }
+        .profile-circle { 
+            width: 90px; height: 90px; background: #ddd; border-radius: 50%; 
+            margin-bottom: 25px; border: 4px solid #00BCD4; 
+            display: flex; align-items: center; justify-content: center; 
+            color: #888; font-size: 0.7rem; text-transform: uppercase;
+        }
+        .quote { font-style: italic; border-left: 3px solid #00BCD4; padding-left: 15px; color: #555; margin-top: 25px; }
+
+        /* 2. BACK (Contact) */
+        .bg-dark { background: #222; color: white; text-align: center; }
+        .bg-dark h2, .bg-dark p { color: white; }
+        .contact-box { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin-top: 20px; text-align: left; display: inline-block; width: 100%; box-sizing: border-box; }
+        .contact-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9rem; }
+        .qr-placeholder { margin-top:30px; border: 2px dashed #555; width: 80px; height: 80px; margin-left: auto; margin-right: auto; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #777; border-radius: 4px; }
+
+        /* 3. FRONT (Cover) */
+        .bg-hero { background: linear-gradient(135deg, #006064 0%, #003d40 100%); color: white; }
+        .bg-hero h2 { color: #00BCD4; font-size: 1rem; }
+        .logo-box { 
+            font-weight: bold; letter-spacing: 2px; border: 2px solid #00BCD4; 
+            padding: 10px 15px; display: inline-block; margin-bottom: 40px; 
+            color: white; font-size: 0.9rem;
+        }
+        .footer-line { margin-top: auto; border-top: 1px solid #00BCD4; padding-top: 20px; color: white; font-size: 0.85rem; opacity: 0.9; }
+
+        /* 4. INSIDE CENTER (Highlight) */
+        .bg-highlight { background: #E0F7FA; border-left: 1px solid white; border-right: 1px solid white; }
+        .icon { font-size: 2.2rem; margin-bottom: 15px; display: block; line-height: 1; }
+
+        /* PRINT SETTINGS */
+        @media print {
+            body { background: white; padding: 0; }
+            .sheet { box-shadow: none; margin: 0; page-break-after: always; }
+        }
         
-        /* Panel 6: Consulting */
-        /* Standard Panel */
-
-        .icon { font-size: 2rem; color: #006064; margin-bottom: 15px; display: block; }
-
+        .label {
+            color: white; font-size: 1.5rem; margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 2px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="page">
+    <div class="label">Seite 1: Deutsch (Außen)</div>
+    <div class="sheet">
         
-        <div class="panel panel-flap">
-            <div class="profile-placeholder">FOTO</div>
+        <div class="panel bg-light">
+            <div class="profile-circle">FOTO</div>
             <h2>Über Mich</h2>
-            <p><strong>Avinash Vivekananthan</strong><br>Freelance Software Engineer</p>
+            <p style="margin-bottom:5px;"><strong>Avinash Vivekananthan</strong><br>Freelance Software Engineer</p>
             <p>Als IT-Cluster Lead und Entwickler schreibe ich nicht nur Code – ich löse geschäftliche Probleme.</p>
-            <p>Ich verbinde komplexe Technologie mit Ihren täglichen Anforderungen. Egal ob Online-Shop oder Gastro-System: Sie erhalten Stabilität, Sicherheit und Effizienz.</p>
+            <p>Ich verbinde Technologie mit Ihren täglichen Anforderungen. Sie erhalten Stabilität, Sicherheit und Effizienz.</p>
             <div class="quote">"Technologische Exzellenz trifft auf unternehmerisches Denken."</div>
         </div>
 
-        <div class="panel panel-back">
+        <div class="panel bg-dark">
             <h2>Let’s Build Something Great.</h2>
-            <p style="opacity: 0.8;">Bereit, Ihr Geschäft zu modernisieren? Lassen Sie uns über Ihr Projekt sprechen.</p>
+            <p style="opacity: 0.8;">Bereit für die Modernisierung? Lassen Sie uns sprechen.</p>
             
             <div class="contact-box">
-                <span class="contact-item">📍 Euskirchen, DE</span>
-                <span class="contact-item">📞 +49 2251 9599741</span>
-                <span class="contact-item">📧 avinash@santechnologies.de</span>
-                <span class="contact-item">🌐 www.santechnologies.de</span>
+                <div class="contact-row">📍 Euskirchen, DE</div>
+                <div class="contact-row">📞 +49 2251 9599741</div>
+                <div class="contact-row">📧 avinash@santechnologies.de</div>
+                <div class="contact-row">🌐 www.santechnologies.de</div>
             </div>
-            <div style="margin-top:30px; border: 2px dashed #555; width: 80px; height: 80px; margin-left: auto; margin-right: auto; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #777;">QR CODE</div>
+            <div class="qr-placeholder">QR CODE</div>
         </div>
 
-        <div class="panel panel-front">
-            <div class="logo-placeholder">SAN TECHNOLOGIES</div>
+        <div class="panel bg-hero">
+            <div class="logo-box">SAN TECHNOLOGIES</div>
             <h2>SOFTWARE ENGINEERING & CONSULTING</h2>
             <h1>Ihr Geschäft transformieren – mit Code.</h1>
-            <p style="color: rgba(255,255,255,0.8); font-size: 1.1rem; margin-top: 20px;">
+            <p style="color: rgba(255,255,255,0.85); font-size: 1.1rem; margin-top: 20px;">
                 Deutsche Ingenieurskunst trifft auf globale digitale Expertise.
             </p>
-            <div style="margin-top: auto; border-top: 1px solid #00BCD4; padding-top: 20px;">
-                <p style="color: white; font-size: 0.9rem;">Web Development | D2C | IT-Consulting</p>
+            <div class="footer-line">
+                Web Development | D2C | IT-Consulting
             </div>
         </div>
     </div>
 
-    <div class="page">
+    <div class="label">Seite 2: Deutsch (Innen)</div>
+    <div class="sheet">
         
-        <div class="panel panel-white">
+        <div class="panel">
             <span class="icon">💻</span>
             <h2>Web & D2C</h2>
             <h3>Webentwicklung & E-Commerce</h3>
             <p>Schluss mit langsamen Baukästen. Ich baue digitale Erlebnisse, die Besucher in Kunden verwandeln.</p>
             <ul>
                 <li><strong>Custom Websites:</strong> Schnell, sicher und SEO-optimiert (React, Node.js).</li>
-                <li><strong>D2C (Direct-to-Consumer):</strong> Maßgeschneiderte Online-Shops für Marken, die ohne technische Limits verkaufen wollen.</li>
+                <li><strong>D2C (Direct-to-Consumer):</strong> Maßgeschneiderte Online-Shops ohne technische Limits.</li>
                 <li><strong>Digitale Transformation:</strong> Weg vom Papier, hin zur Cloud.</li>
             </ul>
         </div>
 
-        <div class="panel panel-highlight">
+        <div class="panel bg-highlight">
             <span class="icon">🍽️</span>
             <h2>SAN Suite</h2>
             <h3>Gastro-Software & KDS</h3>
             <p>Ein proprietäres System, gebaut für Geschwindigkeit und Zuverlässigkeit in der Gastronomie.</p>
             <ul>
-                <li><strong>Kitchen Display System (KDS):</strong> Ersetzt das Zettelchaos durch digitale Screens. Echtzeit-Sync.</li>
-                <li><strong>Point of Sale (POS):</strong> Intuitive Kassenoberfläche für High-Speed-Umgebungen.</li>
+                <li><strong>Kitchen Display System (KDS):</strong> Ersetzt Zettelchaos durch digitale Screens.</li>
+                <li><strong>Point of Sale (POS):</strong> Intuitive Kassenoberfläche für High-Speed.</li>
                 <li><strong>Rechtssicher:</strong> Inklusive Cloud-TSE (KassenSichV) Integration.</li>
             </ul>
         </div>
 
-        <div class="panel panel-white">
+        <div class="panel">
             <span class="icon">🔌</span>
             <h2>Consulting</h2>
             <h3>Systemintegration & IT-Beratung</h3>
             <p>Ihre Tools sollten miteinander sprechen. Ich baue die Brücken.</p>
             <ul>
-                <li><strong>API Integration:</strong> Automatische Verbindung von CRM, Buchhaltung und Inventar.</li>
+                <li><strong>API Integration:</strong> Verbindung von CRM, Buchhaltung und Inventar.</li>
                 <li><strong>IT-Infrastruktur:</strong> Sicheres Cloud-Hosting (AWS) und Wartung.</li>
-                <li><strong>Why Freelance?</strong> Direkter Kontakt zum Entwickler. Keine Agentur-Kosten. Maximale Agilität.</li>
+                <li><strong>Why Freelance?</strong> Direkter Kontakt. Keine Agentur-Kosten.</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="label" style="margin-top: 80px;">Page 3: English (Outside)</div>
+    <div class="sheet">
+        
+        <div class="panel bg-light">
+            <div class="profile-circle">PHOTO</div>
+            <h2>About Me</h2>
+            <p style="margin-bottom:5px;"><strong>Avinash Vivekananthan</strong><br>Freelance Software Engineer</p>
+            <p>As an IT Cluster Lead and developer, I don't just write code—I solve business problems.</p>
+            <p>I bridge the gap between complex tech and your daily needs, ensuring stability, security, and efficiency.</p>
+            <div class="quote">"Technological excellence meets business mindset."</div>
+        </div>
+
+        <div class="panel bg-dark">
+            <h2>Let’s Build Something Great.</h2>
+            <p style="opacity: 0.8;">Ready to modernize your business? Let's discuss your project.</p>
+            
+            <div class="contact-box">
+                <div class="contact-row">📍 Euskirchen, DE</div>
+                <div class="contact-row">📞 +49 2251 9599741</div>
+                <div class="contact-row">📧 avinash@santechnologies.de</div>
+                <div class="contact-row">🌐 www.santechnologies.de</div>
+            </div>
+            <div class="qr-placeholder">QR CODE</div>
+        </div>
+
+        <div class="panel bg-hero">
+            <div class="logo-box">SAN TECHNOLOGIES</div>
+            <h2>SOFTWARE ENGINEERING & CONSULTING</h2>
+            <h1>Transforming Business Through Code.</h1>
+            <p style="color: rgba(255,255,255,0.85); font-size: 1.1rem; margin-top: 20px;">
+                German Engineering meets Global Digital Expertise.
+            </p>
+            <div class="footer-line">
+                Web Development | D2C | IT Consulting
+            </div>
+        </div>
+    </div>
+
+    <div class="label">Page 4: English (Inside)</div>
+    <div class="sheet">
+        
+        <div class="panel">
+            <span class="icon">💻</span>
+            <h2>Web & D2C</h2>
+            <h3>Web Development & E-Commerce</h3>
+            <p>Stop relying on slow website builders. I build digital experiences that convert visitors into customers.</p>
+            <ul>
+                <li><strong>Custom Websites:</strong> Fast, secure, SEO-optimized (React, Node.js).</li>
+                <li><strong>D2C (Direct-to-Consumer):</strong> Tailor-made online stores without technical limits.</li>
+                <li><strong>Digital Transformation:</strong> Move from paper to the cloud.</li>
+            </ul>
+        </div>
+
+        <div class="panel bg-highlight">
+            <span class="icon">🍽️</span>
+            <h2>SAN Suite</h2>
+            <h3>Gastronomy Software & KDS</h3>
+            <p>A proprietary system built for speed and reliability in gastronomy.</p>
+            <ul>
+                <li><strong>Kitchen Display System (KDS):</strong> Replace paper tickets with digital screens.</li>
+                <li><strong>Point of Sale (POS):</strong> Intuitive checkout interface for high-speed environments.</li>
+                <li><strong>Compliant:</strong> Includes Cloud-TSE (KassenSichV) integration.</li>
+            </ul>
+        </div>
+
+        <div class="panel">
+            <span class="icon">🔌</span>
+            <h2>Consulting</h2>
+            <h3>System Integration & IT Consulting</h3>
+            <p>Your tools should talk to each other. I build the bridges.</p>
+            <ul>
+                <li><strong>API Integration:</strong> Connect CRM, Accounting, and Inventory automatically.</li>
+                <li><strong>IT Infrastructure:</strong> Secure Cloud Hosting (AWS) and maintenance.</li>
+                <li><strong>Why Freelance?</strong> Direct contact. No agency overhead.</li>
             </ul>
         </div>
     </div>
