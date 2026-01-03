@@ -7,18 +7,17 @@
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
-        /* --- CSS VARIABLES (Synced with index.html) --- */
+        /* --- CSS VARIABLES --- */
         :root {
             --primary: #006064;
             --accent: #00BCD4;
             --dark: #333333;
             --light: #f8f9fa;
             --white: #ffffff;
-            --bg-suite: #f0f4f8; 
             --container-width: 900px;
         }
 
-        /* --- GLOBAL RESET & LAYOUT --- */
+        /* --- GLOBAL LAYOUT --- */
         * { box-sizing: border-box; }
         body { 
             margin: 0; 
@@ -37,7 +36,7 @@
         a { text-decoration: none; color: var(--primary); transition: 0.3s; }
         a:hover { color: var(--accent); }
 
-        /* --- HEADER (San Suite Style) --- */
+        /* --- HEADER --- */
         header { 
             background: var(--white); 
             height: 90px; 
@@ -51,20 +50,69 @@
         .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .logo img { height: 65px; width: auto; }
         
-        /* Navigation & Toggle Styling */
-        .nav-right { display: flex; align-items: center; gap: 30px; }
-        .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; text-decoration: none; }
+        /* Navigation & Toggle Container */
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .nav-desktop a { font-weight: 700; font-size: 1rem; color: #444; display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .nav-desktop a:hover { color: var(--primary); }
 
-        /* Language Toggle Switch */
-        .lang-toggle { position: relative; width: 50px; height: 26px; display: inline-block; margin-left: 15px;}
-        .lang-toggle input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 1px solid #ccc; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); background-image: url('https://flagcdn.com/w40/de.png'); background-size: cover; }
-        input:checked + .slider { background-color: var(--primary); }
-        input:checked + .slider:before { transform: translateX(24px); background-image: url('https://flagcdn.com/w40/gb.png'); }
+        /* --- NEW TOGGLE STYLE (Flags Outside) --- */
+        .lang-switch-container {
+            display: flex;
+            align-items: center;
+            gap: 12px; /* Space between flags and switch */
+            margin-left: 15px;
+        }
+        
+        .flag-icon {
+            width: 28px;
+            height: auto;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
 
-        /* --- CONTENT BOX --- */
+        /* The Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 54px;
+            height: 28px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        /* The Slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #e6e6e6; /* Light Grey Track */
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid #ccc;
+        }
+        
+        /* The Knob (Teal Circle) */
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 2px;
+            background-color: var(--primary); /* Teal Color */
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Checked State (Moves Right) */
+        input:checked + .slider {
+            background-color: #d0d0d0;
+        }
+        input:checked + .slider:before {
+            transform: translateX(25px);
+        }
+
+        /* --- LEGAL CONTENT --- */
         .legal-content { padding: 80px 0; }
         .legal-box { background: var(--light); padding: 40px; border-radius: 12px; border: 1px solid #eee; }
 
@@ -90,6 +138,7 @@
     <header>
         <div class="container header-content">
             <div class="logo"><a href="index.html"><img src="logo.png" alt="Logo"></a></div>
+            
             <div class="nav-right">
                 <nav class="nav-desktop">
                     <a href="index.html">
@@ -97,10 +146,17 @@
                         <span data-translate="back_home">Startseite zurück</span>
                     </a>
                 </nav>
-                <label class="lang-toggle">
-                    <input type="checkbox" class="lang-toggle-input">
-                    <span class="slider"></span>
-                </label>
+
+                <div class="lang-switch-container">
+                    <img src="https://flagcdn.com/w40/de.png" alt="DE" class="flag-icon">
+                    
+                    <label class="switch">
+                        <input type="checkbox" class="lang-toggle-input">
+                        <span class="slider"></span>
+                    </label>
+                    
+                    <img src="https://flagcdn.com/w40/in.png" alt="IN" class="flag-icon">
+                </div>
             </div>
         </div>
     </header>
