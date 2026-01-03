@@ -397,13 +397,36 @@
             document.documentElement.lang = lang;
         }
 
-        toggles.forEach(t => t.addEventListener('change', e => {
-            const isChecked = e.target.checked;
-            toggles.forEach(box => box.checked = isChecked);
-            updateLanguage(isChecked ? 'en' : 'de');
-        }));
+        // --- MEMORY LOGIC (localStorage) ---
 
-        updateLanguage('de'); // Default
+	// 1. Get the saved language (or default to 'de')
+		const savedLang = localStorage.getItem('selectedLang') || 'de';
+
+	// 2. Set the initial state based on memory
+		updateLanguage(savedLang);
+
+	// 3. Set the toggles correctly (Checked = English, Unchecked = German)
+	toggles.forEach(t => {
+    	t.checked = (savedLang === 'en');
+	});
+
+	// 4. Listen for changes and Save to memory
+	toggles.forEach(toggle => {
+    toggle.addEventListener('change', function() {
+        const isChecked = this.checked;
+        const newLang = isChecked ? 'en' : 'de';
+
+        // Sync all other toggles on the screen
+        toggles.forEach(t => t.checked = isChecked);
+        
+        // SAVE to browser memory
+        localStorage.setItem('selectedLang', newLang);
+        
+        // Update text immediately
+        updateLanguage(newLang);
+    });
+});
     </script>
 </body>
+
 </html>
