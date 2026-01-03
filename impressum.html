@@ -15,7 +15,7 @@
             --light: #f8f9fa;
             --white: #ffffff;
             --bg-suite: #f0f4f8; 
-            --container-width: 900px; /* Narrower for legal text */
+            --container-width: 900px;
         }
 
         /* --- GLOBAL RESET & LAYOUT --- */
@@ -31,23 +31,46 @@
         
         .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; width: 100%; }
         h1, h2, h3 { font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; }
-        h1 { margin-top: 40px; font-size: 2.5rem; color: var(--primary); }
+        h1 { margin-top: 0; font-size: 2.5rem; color: var(--primary); margin-bottom: 40px;}
         h2 { font-size: 1.3rem; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px; margin-bottom: 20px; }
         p { margin: 0 0 15px 0; color: #444; }
         a { text-decoration: none; color: var(--primary); transition: 0.3s; }
         a:hover { color: var(--accent); }
 
-        /* --- HEADER --- */
-        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
+        /* --- HEADER (San Suite Style) --- */
+        header { 
+            background: var(--white); 
+            height: 90px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08); 
+            display: flex; 
+            align-items: center; 
+        }
         .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .logo img { height: 65px; width: auto; }
+        
+        /* Navigation & Toggle Styling */
         .nav-right { display: flex; align-items: center; gap: 30px; }
         .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; text-decoration: none; }
         .nav-desktop a:hover { color: var(--primary); }
 
+        /* Language Toggle Switch */
+        .lang-toggle { position: relative; width: 50px; height: 26px; display: inline-block; margin-left: 15px;}
+        .lang-toggle input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 1px solid #ccc; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); background-image: url('https://flagcdn.com/w40/de.png'); background-size: cover; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(24px); background-image: url('https://flagcdn.com/w40/gb.png'); }
+
         /* --- CONTENT BOX --- */
-        .legal-content { padding: 60px 0; }
+        .legal-content { padding: 80px 0; }
         .legal-box { background: var(--light); padding: 40px; border-radius: 12px; border: 1px solid #eee; }
+
+        /* Logic to hide/show languages */
+        .lang-section { display: none; }
+        .lang-section.active { display: block; }
 
         /* --- FOOTER --- */
         footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; margin-top: 50px; }
@@ -58,6 +81,7 @@
             .nav-desktop a span:last-child { display: none; }
             .nav-desktop a span:first-child { font-size: 1.5rem; }
             .legal-box { padding: 20px; }
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -70,71 +94,134 @@
                 <nav class="nav-desktop">
                     <a href="index.html">
                         <span>←</span> 
-                        <span>Startseite zurück</span>
+                        <span data-translate="back_home">Startseite zurück</span>
                     </a>
                 </nav>
+                <label class="lang-toggle">
+                    <input type="checkbox" class="lang-toggle-input">
+                    <span class="slider"></span>
+                </label>
             </div>
         </div>
     </header>
 
     <section class="legal-content">
         <div class="container">
-            <h1>Impressum</h1>
             
-            <div class="legal-box">
-                <h2>Angaben gemäß § 5 TMG</h2>
-                <p>
-                    <strong>SAN Technologies</strong><br>
-                    Avinash Vivekananthan<br>
-                    Jahnstraße 10<br>
-                    53879 Euskirchen<br>
-                    Deutschland
-                </p>
+            <div id="de-content" class="lang-section active">
+                <h1>Impressum</h1>
+                
+                <div class="legal-box">
+                    <h2>Angaben gemäß § 5 TMG</h2>
+                    <p>
+                        <strong>SAN Technologies</strong><br>
+                        Avinash Vivekananthan<br>
+                        Jahnstraße 10<br>
+                        53879 Euskirchen<br>
+                        Deutschland
+                    </p>
 
-                <h2>Kontakt</h2>
-                <p>
-                    Telefon: +49 2251 9599741<br>
-                    E-Mail: <a href="mailto:avinash@santechnologies.de">avinash@santechnologies.de</a>
-                </p>
+                    <h2>Kontakt</h2>
+                    <p>
+                        Telefon: +49 2251 9599741<br>
+                        E-Mail: <a href="mailto:avinash@santechnologies.de">avinash@santechnologies.de</a>
+                    </p>
 
-                <h2>Umsatzsteuer-ID</h2>
-                <p>
-                    Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br>
-                    <strong>USt-IdNr</strong><br>
-                    <span style="font-size: 0.85rem; color: #666;">(Falls Sie Kleinunternehmer sind, können Sie diesen Punkt entfernen oder "Kleinunternehmer gemäß § 19 UStG" schreiben)</span>
-                </p>
+                    <h2>Umsatzsteuer-ID</h2>
+                    <p>
+                        Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br>
+                        <strong>USt-IdNr</strong><br>
+                        <span style="font-size: 0.85rem; color: #666;">(Falls Sie Kleinunternehmer sind, können Sie diesen Punkt entfernen oder "Kleinunternehmer gemäß § 19 UStG" schreiben)</span>
+                    </p>
 
-                <h2>Redaktionell verantwortlich</h2>
-                <p>
-                    Avinash Vivekananthan<br>
-                    Jahnstraße 10<br>
-                    53879 Euskirchen
-                </p>
+                    <h2>Redaktionell verantwortlich</h2>
+                    <p>
+                        Avinash Vivekananthan<br>
+                        Jahnstraße 10<br>
+                        53879 Euskirchen
+                    </p>
 
-                <h2>EU-Streitschlichtung</h2>
-                <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr/</a>.<br> Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
+                    <h2>EU-Streitschlichtung</h2>
+                    <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr/</a>.<br> Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
 
-                <h2>Verbraucherstreitbeilegung / Universalschlichtungsstelle</h2>
-                <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+                    <h2>Verbraucherstreitbeilegung / Universalschlichtungsstelle</h2>
+                    <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
 
-                <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;">
+                    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;">
 
-                <h3>Haftung für Inhalte</h3>
-                <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
-                <p>Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</p>
+                    <h3>Haftung für Inhalte</h3>
+                    <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+                    <p>Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</p>
 
-                <h3>Haftung für Links</h3>
-                <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.</p>
-                <p>Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
+                    <h3>Haftung für Links</h3>
+                    <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.</p>
+                    <p>Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
 
-                <h3>Urheberrecht</h3>
-                <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.</p>
-                <p>Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</p>
+                    <h3>Urheberrecht</h3>
+                    <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.</p>
+                    <p>Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</p>
+                </div>
             </div>
+
+            <div id="en-content" class="lang-section">
+                <h1>Legal Notice (Impressum)</h1>
+                
+                <div class="legal-box">
+                    <h2>Information pursuant to § 5 TMG</h2>
+                    <p>
+                        <strong>SAN Technologies</strong><br>
+                        Avinash Vivekananthan<br>
+                        Jahnstraße 10<br>
+                        53879 Euskirchen<br>
+                        Germany
+                    </p>
+
+                    <h2>Contact</h2>
+                    <p>
+                        Phone: +49 2251 9599741<br>
+                        Email: <a href="mailto:avinash@santechnologies.de">avinash@santechnologies.de</a>
+                    </p>
+
+                    <h2>VAT ID</h2>
+                    <p>
+                        Sales tax identification number according to § 27 a Sales Tax Law:<br>
+                        <strong>USt-IdNr</strong><br>
+                        <span style="font-size: 0.85rem; color: #666;">(If you are a small business owner, remove this or write "Small business owner according to § 19 UStG")</span>
+                    </p>
+
+                    <h2>Person responsible for editorial</h2>
+                    <p>
+                        Avinash Vivekananthan<br>
+                        Jahnstraße 10<br>
+                        53879 Euskirchen
+                    </p>
+
+                    <h2>EU Dispute Resolution</h2>
+                    <p>The European Commission provides a platform for online dispute resolution (ODR): <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr/</a>.<br> You can find our email address in the legal notice above.</p>
+
+                    <h2>Consumer Dispute Resolution / Universal Arbitration Board</h2>
+                    <p>We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board.</p>
+
+                    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;">
+
+                    <h3>Liability for Contents</h3>
+                    <p>As service providers, we are liable for own contents of these websites according to § 7, paragraph 1 of the German Telemedia Act (TMG). However, according to §§ 8 to 10 TMG, service providers are not obligated to permanently monitor submitted or stored information or to search for evidences that indicate illegal activities.</p>
+                    <p>Legal obligations to removing information or to blocking the use of information remain unchallenged. In this case, liability is only possible at the time of knowledge about a specific violation of law. Illegal contents will be removed immediately at the time we get knowledge of them.</p>
+
+                    <h3>Liability for Links</h3>
+                    <p>Our offer includes links to external third-party websites. We have no influence on the contents of those websites, therefore we cannot guarantee for those contents. Providers or administrators of linked websites are always responsible for their own contents. The linked websites had been checked for possible violations of law at the time of the establishment of the link. Illegal contents were not detected at the time of the linking.</p>
+                    <p>A permanent monitoring of the contents of linked websites cannot be imposed without reasonable indications that there has been a violation of law. Illegal links will be removed immediately at the time we get knowledge of them.</p>
+
+                    <h3>Copyright</h3>
+                    <p>Contents and compilations published on these websites by the providers are subject to German copyright laws. Reproduction, editing, distribution as well as the use of any kind outside the scope of the copyright law require a written permission of the author or originator. Downloads and copies of these websites are permitted for private use only.</p>
+                    <p>The commercial use of our contents without permission of the originator is prohibited. Copyright laws of third parties are respected as long as the contents on these websites do not originate from the provider. Contributions of third parties on this site are indicated as such. However, if you notice any violations of copyright law, please inform us. Such contents will be removed immediately.</p>
+                </div>
+            </div>
+
         </div>
     </section>
 
-     <footer>
+    <footer>
         <div class="container">
             <p>
                 &copy; 2025 SAN Technologies. 
@@ -148,6 +235,74 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        const translations = {
+            'de': {
+                'back_home': 'Startseite zurück',
+                'footer_privacy': 'Datenschutz',
+                'footer_impressum': 'Impressum'
+            },
+            'en': {
+                'back_home': 'Back to Home',
+                'footer_privacy': 'Privacy Policy',
+                'footer_impressum': 'Legal Notice'
+            }
+        };
+
+        const toggles = document.querySelectorAll('.lang-toggle-input');
+
+        // --- MEMORY LOGIC (localStorage) ---
+    
+        // 1. Get the saved language (or default to 'de')
+        const savedLang = localStorage.getItem('selectedLang') || 'de';
+        
+        // 2. Set the initial state
+        updateLanguage(savedLang);
+        
+        // 3. Set the toggles correctly
+        toggles.forEach(t => {
+            t.checked = (savedLang === 'en');
+        });
+
+        // 4. Listen for changes
+        toggles.forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const isChecked = this.checked;
+                const newLang = isChecked ? 'en' : 'de';
+
+                toggles.forEach(t => t.checked = isChecked);
+                localStorage.setItem('selectedLang', newLang);
+                updateLanguage(newLang);
+            });
+        });
+
+        // Helper function
+        function updateLanguage(lang) {
+            document.documentElement.lang = lang;
+            
+            // 1. Switch the Header/Footer short text
+            const translatableElements = document.querySelectorAll('[data-translate]');
+            translatableElements.forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) { 
+                    el.innerHTML = translations[lang][key]; 
+                }
+            });
+
+            // 2. Switch the LONG Legal Text Blocks (Show/Hide)
+            const deContent = document.getElementById('de-content');
+            const enContent = document.getElementById('en-content');
+
+            if (lang === 'en') {
+                deContent.classList.remove('active');
+                enContent.classList.add('active');
+            } else {
+                enContent.classList.remove('active');
+                deContent.classList.add('active');
+            }
+        }
+    </script>
 
 </body>
 </html>
