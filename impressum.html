@@ -36,81 +36,23 @@
         a { text-decoration: none; color: var(--primary); transition: 0.3s; }
         a:hover { color: var(--accent); }
 
-        /* --- HEADER --- */
-        header { 
-            background: var(--white); 
-            height: 90px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08); 
-            display: flex; 
-            align-items: center; 
-        }
+        /* --- HEADER (Simplified) --- */
+        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
         .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .logo img { height: 65px; width: auto; }
-        
-        /* Navigation & Toggle Container */
-        .nav-right { display: flex; align-items: center; gap: 20px; }
-        .nav-desktop a { font-weight: 700; font-size: 1rem; color: #444; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-right { display: flex; align-items: center; gap: 30px; }
+        .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; }
         .nav-desktop a:hover { color: var(--primary); }
 
-        /* --- NEW TOGGLE STYLE (Flags Outside) --- */
-        .lang-switch-container {
-            display: flex;
-            align-items: center;
-            gap: 12px; /* Space between flags and switch */
-            margin-left: 15px;
-        }
-        
-        .flag-icon {
-            width: 28px;
-            height: auto;
-            border-radius: 2px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-
-        /* The Switch */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 54px;
-            height: 28px;
-        }
+        /* --- LANG TOGGLE --- */
+        .lang-switch-container { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-
-        /* The Slider */
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #e6e6e6; /* Light Grey Track */
-            transition: .4s;
-            border-radius: 34px;
-            border: 1px solid #ccc;
-        }
-        
-        /* The Knob (Teal Circle) */
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 3px;
-            bottom: 2px;
-            background-color: var(--primary); /* Teal Color */
-            transition: .4s;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        /* Checked State (Moves Right) */
-        input:checked + .slider {
-            background-color: #d0d0d0;
-        }
-        input:checked + .slider:before {
-            transform: translateX(25px);
-        }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 2px solid #ddd; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 2px; background-color: var(--primary); transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #E0F7FA; border-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .flag-icon { height: 14px; width: auto; vertical-align: middle; }
 
         /* --- LEGAL CONTENT --- */
         .legal-content { padding: 80px 0; }
@@ -126,36 +68,26 @@
         /* --- MOBILE --- */
         @media (max-width: 600px) {
             .logo img { height: 45px; } 
-            .nav-desktop a span:last-child { display: none; }
-            .nav-desktop a span:first-child { font-size: 1.5rem; }
-            .legal-box { padding: 20px; }
-            h1 { font-size: 2rem; }
+            .nav-right { gap: 15px; }
+            .nav-desktop a span[data-translate="nav_back"] { display: none; }
+            .nav-desktop a span:first-child { font-size: 1.8rem; line-height: 1; }
+            .header-content { padding: 0 15px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
+        <header>
         <div class="container header-content">
             <div class="logo"><a href="index.html"><img src="logo.png" alt="Logo"></a></div>
-            
             <div class="nav-right">
                 <nav class="nav-desktop">
-                    <a href="index.html">
-                        <span>←</span> 
-                        <span data-translate="back_home">Startseite zurück</span>
-                    </a>
+                    <a href="index.html"><span>←</span> <span data-translate="nav_back">Startseite zurück</span></a>
                 </nav>
-
                 <div class="lang-switch-container">
-                    <img src="https://flagcdn.com/w40/de.png" alt="DE" class="flag-icon">
-                    
-                    <label class="switch">
-                        <input type="checkbox" class="lang-toggle-input">
-                        <span class="slider"></span>
-                    </label>
-                    
-                    <img src="https://flagcdn.com/w40/in.png" alt="IN" class="flag-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
+                    <label class="switch"><input type="checkbox" class="lang-toggle-input"><span class="slider"></span></label>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
                 </div>
             </div>
         </div>
@@ -362,3 +294,4 @@
 
 </body>
 </html>
+
