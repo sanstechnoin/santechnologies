@@ -40,22 +40,27 @@
         }
 
         .front-content {
-            padding: 8mm 6mm 6mm 10mm; /* Extra left padding for accent */
+            padding: 0 6mm 0 10mm; /* Adjusted padding */
             display: flex; flex-direction: column; justify-content: center; width: 100%;
+            height: 100%;
         }
 
-        .logo { 
-            font-weight: 700; color: #006064; font-size: 9pt; letter-spacing: 1px; margin-bottom: 2mm; 
+        /* LOGO IMAGE STYLING */
+        .logo-img { 
+            height: 14mm; /* Adjusted height to fit perfectly */
+            width: auto; 
+            display: block;
+            margin-bottom: 4mm; /* Space between logo and name */
         }
 
         .name { 
             font-size: 13pt; font-weight: 700; color: #222; margin: 0; line-height: 1.1; 
         }
         .title { 
-            font-size: 7.5pt; color: #00BCD4; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-bottom: 5mm; 
+            font-size: 7.5pt; color: #00BCD4; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-bottom: 4mm; margin-top: 1mm;
         }
 
-        .contact-info { font-size: 7pt; line-height: 1.6; color: #555; }
+        .contact-info { font-size: 7pt; line-height: 1.5; color: #555; }
         .contact-row { display: flex; align-items: center; gap: 6px; }
         .icon { color: #006064; font-weight: bold; width: 12px; }
 
@@ -82,12 +87,16 @@
             content: '•'; color: #00BCD4; margin-right: 5px;
         }
 
+        /* QR Code Box */
         .qr-box {
-            width: 22mm; height: 22mm;
+            width: 20mm; height: 20mm;
             background: white;
             display: flex; align-items: center; justify-content: center;
-            color: #333; font-size: 6pt; text-align: center;
             border-radius: 4px;
+            padding: 2px;
+        }
+        .qr-box img {
+            width: 100%; height: 100%;
         }
 
         /* Labels for display only */
@@ -100,7 +109,7 @@
     <div class="label">Front Side</div>
     <div class="card front">
         <div class="front-content">
-            <div class="logo">SAN TECHNOLOGIES</div>
+            <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" alt="SAN Technologies" class="logo-img">
             
             <div class="name">Avinash Vivekananthan</div>
             <div class="title">Freelance Software Engineer</div>
@@ -125,9 +134,9 @@
             </ul>
         </div>
         <div class="qr-box">
-            QR<br>CODE
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de" alt="QR Code">
         </div>
     </div>
 
 </body>
-</html
+</html>
