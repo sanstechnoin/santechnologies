@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
-        /* --- CSS VARIABLES (Synced with index.html) --- */
+        /* --- CSS VARIABLES (Kept exactly as yours) --- */
         :root {
             --primary: #006064;
             --accent: #00BCD4;
@@ -15,7 +15,7 @@
             --light: #f8f9fa;
             --white: #ffffff;
             --bg-suite: #f0f4f8; 
-            --container-width: 900px; /* Narrower for reading text */
+            --container-width: 900px;
         }
 
         /* --- GLOBAL RESET & LAYOUT --- */
@@ -40,17 +40,40 @@
         ul { margin-bottom: 15px; padding-left: 20px; color: #444; }
         li { margin-bottom: 5px; }
 
-        /* --- HEADER --- */
-        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
+        /* --- UPDATED HEADER (San Suite Style) --- */
+        header { 
+            background: var(--white); 
+            height: 90px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08); 
+            display: flex; 
+            align-items: center; 
+        }
         .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .logo img { height: 65px; width: auto; }
+        
+        /* Navigation & Toggle Styling */
         .nav-right { display: flex; align-items: center; gap: 30px; }
         .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; text-decoration: none; }
         .nav-desktop a:hover { color: var(--primary); }
 
+        /* Language Toggle Switch */
+        .lang-toggle { position: relative; width: 50px; height: 26px; display: inline-block; margin-left: 15px;}
+        .lang-toggle input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 1px solid #ccc; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); background-image: url('https://flagcdn.com/w40/de.png'); background-size: cover; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(24px); background-image: url('https://flagcdn.com/w40/gb.png'); }
+
         /* --- MAIN CONTENT --- */
         .legal-content { padding: 80px 0; }
         .legal-box { background: var(--light); padding: 40px; border-radius: 12px; border: 1px solid #eee; }
+
+        /* Logic to hide/show languages */
+        .lang-section { display: none; }
+        .lang-section.active { display: block; }
 
         /* --- FOOTER --- */
         footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; margin-top: 50px; }
@@ -74,90 +97,172 @@
                 <nav class="nav-desktop">
                     <a href="index.html">
                         <span>←</span> 
-                        <span>Startseite zurück</span>
+                        <span data-translate="back_home">Startseite zurück</span>
                     </a>
                 </nav>
+                <label class="lang-toggle">
+                    <input type="checkbox" class="lang-toggle-input">
+                    <span class="slider"></span>
+                </label>
             </div>
         </div>
     </header>
 
     <section class="legal-content">
         <div class="container">
-            <h1>Datenschutzerklärung</h1>
             
-            <div class="legal-box">
-                <h2>1. Datenschutz auf einen Blick</h2>
-                <h3>Allgemeine Hinweise</h3>
-                <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+            <div id="de-content" class="lang-section active">
+                <h1>Datenschutzerklärung</h1>
+                
+                <div class="legal-box">
+                    <h2>1. Datenschutz auf einen Blick</h2>
+                    <h3>Allgemeine Hinweise</h3>
+                    <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
 
-                <h3>Datenerfassung auf dieser Website</h3>
-                <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong><br>
-                Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Abschnitt "Hinweis zur verantwortlichen Stelle" in dieser Datenschutzerklärung entnehmen.</p>
+                    <h3>Datenerfassung auf dieser Website</h3>
+                    <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong><br>
+                    Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Abschnitt "Hinweis zur verantwortlichen Stelle" in dieser Datenschutzerklärung entnehmen.</p>
 
-                <p><strong>Wie erfassen wir Ihre Daten?</strong><br>
-                Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, die Sie in unser Kontaktformular eingeben.<br>
-                Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs).</p>
+                    <p><strong>Wie erfassen wir Ihre Daten?</strong><br>
+                    Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, die Sie in unser Kontaktformular eingeben.<br>
+                    Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs).</p>
 
-                <p><strong>Wofür nutzen wir Ihre Daten?</strong><br>
-                Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden. Daten aus dem Kontaktformular nutzen wir ausschließlich zur Beantwortung Ihrer Anfrage.</p>
+                    <p><strong>Wofür nutzen wir Ihre Daten?</strong><br>
+                    Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden. Daten aus dem Kontaktformular nutzen wir ausschließlich zur Beantwortung Ihrer Anfrage.</p>
 
-                <h2>2. Hosting und Content Delivery Networks (CDN)</h2>
-                <h3>Hosting bei Netlify</h3>
-                <p>Wir hosten unsere Website bei Netlify, Inc., 2325 3rd Street, Suite 296, San Francisco, California 94107, USA (nachfolgend: Netlify).</p>
-                <p>Netlify ist ein Dienst zum Hosten von Websites und zur Bereitstellung von Inhalten. Wenn Sie unsere Website besuchen, erfasst Netlify verschiedene Logfiles inklusive Ihrer IP-Adressen. Dies ist technisch notwendig, um Ihnen unsere Website anzuzeigen und deren Stabilität und Sicherheit zu gewährleisten (Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO).</p>
-                <p>Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier: <a href="https://www.netlify.com/privacy/" target="_blank">https://www.netlify.com/privacy/</a>.</p>
+                    <h2>2. Hosting und Content Delivery Networks (CDN)</h2>
+                    <h3>Hosting bei GitHub Pages</h3>
+                    <p>Wir hosten unsere Website bei <strong>GitHub Inc.</strong>, 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA (nachfolgend: GitHub).</p>
+                    <p>GitHub ist ein Dienst zum Hosten von Websites und zur Bereitstellung von Inhalten. Wenn Sie unsere Website besuchen, erfasst GitHub verschiedene Logfiles inklusive Ihrer IP-Adressen. Dies ist technisch notwendig, um Ihnen unsere Website anzuzeigen und deren Stabilität und Sicherheit zu gewährleisten (Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO).</p>
+                    <p>Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank">https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement</a>.</p>
 
-                <h2>3. Allgemeine Hinweise und Pflichtinformationen</h2>
-                <h3>Datenschutz</h3>
-                <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
+                    <h2>3. Allgemeine Hinweise und Pflichtinformationen</h2>
+                    <h3>Datenschutz</h3>
+                    <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
 
-                <h3>Hinweis zur verantwortlichen Stelle</h3>
-                <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
-                <p>
-                    <strong>SAN Technologies</strong><br>
-                    Avinash Vivekananthan<br>
-                    Jahnstraße 10<br>
-                    53879 Euskirchen<br>
-                    Deutschland
-                </p>
-                <p>
-                    Telefon: +49 2251 9599741<br>
-                    E-Mail: avinash@santechnologies.de
-                </p>
+                    <h3>Hinweis zur verantwortlichen Stelle</h3>
+                    <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
+                    <p>
+                        <strong>SAN Technologies</strong><br>
+                        Avinash Vivekananthan<br>
+                        Jahnstraße 10<br>
+                        53879 Euskirchen<br>
+                        Deutschland
+                    </p>
+                    <p>
+                        Telefon: +49 2251 9599741<br>
+                        E-Mail: avinash@santechnologies.de
+                    </p>
 
-                <h3>SSL- bzw. TLS-Verschlüsselung</h3>
-                <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte, wie zum Beispiel Bestellungen oder Anfragen, die Sie an uns als Seitenbetreiber senden, eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://“ auf „https://“ wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.</p>
+                    <h3>SSL- bzw. TLS-Verschlüsselung</h3>
+                    <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte, wie zum Beispiel Bestellungen oder Anfragen, die Sie an uns als Seitenbetreiber senden, eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://“ auf „https://“ wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.</p>
 
-                <h2>4. Datenerfassung auf dieser Website</h2>
-                <h3>Cookies</h3>
-                <p>Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Textdateien und richten auf Ihrem Endgerät keinen Schaden an. Sie werden entweder vorübergehend für die Dauer einer Sitzung (Session-Cookies) oder dauerhaft (permanente Cookies) auf Ihrem Endgerät gespeichert.</p>
-                <p>Wir setzen technisch notwendige Cookies ein, um die Grundfunktionen der Website zu gewährleisten. Soweit wir andere Cookies (z. B. für Analysefunktionen) einsetzen, informieren wir Sie hierüber in dieser Datenschutzerklärung gesondert bzw. fragen Ihre Einwilligung über unser Cookie-Banner ab.</p>
+                    <h2>4. Datenerfassung auf dieser Website</h2>
+                    <h3>Cookies</h3>
+                    <p>Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Textdateien und richten auf Ihrem Endgerät keinen Schaden an. Sie werden entweder vorübergehend für die Dauer einer Sitzung (Session-Cookies) oder dauerhaft (permanente Cookies) auf Ihrem Endgerät gespeichert.</p>
+                    <p>Wir setzen technisch notwendige Cookies ein, um die Grundfunktionen der Website zu gewährleisten. Soweit wir andere Cookies (z. B. für Analysefunktionen) einsetzen, informieren wir Sie hierüber in dieser Datenschutzerklärung gesondert bzw. fragen Ihre Einwilligung über unser Cookie-Banner ab.</p>
 
-                <h3>Kontaktformular (Netlify Forms)</h3>
-                <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
-                <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde.</p>
-                <p>Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</p>
-                <p>Wir nutzen für die Formularverarbeitung den Dienst "Netlify Forms". Die eingegebenen Daten werden auf Servern von Netlify verarbeitet. Hinweise zum Datenschutz bei Netlify finden Sie unter: <a href="https://www.netlify.com/privacy/" target="_blank">https://www.netlify.com/privacy/</a>.</p>
+                    <h3>Kontaktformular (Formspree)</h3>
+                    <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+                    <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde.</p>
+                    <p>Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</p>
+                    <p>Wir nutzen für die Formularverarbeitung den Dienst <strong>"Formspree"</strong>. Anbieter ist Formspree, Inc., 21750 Hardy Oak Blvd San Antonio, TX 78258, USA. Die eingegebenen Daten werden auf Servern von Formspree verarbeitet. Hinweise zum Datenschutz bei Formspree finden Sie unter: <a href="https://formspree.io/legal/privacy-policy" target="_blank">https://formspree.io/legal/privacy-policy</a>.</p>
 
-                <h3>Anfrage per E-Mail oder Telefon</h3>
-                <p>Wenn Sie uns per E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+                    <h3>Anfrage per E-Mail oder Telefon</h3>
+                    <p>Wenn Sie uns per E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
 
-                <h2>5. Ihre Rechte</h2>
-                <p>Sie haben jederzeit das Recht:</p>
-                <ul>
-                    <li>Auskunft über Ihre gespeicherten personenbezogenen Daten zu erhalten (Art. 15 DSGVO).</li>
-                    <li>Die Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO).</li>
-                    <li>Die Löschung Ihrer Daten zu verlangen (Art. 17 DSGVO).</li>
-                    <li>Die Einschränkung der Verarbeitung Ihrer Daten zu verlangen (Art. 18 DSGVO).</li>
-                    <li>Ihre Daten in einem gängigen Format zu erhalten (Datenübertragbarkeit, Art. 20 DSGVO).</li>
-                    <li>Jederzeit gegen die Verarbeitung Ihrer Daten Widerspruch einzulegen (Art. 21 DSGVO).</li>
-                </ul>
-                <p>Möchten Sie von Ihren Rechten Gebrauch machen, genügt eine E-Mail an: <strong>avinash@santechnologies.de</strong></p>
+                    <h2>5. Ihre Rechte</h2>
+                    <p>Sie haben jederzeit das Recht:</p>
+                    <ul>
+                        <li>Auskunft über Ihre gespeicherten personenbezogenen Daten zu erhalten (Art. 15 DSGVO).</li>
+                        <li>Die Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO).</li>
+                        <li>Die Löschung Ihrer Daten zu verlangen (Art. 17 DSGVO).</li>
+                        <li>Die Einschränkung der Verarbeitung Ihrer Daten zu verlangen (Art. 18 DSGVO).</li>
+                        <li>Ihre Daten in einem gängigen Format zu erhalten (Datenübertragbarkeit, Art. 20 DSGVO).</li>
+                        <li>Jederzeit gegen die Verarbeitung Ihrer Daten Widerspruch einzulegen (Art. 21 DSGVO).</li>
+                    </ul>
+                    <p>Möchten Sie von Ihren Rechten Gebrauch machen, genügt eine E-Mail an: <strong>avinash@santechnologies.de</strong></p>
+                </div>
             </div>
+
+            <div id="en-content" class="lang-section">
+                <h1>Privacy Policy</h1>
+                
+                <div class="legal-box">
+                    <h2>1. Data Protection at a Glance</h2>
+                    <h3>General Notes</h3>
+                    <p>The following notes provide a simple overview of what happens to your personal data when you visit this website. Personal data is all data with which you can be personally identified.</p>
+
+                    <h3>Data Collection on this Website</h3>
+                    <p><strong>Who is responsible for data collection on this website?</strong><br>
+                    Data processing on this website is carried out by the website operator. You can find their contact details in the "Notice regarding the responsible party" section of this privacy policy.</p>
+
+                    <p><strong>How do we collect your data?</strong><br>
+                    Your data is collected when you provide it to us. This could be, for example, data you enter in our contact form.<br>
+                    Other data is collected automatically or with your consent when you visit the website by our IT systems. These are primarily technical data (e.g., internet browser, operating system, or time of page access).</p>
+
+                    <p><strong>What do we use your data for?</strong><br>
+                    Part of the data is collected to ensure the error-free provision of the website. Other data may be used to analyze your user behavior. Data from the contact form is used exclusively to answer your inquiry.</p>
+
+                    <h2>2. Hosting and Content Delivery Networks (CDN)</h2>
+                    <h3>Hosting with GitHub Pages</h3>
+                    <p>We host our website with <strong>GitHub Inc.</strong>, 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA (hereinafter: GitHub).</p>
+                    <p>GitHub is a service for hosting websites and delivering content. When you visit our website, GitHub collects various log files including your IP addresses. This is technically necessary to display our website to you and to ensure its stability and security (legal basis is Art. 6 Para. 1 lit. f GDPR).</p>
+                    <p>Data transfer to the USA is based on the standard contractual clauses of the EU Commission. Details can be found here: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank">https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement</a>.</p>
+
+                    <h2>3. General Notes and Mandatory Information</h2>
+                    <h3>Data Protection</h3>
+                    <p>The operators of these pages take the protection of your personal data very seriously. We treat your personal data confidentially and in accordance with the statutory data protection regulations and this privacy policy.</p>
+
+                    <h3>Notice regarding the Responsible Party</h3>
+                    <p>The responsible party for data processing on this website is:</p>
+                    <p>
+                        <strong>SAN Technologies</strong><br>
+                        Avinash Vivekananthan<br>
+                        Jahnstraße 10<br>
+                        53879 Euskirchen<br>
+                        Germany
+                    </p>
+                    <p>
+                        Phone: +49 2251 9599741<br>
+                        Email: avinash@santechnologies.de
+                    </p>
+
+                    <h3>SSL or TLS Encryption</h3>
+                    <p>For security reasons and to protect the transmission of confidential content, such as orders or inquiries that you send to us as the site operator, this site uses SSL or TLS encryption. You can recognize an encrypted connection by the fact that the address line of the browser changes from "http://" to "https://" and by the lock symbol in your browser line.</p>
+
+                    <h2>4. Data Collection on this Website</h2>
+                    <h3>Cookies</h3>
+                    <p>Our websites use so-called "cookies". Cookies are small text files and do not cause any damage to your end device. They are stored either temporarily for the duration of a session (session cookies) or permanently (permanent cookies) on your end device.</p>
+                    <p>We use technically necessary cookies to ensure the basic functions of the website. Insofar as we use other cookies (e.g., for analysis functions), we inform you about this separately in this privacy policy or ask for your consent via our cookie banner.</p>
+
+                    <h3>Contact Form (Formspree)</h3>
+                    <p>If you send us inquiries via the contact form, your details from the inquiry form, including the contact details you provided there, will be stored by us for the purpose of processing the inquiry and in case of follow-up questions. We will not pass on this data without your consent.</p>
+                    <p>The processing of this data is based on Art. 6 Para. 1 lit. b GDPR, provided that your request is related to the fulfillment of a contract or is necessary for the implementation of pre-contractual measures. In all other cases, the processing is based on our legitimate interest in the effective processing of the inquiries addressed to us (Art. 6 Para. 1 lit. f GDPR) or on your consent (Art. 6 Para. 1 lit. a GDPR) if this was requested.</p>
+                    <p>The data you enter in the contact form will remain with us until you request us to delete it, revoke your consent to storage, or the purpose for data storage no longer applies (e.g., after your request has been processed). Mandatory statutory provisions – in particular retention periods – remain unaffected.</p>
+                    <p>We use the service <strong>"Formspree"</strong> for form processing. Provider is Formspree, Inc., 21750 Hardy Oak Blvd San Antonio, TX 78258, USA. The entered data is processed on Formspree servers. Information on data protection at Formspree can be found at: <a href="https://formspree.io/legal/privacy-policy" target="_blank">https://formspree.io/legal/privacy-policy</a>.</p>
+
+                    <h3>Inquiry by Email or Phone</h3>
+                    <p>If you contact us by email or phone, your inquiry including all personal data resulting from it (name, inquiry) will be stored and processed by us for the purpose of processing your request. We will not pass on this data without your consent.</p>
+
+                    <h2>5. Your Rights</h2>
+                    <p>You have the right at any time:</p>
+                    <ul>
+                        <li>To receive information about your stored personal data (Art. 15 GDPR).</li>
+                        <li>To request the correction of incorrect data (Art. 16 GDPR).</li>
+                        <li>To request the deletion of your data (Art. 17 GDPR).</li>
+                        <li>To request the restriction of the processing of your data (Art. 18 GDPR).</li>
+                        <li>To receive your data in a common format (data portability, Art. 20 GDPR).</li>
+                        <li>To object to the processing of your data at any time (Art. 21 GDPR).</li>
+                    </ul>
+                    <p>If you would like to exercise your rights, an email to: <strong>avinash@santechnologies.de</strong> is sufficient.</p>
+                </div>
+            </div>
+
         </div>
     </section>
 
- <footer>
+    <footer>
         <div class="container">
             <p>
                 &copy; 2025 SAN Technologies. 
@@ -171,6 +276,74 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        const translations = {
+            'de': {
+                'back_home': 'Startseite zurück',
+                'footer_privacy': 'Datenschutz',
+                'footer_impressum': 'Impressum'
+            },
+            'en': {
+                'back_home': 'Back to Home',
+                'footer_privacy': 'Privacy Policy',
+                'footer_impressum': 'Legal Notice'
+            }
+        };
+
+        const toggles = document.querySelectorAll('.lang-toggle-input');
+
+        // --- MEMORY LOGIC (localStorage) ---
+    
+        // 1. Get the saved language (or default to 'de')
+        const savedLang = localStorage.getItem('selectedLang') || 'de';
+        
+        // 2. Set the initial state
+        updateLanguage(savedLang);
+        
+        // 3. Set the toggles correctly
+        toggles.forEach(t => {
+            t.checked = (savedLang === 'en');
+        });
+
+        // 4. Listen for changes
+        toggles.forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const isChecked = this.checked;
+                const newLang = isChecked ? 'en' : 'de';
+
+                toggles.forEach(t => t.checked = isChecked);
+                localStorage.setItem('selectedLang', newLang);
+                updateLanguage(newLang);
+            });
+        });
+
+        // Helper function
+        function updateLanguage(lang) {
+            document.documentElement.lang = lang;
+            
+            // 1. Switch the Header/Footer short text
+            const translatableElements = document.querySelectorAll('[data-translate]');
+            translatableElements.forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) { 
+                    el.innerHTML = translations[lang][key]; 
+                }
+            });
+
+            // 2. Switch the LONG Legal Text Blocks (Show/Hide)
+            const deContent = document.getElementById('de-content');
+            const enContent = document.getElementById('en-content');
+
+            if (lang === 'en') {
+                deContent.classList.remove('active');
+                enContent.classList.add('active');
+            } else {
+                enContent.classList.remove('active');
+                deContent.classList.add('active');
+            }
+        }
+    </script>
 
 </body>
 </html>
