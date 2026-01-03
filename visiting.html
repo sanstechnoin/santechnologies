@@ -2,141 +2,183 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>SAN Technologies Visiting Card</title>
+    <title>SAN Technologies - 2 Design Options</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700&display=swap');
 
         body { 
-            background: #f0f0f0; 
-            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            background: #e0e0e0; 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            padding: 50px; 
-            gap: 40px;
+            padding: 40px; 
+            gap: 50px;
         }
 
-        /* CARD CONTAINER (Standard Euro Size 85mm x 55mm) */
+        h2 { color: #555; text-transform: uppercase; letter-spacing: 1px; font-size: 14px; margin-bottom: 10px; }
+
+        /* --- GLOBAL CARD SETTINGS (85mm x 55mm) --- */
+        .card-container {
+            display: flex;
+            gap: 20px; /* Space between front and back */
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         .card {
             width: 85mm;
             height: 55mm;
             background: white;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
             display: flex;
         }
 
-        /* --- FRONT SIDE DESIGN --- */
-        .front {
+        /* ========================================= */
+        /* DESIGN 1: THE CORPORATE (Left Aligned)    */
+        /* ========================================= */
+        
+        .d1-front {
             background: white;
             color: #333;
         }
-        
-        /* Left Accent Bar */
-        .front::before {
+        .d1-front::before {
             content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-            width: 6px; background: #00BCD4; /* Cyan Accent */
+            width: 5px; background: #00BCD4; /* Cyan Accent Bar */
         }
-
-        .front-content {
-            padding: 0 6mm 0 10mm; /* Adjusted padding */
-            display: flex; flex-direction: column; justify-content: center; width: 100%;
-            height: 100%;
+        .d1-content {
+            padding: 0 5mm 0 10mm; /* Left padding ensures text clears the bar */
+            display: flex; flex-direction: column; justify-content: center;
+            width: 100%;
         }
-
-        /* LOGO IMAGE STYLING */
-        .logo-img { 
-            height: 14mm; /* Adjusted height to fit perfectly */
-            width: auto; 
-            display: block;
-            margin-bottom: 4mm; /* Space between logo and name */
+        /* Logo Fix: Use Width constraint + Object Fit */
+        .d1-logo { 
+            width: 38mm; height: auto; object-fit: contain; 
+            margin-bottom: 4mm; display: block;
         }
-
-        .name { 
-            font-size: 13pt; font-weight: 700; color: #222; margin: 0; line-height: 1.1; 
+        .d1-name { font-size: 11pt; font-weight: 700; color: #222; line-height: 1.1; }
+        .d1-title { 
+            font-size: 6.5pt; color: #00BCD4; text-transform: uppercase; 
+            letter-spacing: 0.5px; font-weight: 600; margin-bottom: 3mm; margin-top: 1px;
         }
-        .title { 
-            font-size: 7.5pt; color: #00BCD4; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-bottom: 4mm; margin-top: 1mm;
+        .d1-contact { font-size: 6.5pt; line-height: 1.5; color: #555; }
+        .d1-row { display: flex; align-items: center; gap: 6px; }
+        .d1-icon { color: #006064; width: 10px; text-align: center; font-weight: bold; }
+
+
+        /* ========================================= */
+        /* DESIGN 2: THE MODERNIST (Centered)        */
+        /* ========================================= */
+
+        .d2-front {
+            background: white;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 3px solid #00BCD4; /* Bottom accent instead of side */
         }
+        .d2-logo { 
+            width: 45mm; height: auto; object-fit: contain; 
+            margin-bottom: 4mm; /* More space for center layout */
+        }
+        .d2-name { font-size: 12pt; font-weight: 700; color: #006064; margin-bottom: 1px; }
+        .d2-title { 
+            font-size: 6pt; color: #888; text-transform: uppercase; 
+            letter-spacing: 1.5px; margin-bottom: 4mm; font-weight: 600;
+        }
+        .d2-contact { 
+            font-size: 6pt; color: #555; line-height: 1.6;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .d2-divider { width: 20px; height: 1px; background: #ddd; margin: 2px auto; }
 
-        .contact-info { font-size: 7pt; line-height: 1.5; color: #555; }
-        .contact-row { display: flex; align-items: center; gap: 6px; }
-        .icon { color: #006064; font-weight: bold; width: 12px; }
 
-        /* --- BACK SIDE DESIGN --- */
+        /* ========================================= */
+        /* BACK SIDE (Common for both or varied)     */
+        /* ========================================= */
         .back {
             background: linear-gradient(135deg, #006064 0%, #004d50 100%);
             color: white;
             align-items: center;
             padding: 0 6mm;
         }
-
-        .back-content {
-            flex: 1;
+        .back-content { flex: 1; }
+        .tagline { font-size: 9pt; font-weight: 700; margin-bottom: 3mm; line-height: 1.3; }
+        .services { font-size: 6.5pt; color: rgba(255,255,255,0.9); list-style: none; padding: 0; margin: 0; line-height: 1.6; }
+        .services li::before { content: '•'; color: #00BCD4; margin-right: 5px; }
+        .qr-box { 
+            width: 18mm; height: 18mm; background: white; border-radius: 4px; 
+            display: flex; align-items: center; justify-content: center; padding: 2px;
         }
-
-        .tagline {
-            font-size: 10pt; font-weight: 700; margin-bottom: 3mm; line-height: 1.2;
-        }
-        
-        .services-list {
-            font-size: 7pt; color: rgba(255,255,255,0.9); list-style: none; padding: 0; margin: 0; line-height: 1.5;
-        }
-        .services-list li::before {
-            content: '•'; color: #00BCD4; margin-right: 5px;
-        }
-
-        /* QR Code Box */
-        .qr-box {
-            width: 20mm; height: 20mm;
-            background: white;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 4px;
-            padding: 2px;
-        }
-        .qr-box img {
-            width: 100%; height: 100%;
-        }
-
-        /* Labels for display only */
-        .label { font-size: 14px; color: #666; margin-bottom: -30px; text-transform: uppercase; letter-spacing: 1px; }
+        .qr-box img { width: 100%; height: 100%; }
 
     </style>
 </head>
 <body>
 
-    <div class="label">Front Side</div>
-    <div class="card front">
-        <div class="front-content">
-            <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" alt="SAN Technologies" class="logo-img">
-            
-            <div class="name">Avinash Vivekananthan</div>
-            <div class="title">Freelance Software Engineer</div>
-            
-            <div class="contact-info">
-                <div class="contact-row"><span class="icon">📞</span> +49 2251 9599741</div>
-                <div class="contact-row"><span class="icon">📧</span> avinash@santechnologies.de</div>
-                <div class="contact-row"><span class="icon">🌐</span> www.santechnologies.de</div>
-                <div class="contact-row" style="margin-top:2px; color:#888;">📍 Euskirchen, Deutschland</div>
+    <div style="text-align:center;">
+        <h2>Option 1: The Corporate (Left Aligned)</h2>
+        <div class="card-container">
+            <div class="card d1-front">
+                <div class="d1-content">
+                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" class="d1-logo">
+                    <div class="d1-name">Avinash Vivekananthan</div>
+                    <div class="d1-title">Freelance Software Engineer</div>
+                    <div class="d1-contact">
+                        <div class="d1-row"><span class="d1-icon">📞</span> +49 2251 9599741</div>
+                        <div class="d1-row"><span class="d1-icon">📧</span> avinash@santechnologies.de</div>
+                        <div class="d1-row"><span class="d1-icon">🌐</span> www.santechnologies.de</div>
+                        <div class="d1-row"><span class="d1-icon">📍</span> Euskirchen, Deutschland</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card back">
+                <div class="back-content">
+                    <div class="tagline">Ihr Geschäft transformieren –<br>mit Code.</div>
+                    <ul class="services">
+                        <li>Web & D2C E-Commerce</li>
+                        <li>Gastro-Software (KDS/POS)</li>
+                        <li>Systemintegration & IT</li>
+                    </ul>
+                </div>
+                <div class="qr-box">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de" alt="QR">
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="label">Back Side</div>
-    <div class="card back">
-        <div class="back-content">
-            <div class="tagline">Ihr Geschäft transformieren –<br>mit Code.</div>
-            <ul class="services-list">
-                <li>Web & D2C E-Commerce</li>
-                <li>Gastro-Software (KDS/POS)</li>
-                <li>Systemintegration & IT</li>
-            </ul>
-        </div>
-        <div class="qr-box">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de" alt="QR Code">
+    <br><br>
+
+    <div style="text-align:center;">
+        <h2>Option 2: The Modernist (Centered)</h2>
+        <div class="card-container">
+            <div class="card d2-front">
+                <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" class="d2-logo">
+                <div class="d2-name">Avinash Vivekananthan</div>
+                <div class="d2-title">Freelance Software Engineer</div>
+                
+                <div class="d2-contact">
+                    <div>+49 2251 9599741 &nbsp;|&nbsp; avinash@santechnologies.de</div>
+                    <div class="d2-divider"></div>
+                    <div>www.santechnologies.de</div>
+                    <div style="color:#999; margin-top:1px;">Euskirchen, Deutschland</div>
+                </div>
+            </div>
+            <div class="card back">
+                <div class="back-content" style="text-align: center;">
+                    <div class="tagline" style="margin-bottom: 2mm;">SAN TECHNOLOGIES</div>
+                    <div style="font-size: 7pt; margin-bottom: 3mm; opacity:0.8;">Software Engineering & Consulting</div>
+                    <div class="qr-box" style="margin: 0 auto;">
+                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de" alt="QR">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
 </body>
-</html>
+</html
