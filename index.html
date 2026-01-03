@@ -897,319 +897,309 @@
     </div>
 </div>
 
-	<script>
-       // --- 1. PAGE LOADER LOGIC (Session Based) ---
-        const loader = document.getElementById('page-loader');
-        const siteContent = document.getElementById('siteContent');
+<script>
+    // --- 1. CONFIGURATION ---
+    // PASTE YOUR FORMSPREE URL HERE (e.g., https://formspree.io/f/abcde123)
+    const FORMSPREE_URL = "https://formspree.io/f/xnjnzlya"; 
 
-        // Check if the user has already visited in this session
-        if (sessionStorage.getItem('hasVisited')) {
-            // 1. If visited: Hide loader immediately & show content instantly (no pulse)
-            loader.style.display = 'none';
-            siteContent.style.transition = 'none'; // Disable fade-in transition for instant load
-            siteContent.style.opacity = '1';
-            document.body.style.overflow = 'auto'; 
+    // --- 2. FORM HANDLING (FORMSPREE) ---
+    document.addEventListener("DOMContentLoaded", function() {
+        const modal = document.getElementById('successModal');
+        const contactForm = document.querySelector('.contact-form'); 
 
-        } else {
-            // 2. If NOT visited: Run the full animation
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    loader.style.opacity = '0';
-                    siteContent.style.opacity = '1';
-                    setTimeout(() => {
-                        document.body.style.overflow = 'auto'; 
-                        loader.style.display = 'none';
-                        
-                        // Mark this session as visited
-                        sessionStorage.setItem('hasVisited', 'true');
-                    }, 1200);
-                }, 2000); 
+        window.closeModal = function() { 
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) { window.closeModal(); }
+        }
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault(); 
+                const formData = new FormData(contactForm);
+                
+                fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        modal.style.display = 'flex';
+                        setTimeout(() => { modal.classList.add('show'); }, 10); 
+                        contactForm.reset(); 
+                    } else {
+                        alert("Oops! There was a problem submitting your form.");
+                    }
+                })
+                .catch(error => {
+                    alert("Error submitting form. Please check your connection.");
+                });
             });
         }
+    });
 
-        // --- 2. SLIDER LOGIC ---
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const sliderWrapper = document.getElementById('sliderWrapper');
-        let slideInterval;
+    // --- 3. PAGE LOADER, SLIDER & TRANSLATIONS ---
+    const loader = document.getElementById('page-loader');
+    const siteContent = document.getElementById('siteContent');
 
-        function moveSlide(n) {
-            currentSlide = (currentSlide + n + slides.length) % slides.length;
-            sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
+    // Check if the user has already visited in this session
+    if (sessionStorage.getItem('hasVisited')) {
+        loader.style.display = 'none';
+        siteContent.style.transition = 'none';
+        siteContent.style.opacity = '1';
+        document.body.style.overflow = 'auto'; 
+    } else {
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                loader.style.opacity = '0';
+                siteContent.style.opacity = '1';
+                setTimeout(() => {
+                    document.body.style.overflow = 'auto'; 
+                    loader.style.display = 'none';
+                    sessionStorage.setItem('hasVisited', 'true');
+                }, 1200);
+            }, 2000); 
+        });
+    }
 
-        function startSlideShow() {
-            stopSlideShow(); 
-            slideInterval = setInterval(() => { moveSlide(1); }, 5000); 
-        }
+    // SLIDER LOGIC
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const sliderWrapper = document.getElementById('sliderWrapper');
+    let slideInterval;
 
-        function stopSlideShow() { clearInterval(slideInterval); }
+    function moveSlide(n) {
+        currentSlide = (currentSlide + n + slides.length) % slides.length;
+        sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
 
-        const showcaseSection = document.getElementById('showcase');
+    function startSlideShow() {
+        stopSlideShow(); 
+        slideInterval = setInterval(() => { moveSlide(1); }, 5000); 
+    }
+
+    function stopSlideShow() { clearInterval(slideInterval); }
+
+    const showcaseSection = document.getElementById('showcase');
+    if (showcaseSection) {
         showcaseSection.addEventListener('mouseenter', stopSlideShow);
         showcaseSection.addEventListener('mouseleave', startSlideShow);
         showcaseSection.addEventListener('touchstart', stopSlideShow);
         showcaseSection.addEventListener('touchend', startSlideShow);
-
-        startSlideShow(); // Init
-
-        // --- 3. GENERAL UI LOGIC ---
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        function toggleMenu() { mobileMenu.classList.toggle('active'); }
-        hamburgerBtn.addEventListener('click', toggleMenu);
-
-        var mybutton = document.getElementById("backToTop");
-        window.onscroll = function() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                mybutton.style.display = "block";
-            } else { mybutton.style.display = "none"; }
-        };
-        function topFunction() { document.body.scrollTop = 0; document.documentElement.scrollTop = 0; }
-
-        function acceptCookies() {
-            document.getElementById("cookieBanner").style.display = "none";
-            localStorage.setItem("cookiesAccepted", "true");
-        }
-        if (localStorage.getItem("cookiesAccepted") === "true") {
-            document.getElementById("cookieBanner").style.display = "none";
-        }
-
-    // --- 4. TRANSLATIONS & DUAL SWITCH SYNC ---
-        const translations = {
-    'de': {
-        'page_title': 'SAN Technologies | Avinash Vivekananthan - Softwareberater',
-        'nav_work': 'Referenzen', 'nav_services': 'Leistungen', 'nav_about': 'Über Mich',
-	'nav_products': 'Produkte',
-        'hero_intro': 'AVINASH VIVEKANANTHAN — FREIBERUFLICHER SOTFWAREENTWICKLER',
-        'hero_title': 'Ihr Geschäft transformieren – mit maßgeschneidertem Code.',
-        'hero_sub': 'Deutsche Ingenieurskunst trifft auf globale digitale Expertise. Direkter Zugang zum Entwickler für leistungsstarke Web- und Softwarelösungen.',
-        'hero_btn': 'Mehr Information',
-	'suite_teaser_title': 'SAN Suite – Modulare Software für Gastronomie & Handel',
-        'suite_teaser_sub': 'Ein eigenständiges System für Restaurants und Direct-to-Consumer-Geschäfte – flexibel erweiterbar, rechtssicher und individuell angepasst.',
-        'suite_bullet_1': 'Eigenständiges Restaurant- & Bestellsystem',
-        'suite_bullet_2': 'Optional integrierbare Kassensysteme & Zahlungen',
-        'suite_bullet_3': 'Skalierbar von Einzellösung bis Komplettplattform',
-        'suite_teaser_btn': 'SAN Suite entdecken',
-	'sol_title': 'Weitere Lösungen & Projekte',
-        'sol_c1_title': 'Gastronomie-Systeme',
-        'sol_c1_text': 'KDS, POS, QR-Ordering, Reporting',
-        'sol_c1_btn': 'Mehr erfahren',
-        'sol_c2_title': 'E-Commerce & D2C Systeme',
-        'sol_c2_text': 'Shops, Admin Panels, Bestell- & Versandlogik',
-        'sol_c2_btn': 'Referenzen ansehen',
-        'kds_tag': 'Reale Kundenlösung', 'kds_title': 'Das SAN Kitchen Display System (KDS)',
-        'kds_desc': 'Ein Beispiel meiner Arbeit: Ich habe dieses KDS entwickelt, um Papierbons in der Gastronomie durch intelligente Echtzeit-Workflows zu ersetzen.',
-        'kds_li1_title': 'Echtzeit-Synchronisation:', 'kds_li1_desc': 'Sofortige Übertragung vom POS in die Küche.',
-        'kds_li2_title': 'Zero Latency Architektur:', 'kds_li2_desc': 'Gebaut auf modernster WebSocket-Technologie.',
-        'kds_li3_title': 'Skalierbar:', 'kds_li3_desc': 'Vom Foodtruck bis zum Fine Dining Restaurant.',
-        'pos_tag': 'Erweiterung', 'pos_title': 'Das SAN Point of Sale System (POS)',
-        'pos_desc': 'Die perfekte Ergänzung zum KDS. Eine blitzschnelle Kassenoberfläche, die speziell für High-Speed-Umgebungen entwickelt wurde.',
-        'pos_li1_title': 'Intuitive UI:', 'pos_li1_desc': 'Schulungsaufwand minimiert durch smartes Design.',
-        'pos_li2_title': 'Cloud-Sync:', 'pos_li2_desc': 'Alle Verkaufsdaten sicher und live in der Cloud.',
-        'pos_li3_title': 'Nahtlose Integration:', 'pos_li3_desc': 'Direkte Verbindung zum KDS und Buchhaltung.',
-        'pos_li4_title': '100% Finanzamt-konform:', 'pos_li4_desc': 'Inklusive zertifizierter TSE (KassenSichV) für rechtssicheres Arbeiten.',
-        'suite_sub': 'Ein eigenständiges Restaurant-System – mit optionaler Kassenanbindung',
-        'suite_intro_main': 'SAN Suite ist ein vollständig eigenständiges System für Restaurants, die eine moderne, zentrale Lösung suchen. Bestellungen, Küchenabläufe, Online-Bestellungen und Auswertungen werden vollständig innerhalb der SAN Suite abgebildet.',
-        'suite_intro_sub': 'Optional kann SAN Suite an moderne Kassensysteme angebunden werden, ausschließlich für die finale Zahlungsabwicklung und gesetzliche Anforderungen.',
-        'suite_disclaimer': 'SAN Suite ist ein proprietäres Restaurant-Management-System von SAN Technologies. Zahlungsabwicklung erfolgt – sofern gesetzlich erforderlich – über zertifizierte Drittanbieter.',
-        'tier_core_title': 'SAN Suite CORE',
-        'tier_core_desc': 'Ideal für Betriebe mit bestehender Kasse (z.B. SumUp), die interne Abläufe digitalisieren wollen.',
-        'core_warning': '* SAN Suite CORE ist kein zertifiziertes Kassensystem und ersetzt nicht die TSE-Kasse.',
-        'tier_prime_title': 'SAN Suite PRIME',
-        'tier_prime_desc': 'Das vollständig TSE-konforme Cloud-Kassensystem. Ersetzt veraltete Hardware restlos.',
-	'suite_subtitle': 'Ideal für Restaurants, Cafés und Imbisse ohne bestehendes Kassensystem oder mit dem Wunsch nach einer modernen Komplettlösung.',
-	'legal_note_core': 'SAN Suite CORE ist kein Kassensystem im rechtlichen Sinne und erfordert ein separates, gesetzeskonformes Kassensystem für Zahlungen.',
-	'legal_note_prime': 'SAN Suite PRIME erfüllt die gesetzlichen Anforderungen gemäß KassenSichV durch Cloud-TSE (z. B. Fiskaly).',
-        'ext_title': 'Modulare Erweiterungen',
-	'suite_li_menu': 'Interaktive digitale Speisekarte', 'suite_li_order': 'Live-Bestellsystem', 'suite_li_kds': 'KDS-Küchensynchronisation',
-	'suite_prime_li_tse': 'Cloud-TSE (Fiskaly Integration)', 'suite_prime_li_belege': 'Finanzamt-konforme Belege', 'suite_prime_li_archiv': 'Revisionssicheres Archiv',
-        'ext1_t': 'Logistik', 'ext2_t': 'Abholung', 'ext3_t': 'QR-Bestellung', 'ext4_t': 'Einblicke',
-        'suite_btn': 'Beratung anfragen',
-	'testi_title': 'Ergebnisse aus der Praxis',
-        'testi_1': '"Seit der Umstellung auf das digitale KDS ist das Zettelchaos in der Küche Geschichte. Die Abläufe sind ruhiger und die Wartezeiten für Gäste haben sich spürbar verkürzt."',
-        'testi_1_attr': 'Inhaber, Restaurant',
-        'testi_2': '"Wir sparen täglich Stunden bei der Logistik, weil das System unsere komplexen Versandregeln automatisch steuert. Endlich können wir ohne technisches Kopfzerbrechen wachsen."',
-        'testi_2_attr': 'Gründer, D2C-Marke',
-        'stack_title': 'Tech Stack & Tools', 'services_title': 'Meine Kernkompetenzen',
-        'services_sub': 'Als Full-Stack Entwickler biete ich mehr als nur Websites. Ich baue digitale Werkzeuge, die Ihr Unternehmen effizienter machen.',
-        'srv1_title': 'Maßgeschneiderte Webentwicklung', 'srv1_desc': 'Keine Baukästen. Schnelle, sichere Webanwendungen mit React und Node.js.',
-        'srv2_title': 'API & Systemintegration', 'srv2_desc': 'Verbinden Sie CRM, Buchhaltung und Inventar zur Automatisierung.',
-        'srv3_title': 'Digitale Transformation', 'srv3_desc': 'Weg von Stift und Papier. Digitalisierung für maximale Effizienz.',
-        'srv4_title': 'IT-Infrastruktur Beratung', 'srv4_desc': 'Stabile und sichere IT-Umgebungen basierend auf Enterprise-Erfahrung.',
-        'srv5_title': 'E-Commerce & POS Lösungen', 'srv5_desc': 'Integrierte Verkaufslösungen für Shop und Kasse.',
-        'srv6_title': 'Wartung & Cloud-Hosting', 'srv6_desc': 'Updates, Backups und sicheres AWS Hosting.',
-        'about_title': 'Persönlich & Professionell',
-        'about_p1': 'Mit meiner Erfahrung als IT-Cluster Lead sorge ich für Stabilität und Sicherheit. Ich entwickle nicht nur Software, sondern digitale Effizienz – und verwandle komplexe Geschäftsprozesse in intuitive Webanwendungen.',
-        'about_quote': '"Ich verbinde technologische Exzellenz mit einem tiefen Verständnis für geschäftliche Anforderungen."',
-        'location': 'Euskirchen, Deutschland',
-        'form_title': 'Projektanfrage senden', 'form_name': 'Name / Firma', 'form_email': 'E-Mail Adresse', 'form_type': 'Projekttyp', 'form_msg': 'Nachricht', 'form_btn': 'Anfrage Absenden',
-        'opt_web': 'Web Entwicklung', 'opt_pos': 'POS/KDS System', 'opt_it': 'IT Beratung', 'opt_other': 'Anderes',
-        'footer_header_san': 'SAN Technologies', 'footer_header_contact': 'Kontakt & Inhaber',
-        'footer_legal_tmg': 'Angaben gemäß § 5 TMG:', 'footer_country': 'Deutschland', 'footer_rep_by': 'Vertreten durch:',
-        'footer_disclaimer': 'Haftungsausschluss: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links.',
-        'footer_rights': 'Alle Rechte vorbehalten.',
-        'cookie_text': 'Wir verwenden Cookies, um Ihre Erfahrung zu verbessern.', 'cookie_btn': 'Akzeptieren',
-	'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
-	'modal_title': 'Vielen Dank!',
-	'modal_text': 'Wir haben Ihre Anfrage erhalten und melden uns schnellstmöglich bei Ihnen.',
-	'modal_close': 'Schließen',
-	'proprietary_note': 'SAN Suite ist ein proprietäres Restaurant-Management-System von SAN Technologies. Zahlungsabwicklung erfolgt über zertifizierte Drittanbieter.'
-    },
-    'en': {
-        'page_title': 'SAN Technologies | Avinash Vivekananthan - Software Consultant',
-        'nav_work': 'Work', 'nav_services': 'Services', 'nav_about': 'About Me',
-	'nav_products': 'Products',
-        'hero_intro': 'AVINASH VIVEKANANTHAN — FREELANCE SOFTWARE ENGINEER',
-        'hero_title': 'Transforming Business through Custom Code.',
-        'hero_sub': 'German engineering meets global digital expertise. Direct access to the developer.',
-        'hero_btn': 'More Information',
-	'suite_teaser_title': 'SAN Suite – Modular Software for Gastronomy & Retail',
-        'suite_teaser_sub': 'A standalone system for restaurants and direct-to-consumer businesses – flexible, compliant, and customizable.',
-        'suite_bullet_1': 'Standalone Restaurant & Ordering System',
-        'suite_bullet_2': 'Optional Integrated POS & Payments',
-        'suite_bullet_3': 'Scalable from Single Solution to Complete Platform',
-        'suite_teaser_btn': 'Discover SAN Suite',
-	'sol_title': 'Further Solutions & Projects',
-        'sol_c1_title': 'Gastronomy Systems',
-        'sol_c1_text': 'KDS, POS, QR-Ordering, Reporting',
-        'sol_c1_btn': 'Learn More',
-        'sol_c2_title': 'E-Commerce & D2C Systems',
-        'sol_c2_text': 'Shops, Admin Panels, Order & Shipping Logic',
-        'sol_c2_btn': 'View References',
-        'kds_tag': 'Featured Project', 'kds_title': 'The SAN Kitchen Display System (KDS)',
-        'kds_desc': 'An example of my capabilities: I developed this KDS to replace paper tickets in gastronomy with intelligent real-time workflows.',
-        'kds_li1_title': 'Real-time Sync:', 'kds_li1_desc': 'Instant transmission from POS to Kitchen.',
-        'kds_li2_title': 'Zero Latency Architecture:', 'kds_li2_desc': 'Built on modern WebSocket technology.',
-        'kds_li3_title': 'Scalable:', 'kds_li3_desc': 'From food trucks to fine dining restaurants.',
-        'pos_tag': 'Extension', 'pos_title': 'The SAN Point of Sale System (POS)',
-        'pos_desc': 'The perfect complement to the KDS. A lightning-fast checkout interface designed for high-speed environments.',
-        'pos_li1_title': 'Intuitive UI:', 'pos_li1_desc': 'Minimized training time thanks to smart design.',
-        'pos_li2_title': 'Cloud-Sync:', 'pos_li2_desc': 'All sales data secure and live in the cloud.',
-        'pos_li3_title': 'Seamless Integration:', 'pos_li3_desc': 'Direct connection to KDS and accounting.',
-        'pos_li4_title': '100% Fiscal Compliance:', 'pos_li4_desc': 'Includes certified TSE (KassenSichV) for full legal compliance in Germany.',
-        'suite_sub': 'A standalone restaurant system with optional payment integration',
-        'suite_intro_main': 'SAN Suite is a fully standalone restaurant system designed to manage orders, kitchen workflows, and reporting from a single platform.',
-        'suite_intro_sub': 'Optionally, SAN Suite can integrate with modern cash or payment systems solely for final payment processing and legal compliance.',
-        'suite_disclaimer': 'SAN Suite is a proprietary restaurant management system developed and operated by SAN Technologies. Payment processing via certified providers.',
-        'tier_core_title': 'SAN Suite CORE',
-        'tier_core_desc': 'Designed for restaurants that already operate a compliant cash register and want to modernize workflows.',
-        'core_warning': '* SAN Suite CORE is not a certified register and does not replace the TSE register.',
-        'tier_prime_title': 'SAN Suite PRIME',
-        'tier_prime_desc': 'A fully compliant digital cash register solution with Cloud-TSE, legal receipts, and audit storage.',
-	'suite_subtitle': 'Designed for restaurants that want a modern all-in-one system without legacy hardware.',
-	'legal_note_core': 'SAN Suite CORE is not a POS system in the legal sense and requires a separate, legally compliant POS system for payments.',
-	'legal_note_prime': 'SAN Suite PRIME meets the legal requirements according to KassenSichV through Cloud-TSE (e.g., Fiskaly).',
-        'ext_title': 'Modular Extensions',
-	'suite_li_menu': 'Interactive Digital Menu', 'suite_li_order': 'Live Ordering System', 'suite_li_kds': 'KDS Kitchen Synchronization',
-	'suite_prime_li_tse': 'Cloud-TSE (Fiskaly Integration)', 'suite_prime_li_belege': 'Legal Receipts & QR Codes', 'suite_prime_li_archiv': '10-Year Audit Archive',
-        'ext1_t': 'Logistics', 'ext2_t': 'Pickup', 'ext3_t': 'QR-Order', 'ext4_t': 'Insights',
-        'suite_btn': 'Request Consultation',
-	'testi_title': 'Results from the Field',
-        'testi_1': '"Since switching to the digital KDS, the paper chaos in the kitchen is history. Workflows are calmer, and guest wait times have noticeably decreased."',
-        'testi_1_attr': 'Owner, Restaurant',
-        'testi_2': '"We save hours on logistics daily because the system automatically manages our complex shipping rules. Finally, we can grow without technical headaches."',
-        'testi_2_attr': 'Founder, D2C Brand',
-        'stack_title': 'Tech Stack & Tools', 'services_title': 'Core Competencies',
-        'services_sub': 'As a full-stack developer, I offer more than just websites. I build digital tools.',
-        'srv1_title': 'Custom Web Development', 'srv1_desc': 'No website builders. Fast, secure web apps using React and Node.js.',
-        'srv2_title': 'API & System Integration', 'srv2_desc': 'Connect your CRM, accounting, and inventory to automate workflows.',
-        'srv3_title': 'Digital Transformation', 'srv3_desc': 'Moving from pen and paper to the cloud. Maximize efficiency.',
-        'srv4_title': 'IT Infrastructure Consulting', 'srv4_desc': 'Stable and secure IT environments based on enterprise experience.',
-        'srv5_title': 'E-Commerce & POS Solutions', 'srv5_desc': 'Integrated sales solutions for online shops and checkouts.',
-        'srv6_title': 'Maintenance & Cloud Hosting', 'srv6_desc': 'Updates, backups, and secure AWS hosting.',
-        'about_title': 'Personal & Professional',
-        'about_p1': 'With my experience as an IT Cluster Lead, I ensure stability and security. I don\'t just write code; I build digital efficiency—transforming complex business processes into intuitive web applications.',
-        'about_quote': '"Bridging technological excellence with a deep understanding of business requirements."',
-        'location': 'Euskirchen, Germany',
-        'form_title': 'Send Project Enquiry', 'form_name': 'Name / Company', 'form_email': 'Email Address', 'form_type': 'Project Type', 'form_msg': 'Message', 'form_btn': 'Send Enquiry',
-        'opt_web': 'Web Development', 'opt_pos': 'POS/KDS System', 'opt_it': 'IT Consulting', 'opt_other': 'Other',
-        'footer_header_san': 'SAN Technologies', 'footer_header_contact': 'Contact & Owner',
-        'footer_legal_tmg': 'Information pursuant to § 5 TMG:', 'footer_country': 'Germany', 'footer_rep_by': 'Represented by:',
-        'footer_disclaimer': 'Disclaimer: Despite careful content control, we assume no liability for the content of external links.',
-        'footer_rights': 'All rights reserved.',
-        'cookie_text': 'We use cookies to improve your experience.', 'cookie_btn': 'Accept',
-	'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
-	'modal_title': 'Thank You!',
-	'modal_text': 'We have received your enquiry and will get back to you as soon as possible.',
-	'modal_close': 'Close',
-	'proprietary_note': 'SAN Suite is a proprietary restaurant management system from SAN Technologies. Payment processing is handled through certified third-party providers.'
+        startSlideShow(); 
     }
-};
 
-        const toggles = document.querySelectorAll('.lang-toggle-input');
-        const translatableElements = document.querySelectorAll('[data-translate]');
+    // GENERAL UI LOGIC
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    function toggleMenu() { mobileMenu.classList.toggle('active'); }
+    if (hamburgerBtn) hamburgerBtn.addEventListener('click', toggleMenu);
 
-        function updateLanguage(lang) {
-            translatableElements.forEach(el => {
-                const key = el.getAttribute('data-translate');
-                if (translations[lang][key]) { el.innerHTML = translations[lang][key]; }
-            });
-            document.documentElement.lang = lang;
+    var mybutton = document.getElementById("backToTop");
+    window.onscroll = function() {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            mybutton.style.display = "block";
+        } else { mybutton.style.display = "none"; }
+    };
+    function topFunction() { document.body.scrollTop = 0; document.documentElement.scrollTop = 0; }
+
+    function acceptCookies() {
+        document.getElementById("cookieBanner").style.display = "none";
+        localStorage.setItem("cookiesAccepted", "true");
+    }
+    if (localStorage.getItem("cookiesAccepted") === "true") {
+        document.getElementById("cookieBanner").style.display = "none";
+    }
+
+    // TRANSLATIONS
+    const translations = {
+        'de': {
+            'page_title': 'SAN Technologies | Avinash Vivekananthan - Softwareberater',
+            'nav_work': 'Referenzen', 'nav_services': 'Leistungen', 'nav_about': 'Über Mich',
+            'nav_products': 'Produkte',
+            'hero_intro': 'AVINASH VIVEKANANTHAN — FREIBERUFLICHER SOTFWAREENTWICKLER',
+            'hero_title': 'Ihr Geschäft transformieren – mit maßgeschneidertem Code.',
+            'hero_sub': 'Deutsche Ingenieurskunst trifft auf globale digitale Expertise. Direkter Zugang zum Entwickler für leistungsstarke Web- und Softwarelösungen.',
+            'hero_btn': 'Mehr Information',
+            'suite_teaser_title': 'SAN Suite – Modulare Software für Gastronomie & Handel',
+            'suite_teaser_sub': 'Ein eigenständiges System für Restaurants und Direct-to-Consumer-Geschäfte – flexibel erweiterbar, rechtssicher und individuell angepasst.',
+            'suite_bullet_1': 'Eigenständiges Restaurant- & Bestellsystem',
+            'suite_bullet_2': 'Optional integrierbare Kassensysteme & Zahlungen',
+            'suite_bullet_3': 'Skalierbar von Einzellösung bis Komplettplattform',
+            'suite_teaser_btn': 'SAN Suite entdecken',
+            'sol_title': 'Weitere Lösungen & Projekte',
+            'sol_c1_title': 'Gastronomie-Systeme',
+            'sol_c1_text': 'KDS, POS, QR-Ordering, Reporting',
+            'sol_c1_btn': 'Mehr erfahren',
+            'sol_c2_title': 'E-Commerce & D2C Systeme',
+            'sol_c2_text': 'Shops, Admin Panels, Bestell- & Versandlogik',
+            'sol_c2_btn': 'Referenzen ansehen',
+            'kds_tag': 'Reale Kundenlösung', 'kds_title': 'Das SAN Kitchen Display System (KDS)',
+            'kds_desc': 'Ein Beispiel meiner Arbeit: Ich habe dieses KDS entwickelt, um Papierbons in der Gastronomie durch intelligente Echtzeit-Workflows zu ersetzen.',
+            'kds_li1_title': 'Echtzeit-Synchronisation:', 'kds_li1_desc': 'Sofortige Übertragung vom POS in die Küche.',
+            'kds_li2_title': 'Zero Latency Architektur:', 'kds_li2_desc': 'Gebaut auf modernster WebSocket-Technologie.',
+            'kds_li3_title': 'Skalierbar:', 'kds_li3_desc': 'Vom Foodtruck bis zum Fine Dining Restaurant.',
+            'pos_tag': 'Erweiterung', 'pos_title': 'Das SAN Point of Sale System (POS)',
+            'pos_desc': 'Die perfekte Ergänzung zum KDS. Eine blitzschnelle Kassenoberfläche, die speziell für High-Speed-Umgebungen entwickelt wurde.',
+            'pos_li1_title': 'Intuitive UI:', 'pos_li1_desc': 'Schulungsaufwand minimiert durch smartes Design.',
+            'pos_li2_title': 'Cloud-Sync:', 'pos_li2_desc': 'Alle Verkaufsdaten sicher und live in der Cloud.',
+            'pos_li3_title': 'Nahtlose Integration:', 'pos_li3_desc': 'Direkte Verbindung zum KDS und Buchhaltung.',
+            'pos_li4_title': '100% Finanzamt-konform:', 'pos_li4_desc': 'Inklusive zertifizierter TSE (KassenSichV) für rechtssicheres Arbeiten.',
+            'suite_sub': 'Ein eigenständiges Restaurant-System – mit optionaler Kassenanbindung',
+            'suite_intro_main': 'SAN Suite ist ein vollständig eigenständiges System für Restaurants, die eine moderne, zentrale Lösung suchen. Bestellungen, Küchenabläufe, Online-Bestellungen und Auswertungen werden vollständig innerhalb der SAN Suite abgebildet.',
+            'suite_intro_sub': 'Optional kann SAN Suite an moderne Kassensysteme angebunden werden, ausschließlich für die finale Zahlungsabwicklung und gesetzliche Anforderungen.',
+            'suite_disclaimer': 'SAN Suite ist ein proprietäres Restaurant-Management-System von SAN Technologies. Zahlungsabwicklung erfolgt – sofern gesetzlich erforderlich – über zertifizierte Drittanbieter.',
+            'tier_core_title': 'SAN Suite CORE',
+            'tier_core_desc': 'Ideal für Betriebe mit bestehender Kasse (z.B. SumUp), die interne Abläufe digitalisieren wollen.',
+            'core_warning': '* SAN Suite CORE ist kein zertifiziertes Kassensystem und ersetzt nicht die TSE-Kasse.',
+            'tier_prime_title': 'SAN Suite PRIME',
+            'tier_prime_desc': 'Das vollständig TSE-konforme Cloud-Kassensystem. Ersetzt veraltete Hardware restlos.',
+            'suite_subtitle': 'Designed for restaurants that want a modern all-in-one system without legacy hardware.',
+            'legal_note_core': 'SAN Suite CORE ist kein Kassensystem im rechtlichen Sinne und erfordert ein separates, gesetzeskonformes Kassensystem für Zahlungen.',
+            'legal_note_prime': 'SAN Suite PRIME erfüllt die gesetzlichen Anforderungen gemäß KassenSichV durch Cloud-TSE (z. B. Fiskaly).',
+            'ext_title': 'Modulare Erweiterungen',
+            'suite_li_menu': 'Interaktive digitale Speisekarte', 'suite_li_order': 'Live-Bestellsystem', 'suite_li_kds': 'KDS-Küchensynchronisation',
+            'suite_prime_li_tse': 'Cloud-TSE (Fiskaly Integration)', 'suite_prime_li_belege': 'Finanzamt-konforme Belege', 'suite_prime_li_archiv': 'Revisionssicheres Archiv',
+            'ext1_t': 'Logistik', 'ext2_t': 'Abholung', 'ext3_t': 'QR-Bestellung', 'ext4_t': 'Einblicke',
+            'suite_btn': 'Beratung anfragen',
+            'testi_title': 'Ergebnisse aus der Praxis',
+            'testi_1': '"Seit der Umstellung auf das digitale KDS ist das Zettelchaos in der Küche Geschichte. Die Abläufe sind ruhiger und die Wartezeiten für Gäste haben sich spürbar verkürzt."',
+            'testi_1_attr': 'Inhaber, Restaurant',
+            'testi_2': '"Wir sparen täglich Stunden bei der Logistik, weil das System unsere komplexen Versandregeln automatisch steuert. Endlich können wir ohne technisches Kopfzerbrechen wachsen."',
+            'testi_2_attr': 'Gründer, D2C-Marke',
+            'stack_title': 'Tech Stack & Tools', 'services_title': 'Meine Kernkompetenzen',
+            'services_sub': 'Als Full-Stack Entwickler biete ich mehr als nur Websites. Ich baue digitale Werkzeuge, die Ihr Unternehmen effizienter machen.',
+            'srv1_title': 'Maßgeschneiderte Webentwicklung', 'srv1_desc': 'Keine Baukästen. Schnelle, sichere Webanwendungen mit React und Node.js.',
+            'srv2_title': 'API & Systemintegration', 'srv2_desc': 'Verbinden Sie CRM, Buchhaltung und Inventar zur Automatisierung.',
+            'srv3_title': 'Digitale Transformation', 'srv3_desc': 'Weg von Stift und Papier. Digitalisierung für maximale Effizienz.',
+            'srv4_title': 'IT-Infrastruktur Beratung', 'srv4_desc': 'Stabile und sichere IT-Umgebungen basierend auf Enterprise-Erfahrung.',
+            'srv5_title': 'E-Commerce & POS Lösungen', 'srv5_desc': 'Integrierte Verkaufslösungen für Shop und Kasse.',
+            'srv6_title': 'Wartung & Cloud-Hosting', 'srv6_desc': 'Updates, Backups und sicheres AWS Hosting.',
+            'about_title': 'Persönlich & Professionell',
+            'about_p1': 'Mit meiner Erfahrung als IT-Cluster Lead sorge ich für Stabilität und Sicherheit. Ich entwickle nicht nur Software, sondern digitale Effizienz – und verwandle komplexe Geschäftsprozesse in intuitive Webanwendungen.',
+            'about_quote': '"Ich verbinde technologische Exzellenz mit einem tiefen Verständnis für geschäftliche Anforderungen."',
+            'location': 'Euskirchen, Deutschland',
+            'form_title': 'Projektanfrage senden', 'form_name': 'Name / Firma', 'form_email': 'E-Mail Adresse', 'form_type': 'Projekttyp', 'form_msg': 'Nachricht', 'form_btn': 'Anfrage Absenden',
+            'opt_web': 'Web Entwicklung', 'opt_pos': 'POS/KDS System', 'opt_it': 'IT Beratung', 'opt_other': 'Anderes',
+            'footer_header_san': 'SAN Technologies', 'footer_header_contact': 'Kontakt & Inhaber',
+            'footer_legal_tmg': 'Angaben gemäß § 5 TMG:', 'footer_country': 'Deutschland', 'footer_rep_by': 'Vertreten durch:',
+            'footer_disclaimer': 'Haftungsausschluss: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links.',
+            'footer_rights': 'Alle Rechte vorbehalten.',
+            'cookie_text': 'Wir verwenden Cookies, um Ihre Erfahrung zu verbessern.', 'cookie_btn': 'Akzeptieren',
+            'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
+            'modal_title': 'Vielen Dank!',
+            'modal_text': 'Wir haben Ihre Anfrage erhalten und melden uns schnellstmöglich bei Ihnen.',
+            'modal_close': 'Schließen',
+            'proprietary_note': 'SAN Suite ist ein proprietäres Restaurant-Management-System von SAN Technologies. Zahlungsabwicklung erfolgt über zertifizierte Drittanbieter.'
+        },
+        'en': {
+            'page_title': 'SAN Technologies | Avinash Vivekananthan - Software Consultant',
+            'nav_work': 'Work', 'nav_services': 'Services', 'nav_about': 'About Me',
+            'nav_products': 'Products',
+            'hero_intro': 'AVINASH VIVEKANANTHAN — FREELANCE SOFTWARE ENGINEER',
+            'hero_title': 'Transforming Business through Custom Code.',
+            'hero_sub': 'German engineering meets global digital expertise. Direct access to the developer.',
+            'hero_btn': 'More Information',
+            'suite_teaser_title': 'SAN Suite – Modular Software for Gastronomy & Retail',
+            'suite_teaser_sub': 'A standalone system for restaurants and direct-to-consumer businesses – flexible, compliant, and customizable.',
+            'suite_bullet_1': 'Standalone Restaurant & Ordering System',
+            'suite_bullet_2': 'Optional Integrated POS & Payments',
+            'suite_bullet_3': 'Scalable from Single Solution to Complete Platform',
+            'suite_teaser_btn': 'Discover SAN Suite',
+            'sol_title': 'Further Solutions & Projects',
+            'sol_c1_title': 'Gastronomy Systems',
+            'sol_c1_text': 'KDS, POS, QR-Ordering, Reporting',
+            'sol_c1_btn': 'Learn More',
+            'sol_c2_title': 'E-Commerce & D2C Systems',
+            'sol_c2_text': 'Shops, Admin Panels, Order & Shipping Logic',
+            'sol_c2_btn': 'View References',
+            'kds_tag': 'Featured Project', 'kds_title': 'The SAN Kitchen Display System (KDS)',
+            'kds_desc': 'An example of my capabilities: I developed this KDS to replace paper tickets in gastronomy with intelligent real-time workflows.',
+            'kds_li1_title': 'Real-time Sync:', 'kds_li1_desc': 'Instant transmission from POS to Kitchen.',
+            'kds_li2_title': 'Zero Latency Architecture:', 'kds_li2_desc': 'Built on modern WebSocket technology.',
+            'kds_li3_title': 'Scalable:', 'kds_li3_desc': 'From food trucks to fine dining restaurants.',
+            'pos_tag': 'Extension', 'pos_title': 'The SAN Point of Sale System (POS)',
+            'pos_desc': 'The perfect complement to the KDS. A lightning-fast checkout interface designed for high-speed environments.',
+            'pos_li1_title': 'Intuitive UI:', 'pos_li1_desc': 'Minimized training time thanks to smart design.',
+            'pos_li2_title': 'Cloud-Sync:', 'pos_li2_desc': 'All sales data secure and live in the cloud.',
+            'pos_li3_title': 'Seamless Integration:', 'pos_li3_desc': 'Direct connection to KDS and accounting.',
+            'pos_li4_title': '100% Fiscal Compliance:', 'pos_li4_desc': 'Includes certified TSE (KassenSichV) for full legal compliance in Germany.',
+            'suite_sub': 'A standalone restaurant system with optional payment integration',
+            'suite_intro_main': 'SAN Suite is a fully standalone restaurant system designed to manage orders, kitchen workflows, and reporting from a single platform.',
+            'suite_intro_sub': 'Optionally, SAN Suite can integrate with modern cash or payment systems solely for final payment processing and legal compliance.',
+            'suite_disclaimer': 'SAN Suite is a proprietary restaurant management system developed and operated by SAN Technologies. Payment processing via certified providers.',
+            'tier_core_title': 'SAN Suite CORE',
+            'tier_core_desc': 'Designed for restaurants that already operate a compliant cash register and want to modernize workflows.',
+            'core_warning': '* SAN Suite CORE is not a certified register and does not replace the TSE register.',
+            'tier_prime_title': 'SAN Suite PRIME',
+            'tier_prime_desc': 'A fully compliant digital cash register solution with Cloud-TSE, legal receipts, and audit storage.',
+            'suite_subtitle': 'Designed for restaurants that want a modern all-in-one system without legacy hardware.',
+            'legal_note_core': 'SAN Suite CORE is not a POS system in the legal sense and requires a separate, legally compliant POS system for payments.',
+            'legal_note_prime': 'SAN Suite PRIME meets the legal requirements according to KassenSichV through Cloud-TSE (e.g., Fiskaly).',
+            'ext_title': 'Modular Extensions',
+            'suite_li_menu': 'Interactive Digital Menu', 'suite_li_order': 'Live Ordering System', 'suite_li_kds': 'KDS Kitchen Synchronization',
+            'suite_prime_li_tse': 'Cloud-TSE (Fiskaly Integration)', 'suite_prime_li_belege': 'Legal Receipts & QR Codes', 'suite_prime_li_archiv': '10-Year Audit Archive',
+            'ext1_t': 'Logistics', 'ext2_t': 'Pickup', 'ext3_t': 'QR-Order', 'ext4_t': 'Insights',
+            'suite_btn': 'Request Consultation',
+            'testi_title': 'Results from the Field',
+            'testi_1': '"Since switching to the digital KDS, the paper chaos in the kitchen is history. Workflows are calmer, and guest wait times have noticeably decreased."',
+            'testi_1_attr': 'Owner, Restaurant',
+            'testi_2': '"We save hours on logistics daily because the system automatically manages our complex shipping rules. Finally, we can grow without technical headaches."',
+            'testi_2_attr': 'Founder, D2C Brand',
+            'stack_title': 'Tech Stack & Tools', 'services_title': 'Core Competencies',
+            'services_sub': 'As a full-stack developer, I offer more than just websites. I build digital tools.',
+            'srv1_title': 'Custom Web Development', 'srv1_desc': 'No website builders. Fast, secure web apps using React and Node.js.',
+            'srv2_title': 'API & System Integration', 'srv2_desc': 'Connect your CRM, accounting, and inventory to automate workflows.',
+            'srv3_title': 'Digital Transformation', 'srv3_desc': 'Moving from pen and paper to the cloud. Maximize efficiency.',
+            'srv4_title': 'IT Infrastructure Consulting', 'srv4_desc': 'Stable and secure IT environments based on enterprise experience.',
+            'srv5_title': 'E-Commerce & POS Solutions', 'srv5_desc': 'Integrated sales solutions for online shops and checkouts.',
+            'srv6_title': 'Maintenance & Cloud Hosting', 'srv6_desc': 'Updates, backups, and secure AWS hosting.',
+            'about_title': 'Personal & Professional',
+            'about_p1': 'With my experience as an IT Cluster Lead, I ensure stability and security. I don\'t just write code; I build digital efficiency—transforming complex business processes into intuitive web applications.',
+            'about_quote': '"Bridging technological excellence with a deep understanding of business requirements."',
+            'location': 'Euskirchen, Germany',
+            'form_title': 'Send Project Enquiry', 'form_name': 'Name / Company', 'form_email': 'Email Address', 'form_type': 'Project Type', 'form_msg': 'Message', 'form_btn': 'Send Enquiry',
+            'opt_web': 'Web Development', 'opt_pos': 'POS/KDS System', 'opt_it': 'IT Consulting', 'opt_other': 'Other',
+            'footer_header_san': 'SAN Technologies', 'footer_header_contact': 'Contact & Owner',
+            'footer_legal_tmg': 'Information pursuant to § 5 TMG:', 'footer_country': 'Germany', 'footer_rep_by': 'Represented by:',
+            'footer_disclaimer': 'Disclaimer: Despite careful content control, we assume no liability for the content of external links.',
+            'footer_rights': 'All rights reserved.',
+            'cookie_text': 'We use cookies to improve your experience.', 'cookie_btn': 'Accept',
+            'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
+            'modal_title': 'Thank You!',
+            'modal_text': 'We have received your enquiry and will get back to you as soon as possible.',
+            'modal_close': 'Close',
+            'proprietary_note': 'SAN Suite is a proprietary restaurant management system from SAN Technologies. Payment processing is handled through certified third-party providers.'
         }
+    };
 
-        // Sync all toggles
-        toggles.forEach(toggle => {
-            toggle.addEventListener('change', function() {
-                const isChecked = this.checked;
-                // Sync all other checkboxes
-                toggles.forEach(t => t.checked = isChecked);
-                
-                if(isChecked) { updateLanguage('en'); } else { updateLanguage('de'); }
-            });
+    const toggles = document.querySelectorAll('.lang-toggle-input');
+    const translatableElements = document.querySelectorAll('[data-translate]');
+
+    function updateLanguage(lang) {
+        translatableElements.forEach(el => {
+            const key = el.getAttribute('data-translate');
+            if (translations[lang][key]) { el.innerHTML = translations[lang][key]; }
         });
-
-        // Default: German
-        toggles.forEach(t => t.checked = false);
-        updateLanguage('de');
-
-
-// --- SAFE FORM HANDLING (AJAX) ---
-document.addEventListener("DOMContentLoaded", function() {
-    
-    const modal = document.getElementById('successModal');
-    const contactForm = document.querySelector('.contact-form'); 
-
-    // Function to close modal
-    window.closeModal = function() { 
-        modal.classList.remove('show');
-        setTimeout(() => { modal.style.display = 'none'; }, 300);
+        document.documentElement.lang = lang;
     }
 
-    // Close modal when clicking outside box
-    window.onclick = function(event) {
-        if (event.target == modal) { window.closeModal(); }
-    }
-
-    // Intercept the form submission
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // STOP the redirect
-            
-            const formData = new FormData(contactForm);
-            
-            fetch('/', {
-                method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(() => {
-                // Show Modal on Success
-                modal.style.display = 'flex';
-                // Small delay to allow 'display:flex' to apply before adding opacity class
-                setTimeout(() => { modal.classList.add('show'); }, 10); 
-                contactForm.reset(); // Clear the form inputs
-            })
-            .catch((error) => {
-                alert('Error submitting form. Please check your connection.');
-            });
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            const isChecked = this.checked;
+            toggles.forEach(t => t.checked = isChecked);
+            if(isChecked) { updateLanguage('en'); } else { updateLanguage('de'); }
         });
-    } else {
-        console.error("Form not found! Check if the <form> tag has class='contact-form'");
-    }
-});
+    });
 
-    </script>
+    // Default: German
+    toggles.forEach(t => t.checked = false);
+    updateLanguage('de');
+</script>
 </body>
 </html>
