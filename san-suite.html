@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-translate="suite_page_title">SAN Suite | Detailed Overview</title>
+   	<title data-translate="suite_page_title">KDS Kitchen Monitor & Gastro Software | SAN Suite</title>
+    
+    <meta name="description" content="SAN Suite: The digital Kitchen Display System (KDS) for gastronomy. Optimize your kitchen with digital tickets, touchscreens, and seamless POS integration." data-translate-meta="suite_meta_desc">
+    <meta name="keywords" content="KDS System Gastronomy, Kitchen Monitor, Kitchen Display System, Digital Kitchen, Restaurant Software, Paperless Kitchen" data-translate-meta="suite_keywords">
+
+    <meta property="og:title" content="SAN Suite | The KDS for Modern Gastronomy" data-translate-meta="suite_og_title">
+    <meta property="og:description" content="End the paper chaos. Digitize your kitchen workflows with the SAN Kitchen Display System." data-translate-meta="suite_og_desc">
+    <meta property="og:image" content="https://santechnologies.de/pos-screen.jpg">
+    <meta property="og:type" content="product">
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
@@ -341,7 +349,11 @@ display: flex;
     <script>
         const translations = {
             'de': {
-                'suite_page_title': 'SAN Suite | Die Restaurant-Komplettlösung',
+                'suite_page_title': 'KDS Küchenmonitor & Gastro Software | SAN Suite',
+				'suite_meta_desc': 'SAN Suite: Das digitale Küchensystem (KDS) für die Gastronomie. Optimieren Sie Ihre Küche mit digitalen Bons, Touchscreens und nahtloser POS-Integration.',
+				'suite_keywords': 'KDS System Gastronomie, Küchenmonitor, Kitchen Display System, Digitale Küche, Gastro Software, Restaurant System, Papierlos',
+				'suite_og_title': 'SAN Suite | Das KDS für moderne Gastronomie',
+				'suite_og_desc': 'Schluss mit Zettelchaos. Digitalisieren Sie Ihre Küche mit dem SAN Kitchen Display System.',
                 'nav_back': 'Startseite zurück',
                 'trust_line': 'Entwickelt & betrieben in Deutschland · DSGVO-konform',
                 'suite_hero_title': 'SAN Suite',
@@ -384,7 +396,11 @@ display: flex;
                 'cta_btn': 'Beratung anfragen'
             },
             'en': {
-                'suite_page_title': 'SAN Suite | The All-in-One Restaurant Solution',
+                'suite_page_title': 'KDS Kitchen Monitor & Gastro Software | SAN Suite',
+				'suite_meta_desc': 'SAN Suite: The digital Kitchen Display System (KDS) for gastronomy. Optimize your kitchen with digital tickets, touchscreens, and seamless POS integration.',
+				'suite_keywords': 'KDS System Gastronomy, Kitchen Monitor, Kitchen Display System, Digital Kitchen, Restaurant Software, Paperless Kitchen',
+				'suite_og_title': 'SAN Suite | The KDS for Modern Gastronomy',
+				'suite_og_desc': 'End the paper chaos. Digitize your kitchen workflows with the SAN Kitchen Display System.',
                 'nav_back': 'Back to Home',
                 'trust_line': 'Developed & operated in Germany · GDPR compliant',
                 'suite_hero_title': 'SAN Suite',
@@ -431,10 +447,18 @@ display: flex;
         const toggles = document.querySelectorAll('.lang-toggle-input');
 		document.addEventListener('contextmenu', event => event.preventDefault());
         function updateLanguage(lang) {
+            // 1. Normale Textelemente (innerHTML)
             document.querySelectorAll('[data-translate]').forEach(el => {
                 const key = el.getAttribute('data-translate');
                 if (translations[lang][key]) el.innerHTML = translations[lang][key];
             });
+
+            // 2. Meta-Tags & Attribute (content) - NEU
+            document.querySelectorAll('[data-translate-meta]').forEach(el => {
+                const key = el.getAttribute('data-translate-meta');
+                if (translations[lang][key]) el.setAttribute('content', translations[lang][key]);
+            });
+
             document.documentElement.lang = lang;
         }
 
@@ -470,3 +494,4 @@ display: flex;
     </script>
 </body>
 </html>
+
