@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-translate="comm_page_title">SAN Commerce | High-Performance D2C</title>
+    <title data-translate="comm_page_title">D2C E-Commerce Agentur & Headless Shops | SAN Commerce</title>
+    
+    <meta name="description" content="High-Performance E-Commerce Lösungen für D2C Marken. Maßgeschneiderte Headless-Shops (React), Custom Admin-Panels und Daten-Migration weg von Shopify." data-translate-meta="comm_meta_desc">
+    <meta name="keywords" content="D2C Shop Entwicklung, Headless Commerce, Shopify Alternative, E-Commerce Agentur, Custom Shop Software, React Shop" data-translate-meta="comm_keywords">
+
+    <meta property="og:title" content="SAN Commerce | High-Performance D2C Shops" data-translate-meta="comm_og_title">
+    <meta property="og:description" content="Ladezeiten unter 1 Sekunde. Volle Kontrolle über ROI und Logistik. Die Alternative zum Baukasten." data-translate-meta="comm_og_desc">
+    <meta property="og:image" content="https://santechnologies.de/admin-dashboard.jpg">
+    <meta property="og:type" content="product">
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
@@ -452,7 +460,11 @@
         const translations = {
             'de': {
                 'nav_back': 'Startseite zurück',
-                'comm_page_title': 'SAN Commerce | High-Performance D2C',
+                'comm_page_title': 'D2C E-Commerce Agentur & Headless Shops | SAN Commerce',
+				'comm_meta_desc': 'High-Performance E-Commerce Lösungen für D2C Marken. Maßgeschneiderte Headless-Shops (React), Custom Admin-Panels und Daten-Migration weg von Shopify.',
+				'comm_keywords': 'D2C Shop Entwicklung, Headless Commerce, Shopify Alternative, E-Commerce Agentur, Custom Shop Software, React Shop',
+				'comm_og_title': 'SAN Commerce | High-Performance D2C Shops',
+				'comm_og_desc': 'Ladezeiten unter 1 Sekunde. Volle Kontrolle über ROI und Logistik. Die Alternative zum Baukasten.',
                 'comm_trust_line': 'Performance First · Maßgeschneiderte Logik · Scalable',
                 'comm_hero_title': 'SAN Commerce',
                 'comm_hero_sub': 'Das Betriebssystem für Direct-to-Consumer (D2C) Marken',
@@ -505,7 +517,11 @@
             },
             'en': {
                 'nav_back': 'Back to Home',
-                'comm_page_title': 'SAN Commerce | High-Performance D2C',
+                'comm_page_title': 'D2C E-Commerce Agency & Headless Shops | SAN Commerce',
+				'comm_meta_desc': 'High-performance e-commerce solutions for D2C brands. Custom headless shops (React), bespoke admin panels, and data migration away from Shopify.',
+				'comm_keywords': 'D2C Shop Development, Headless Commerce, Shopify Alternative, E-Commerce Agency, Custom Shop Software, React Shop',
+				'comm_og_title': 'SAN Commerce | High-Performance D2C Shops',
+				'comm_og_desc': 'Load times under 1 second. Full control over ROI and logistics. The alternative to template builders.',
                 'comm_trust_line': 'Performance First · Custom Logic · Scalable',
                 'comm_hero_title': 'SAN Commerce',
                 'comm_hero_sub': 'The Operating System for Direct-to-Consumer (D2C) Brands',
@@ -561,10 +577,18 @@
         const toggles = document.querySelectorAll('.lang-toggle-input');
 		document.addEventListener('contextmenu', event => event.preventDefault());
         function updateLanguage(lang) {
+            // 1. Text Elements (innerHTML)
             document.querySelectorAll('[data-translate]').forEach(el => {
                 const key = el.getAttribute('data-translate');
                 if (translations[lang][key]) el.innerHTML = translations[lang][key];
             });
+
+            // 2. Meta Tags (content attribute)
+            document.querySelectorAll('[data-translate-meta]').forEach(el => {
+                const key = el.getAttribute('data-translate-meta');
+                if (translations[lang][key]) el.setAttribute('content', translations[lang][key]);
+            });
+
             document.documentElement.lang = lang;
         }
 
@@ -600,3 +624,4 @@
     </script>
 </body>
 </html>
+
