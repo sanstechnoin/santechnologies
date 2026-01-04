@@ -152,7 +152,7 @@ display: flex;
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <header>
         <div class="container header-content">
@@ -254,6 +254,34 @@ display: flex;
         </div>
     </section>
 
+<section style="background-color: var(--white); border-top: 1px solid #eee;">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="geo_faq_title">Warum ein digitales Küchensystem (KDS)?</h2>
+                <p data-translate="geo_faq_sub">Mehr als nur ein Bildschirm: Optimierung von Arbeitsabläufen.</p>
+            </div>
+            
+            <div style="max-width: 900px; margin: 0 auto; text-align: left;">
+                
+                <div style="background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid var(--primary);">
+                   <h3 style="font-size: 1.2rem; color: var(--primary); margin: 0 0 10px 0;" data-translate="geo_q1">Steigerung der Produktivität in der Küche</h3>
+                    <p style="margin: 0;" data-translate="geo_a1">Manuelle Bons gehen verloren oder werden fettig. Ein <strong>Kitchen Display System (KDS)</strong> sortiert Bestellungen automatisch nach Gang, Tisch oder Zubereitungszeit. Das Ergebnis: Keine Rückfragen, weniger Laufwege und eine <strong>30% schnellere Zubereitung</strong>.</p>
+                </div>
+
+                <div style="background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid var(--accent);">
+                    <h3 style="font-size: 1.2rem; color: var(--primary); margin: 0 0 10px 0;" data-translate="geo_q2">Kontrolle über Zubereitungszeiten</h3>
+                    <p style="margin: 0;" data-translate="geo_a2">Im Gegensatz zum klassischen Bondrucker liefert SAN Suite Daten. Sie sehen exakt, wie lange ein Gericht von der Bestellung bis zum Pass (Ausgabe) benötigt. Identifizieren Sie Engpässe und optimieren Sie Ihre <strong>Küchen-Performance</strong> datenbasiert.</p>
+                </div>
+
+                <div style="background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid var(--primary);">
+                    <h3 style="font-size: 1.2rem; color: var(--primary); margin: 0 0 10px 0;" data-translate="geo_q3">Kostenersparnis & Nachhaltigkeit</h3>
+                    <p style="margin: 0;" data-translate="geo_a3">Thermodrucker verursachen laufende Kosten für Papierrollen und sind umweltschädlich. Ein digitales System amortisiert sich durch den Wegfall von Verbrauchsmaterialien oft schon im ersten Jahr. Zudem vermeiden Sie <strong>Fehlproduktionen</strong> durch klare digitale Anweisungen.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <section style="background-color: var(--bg-suite);">
         <div class="container">
             <div class="section-header">
@@ -333,6 +361,14 @@ display: flex;
                 'tier_core_pos': 'Der digitale Einstieg. Ideal für Betriebe mit externer Kasse oder manueller Zahlungsabwicklung.',
                 'core_features': '<li>✓ Digitale Bestellerfassung</li><li>✓ Küchen- & Workflow-Steuerung</li><li>✓ Digitale Speisekarte</li><li>✓ WhatsApp-Benachrichtigungen</li>',
                 'legal_note_core': 'SAN Suite CORE ist kein Kassensystem im rechtlichen Sinne und erfordert ein separates, gesetzeskonformes Kassensystem für Zahlungen.',
+				'geo_faq_title': 'Warum ein digitales Küchensystem (KDS)?',
+				'geo_faq_sub': 'Mehr als nur ein Bildschirm: Optimierung von Arbeitsabläufen.',
+				'geo_q1': 'Steigerung der Produktivität in der Küche',
+				'geo_a1': 'Manuelle Bons gehen verloren oder werden unleserlich. Ein <strong>Kitchen Display System (KDS)</strong> sortiert Bestellungen automatisch nach Gang oder Zubereitungszeit. Das Ergebnis: Weniger Laufwege und eine <strong>30% schnellere Zubereitung</strong>.',
+				'geo_q2': 'Kontrolle über Zubereitungszeiten',
+				'geo_a2': 'Im Gegensatz zum Bondrucker liefert SAN Suite Daten. Sie sehen exakt, wie lange ein Gericht benötigt. Identifizieren Sie Engpässe und optimieren Sie Ihre <strong>Küchen-Performance</strong> datenbasiert.',
+				'geo_q3': 'Kostenersparnis & Nachhaltigkeit',
+				'geo_a3': 'Thermodrucker verursachen laufende Kosten. Ein digitales System amortisiert sich durch den Wegfall von Papierrollen oft im ersten Jahr. Zudem vermeiden Sie <strong>Fehlproduktionen</strong> durch klare Anweisungen.',
                 'tier_prime_title': 'SAN Suite PRIME',
                 'tier_prime_pos': 'Rechtssicher & vollständig. Für Betriebe, die eine vollständige digitale Kassenlösung benötigen.',
                 'prime_features': '<li>✓ Inklusive aller CORE Funktionen</li><li>✓ Cloud-TSE (Fiskaly Integration)</li><li>✓ Gesetzeskonforme Belege & QR-Codes</li><li>✓ 10-Jahres Revisionssicheres Archiv</li>',
@@ -344,7 +380,7 @@ display: flex;
                 's1': 'Beratung', 's2': 'Setup', 's3': 'Anpassung', 's4': 'Testbetrieb', 's5': 'Go-Live', 's6': 'Support',
                 'cta_t': 'Starten Sie mit CORE – wachsen Sie zur Suite',
                 'cta_desc': 'Keine Massenlösung · Keine Verträge von der Stange · Direkter Support',
-		'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
+				'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
                 'cta_btn': 'Beratung anfragen'
             },
             'en': {
@@ -372,6 +408,14 @@ display: flex;
                 'tier_prime_pos': 'Legally secure & complete. For businesses requiring a full digital checkout solution.',
                 'prime_features': '<li>✓ Includes all CORE functions</li><li>✓ Cloud-TSE (Fiskaly Integration)</li><li>✓ Legal Receipts & QR Codes</li><li>✓ 10-Year Audit Archive</li>',
                 'legal_note_prime': 'SAN Suite PRIME meets the legal requirements according to KassenSichV through Cloud-TSE (e.g., Fiskaly).',
+				'geo_faq_title': 'Why a Digital Kitchen System (KDS)?',
+				'geo_faq_sub': 'More than just a screen: Optimizing kitchen workflows.',
+				'geo_q1': 'Boosting Kitchen Productivity',
+				'geo_a1': 'Paper tickets get lost or become unreadable. A <strong>Kitchen Display System (KDS)</strong> automatically sorts orders by course or prep time. The result: Fewer questions, less walking, and <strong>30% faster preparation</strong>.',
+				'geo_q2': 'Control over Preparation Times',
+				'geo_a2': 'Unlike standard receipt printers, SAN Suite provides data. See exactly how long a dish takes from order to pass. Identify bottlenecks and optimize your <strong>kitchen performance</strong> based on real data.',
+				'geo_q3': 'Cost Savings & Sustainability',
+				'geo_a3': 'Thermal printers create ongoing costs for paper rolls. A digital system pays for itself often within the first year by eliminating consumables. Plus, you avoid <strong>production errors</strong> through clear digital instructions.',
                 'ext_title': 'Modularly expandable – only what you need',
                 'ext_sub': 'All modules are optional & combinable with CORE or PRIME.',
                 'ext1': 'Delivery & Logistics', 'ext2': 'Click & Collect', 'ext3': 'Dine-In QR Order', 'ext4': 'Kitchen Display (KDS)', 'ext5': 'Reporting & Insights', 'ext6': 'Coupon System',
@@ -379,12 +423,13 @@ display: flex;
                 's1': 'Consulting', 's2': 'Setup', 's3': 'Customization', 's4': 'Test phase', 's5': 'Go-Live', 's6': 'Support',
                 'cta_t': 'Start with CORE – grow into the Suite',
                 'cta_desc': 'No mass solution · No off-the-shelf contracts · Direct support',
-		'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
+				'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
                 'cta_btn': 'Request Consultation'
             }
         };
 
         const toggles = document.querySelectorAll('.lang-toggle-input');
+		document.addEventListener('contextmenu', event => event.preventDefault());
         function updateLanguage(lang) {
             document.querySelectorAll('[data-translate]').forEach(el => {
                 const key = el.getAttribute('data-translate');
@@ -424,5 +469,4 @@ display: flex;
 });
     </script>
 </body>
-
 </html>
