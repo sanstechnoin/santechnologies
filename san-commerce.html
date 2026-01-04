@@ -86,6 +86,46 @@
         .plain-box { background: var(--bg-suite); padding: 50px; border-radius: 25px; text-align: center; margin: 40px 0; }
         .integration-note { background: var(--white); padding: 20px 30px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; margin-top: 20px; }
 
+	/* --- IMAGE MODAL (LIGHTBOX) --- */
+        .img-modal { 
+            display: none; /* Hidden by default */
+            position: fixed; z-index: 10001; /* Sit on top of everything */
+            left: 0; top: 0; width: 100%; height: 100%; 
+            background-color: rgba(0,0,0,0.9); /* Black background with opacity */
+        }
+        
+        /* The Image inside the Modal */
+        .img-modal-content { 
+            margin: auto; display: block; 
+            max-width: 90%; max-height: 90vh; 
+            position: absolute; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); /* Perfectly centered */
+            border-radius: 5px; 
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        /* The Close Button (Top RIGHT) */
+        .close-img { 
+            position: absolute; 
+            top: 20px; 
+            right: 30px; /* Changed from left to right */
+            color: #f1f1f1; 
+            font-size: 40px; 
+            font-weight: bold; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            z-index: 10002;
+        }
+        .close-img:hover { color: var(--accent); }
+
+        /* Style for the Thumbnail in the page */
+        .zoom-trigger { 
+            cursor: zoom-in; transition: transform 0.2s; 
+        }
+        .zoom-trigger:hover { 
+            opacity: 0.9; transform: scale(1.02); 
+        }
+
         /* --- TIER DEEP DIVE --- */
         .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 40px; }
         .tier-card { 
@@ -133,7 +173,7 @@
         @media (max-width: 900px) { .comm-hero h1 { font-size: 2.5rem; } .tier-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <header>
         <div class="container header-content">
@@ -240,6 +280,94 @@
         </div>
     </section>
 
+<section style="background-color: var(--white); border-top: 1px solid #eee;">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="geo_comm_title">Warum Custom Commerce? (India & Germany Ready)</h2>
+                <p data-translate="geo_comm_sub">Einblicke in das SAN Commerce "Merchant OS" Backend.</p>
+            </div>
+            
+            <div style="max-width: 900px; margin: 0 auto; text-align: left;">
+                
+                <div style="background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid var(--primary);">
+                    <h3 style="font-size: 1.2rem; color: var(--primary); margin: 0 0 10px 0;" data-translate="geo_cq1">Das "Merchant OS": Volle Kontrolle über Inventar & ROI</h3>
+                    <p style="margin: 0;" data-translate="geo_ca1">
+                        Vergessen Sie unübersichtliche Standard-Dashboards. Unser <strong>Custom Admin Panel</strong> zeigt Ihnen den echten Gewinn pro Bestellung in Echtzeit. Verwalten Sie <strong>Lagerbestände (Inventory)</strong>, komplexe <strong>Versandregeln (Shipping Rules)</strong> und Coupons zentral – ohne teure Zusatz-Apps.
+                    </p>
+                </div>
+
+                <div style="background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid var(--accent);">
+                    <h3 style="font-size: 1.2rem; color: var(--primary); margin: 0 0 10px 0;" data-translate="geo_cq2">Verkaufen in Deutschland & Indien gleichzeitig?</h3>
+                    <p style="margin: 0;" data-translate="geo_ca2">
+                        SAN Commerce ist "Cross-Border Ready". Wir unterstützen <strong>Multi-Currency (EUR / INR)</strong> und lokale Zahlungsarten nativ: <strong>UPI & Razorpay</strong> für Indien sowie <strong>SEPA, PayPal & Klarna</strong> für Deutschland. Das System routet Bestellungen automatisch an das passende lokale Lager.
+                    </p>
+                </div>
+
+                <div style="background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid var(--primary);">
+                    <h3 style="font-size: 1.2rem; color: var(--primary); margin: 0 0 10px 0;" data-translate="geo_cq3">Warum ist "Headless" besser für SEO?</h3>
+                    <p style="margin: 0;" data-translate="geo_ca3">
+                        Durch die Trennung von Frontend (React) und Backend laden Ihre Seiten in <strong>unter 1 Sekunde</strong>. Dies verbessert den <strong>Google Quality Score</strong> massiv und senkt Ihre CPC-Kosten für Werbung auf Facebook oder Google Ads.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+<section style="background-color: var(--light); padding: 80px 0;">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="case_title">Case Study: Mom's Hair Oil</h2>
+                <p data-translate="case_sub">Vom lokalen Geschäft zur internationalen D2C-Marke.</p>
+            </div>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center;">
+                <div style="flex: 1; min-width: 300px; text-align: left;">
+                    <h3 data-translate="case_h3" style="color: var(--primary); margin-bottom: 15px;">Die Herausforderung</h3>
+                    <p data-translate="case_p1">
+                        Der Kunde benötigte komplexe <strong>Versandregeln (Shipping Rules)</strong> basierend auf dem ROI und spezifische <strong>Coupon-Logiken</strong>, die Shopify nicht abbilden konnte.
+                    </p>
+                    
+                    <h3 data-translate="case_h3_2" style="color: var(--primary); margin-bottom: 15px; margin-top: 30px;">Die Lösung</h3>
+                    <p data-translate="case_p2">
+                        Wir entwickelten ein <strong>Custom Admin Panel</strong> (siehe Screenshot), das Inventar, MRP und Verkäufe in Echtzeit synchronisiert. Das System berechnet automatisch den profitabelsten Versandweg für Bestellungen in Indien und Deutschland.
+                    </p>
+
+                    <div style="margin-top: 30px; display: flex; gap: 20px;">
+                        <div style="text-align: center;">
+                            <span style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">+45%</span>
+                            <span style="font-size: 0.9rem; color: #666;" data-translate="case_stat1">Conversion Rate</span>
+                        </div>
+                        <div style="text-align: center;">
+                            <span style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">< 1s</span>
+                            <span style="font-size: 0.9rem; color: #666;" data-translate="case_stat2">Ladezeit (Web Vitals)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="flex: 1; min-width: 300px;">
+                    <div style="background: white; padding: 10px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #eee;">
+                        
+                        <img 
+                            src="admin-dashboard.jpg" 
+                            alt="SAN Commerce Admin Panel (Click to Zoom)" 
+                            class="zoom-trigger" 
+                            onclick="openModal(this.src)"
+                            style="width: 100%; height: auto; border-radius: 8px; display: block;"
+                        >
+                        
+                    </div>
+                    <p style="text-align: center; font-size: 0.8rem; color: #999; margin-top: 10px; font-style: italic;">
+                        <span style="cursor:pointer;" onclick="openModal('admin-dashboard.jpg')" data-translate="zoom_hint">🔍 Klick zum Vergrößern</span>
+                    </p>
+                    </p>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section style="background-color: var(--bg-suite);">
         <div class="container">
             <div class="section-header">
@@ -295,7 +423,31 @@
             </p>
         </div>
     </footer>
+	<div id="imageModal" class="img-modal" onclick="closeModal()">
+        <span class="close-img" onclick="closeModal()">&times;</span>
+        <img class="img-modal-content" id="imgExpanded">
+    </div>
 
+    <script>
+        function openModal(src) {
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("imgExpanded");
+            modal.style.display = "block";
+            modalImg.src = src;
+            document.body.style.overflow = "hidden"; // Stop background scrolling
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("imageModal");
+            modal.style.display = "none";
+            document.body.style.overflow = "auto"; // Re-enable scrolling
+        }
+
+        // Close on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") closeModal();
+        });
+    </script>
     <script>
         const translations = {
             'de': {
@@ -305,41 +457,50 @@
                 'comm_hero_title': 'SAN Commerce',
                 'comm_hero_sub': 'Das Betriebssystem für Direct-to-Consumer (D2C) Marken',
                 'comm_hero_desc': 'Keine Baukästen. Keine Kompromisse. Eine E-Commerce Plattform, die sich exakt an Ihre Logistik und Verkaufsregeln anpasst.',
-                
                 'comm_filter_title': 'Ist SAN Commerce das Richtige?',
                 'comm_filter_subtitle': 'Entwickelt für Marken, die aus Standard-Shop-Lösungen herausgewachsen sind.',
                 'comm_ideal_t': '✅ Ideal für...',
                 'comm_ideal_list': '<li>• D2C Marken mit eigenem Inventar</li><li>• Komplexe Versand- oder Bundle-Regeln</li><li>• Fokus auf Ladezeit & SEO-Performance</li><li>• Wunsch nach eigener Datenhoheit</li>',
                 'comm_not_ideal_t': '❌ Nicht geeignet für...',
                 'comm_not_ideal_list': '<li>• Klassisches Dropshipping</li><li>• "Schnell reich werden" Shops</li><li>• Händler ohne spezifische Anforderungen</li>',
-                
                 'comm_plain_t': 'Warum Custom Development?',
                 'comm_plain_p': 'Standard-Plattformen zwingen Sie in ihre Logik. SAN Commerce kehrt das Prinzip um: Die Software passt sich Ihrem Geschäftsprozess an – von der Kalkulation des ROI bis zur automatischen Zuweisung von Versanddienstleistern.',
-                'comm_plain_note': '💡 Das Ergebnis: Höhere Conversion-Rates durch Performance und massive Zeitersparnis im Backoffice.',
-                
+                'comm_plain_note': '💡 Das Ergebnis: Höhere Conversion-Rates durch Performance und massive Zeitersparnis im Backoffice.',                
                 'comm_edition_title': 'Zwei Säulen Ihres Erfolgs',
-                
+                'geo_comm_title': 'Warum Custom Commerce? (India & Germany Ready)',
+				'geo_comm_sub': 'Einblicke in das SAN Commerce "Merchant OS" Backend.',
+				'geo_cq1': 'Das "Merchant OS": Volle Kontrolle über Inventar & ROI',
+				'geo_ca1': 'Vergessen Sie unübersichtliche Dashboards. Unser <strong>Custom Admin Panel</strong> zeigt Ihnen den echten Gewinn pro Bestellung. Verwalten Sie <strong>Lagerbestände (Inventory)</strong>, komplexe <strong>Versandregeln</strong> und Coupons zentral – ohne teure Zusatz-Apps.',
+				'geo_cq2': 'Verkaufen in Deutschland & Indien gleichzeitig?',
+				'geo_ca2': 'SAN Commerce ist "Cross-Border Ready". Wir unterstützen <strong>Multi-Currency (EUR / INR)</strong> und lokale Zahlungsarten: <strong>UPI & Razorpay</strong> für Indien sowie <strong>SEPA & PayPal</strong> für Deutschland. Bestellungen werden automatisch an das passende Lager geleitet.',
+				'geo_cq3': 'Warum ist "Headless" besser für SEO?',
+				'geo_ca3': 'Durch die Trennung von Frontend (React) und Backend laden Ihre Seiten in <strong>unter 1 Sekunde</strong>. Dies verbessert den <strong>Google Quality Score</strong> und senkt Ihre Werbekosten.',
+				'case_title': "Fallstudie: Mom's Hair Oil",
+				'case_sub': 'Vom lokalen Geschäft zur internationalen D2C-Marke.',
+				'case_h3': 'Die Herausforderung',
+				'case_p1': 'Der Kunde benötigte komplexe <strong>Versandregeln (Shipping Rules)</strong> basierend auf dem ROI und spezifische <strong>Coupon-Logiken</strong>, die Shopify nicht abbilden konnte.',
+				'case_h3_2': 'Die Lösung',
+				'case_p2': 'Wir entwickelten ein <strong>Custom Admin Panel</strong>, das Inventar und Verkäufe in Echtzeit synchronisiert. Das System berechnet automatisch den profitabelsten Versandweg.',
+				'case_stat1': 'Conversion Rate',
+				'case_stat2': 'Ladezeit (Web Vitals)',
+				'zoom_hint': '🔍 Klick zum Vergrößern',
                 'tier_store_title': 'SAN Commerce CORE',
                 'tier_store_pos': 'Das Kundenerlebnis. Blitzschnell, mobil-optimiert und conversion-stark.',
                 'store_features': '<li>✓ Next-Gen Tech Stack (React/Node)</li><li>✓ < 1 Sekunde Ladezeit</li><li>✓ Individuelles UX/UI Design</li><li>✓ SEO-Optimierte Struktur</li>',
-                'note_store': 'Der "sichtbare" Teil Ihres Shops – gebaut um zu verkaufen.',
-                
+                'note_store': 'Der "sichtbare" Teil Ihres Shops – gebaut um zu verkaufen.',                
                 'tier_admin_title': 'SAN Commerce PRIME',
                 'tier_admin_pos': 'Das Gehirn (Merchant OS). Ein Admin-Panel, das Ihre operativen Probleme löst.',
                 'admin_features': '<li>✓ Individuelle Bestellverwaltung (OMS)</li><li>✓ Automatische Versand-Logik</li><li>✓ Echtzeit ROI & Profit Rechner</li><li>✓ Inventar- & Lager-Management</li>',
                 'note_admin': 'Das Backend, das Ihre täglichen Abläufe automatisiert.',
-
                 'comm_ext_title': 'Features, die den Unterschied machen',
                 'comm_ext_sub': 'Funktionen, die in Standard-Shops teure Apps erfordern, sind hier nativ integriert.',
                 'cext1': 'Smarte Logistik', 'cext2': 'WhatsApp Updates', 'cext3': 'Profit Analytics', 
                 'cext4': 'Dynamic Bundles', 'cext5': 'UPI / Payments', 'cext6': 'Coupon Engine',
-                
                 'proc_t': 'Implementation & Prozess',
-                'cs1': 'Analyse', 'cs2': 'Architektur', 'cs3': 'Development', 'cs4': 'Migration', 'cs5': 'Launch', 'cs6': 'Scaling',
-                
+                'cs1': 'Analyse', 'cs2': 'Architektur', 'cs3': 'Development', 'cs4': 'Migration', 'cs5': 'Launch', 'cs6': 'Scaling',                
                 'ccta_t': 'Bereit für den nächsten Schritt?',
                 'ccta_desc': 'Lassen Sie uns besprechen, wie wir Ihre manuellen Prozesse automatisieren können.',
-		'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
+				'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
                 'ccta_btn': 'Projekt anfragen'
             },
             'en': {
@@ -349,46 +510,56 @@
                 'comm_hero_title': 'SAN Commerce',
                 'comm_hero_sub': 'The Operating System for Direct-to-Consumer (D2C) Brands',
                 'comm_hero_desc': 'No templates. No compromises. An E-Commerce platform that adapts exactly to your logistics and sales rules.',
-                
                 'comm_filter_title': 'Is SAN Commerce right for you?',
                 'comm_filter_subtitle': 'Designed for brands that have outgrown standard shop solutions.',
                 'comm_ideal_t': '✅ Ideal for...',
                 'comm_ideal_list': '<li>• D2C brands with own inventory</li><li>• Complex shipping or bundle rules</li><li>• Focus on load time & SEO performance</li><li>• Desire for full data ownership</li>',
                 'comm_not_ideal_t': '❌ Not suitable for...',
                 'comm_not_ideal_list': '<li>• Classic Dropshipping</li><li>• "Get rich quick" stores</li><li>• Merchants without specific needs</li>',
-                
                 'comm_plain_t': 'Why Custom Development?',
                 'comm_plain_p': 'Standard platforms force you into their logic. SAN Commerce reverses the principle: The software adapts to your business process – from ROI calculation to automatic carrier assignment.',
                 'comm_plain_note': '💡 The result: Higher conversion rates through performance and massive time savings in the back office.',
-                
                 'comm_edition_title': 'Two Pillars of Success',
-                
+                'geo_comm_title': 'Why Custom Commerce? (India & Germany Ready)',
+				'geo_comm_sub': 'Insights into the SAN Commerce "Merchant OS" Backend.',
+				'geo_cq1': 'The "Merchant OS": Full Control over Inventory & ROI',
+				'geo_ca1': 'Forget cluttered standard dashboards. Our <strong>Custom Admin Panel</strong> shows you real-time profit per order. Manage <strong>Inventory</strong>, complex <strong>Shipping Rules</strong>, and Coupons centrally – without expensive plugin subscriptions.',
+				'geo_cq2': 'Selling in Germany & India simultaneously?',
+				'geo_ca2': 'SAN Commerce is "Cross-Border Ready". We support <strong>Multi-Currency (EUR / INR)</strong> and local payment gateways natively: <strong>UPI & Razorpay</strong> for India, and <strong>SEPA & PayPal</strong> for Germany. Orders are automatically routed to the correct local warehouse.',
+				'geo_cq3': 'Why is "Headless" better for SEO?',
+				'geo_ca3': 'By separating the Frontend (React) from the Backend, your pages load in <strong>under 1 second</strong>. This massively improves your <strong>Google Quality Score</strong> and lowers your CPC costs for ads.',
+				'case_title': "Case Study: Mom's Hair Oil",
+				'case_sub': 'From local business to international D2C brand.',
+				'case_h3': 'The Challenge',
+				'case_p1': 'The client needed complex <strong>Shipping Rules</strong> based on ROI and specific <strong>Coupon Logic</strong> that standard platforms could not handle.',
+				'case_h3_2': 'The Solution',
+				'case_p2': 'We developed a <strong>Custom Admin Panel</strong> that syncs inventory and sales in real-time. The system automatically calculates the most profitable shipping route.',
+				'case_stat1': 'Conversion Rate',
+				'case_stat2': 'Load Time (Web Vitals)',
+				'zoom_hint': '🔍 Click to Zoom',
                 'tier_store_title': 'SAN Commerce CORE',
                 'tier_store_pos': 'The Customer Experience. Lightning fast, mobile-optimized, and conversion-strong.',
                 'store_features': '<li>✓ Next-Gen Tech Stack (React/Node)</li><li>✓ < 1 Second Load Time</li><li>✓ Custom UX/UI Design</li><li>✓ SEO-Optimized Structure</li>',
-                'note_store': 'The "visible" part of your shop – built to sell.',
-                
+                'note_store': 'The "visible" part of your shop – built to sell.',                
                 'tier_admin_title': 'SAN Commerce PRIME',
                 'tier_admin_pos': 'The Brain (Merchant OS). An Admin Panel that solves your operational headaches.',
                 'admin_features': '<li>✓ Custom Order Mgmt (OMS)</li><li>✓ Automatic Shipping Logic</li><li>✓ Real-time ROI & Profit Calc</li><li>✓ Inventory & Warehouse Mgmt</li>',
                 'note_admin': 'The backend that automates your daily workflows.',
-
                 'comm_ext_title': 'Features that make the difference',
                 'comm_ext_sub': 'Features that require expensive apps in standard shops are integrated natively here.',
                 'cext1': 'Smart Logistics', 'cext2': 'WhatsApp Updates', 'cext3': 'Profit Analytics', 
                 'cext4': 'Dynamic Bundles', 'cext5': 'UPI / Payments', 'cext6': 'Coupon Engine',
-                
                 'proc_t': 'Implementation & Process',
                 'cs1': 'Analysis', 'cs2': 'Architecture', 'cs3': 'Development', 'cs4': 'Migration', 'cs5': 'Launch', 'cs6': 'Scaling',
-                
                 'ccta_t': 'Ready for the next step?',
                 'ccta_desc': 'Let\'s discuss how we can automate your manual processes.',
-		'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
+				'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
                 'ccta_btn': 'Request Project'
             }
         };
 
         const toggles = document.querySelectorAll('.lang-toggle-input');
+		document.addEventListener('contextmenu', event => event.preventDefault());
         function updateLanguage(lang) {
             document.querySelectorAll('[data-translate]').forEach(el => {
                 const key = el.getAttribute('data-translate');
@@ -428,5 +599,4 @@
 });
     </script>
 </body>
-
 </html>
