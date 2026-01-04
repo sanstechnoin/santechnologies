@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-translate="page_title">Softwareentwickler Euskirchen | Web & App Development | SAN Technologies</title>
-    <meta name="description" content="Avinash Vivekananthan: Freelance Software Engineer aus Euskirchen. Spezialisiert auf maßgeschneiderte Webentwicklung, KDS-Systeme und digitale Transformation.">
-    <meta name="keywords" content="Softwareentwickler Euskirchen, Freelance Developer, Webentwicklung, KDS System, App Entwicklung, React, Node.js">
     
-    <meta property="og:title" content="SAN Technologies | Software Engineering">
-    <meta property="og:description" content="Deutsche Ingenieurskunst für Ihr digitales Business. Web, App & Gastro-Software.">
+    <meta name="description" content="Avinash Vivekananthan: Freelance Software Engineer aus Euskirchen. Spezialisiert auf maßgeschneiderte Webentwicklung, KDS-Systeme und digitale Transformation." data-translate-meta="home_meta_desc">
+    <meta name="keywords" content="Softwareentwickler Euskirchen, Freelance Developer, Webentwicklung, KDS System, App Entwicklung, React, Node.js" data-translate-meta="home_keywords">
+    
+    <meta property="og:title" content="SAN Technologies | Software Engineering" data-translate-meta="home_og_title">
+    <meta property="og:description" content="Deutsche Ingenieurskunst für Ihr digitales Business. Web, App & Gastro-Software." data-translate-meta="home_og_desc">
     <meta property="og:image" content="https://santechnologies.de/logo.png">
     <meta property="og:type" content="website">
 
@@ -1026,6 +1027,10 @@
     const translations = {
         'de': {
             'page_title': 'Softwareentwickler Euskirchen | Web & App Development | SAN Technologies',
+			'home_meta_desc': 'Avinash Vivekananthan: Freelance Software Engineer aus Euskirchen. Spezialisiert auf maßgeschneiderte Webentwicklung, KDS-Systeme und digitale Transformation.',
+			'home_keywords': 'Softwareentwickler Euskirchen, Freelance Developer, Webentwicklung, KDS System, App Entwicklung, React, Node.js',
+			'home_og_title': 'SAN Technologies | Software Engineering',
+			'home_og_desc': 'Deutsche Ingenieurskunst für Ihr digitales Business. Web, App & Gastro-Software.',
             'nav_work': 'Referenzen', 'nav_services': 'Leistungen', 'nav_about': 'Über Mich', 'nav_contact': 'Kontakt', 'nav_products': 'Produkte',
             'hero_intro': 'AVINASH VIVEKANANTHAN — FREIBERUFLICHER SOTFWAREENTWICKLER',
             'hero_title': 'Ihr Geschäft transformieren – mit maßgeschneidertem Code.',
@@ -1104,6 +1109,10 @@
         },
         'en': {
             'page_title': 'Software Engineer Euskirchen | Web & App Development | SAN Technologies',
+			'home_meta_desc': 'Avinash Vivekananthan: Freelance Software Engineer based in Euskirchen. Specializing in custom web development, KDS systems, and digital transformation.',
+			'home_keywords': 'Software Engineer Germany, Freelance Developer, Web Development, KDS System, App Development, React, Node.js',
+			'home_og_title': 'SAN Technologies | Software Engineering',
+			'home_og_desc': 'German engineering for your digital business. Web, App & Gastro Software.',
             'nav_work': 'Work', 'nav_services': 'Services', 'nav_about': 'About Me', 'nav_contact': 'Contact', 'nav_products': 'Products',
             'hero_intro': 'AVINASH VIVEKANANTHAN — FREELANCE SOFTWARE ENGINEER',
             'hero_title': 'Transforming Business through Custom Code.',
@@ -1184,14 +1193,21 @@
 
     const toggles = document.querySelectorAll('.lang-toggle-input');
     const translatableElements = document.querySelectorAll('[data-translate]');
-
     function updateLanguage(lang) {
-        translatableElements.forEach(el => {
-            const key = el.getAttribute('data-translate');
-            if (translations[lang][key]) { el.innerHTML = translations[lang][key]; }
-        });
-        document.documentElement.lang = lang;
-    }
+            // 1. Text Elements (innerHTML)
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+
+            // 2. Meta Tags (content attribute)
+            document.querySelectorAll('[data-translate-meta]').forEach(el => {
+                const key = el.getAttribute('data-translate-meta');
+                if (translations[lang][key]) el.setAttribute('content', translations[lang][key]);
+            });
+
+            document.documentElement.lang = lang;
+        }
 
     // --- MEMORY LOGIC (localStorage) ---
 
@@ -1225,6 +1241,7 @@
 </script>
 </body>
 </html>
+
 
 
 
