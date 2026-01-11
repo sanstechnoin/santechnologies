@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Suite - Postcard Final</title>
+    <title>SAN Suite - Euskirchen Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
@@ -41,12 +41,11 @@
         /* --- FRONT SIDE --- */
         .front { background-color: var(--dark); color: white; }
 
-        /* IMAGE GRID (60% width) */
         .front-visuals {
             flex: 6;
             display: flex;
             flex-direction: column;
-            border-right: 4px solid var(--accent); /* Visual divider */
+            border-right: 4px solid var(--accent);
         }
 
         /* Top Image: KDS */
@@ -58,7 +57,6 @@
         }
         .img-top img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
         
-        /* Small badge just to identify the screen type (optional, can remove) */
         .img-badge {
             position: absolute; top: 12px; left: 12px;
             background: rgba(0,0,0,0.8); color: var(--accent);
@@ -73,9 +71,10 @@
             overflow: hidden;
             position: relative;
         }
+        /* Replace this src with 'scan-table.png' when ready */
         .img-bottom img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Sidebar (40% width) - NOW HOLDS THE TEXT */
+        /* Sidebar */
         .front-sidebar {
             flex: 4;
             background: linear-gradient(135deg, var(--primary) 0%, #004d50 100%);
@@ -89,7 +88,6 @@
 
         .logo-area img { width: 130px; filter: brightness(0) invert(1); display: block; margin-bottom: 30px;}
         
-        /* The Main Hook text moved here */
         .sidebar-headline { 
             font-size: 32px; 
             font-weight: 800; 
@@ -107,15 +105,21 @@
             margin-bottom: auto;
         }
 
+        /* The "Made in Euskirchen" Footer */
         .bottom-tag {
             margin-top: auto;
-            font-size: 11px;
-            color: rgba(255,255,255,0.7);
+            font-size: 10px;
+            color: rgba(255,255,255,0.9);
             border-top: 1px solid rgba(255,255,255,0.2);
-            padding-top: 10px;
+            padding-top: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
+        .heart { color: #ff4d4d; font-size: 12px; }
 
-        /* --- BACK SIDE (Unchanged logic, just clean layout) --- */
+        /* --- BACK SIDE --- */
         .back { background: white; flex-direction: row; }
 
         .back-content {
@@ -128,7 +132,6 @@
         .back-header { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
         .back-sub { font-size: 11px; color: #666; margin-bottom: 20px; font-weight: 500; }
 
-        /* FEATURE TABLE */
         .feature-table {
             width: 100%;
             border-collapse: collapse;
@@ -142,14 +145,20 @@
         .icon-cell { width: 20px; font-size: 14px; }
         .check-icon { color: var(--accent); font-weight: bold; }
 
-        .disclaimer-box {
+        /* The "Impressive" Local Badge */
+        .local-badge {
+            background: #f0fbfc;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            padding: 8px 12px;
             margin-top: 15px;
-            border-top: 1px solid #eee;
-            padding-top: 8px;
-            font-size: 8px;
-            color: #999;
-            line-height: 1.3;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+        .lb-icon { font-size: 18px; }
+        .lb-text { font-size: 9px; color: var(--primary); line-height: 1.3; }
+        .lb-text strong { font-size: 10px; font-weight: 700; display: block; }
 
         .back-action {
             flex: 3.5;
@@ -179,14 +188,11 @@
     <div>
         <h2>Front Side</h2>
         <div class="card front">
-            
             <div class="front-visuals">
-                
                 <div class="img-top">
                     <div class="img-badge">Kitchen View</div>
                     <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/pos-screen.jpg" alt="Kitchen Display">
                 </div>
-
                 <div class="img-bottom">
                     <div class="img-badge">Guest View</div>
                     <img src="https://images.unsplash.com/photo-1595079676339-1534801fafde?auto=format&fit=crop&q=80&w=800" alt="Scanning QR Code">
@@ -206,7 +212,7 @@
                 </div>
 
                 <div class="bottom-tag">
-                    German Engineering for<br>Modern Hospitality.
+                    Made with <span class="heart">❤</span> in Euskirchen.
                 </div>
             </div>
         </div>
@@ -229,7 +235,7 @@
                     <tbody>
                         <tr>
                             <td class="icon-cell">📱</td>
-                            <td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:9px;">Guests scan & order at the table/room.</span></td>
+                            <td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:9px;">Guests scan & order at table/room.</span></td>
                             <td class="check-icon">✓ Yes</td>
                         </tr>
                         <tr>
@@ -239,19 +245,18 @@
                         </tr>
                         <tr>
                             <td class="icon-cell">🛵</td>
-                            <td><strong>Delivery & Logistics</strong><br><span style="color:#777; font-size:9px;">Manage drivers. Live Tracker optional.</span></td>
-                            <td class="check-icon">✓ Yes</td>
-                        </tr>
-                        <tr>
-                            <td class="icon-cell">🛍️</td>
-                            <td><strong>Pickup / Takeaway</strong><br><span style="color:#777; font-size:9px;">Guests order online & pick up.</span></td>
+                            <td><strong>Delivery & Logistics</strong><br><span style="color:#777; font-size:9px;">Live Tracking optional.</span></td>
                             <td class="check-icon">✓ Yes</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div class="disclaimer-box">
-                    <strong>*Legal Note:</strong> SAN Suite CORE handles ordering workflow independently. Payment processing requires connection to your existing compliant POS or upgrade to SAN Suite PRIME.
+                <div class="local-badge">
+                    <div class="lb-icon">🤝</div>
+                    <div class="lb-text">
+                        <strong>Ihr lokaler Partner in Euskirchen.</strong>
+                        Keine Hotline. Kein Callcenter. Persönlicher Support vor Ort.
+                    </div>
                 </div>
             </div>
 
