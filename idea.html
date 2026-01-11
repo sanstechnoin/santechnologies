@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Suite - Euskirchen Edition</title>
+    <title>SAN Suite - Final Postcard</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
@@ -60,7 +60,7 @@
         .img-badge {
             position: absolute; top: 12px; left: 12px;
             background: rgba(0,0,0,0.8); color: var(--accent);
-            font-size: 8px; font-weight: 700; padding: 4px 8px;
+            font-size: 9px; font-weight: 700; padding: 4px 8px;
             text-transform: uppercase; border-radius: 4px;
             letter-spacing: 1px;
         }
@@ -71,7 +71,6 @@
             overflow: hidden;
             position: relative;
         }
-        /* Replace this src with 'scan-table.png' when ready */
         .img-bottom img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Sidebar */
@@ -92,7 +91,7 @@
             font-size: 32px; 
             font-weight: 800; 
             color: white; 
-            line-height: 1.1; 
+            line-height: 1.2; 
             margin-bottom: 10px;
         }
         
@@ -105,7 +104,6 @@
             margin-bottom: auto;
         }
 
-        /* The "Made in Euskirchen" Footer */
         .bottom-tag {
             margin-top: auto;
             font-size: 10px;
@@ -130,7 +128,7 @@
         }
 
         .back-header { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
-        .back-sub { font-size: 11px; color: #666; margin-bottom: 20px; font-weight: 500; }
+        .back-sub { font-size: 11px; color: #666; margin-bottom: 15px; font-weight: 500; }
 
         .feature-table {
             width: 100%;
@@ -139,13 +137,13 @@
             margin-bottom: auto;
         }
         .feature-table th { text-align: left; color: #888; font-weight: 500; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .feature-table td { padding: 8px 0; border-bottom: 1px solid #f4f4f4; color: var(--dark); vertical-align: middle; }
+        .feature-table td { padding: 6px 0; border-bottom: 1px solid #f4f4f4; color: var(--dark); vertical-align: middle; }
         .feature-table td:last-child { text-align: right; color: var(--primary); font-weight: 700; }
         
         .icon-cell { width: 20px; font-size: 14px; }
         .check-icon { color: var(--accent); font-weight: bold; }
 
-        /* The "Impressive" Local Badge */
+        /* Local Badge */
         .local-badge {
             background: #f0fbfc;
             border: 1px solid var(--accent);
@@ -188,14 +186,15 @@
     <div>
         <h2>Front Side</h2>
         <div class="card front">
+            
             <div class="front-visuals">
                 <div class="img-top">
-                    <div class="img-badge">Kitchen View</div>
+                    <div class="img-badge">Kitchen Display (KDS)</div>
                     <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/pos-screen.jpg" alt="Kitchen Display">
                 </div>
                 <div class="img-bottom">
-                    <div class="img-badge">Guest View</div>
-                    <img src="https://images.unsplash.com/photo-1595079676339-1534801fafde?auto=format&fit=crop&q=80&w=800" alt="Scanning QR Code">
+                    <div class="img-badge">Guest Scanning</div>
+                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/scan-table.png" alt="Scanning QR Code">
                 </div>
             </div>
 
@@ -207,8 +206,7 @@
                 <div class="sidebar-sub">F&B Operations Platform</div>
                 <div class="sidebar-headline">
                     Dine-In.<br>
-                    Pickup.<br>
-                    Delivery.
+                    Click &<br>Collect.
                 </div>
 
                 <div class="bottom-tag">
@@ -223,7 +221,7 @@
         <div class="card back">
             <div class="back-content">
                 <div class="back-header">Modernize Your Hotel Dining</div>
-                <div class="back-sub">A complete system for efficient F&B operations.</div>
+                <div class="back-sub">Effortless ordering for guests & staff.</div>
 
                 <table class="feature-table">
                     <thead>
@@ -234,18 +232,23 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td class="icon-cell">📜</td>
+                            <td><strong>Digital Menu Card</strong><br><span style="color:#777; font-size:9px;">Always up-to-date. No printing costs.</span></td>
+                            <td class="check-icon">✓ Yes</td>
+                        </tr>
+                        <tr>
                             <td class="icon-cell">📱</td>
-                            <td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:9px;">Guests scan & order at table/room.</span></td>
+                            <td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:9px;">Guests scan & order at the table.</span></td>
+                            <td class="check-icon">✓ Yes</td>
+                        </tr>
+                        <tr>
+                            <td class="icon-cell">🛍️</td>
+                            <td><strong>Click & Collect</strong><br><span style="color:#777; font-size:9px;">Order online & pick up at the counter.</span></td>
                             <td class="check-icon">✓ Yes</td>
                         </tr>
                         <tr>
                             <td class="icon-cell">📺</td>
                             <td><strong>Kitchen Display (KDS)</strong><br><span style="color:#777; font-size:9px;">Digital tickets. Zero paper chaos.</span></td>
-                            <td class="check-icon">✓ Yes</td>
-                        </tr>
-                        <tr>
-                            <td class="icon-cell">🛵</td>
-                            <td><strong>Delivery & Logistics</strong><br><span style="color:#777; font-size:9px;">Live Tracking optional.</span></td>
                             <td class="check-icon">✓ Yes</td>
                         </tr>
                     </tbody>
