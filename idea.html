@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Suite - English & German Versions</title>
+    <title>SAN Suite - Sales Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
@@ -12,6 +12,7 @@
             --accent: #00BCD4;   /* Bright Cyan */
             --dark: #1a1a1a;
             --light: #f4f7f6;
+            --white: #ffffff;
             --card-width: 600px;
             --card-height: 400px;
         }
@@ -23,10 +24,9 @@
             flex-direction: column;
             align-items: center;
             padding: 40px;
-            gap: 60px; /* Space between language versions */
+            gap: 60px;
         }
 
-        /* Section Separators */
         .version-label {
             font-size: 24px;
             font-weight: 800;
@@ -40,11 +40,7 @@
 
         h2 { color: #666; text-transform: uppercase; letter-spacing: 1px; font-size: 14px; margin-bottom: 10px; text-align: center; }
 
-        .card-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        .card-container { display: flex; flex-direction: column; gap: 20px; }
 
         .card {
             width: var(--card-width);
@@ -57,13 +53,13 @@
         }
 
         /* --- FRONT SIDE --- */
-        .front { background-color: var(--dark); color: white; }
+        .front { background-color: var(--white); color: var(--dark); }
 
         .front-visuals {
             flex: 6;
             display: flex;
             flex-direction: column;
-            border-right: 4px solid var(--accent);
+            border-right: 1px solid #eee; /* Subtle divider for white bg */
         }
 
         /* Top Image */
@@ -91,10 +87,10 @@
         }
         .img-bottom img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Sidebar */
+        /* Sidebar - NOW WHITE BACKGROUND */
         .front-sidebar {
             flex: 4;
-            background: linear-gradient(135deg, var(--primary) 0%, #004d50 100%);
+            background: var(--white); /* White Background */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -103,30 +99,46 @@
             text-align: left;
         }
 
-        .logo-area img { width: 130px; filter: brightness(0) invert(1); display: block; margin-bottom: 25px;}
+        .logo-area img { width: 130px; display: block; margin-bottom: 25px;} /* Normal logo colors */
         
+        /* New "KDS System" Label */
+        .system-tag {
+            background: var(--primary);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            border-radius: 4px;
+            align-self: flex-start;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        /* The "Why Pay More" Hook */
         .sidebar-headline { 
             font-size: 28px; 
             font-weight: 800; 
-            color: white; 
-            line-height: 1.2; 
+            color: var(--dark); 
+            line-height: 1.1; 
             margin-bottom: 10px;
         }
         
+        .highlight-red { color: #d32f2f; }
+
         .sidebar-sub {
-            font-size: 12px;
-            color: var(--accent);
+            font-size: 14px;
+            color: #555;
             font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            line-height: 1.4;
             margin-bottom: auto;
         }
 
         .bottom-tag {
             margin-top: auto;
             font-size: 10px;
-            color: rgba(255,255,255,0.9);
-            border-top: 1px solid rgba(255,255,255,0.2);
+            color: #999;
+            border-top: 1px solid #eee;
             padding-top: 12px;
             font-weight: 500;
             display: flex;
@@ -135,7 +147,7 @@
         }
         .heart { color: #ff4d4d; font-size: 12px; }
 
-        /* --- BACK SIDE --- */
+        /* --- BACK SIDE (Same structure) --- */
         .back { background: white; flex-direction: row; }
 
         .back-content {
@@ -161,7 +173,6 @@
         .icon-cell { width: 20px; font-size: 14px; }
         .check-icon { color: var(--accent); font-weight: bold; font-size: 10px; }
 
-        /* Disclaimer */
         .disclaimer-box {
             margin-top: 15px;
             border-top: 1px solid #eee;
@@ -174,7 +185,6 @@
             border-radius: 4px;
         }
 
-        /* Local Badge */
         .local-badge {
             background: #f0fbfc;
             border: 1px solid var(--accent);
@@ -233,12 +243,19 @@
                 <div class="front-sidebar">
                     <div class="logo-area">
                         <img src="logo.png" alt="SAN Technologies" onerror="this.style.display='none';"> 
-                        <div style="color:white; font-weight:800; font-size:20px; margin-bottom:20px; display:none;">SAN Technologies</div>
+                        <div style="color:#006064; font-weight:800; font-size:20px; margin-bottom:20px; display:none;">SAN Technologies</div>
                     </div>
-                    <div class="sidebar-sub">F&B Operations Platform</div>
+                    
+                    <div class="system-tag">New KDS System</div>
+
                     <div class="sidebar-headline">
-                        Dine-In.<br>Pickup.<br>Delivery.
+                        Why pay <span class="highlight-red">30%</span><br>delivery fees?
                     </div>
+                    <div class="sidebar-sub">
+                        Keep the profit.<br>
+                        Use your own system.
+                    </div>
+
                     <div class="bottom-tag">Made with <span class="heart">❤</span> in Euskirchen.</div>
                 </div>
             </div>
@@ -248,8 +265,8 @@
             <h2>Back Side (EN)</h2>
             <div class="card back">
                 <div class="back-content">
-                    <div class="back-header">Modernize Your Hotel Dining</div>
-                    <div class="back-sub">Effortless ordering for guests & staff.</div>
+                    <div class="back-header">Modernize Your Operations</div>
+                    <div class="back-sub">Save money with direct orders & efficiency.</div>
 
                     <table class="feature-table">
                         <thead>
@@ -264,16 +281,16 @@
                         </tbody>
                     </table>
 
-                    <div class="disclaimer-box">
-                        <strong>*Legal Note:</strong> SAN Suite CORE is designed for order management and kitchen workflow. It requires a separate, legally compliant POS system for final payment processing (unless upgraded to SAN Suite PRIME).
-                    </div>
-
                     <div class="local-badge">
                         <div class="lb-icon">🤝</div>
                         <div class="lb-text">
                             <strong>Your Local Partner in Euskirchen.</strong>
                             No Hotline. No Call Center. Personal support on-site.
                         </div>
+                    </div>
+
+                    <div class="disclaimer-box">
+                        <strong>*Legal Note:</strong> SAN Suite CORE is designed for order management and kitchen workflow. It requires a separate, legally compliant POS system for final payment processing (unless upgraded to SAN Suite PRIME).
                     </div>
                 </div>
 
@@ -309,10 +326,17 @@
                     <div class="logo-area">
                         <img src="logo.png" alt="SAN Technologies" onerror="this.style.display='none';"> 
                     </div>
-                    <div class="sidebar-sub">F&B Operations Plattform</div>
+                    
+                    <div class="system-tag">Neues KDS System</div>
+
                     <div class="sidebar-headline">
-                        Dine-In.<br>Abholung.<br>Lieferung.
+                        Warum <span class="highlight-red">30%</span><br>Gebühren zahlen?
                     </div>
+                    <div class="sidebar-sub">
+                        Sparen Sie sich die Provision.<br>
+                        Nutzen Sie Ihr eigenes System.
+                    </div>
+
                     <div class="bottom-tag">Made with <span class="heart">❤</span> in Euskirchen.</div>
                 </div>
             </div>
@@ -322,8 +346,8 @@
             <h2>Rückseite (DE)</h2>
             <div class="card back">
                 <div class="back-content">
-                    <div class="back-header">Modernisieren Sie Ihre Hotel-Gastro</div>
-                    <div class="back-sub">Einfache Abläufe für Gäste & Personal.</div>
+                    <div class="back-header">Modernisieren Sie Ihren Betrieb</div>
+                    <div class="back-sub">Einfache Abläufe & keine Provisionen.</div>
 
                     <table class="feature-table">
                         <thead>
@@ -338,16 +362,16 @@
                         </tbody>
                     </table>
 
-                    <div class="disclaimer-box">
-                        <strong>*Rechtlicher Hinweis:</strong> SAN Suite CORE dient dem Bestellmanagement und Küchen-Workflow. Die Zahlungsabwicklung erfolgt über Ihr bestehendes Kassensystem (sofern kein Upgrade auf SAN Suite PRIME erfolgt).
-                    </div>
-
                     <div class="local-badge">
                         <div class="lb-icon">🤝</div>
                         <div class="lb-text">
                             <strong>Ihr lokaler Partner in Euskirchen.</strong>
                             Keine Hotline. Kein Callcenter. Persönlicher Support vor Ort.
                         </div>
+                    </div>
+
+                    <div class="disclaimer-box">
+                        <strong>*Rechtlicher Hinweis:</strong> SAN Suite CORE dient dem Bestellmanagement und Küchen-Workflow. Die Zahlungsabwicklung erfolgt über Ihr bestehendes Kassensystem (sofern kein Upgrade auf SAN Suite PRIME erfolgt).
                     </div>
                 </div>
 
