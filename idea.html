@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Suite - Final Postcard (All Options)</title>
+    <title>SAN Suite - Flexible Option</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
@@ -48,7 +48,7 @@
             border-right: 4px solid var(--accent);
         }
 
-        /* Top Image: KDS */
+        /* Top Image */
         .img-top {
             flex: 1;
             overflow: hidden;
@@ -65,7 +65,7 @@
             letter-spacing: 1px;
         }
 
-        /* Bottom Image: QR Scan */
+        /* Bottom Image */
         .img-bottom {
             flex: 1;
             overflow: hidden;
@@ -88,15 +88,15 @@
         .logo-area img { width: 130px; filter: brightness(0) invert(1); display: block; margin-bottom: 25px;}
         
         .sidebar-headline { 
-            font-size: 28px; 
+            font-size: 34px; 
             font-weight: 800; 
             color: white; 
-            line-height: 1.2; 
+            line-height: 1.1; 
             margin-bottom: 10px;
         }
         
         .sidebar-sub {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--accent);
             font-weight: 500;
             text-transform: uppercase;
@@ -122,7 +122,7 @@
 
         .back-content {
             flex: 6.5;
-            padding: 25px; /* Slightly reduced padding to fit list */
+            padding: 25px;
             display: flex;
             flex-direction: column;
         }
@@ -130,32 +130,44 @@
         .back-header { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
         .back-sub { font-size: 11px; color: #666; margin-bottom: 15px; font-weight: 500; }
 
-        .feature-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 10px; /* Slightly smaller to fit 5 items */
-            margin-bottom: auto;
+        /* DEPLOYMENT OPTIONS BOX */
+        .options-box {
+            background: #f0fbfc;
+            border: 1px solid #bcebf0;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 15px;
         }
-        .feature-table th { text-align: left; color: #888; font-weight: 500; border-bottom: 1px solid #eee; padding-bottom: 4px; }
-        .feature-table td { padding: 5px 0; border-bottom: 1px solid #f4f4f4; color: var(--dark); vertical-align: middle; }
-        .feature-table td:last-child { text-align: right; color: var(--primary); font-weight: 700; }
-        
-        .icon-cell { width: 20px; font-size: 14px; }
-        .check-icon { color: var(--accent); font-weight: bold; font-size: 10px; }
+        .option-row { display: flex; margin-bottom: 8px; align-items: flex-start; }
+        .option-row:last-child { margin-bottom: 0; }
+        .opt-badge { 
+            background: var(--primary); color: white; 
+            font-size: 9px; font-weight: 700; padding: 3px 6px; 
+            border-radius: 3px; margin-right: 8px; width: 60px; text-align: center; flex-shrink: 0;
+        }
+        .opt-badge.full { background: var(--accent); color: var(--dark); }
+        .opt-text { font-size: 10px; color: #333; line-height: 1.3; }
+
+        /* Feature List (Compact) */
+        .feature-list {
+            list-style: none; padding: 0; margin: 0;
+            font-size: 10px; color: #444;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 5px;
+        }
+        .feature-list li { display: flex; align-items: center; gap: 5px; }
+        .feature-list li::before { content: '✓'; color: var(--accent); font-weight: bold; }
 
         /* Local Badge */
         .local-badge {
-            background: #f0fbfc;
-            border: 1px solid var(--accent);
-            border-radius: 6px;
-            padding: 6px 10px;
-            margin-top: 12px;
+            margin-top: auto;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         .lb-icon { font-size: 16px; }
-        .lb-text { font-size: 8px; color: var(--primary); line-height: 1.3; }
+        .lb-text { font-size: 9px; color: var(--primary); line-height: 1.3; }
         .lb-text strong { font-size: 9px; font-weight: 700; display: block; }
 
         .back-action {
@@ -190,24 +202,25 @@
             <div class="front-visuals">
                 <div class="img-top">
                     <div class="img-badge">Kitchen Display (KDS)</div>
-                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/pos-screen.jpg" alt="Kitchen Display">
+                    <img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x300?text=pos-screen.jpg'">
                 </div>
                 <div class="img-bottom">
                     <div class="img-badge">Guest Scanning</div>
-                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/scan-table.png" alt="Scanning QR Code">
+                    <img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x300?text=scan-table.png'">
                 </div>
             </div>
 
             <div class="front-sidebar">
                 <div class="logo-area">
-                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" alt="SAN Technologies">
+                    <img src="logo.png" alt="SAN Technologies" onerror="this.style.display='none';"> 
                 </div>
                 
                 <div class="sidebar-sub">F&B Operations Platform</div>
                 <div class="sidebar-headline">
-                    Dine-In.<br>
-                    Pickup.<br>
-                    Delivery.
+                    Your POS<br>Remains.
+                </div>
+                <div style="font-size: 11px; color:rgba(255,255,255,0.8); line-height:1.3; margin-top:5px;">
+                    Unless you want<br>to replace it.
                 </div>
 
                 <div class="bottom-tag">
@@ -221,44 +234,36 @@
         <h2>Back Side</h2>
         <div class="card back">
             <div class="back-content">
-                <div class="back-header">Modernize Your Hotel Dining</div>
-                <div class="back-sub">Effortless ordering for guests & staff.</div>
+                <div class="back-header">Flexible Digital Upgrade</div>
+                <div class="back-sub">Modernize your F&B without disrupting operations.</div>
 
-                <table class="feature-table">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Module</th>
-                            <th>Included</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="icon-cell">📜</td>
-                            <td><strong>Digital Menu Card</strong><br><span style="color:#777; font-size:8px;">Always up-to-date. No printing costs.</span></td>
-                            <td class="check-icon">✓ Yes</td>
-                        </tr>
-                        <tr>
-                            <td class="icon-cell">📱</td>
-                            <td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:8px;">Guests scan & order at the table.</span></td>
-                            <td class="check-icon">✓ Yes</td>
-                        </tr>
-                        <tr>
-                            <td class="icon-cell">🛍️</td>
-                            <td><strong>Click & Collect</strong><br><span style="color:#777; font-size:8px;">Order online & pick up at the counter.</span></td>
-                            <td class="check-icon">✓ Yes</td>
-                        </tr>
-                        <tr>
-                            <td class="icon-cell">🛵</td>
-                            <td><strong>Delivery & Logistics</strong><br><span style="color:#777; font-size:8px;">Includes Live Driver Tracking.</span></td>
-                            <td class="check-icon">✓ Yes</td>
-                        </tr>
-                        <tr>
-                            <td class="icon-cell">📺</td>
-                            <td><strong>Kitchen Display (KDS)</strong><br><span style="color:#777; font-size:8px;">Digital tickets. Zero paper chaos.</span></td>
-                            <td class="check-icon">✓ Yes</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="options-box">
+                    <div class="option-row">
+                        <div class="opt-badge">ADD-ON</div>
+                        <div class="opt-text">
+                            <strong>Interactive Ordering Tool</strong><br>
+                            We handle QR, KDS & Delivery. <br>
+                            Uses <u>your existing POS & TSE</u>.
+                        </div>
+                    </div>
+                    <div class="option-row">
+                        <div class="opt-badge full">FULL SYSTEM</div>
+                        <div class="opt-text">
+                            <strong>Complete All-in-One</strong><br>
+                            We replace your legacy system. <br>
+                            Includes <u>Certified Cloud-TSE</u>.
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="feature-list">
+                    <li>Digital Menu Card</li>
+                    <li>QR Dine-In Ordering</li>
+                    <li>Click & Collect</li>
+                    <li>Delivery w/ Tracker</li>
+                    <li>Kitchen Display (KDS)</li>
+                    <li>WhatsApp Alerts</li>
+                </ul>
 
                 <div class="local-badge">
                     <div class="lb-icon">🤝</div>
