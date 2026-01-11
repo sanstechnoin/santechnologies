@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Suite - Final Image Layout</title>
+    <title>SAN Suite - Final Rounded Logo Box</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
@@ -67,8 +67,8 @@
             padding: 40px; 
             position: relative;
             border-bottom: 4px solid var(--accent);
-            align-items: center; /* Vertically center content */
-            justify-content: space-between; /* Push text left, logo right */
+            align-items: center; 
+            justify-content: space-between; 
         }
 
         /* Left Column: Text */
@@ -82,24 +82,25 @@
 
         /* Right Column: Logo Box */
         .front-logo-col {
-            flex: 0 0 180px; /* Fixed width for the right side */
+            flex: 0 0 180px; 
             display: flex;
             flex-direction: column;
-            align-items: flex-end; /* Align to right */
+            align-items: flex-end; 
             justify-content: center;
         }
 
-        /* The White Logo Box */
+        /* The White Logo Box with ROUNDED CORNERS */
         .logo-box-square {
             background: white;
             width: 180px;
-            height: 160px; /* Slightly rectangular/square */
+            height: 160px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             padding: 15px;
-            margin-bottom: 15px; /* Space for "Made in" text */
+            margin-bottom: 15px;
+            border-radius: 15px; /* <--- ROUNDED CORNERS ADDED */
         }
         .logo-box-square img {
             width: 100%;
@@ -178,7 +179,7 @@
             z-index: 2;
         }
 
-        /* --- BACK SIDE (Standard) --- */
+        /* --- BACK SIDE --- */
         .back { background: white; flex-direction: row; }
 
         .back-content {
@@ -271,7 +272,7 @@
 
                     <div class="front-logo-col">
                         <div class="logo-box-square">
-                            <img src="card_with_logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x100?text=LOGO'"> 
+                            <img src="Master_Email_Logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x100?text=LOGO'"> 
                         </div>
                         <div class="made-in-text">Made with <span class="heart">❤</span> in Euskirchen.</div>
                     </div>
@@ -357,7 +358,7 @@
 
                     <div class="front-logo-col">
                         <div class="logo-box-square">
-                            <img src="card_with_logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x100?text=LOGO'"> 
+                            <img src="Master_Email_Logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x100?text=LOGO'"> 
                         </div>
                         <div class="made-in-text">Made with <span class="heart">❤</span> in Euskirchen.</div>
                     </div>
