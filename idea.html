@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Suite - Dine-In & Delivery Postcard</title>
+    <title>SAN Suite - Postcard Final</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
@@ -46,7 +46,7 @@
             flex: 6;
             display: flex;
             flex-direction: column;
-            position: relative;
+            border-right: 4px solid var(--accent); /* Visual divider */
         }
 
         /* Top Image: KDS */
@@ -58,12 +58,13 @@
         }
         .img-top img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
         
-        /* Label for Top Image */
-        .img-label {
-            position: absolute; top: 10px; left: 10px;
-            background: rgba(0,0,0,0.7); color: white;
-            font-size: 9px; font-weight: 700; padding: 3px 8px;
-            text-transform: uppercase; border-radius: 3px;
+        /* Small badge just to identify the screen type (optional, can remove) */
+        .img-badge {
+            position: absolute; top: 12px; left: 12px;
+            background: rgba(0,0,0,0.8); color: var(--accent);
+            font-size: 8px; font-weight: 700; padding: 4px 8px;
+            text-transform: uppercase; border-radius: 4px;
+            letter-spacing: 1px;
         }
 
         /* Bottom Image: QR Scan */
@@ -74,57 +75,47 @@
         }
         .img-bottom img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Overlay Text */
-        .front-overlay {
-            position: absolute;
-            bottom: 0; left: 0; width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%);
-            padding: 20px 20px 25px 20px;
-            z-index: 10;
-        }
-        
-        .front-headline {
-            font-size: 26px;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-        .front-sub {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Sidebar (40% width) */
+        /* Sidebar (40% width) - NOW HOLDS THE TEXT */
         .front-sidebar {
             flex: 4;
             background: linear-gradient(135deg, var(--primary) 0%, #004d50 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 25px;
+            padding: 30px;
             position: relative;
-            z-index: 20; /* Sit above images */
-            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+            text-align: left;
         }
 
-        .logo-area img { width: 120px; filter: brightness(0) invert(1); display: block; margin-bottom: auto;}
+        .logo-area img { width: 130px; filter: brightness(0) invert(1); display: block; margin-bottom: 30px;}
         
-        .sidebar-text { margin-top: auto; }
-        .sidebar-title { font-size: 20px; font-weight: 700; margin-bottom: 5px; color: white; }
-        .sidebar-list { list-style: none; padding: 0; margin: 0; }
-        .sidebar-list li {
-            font-size: 12px; color: rgba(255,255,255,0.9);
-            margin-bottom: 6px; padding-left: 15px; position: relative;
+        /* The Main Hook text moved here */
+        .sidebar-headline { 
+            font-size: 32px; 
+            font-weight: 800; 
+            color: white; 
+            line-height: 1.1; 
+            margin-bottom: 10px;
         }
-        .sidebar-list li::before {
-            content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: bold;
+        
+        .sidebar-sub {
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: auto;
         }
 
-        /* --- BACK SIDE --- */
+        .bottom-tag {
+            margin-top: auto;
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 10px;
+        }
+
+        /* --- BACK SIDE (Unchanged logic, just clean layout) --- */
         .back { background: white; flex-direction: row; }
 
         .back-content {
@@ -192,18 +183,13 @@
             <div class="front-visuals">
                 
                 <div class="img-top">
-                    <div class="img-label">Kitchen Display (KDS)</div>
-                    <img src="pos-screen.jpg" alt="Kitchen Display">
+                    <div class="img-badge">Kitchen View</div>
+                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/pos-screen.jpg" alt="Kitchen Display">
                 </div>
 
                 <div class="img-bottom">
-                    <div class="img-label">QR Dine-In Order</div>
-                    <img src="scan-table.png" alt="Scanning QR Code">
-                </div>
-
-                <div class="front-overlay">
-                    <div class="front-sub">F&B Operations Platform</div>
-                    <div class="front-headline">Dine-In. Pickup.<br>Delivery.</div>
+                    <div class="img-badge">Guest View</div>
+                    <img src="https://images.unsplash.com/photo-1595079676339-1534801fafde?auto=format&fit=crop&q=80&w=800" alt="Scanning QR Code">
                 </div>
             </div>
 
@@ -211,14 +197,16 @@
                 <div class="logo-area">
                     <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" alt="SAN Technologies">
                 </div>
-                <div class="sidebar-text">
-                    <div class="sidebar-title">SAN Suite</div>
-                    <ul class="sidebar-list">
-                        <li><strong>Dine-In:</strong> QR Ordering from Table</li>
-                        <li><strong>Kitchen:</strong> Digital KDS Screens</li>
-                        <li><strong>Delivery:</strong> With Live Tracking</li>
-                        <li><strong>Pickup:</strong> Click & Collect</li>
-                    </ul>
+                
+                <div class="sidebar-sub">F&B Operations Platform</div>
+                <div class="sidebar-headline">
+                    Dine-In.<br>
+                    Pickup.<br>
+                    Delivery.
+                </div>
+
+                <div class="bottom-tag">
+                    German Engineering for<br>Modern Hospitality.
                 </div>
             </div>
         </div>
@@ -241,7 +229,7 @@
                     <tbody>
                         <tr>
                             <td class="icon-cell">📱</td>
-                            <td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:9px;">Guests scan & order at the table. Faster service.</span></td>
+                            <td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:9px;">Guests scan & order at the table/room.</span></td>
                             <td class="check-icon">✓ Yes</td>
                         </tr>
                         <tr>
@@ -256,7 +244,7 @@
                         </tr>
                         <tr>
                             <td class="icon-cell">🛍️</td>
-                            <td><strong>Pickup / Takeaway</strong><br><span style="color:#777; font-size:9px;">Guests order online & pick up at counter.</span></td>
+                            <td><strong>Pickup / Takeaway</strong><br><span style="color:#777; font-size:9px;">Guests order online & pick up.</span></td>
                             <td class="check-icon">✓ Yes</td>
                         </tr>
                     </tbody>
