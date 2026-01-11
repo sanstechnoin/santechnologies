@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Suite - Hotel B2B Postcard</title>
+    <title>SAN Suite - Hotel Postcard (Table Version)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
         :root {
-            --primary: #006064;  /* Your Brand Deep Cyan */
-            --accent: #00BCD4;   /* Your Brand Bright Cyan */
+            --primary: #006064;
+            --accent: #00BCD4;
             --dark: #1a1a1a;
             --light: #f4f7f6;
-            --card-width: 600px;  /* 6 inches scaled up */
-            --card-height: 400px; /* 4 inches scaled up */
+            --card-width: 600px;
+            --card-height: 400px;
         }
 
         body {
@@ -28,7 +28,6 @@
 
         h2 { color: #555; text-transform: uppercase; letter-spacing: 1px; font-size: 14px; margin-bottom: 10px; }
 
-        /* --- CARD CONTAINER --- */
         .card {
             width: var(--card-width);
             height: var(--card-height);
@@ -39,15 +38,9 @@
             display: flex;
         }
 
-        /* ========================================= */
-        /* FRONT SIDE: The Hook (Visual & Emotion)   */
-        /* ========================================= */
-        .front {
-            background-color: var(--dark);
-            color: white;
-        }
+        /* --- FRONT SIDE --- */
+        .front { background-color: var(--dark); color: white; }
 
-        /* Left Image Area (60%) */
         .front-image {
             flex: 6;
             position: relative;
@@ -55,15 +48,20 @@
             background-color: #000;
         }
         
-        /* Placeholder for a Hotel Room Service or KDS Image */
+        /* IMAGE FIX: Full Opacity (No hiding) */
         .front-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.7; /* Darken for text readability if needed */
+            opacity: 1; /* Fully Visible */
         }
 
-        /* Overlay Text on Image */
+        /* Gradient only at the bottom for text readability */
+        .front-image::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+        }
+
         .front-overlay {
             position: absolute;
             bottom: 30px;
@@ -72,22 +70,25 @@
         }
         
         .front-headline {
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
         .front-sub {
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 600;
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 1px;
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.6);
+            padding: 4px 8px;
+            display: inline-block;
+            border-radius: 4px;
         }
 
-        /* Right Sidebar (40%) - Branding */
         .front-sidebar {
             flex: 4;
             background: linear-gradient(135deg, var(--primary) 0%, #004d50 100%);
@@ -98,76 +99,53 @@
             position: relative;
         }
 
-        /* Cyan accent line */
-        .front-sidebar::before {
-            content: ''; position: absolute; left: 0; top: 20px; bottom: 20px;
-            width: 4px; background: var(--accent);
-        }
-
-        .logo-area { margin-bottom: auto; }
-        .logo-img { width: 140px; height: auto; display: block; filter: brightness(0) invert(1); } /* White Logo */
-
+        .logo-area img { width: 130px; filter: brightness(0) invert(1); display: block; margin-bottom: auto;}
+        
         .sidebar-text { margin-top: auto; }
-        .sidebar-title { font-size: 24px; font-weight: 700; margin-bottom: 5px; color: white; }
-        .sidebar-desc { font-size: 14px; line-height: 1.4; color: rgba(255,255,255,0.8); }
+        .sidebar-title { font-size: 22px; font-weight: 700; margin-bottom: 5px; color: white; }
+        .sidebar-desc { font-size: 13px; line-height: 1.4; color: rgba(255,255,255,0.85); }
 
+        /* --- BACK SIDE --- */
+        .back { background: white; flex-direction: row; }
 
-        /* ========================================= */
-        /* BACK SIDE: The Logic (Features & CTA)     */
-        /* ========================================= */
-        .back {
-            background: white;
-            flex-direction: row;
-        }
-
-        /* Left Side (Content) - 65% */
         .back-content {
             flex: 6.5;
-            padding: 35px;
+            padding: 30px;
             display: flex;
             flex-direction: column;
         }
 
-        .back-header {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-        .back-sub {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 25px;
-            font-weight: 500;
-        }
+        .back-header { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
+        .back-sub { font-size: 11px; color: #666; margin-bottom: 20px; font-weight: 500; }
 
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
+        /* NEW TABLE DESIGN */
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-bottom: auto;
         }
-
-        .feature-item { display: flex; align-items: flex-start; gap: 10px; }
-        .f-icon { color: var(--accent); font-size: 18px; line-height: 1; }
-        .f-text strong { display: block; font-size: 13px; color: var(--dark); margin-bottom: 2px; }
-        .f-text span { display: block; font-size: 11px; color: #777; line-height: 1.3; }
+        .feature-table th { text-align: left; color: #888; font-weight: 500; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .feature-table td { padding: 8px 0; border-bottom: 1px solid #f4f4f4; color: var(--dark); vertical-align: middle; }
+        .feature-table td:last-child { text-align: right; color: var(--primary); font-weight: 700; }
+        
+        .icon-cell { width: 20px; font-size: 14px; }
+        .check-icon { color: var(--accent); font-weight: bold; }
 
         .disclaimer-box {
-            margin-top: auto;
+            margin-top: 15px;
             border-top: 1px solid #eee;
-            padding-top: 10px;
-            font-size: 9px;
+            padding-top: 8px;
+            font-size: 8px;
             color: #999;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
-        /* Right Side (Action) - 35% */
         .back-action {
             flex: 3.5;
             background: var(--light);
             border-left: 1px solid #eee;
-            padding: 30px 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -175,55 +153,39 @@
             text-align: center;
         }
 
-        .qr-code {
-            width: 120px;
-            height: 120px;
-            background: white;
-            padding: 5px;
-            border: 1px solid #ddd;
-            margin-bottom: 15px;
-        }
+        .qr-code { width: 110px; height: 110px; background: white; padding: 5px; border: 1px solid #ddd; margin-bottom: 10px; }
         
         .cta-btn {
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 8px 15px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 15px;
+            background: var(--primary); color: white; text-decoration: none;
+            font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 4px;
+            display: inline-block; margin-bottom: 10px;
         }
 
-        .contact-info { font-size: 10px; color: #555; line-height: 1.6; }
-        .contact-info strong { color: var(--primary); }
-
+        .contact-info { font-size: 9px; color: #555; line-height: 1.5; }
     </style>
 </head>
 <body>
 
     <div>
-        <h2>Front Side (The Hook)</h2>
+        <h2>Front Side</h2>
         <div class="card front">
             
             <div class="front-image">
                 <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/pos-screen.jpg" alt="Hotel KDS">
                 <div class="front-overlay">
-                    <div class="front-sub">Modern Hospitality</div>
-                    <div class="front-headline">Upgrade Your Hotel<br>F&B Operations.</div>
+                    <div class="front-sub">Hotel F&B Solution</div>
+                    <div class="front-headline">Modern Room Service.<br>Zero Integration Headache.</div>
                 </div>
             </div>
 
             <div class="front-sidebar">
                 <div class="logo-area">
-                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" class="logo-img" alt="SAN Technologies">
+                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" alt="SAN Technologies">
                 </div>
                 <div class="sidebar-text">
                     <div class="sidebar-title">SAN Suite</div>
                     <div class="sidebar-desc">
-                        Digital Room Service & Kitchen Display System.<br><br>
-                        <strong>No IT Headaches.<br>Works alongside your PMS.</strong>
+                        Upgrade your kitchen & service workflow without replacing your PMS.
                     </div>
                 </div>
             </div>
@@ -231,53 +193,51 @@
     </div>
 
     <div>
-        <h2>Back Side (The Pitch)</h2>
+        <h2>Back Side</h2>
         <div class="card back">
             <div class="back-content">
-                <div class="back-header">Digital Efficiency for Your Kitchen.</div>
-                <div class="back-sub">Don't change your whole system. Just upgrade your workflow.</div>
+                <div class="back-header">Why Switch to Digital?</div>
+                <div class="back-sub">Compare the workflow efficiency.</div>
 
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <div class="f-icon">🍽️</div>
-                        <div class="f-text">
-                            <strong>Digital Room Service</strong>
-                            <span>Guests scan a QR code to order. No apps, no phone calls.</span>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="f-icon">📺</div>
-                        <div class="f-text">
-                            <strong>Kitchen Display (KDS)</strong>
-                            <span>Orders appear instantly on screens. Quiet, paperless, organized.</span>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="f-icon">🚀</div>
-                        <div class="f-text">
-                            <strong>Standalone "CORE"</strong>
-                            <span>Works independently from your main PMS/Register. Quick setup.</span>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="f-icon">💬</div>
-                        <div class="f-text">
-                            <strong>WhatsApp Alerts</strong>
-                            <span>Guests get notified automatically when food is ready.</span>
-                        </div>
-                    </div>
-                </div>
+                <table class="feature-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Feature</th>
+                            <th>SAN Suite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="icon-cell">📱</td>
+                            <td><strong>QR Scan from Table / Room</strong><br><span style="color:#777; font-size:9px;">Guests order via phone. No app needed.</span></td>
+                            <td class="check-icon">✓ Included</td>
+                        </tr>
+                        <tr>
+                            <td class="icon-cell">📺</td>
+                            <td><strong>Kitchen Display (KDS)</strong><br><span style="color:#777; font-size:9px;">Instant digital tickets. No paper noise.</span></td>
+                            <td class="check-icon">✓ Included</td>
+                        </tr>
+                        <tr>
+                            <td class="icon-cell">🛎️</td>
+                            <td><strong>Room Service Logic</strong><br><span style="color:#777; font-size:9px;">Auto-assigns orders to room numbers.</span></td>
+                            <td class="check-icon">✓ Included</td>
+                        </tr>
+                        <tr>
+                            <td class="icon-cell">⚙️</td>
+                            <td><strong>Independent System</strong><br><span style="color:#777; font-size:9px;">Works parallel to Oracle/Fidelio.</span></td>
+                            <td class="check-icon">✓ Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
 
                 <div class="disclaimer-box">
-                    <strong>*Legal Note:</strong> SAN Suite CORE is designed for order management and kitchen workflow. It requires a separate, legally compliant POS system for final payment processing (unless upgraded to SAN Suite PRIME).
+                    <strong>*Legal Note:</strong> SAN Suite CORE handles ordering & kitchen workflow. Final payment/invoice is processed via your existing PMS or compliant register.
                 </div>
             </div>
 
             <div class="back-action">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de" class="qr-code" alt="Scan for Demo">
-                
-                <a href="https://santechnologies.de" class="cta-btn">SCAN FOR LIVE DEMO</a>
-
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de" class="qr-code" alt="Scan QR">
+                <a href="https://santechnologies.de" class="cta-btn">SEE LIVE DEMO</a>
                 <div class="contact-info">
                     <strong>Avinash Vivekananthan</strong><br>
                     Software Engineer<br>
