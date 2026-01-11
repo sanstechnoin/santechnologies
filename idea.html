@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Suite - Final Vertical (15-30%)</title>
+    <title>SAN Suite - Sketch Design</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
@@ -13,6 +13,7 @@
             --dark: #1a1a1a;
             --light: #f4f7f6;
             --white: #ffffff;
+            --red-pop: #ff4d4d;
             --card-width: 600px;
             --card-height: 400px;
         }
@@ -52,105 +53,96 @@
             display: flex;
         }
 
-        /* --- FRONT SIDE (VERTICAL STACK) --- */
+        /* --- FRONT SIDE --- */
         .front { 
-            background-color: var(--dark); 
-            color: white; 
-            flex-direction: column; /* Stack top to bottom */
-        }
-
-        /* TOP SECTION: TEXT (75%) */
-        .front-text-area {
-            flex: 3; /* Takes up 75% of height */
             background: linear-gradient(135deg, var(--primary) 0%, #004d50 100%);
-            display: flex;
+            color: white; 
             flex-direction: column;
-            padding: 30px 40px; 
+            padding: 40px;
             position: relative;
-            text-align: left;
             border-bottom: 4px solid var(--accent);
         }
 
-        .logo-area img { 
-            width: 120px; 
-            filter: brightness(0) invert(1); 
-            display: block; 
-            margin-bottom: 20px;
-        }
-
-        .system-tag {
+        /* LOGO BOX (Top Right) */
+        .logo-box-right {
+            position: absolute;
+            top: 30px;
+            right: 30px;
             background: white;
-            color: var(--primary);
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            padding: 5px 10px;
-            border-radius: 4px;
-            align-self: flex-start;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            width: 140px;
+            z-index: 10;
+        }
+        .logo-box-right img { width: 100%; height: auto; display: block; }
+
+        /* Main Content Area */
+        .front-content {
+            margin-top: 60px; /* Space for logo area */
         }
 
-        /* The Hook */
         .front-headline { 
-            font-size: 32px; 
+            font-size: 38px; 
             font-weight: 800; 
             color: white; 
             line-height: 1.1; 
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         
         .highlight-accent { color: var(--accent); }
 
         .front-sub {
-            font-size: 14px;
-            color: rgba(255,255,255,0.9);
+            font-size: 18px;
+            color: rgba(255,255,255,0.95);
             font-weight: 500;
             line-height: 1.4;
-            max-width: 400px;
+            margin-bottom: 50px;
         }
 
-        .bottom-tag {
+        /* The Graphic Element from Sketch */
+        .strike-graphic {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .strike-line {
+            border-top: 2px solid rgba(255,255,255,0.3);
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            z-index: 1;
+        }
+        .strike-x {
+            color: var(--red-pop);
+            font-size: 60px;
+            font-weight: 800;
+            line-height: 1;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .bottom-headline {
+            text-align: center;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .made-in-footer {
             position: absolute;
             bottom: 15px;
-            right: 20px;
+            left: 40px;
             font-size: 10px;
             color: rgba(255,255,255,0.6);
             font-weight: 500;
         }
-        .heart { color: #ff4d4d; font-size: 12px; }
+        .heart { color: var(--red-pop); font-size: 12px; }
 
-        /* BOTTOM SECTION: IMAGES (25%) */
-        .front-visuals {
-            flex: 1; /* Takes up 25% of height */
-            display: flex;
-            flex-direction: row; 
-            background: #000;
-        }
-
-        .visual-block {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-            border-right: 1px solid rgba(255,255,255,0.2);
-        }
-        .visual-block:last-child { border-right: none; }
-        
-        .visual-block img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            object-position: center; 
-            opacity: 0.85; 
-        }
-        
-        .img-label {
-            position: absolute; bottom: 8px; left: 10px;
-            color: white; font-size: 9px; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 0.5px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-            z-index: 2;
-        }
 
         /* --- BACK SIDE (Standard Table Layout) --- */
         .back { background: white; flex-direction: row; }
@@ -165,7 +157,6 @@
         .back-header { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
         .back-sub { font-size: 11px; color: #666; margin-bottom: 15px; font-weight: 500; }
 
-        /* Feature Table (Reverted to the clean table version) */
         .feature-table {
             width: 100%;
             border-collapse: collapse;
@@ -232,35 +223,29 @@
             <h2>Front Side (EN)</h2>
             <div class="card front">
                 
-                <div class="front-text-area">
-                    <div class="logo-area">
-                        <img src="logo.png" alt="SAN Technologies" onerror="this.style.display='none';"> 
-                        <div style="color:white; font-weight:800; font-size:20px; margin-bottom:15px; display:none;">SAN Technologies</div>
-                    </div>
-                    
-                    <div class="system-tag">New KDS System</div>
+                <div class="logo-box-right">
+                    <img src="Master_Email_Logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x50?text=LOGO'"> 
+                </div>
 
+                <div class="front-content">
                     <div class="front-headline">
-                        Why pay <span class="highlight-accent">15-30%</span><br>delivery fees?
+                        Why pay <span class="highlight-accent">15-30%</span><br>fees?
                     </div>
                     <div class="front-sub">
-                        Keep the profit. Use your own system.<br>
-                        Perfect for Hotels & Restaurants.
+                        Save the commission.<br>Use your own system.
                     </div>
 
-                    <div class="bottom-tag">Made with <span class="heart">❤</span> in Euskirchen.</div>
+                    <div class="strike-graphic">
+                        <div class="strike-line"></div>
+                        <span class="strike-x">X</span>
+                    </div>
+
+                    <div class="bottom-headline">
+                        F&B Operations Platform
+                    </div>
                 </div>
 
-                <div class="front-visuals">
-                    <div class="visual-block">
-                        <div class="img-label">Kitchen Display</div>
-                        <img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x150?text=KDS+Screen'">
-                    </div>
-                    <div class="visual-block">
-                        <div class="img-label">Guest Order</div>
-                        <img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'">
-                    </div>
-                </div>
+                <div class="made-in-footer">Made with <span class="heart">❤</span> in Euskirchen.</div>
 
             </div>
         </div>
@@ -317,34 +302,29 @@
             <h2>Vorderseite (DE)</h2>
             <div class="card front">
                 
-                <div class="front-text-area">
-                    <div class="logo-area">
-                        <img src="logo.png" alt="SAN Technologies" onerror="this.style.display='none';"> 
-                    </div>
-                    
-                    <div class="system-tag">Neues KDS System</div>
+                <div class="logo-box-right">
+                    <img src="Master_Email_Logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x50?text=LOGO'"> 
+                </div>
 
+                <div class="front-content">
                     <div class="front-headline">
                         Warum <span class="highlight-accent">15-30%</span><br>Gebühren zahlen?
                     </div>
                     <div class="front-sub">
-                        Sparen Sie die Provision.<br>
-                        Nutzen Sie Ihr eigenes System.
+                        Sparen Sie die Provision.<br>Nutzen Sie Ihr eigenes System.
                     </div>
 
-                    <div class="bottom-tag">Made with <span class="heart">❤</span> in Euskirchen.</div>
+                    <div class="strike-graphic">
+                        <div class="strike-line"></div>
+                        <span class="strike-x">X</span>
+                    </div>
+
+                    <div class="bottom-headline">
+                        F&B Operations Plattform
+                    </div>
                 </div>
 
-                <div class="front-visuals">
-                    <div class="visual-block">
-                        <div class="img-label">Küchen-Display</div>
-                        <img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x150?text=KDS+Screen'">
-                    </div>
-                    <div class="visual-block">
-                        <div class="img-label">QR-Bestellung</div>
-                        <img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'">
-                    </div>
-                </div>
+                <div class="made-in-footer">Made with <span class="heart">❤</span> in Euskirchen.</div>
 
             </div>
         </div>
