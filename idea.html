@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Suite - Sales Edition</title>
+    <title>SAN Suite - Final Vertical Layout</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
@@ -52,102 +52,108 @@
             display: flex;
         }
 
-        /* --- FRONT SIDE --- */
-        .front { background-color: var(--white); color: var(--dark); }
+        /* --- FRONT SIDE (VERTICAL STACK) --- */
+        .front { 
+            background-color: var(--dark); 
+            color: white; 
+            flex-direction: column; /* Stack top to bottom */
+        }
 
-        .front-visuals {
-            flex: 6;
+        /* TOP SECTION: TEXT (75%) */
+        .front-text-area {
+            flex: 3; /* Takes up 75% of height */
+            background: linear-gradient(135deg, var(--primary) 0%, #004d50 100%);
             display: flex;
             flex-direction: column;
-            border-right: 1px solid #eee; /* Subtle divider for white bg */
-        }
-
-        /* Top Image */
-        .img-top {
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-            border-bottom: 2px solid white;
-        }
-        .img-top img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-        
-        .img-badge {
-            position: absolute; top: 12px; left: 12px;
-            background: rgba(0,0,0,0.8); color: var(--accent);
-            font-size: 9px; font-weight: 700; padding: 4px 8px;
-            text-transform: uppercase; border-radius: 4px;
-            letter-spacing: 1px;
-        }
-
-        /* Bottom Image */
-        .img-bottom {
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-        }
-        .img-bottom img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Sidebar - NOW WHITE BACKGROUND */
-        .front-sidebar {
-            flex: 4;
-            background: var(--white); /* White Background */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 30px;
+            padding: 30px 40px; /* More padding for impact */
             position: relative;
             text-align: left;
+            border-bottom: 4px solid var(--accent); /* Visual divider */
         }
 
-        .logo-area img { width: 130px; display: block; margin-bottom: 25px;} /* Normal logo colors */
-        
+        .logo-area img { 
+            width: 120px; 
+            filter: brightness(0) invert(1); 
+            display: block; 
+            margin-bottom: 20px;
+        }
+
         /* New "KDS System" Label */
         .system-tag {
-            background: var(--primary);
-            color: white;
+            background: white;
+            color: var(--primary);
             font-size: 10px;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
             padding: 5px 10px;
             border-radius: 4px;
             align-self: flex-start;
             margin-bottom: 15px;
-            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* The "Why Pay More" Hook */
-        .sidebar-headline { 
-            font-size: 28px; 
+        /* The Hook */
+        .front-headline { 
+            font-size: 32px; 
             font-weight: 800; 
-            color: var(--dark); 
+            color: white; 
             line-height: 1.1; 
             margin-bottom: 10px;
         }
         
-        .highlight-red { color: #d32f2f; }
+        .highlight-accent { color: var(--accent); }
 
-        .sidebar-sub {
+        .front-sub {
             font-size: 14px;
-            color: #555;
+            color: rgba(255,255,255,0.9);
             font-weight: 500;
             line-height: 1.4;
-            margin-bottom: auto;
+            max-width: 400px;
         }
 
         .bottom-tag {
-            margin-top: auto;
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
             font-size: 10px;
-            color: #999;
-            border-top: 1px solid #eee;
-            padding-top: 12px;
+            color: rgba(255,255,255,0.6);
             font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
         .heart { color: #ff4d4d; font-size: 12px; }
 
-        /* --- BACK SIDE (Same structure) --- */
+        /* BOTTOM SECTION: IMAGES (25%) */
+        .front-visuals {
+            flex: 1; /* Takes up 25% of height */
+            display: flex;
+            flex-direction: row; /* Side by side images */
+            background: #000;
+        }
+
+        .visual-block {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        .visual-block:last-child { border-right: none; }
+        
+        .visual-block img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            object-position: center; 
+            opacity: 0.8; /* Slight dim to blend with footer feel */
+        }
+        
+        .img-label {
+            position: absolute; bottom: 8px; left: 10px;
+            color: white; font-size: 9px; font-weight: 700; 
+            text-transform: uppercase; letter-spacing: 0.5px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            z-index: 2;
+        }
+
+        /* --- BACK SIDE (Standard Layout) --- */
         .back { background: white; flex-direction: row; }
 
         .back-content {
@@ -160,44 +166,51 @@
         .back-header { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
         .back-sub { font-size: 11px; color: #666; margin-bottom: 15px; font-weight: 500; }
 
-        .feature-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 10px;
-            margin-bottom: auto;
+        .options-box {
+            background: #f0fbfc;
+            border: 1px solid #bcebf0;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 15px;
         }
-        .feature-table th { text-align: left; color: #888; font-weight: 500; border-bottom: 1px solid #eee; padding-bottom: 4px; }
-        .feature-table td { padding: 5px 0; border-bottom: 1px solid #f4f4f4; color: var(--dark); vertical-align: middle; }
-        .feature-table td:last-child { text-align: right; color: var(--primary); font-weight: 700; }
-        
-        .icon-cell { width: 20px; font-size: 14px; }
-        .check-icon { color: var(--accent); font-weight: bold; font-size: 10px; }
+        .option-row { display: flex; margin-bottom: 8px; align-items: flex-start; }
+        .option-row:last-child { margin-bottom: 0; }
+        .opt-badge { 
+            background: var(--primary); color: white; 
+            font-size: 9px; font-weight: 700; padding: 3px 6px; 
+            border-radius: 3px; margin-right: 8px; width: 60px; text-align: center; flex-shrink: 0;
+        }
+        .opt-badge.full { background: var(--accent); color: var(--dark); }
+        .opt-text { font-size: 10px; color: #333; line-height: 1.3; }
 
-        .disclaimer-box {
-            margin-top: 15px;
-            border-top: 1px solid #eee;
-            padding-top: 8px;
-            font-size: 8px;
-            color: #777;
-            line-height: 1.3;
-            background: #fafafa;
-            padding: 8px;
-            border-radius: 4px;
+        .feature-list {
+            list-style: none; padding: 0; margin: 0;
+            font-size: 10px; color: #444;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 5px;
         }
+        .feature-list li { display: flex; align-items: center; gap: 5px; }
+        .feature-list li::before { content: '✓'; color: var(--accent); font-weight: bold; }
 
         .local-badge {
-            background: #f0fbfc;
-            border: 1px solid var(--accent);
-            border-radius: 6px;
-            padding: 6px 10px;
-            margin-top: 10px;
+            margin-top: auto;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         .lb-icon { font-size: 16px; }
-        .lb-text { font-size: 8px; color: var(--primary); line-height: 1.3; }
+        .lb-text { font-size: 9px; color: var(--primary); line-height: 1.3; }
         .lb-text strong { font-size: 9px; font-weight: 700; display: block; }
+
+        .disclaimer-box {
+            margin-top: 10px;
+            border-top: 1px solid #eee;
+            padding-top: 8px;
+            font-size: 8px;
+            color: #888;
+            line-height: 1.3;
+        }
 
         .back-action {
             flex: 3.5;
@@ -230,34 +243,37 @@
         <div>
             <h2>Front Side (EN)</h2>
             <div class="card front">
-                <div class="front-visuals">
-                    <div class="img-top">
-                        <div class="img-badge">Kitchen Display (KDS)</div>
-                        <img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x300?text=pos-screen.jpg'">
-                    </div>
-                    <div class="img-bottom">
-                        <div class="img-badge">Guest Scanning</div>
-                        <img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x300?text=scan-table.png'">
-                    </div>
-                </div>
-                <div class="front-sidebar">
+                
+                <div class="front-text-area">
                     <div class="logo-area">
                         <img src="logo.png" alt="SAN Technologies" onerror="this.style.display='none';"> 
-                        <div style="color:#006064; font-weight:800; font-size:20px; margin-bottom:20px; display:none;">SAN Technologies</div>
+                        <div style="color:white; font-weight:800; font-size:20px; margin-bottom:15px; display:none;">SAN Technologies</div>
                     </div>
                     
                     <div class="system-tag">New KDS System</div>
 
-                    <div class="sidebar-headline">
-                        Why pay <span class="highlight-red">30%</span><br>delivery fees?
+                    <div class="front-headline">
+                        Why pay <span class="highlight-accent">30%</span><br>delivery fees?
                     </div>
-                    <div class="sidebar-sub">
-                        Keep the profit.<br>
-                        Use your own system.
+                    <div class="front-sub">
+                        Keep the profit. Use your own system.<br>
+                        Perfect for Hotels & Restaurants.
                     </div>
 
                     <div class="bottom-tag">Made with <span class="heart">❤</span> in Euskirchen.</div>
                 </div>
+
+                <div class="front-visuals">
+                    <div class="visual-block">
+                        <div class="img-label">Kitchen Display</div>
+                        <img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x150?text=KDS+Screen'">
+                    </div>
+                    <div class="visual-block">
+                        <div class="img-label">Guest Order</div>
+                        <img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'">
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -268,18 +284,33 @@
                     <div class="back-header">Modernize Your Operations</div>
                     <div class="back-sub">Save money with direct orders & efficiency.</div>
 
-                    <table class="feature-table">
-                        <thead>
-                            <tr><th colspan="2">Module</th><th>Included</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="icon-cell">📜</td><td><strong>Digital Menu Card</strong><br><span style="color:#777; font-size:8px;">Always up-to-date. No printing costs.</span></td><td class="check-icon">✓ Yes</td></tr>
-                            <tr><td class="icon-cell">📱</td><td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:8px;">Guests scan & order at the table.</span></td><td class="check-icon">✓ Yes</td></tr>
-                            <tr><td class="icon-cell">🛍️</td><td><strong>Click & Collect</strong><br><span style="color:#777; font-size:8px;">Order online & pick up at the counter.</span></td><td class="check-icon">✓ Yes</td></tr>
-                            <tr><td class="icon-cell">🛵</td><td><strong>Delivery & Logistics</strong><br><span style="color:#777; font-size:8px;">Includes Live Driver Tracking.</span></td><td class="check-icon">✓ Yes</td></tr>
-                            <tr><td class="icon-cell">📺</td><td><strong>Kitchen Display (KDS)</strong><br><span style="color:#777; font-size:8px;">Digital tickets. Zero paper chaos.</span></td><td class="check-icon">✓ Yes</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="options-box">
+                        <div class="option-row">
+                            <div class="opt-badge">ADD-ON</div>
+                            <div class="opt-text">
+                                <strong>Interactive Ordering Tool</strong><br>
+                                We handle QR, KDS & Delivery. <br>
+                                Uses <u>your existing POS & TSE</u>.
+                            </div>
+                        </div>
+                        <div class="option-row">
+                            <div class="opt-badge full">FULL SYSTEM</div>
+                            <div class="opt-text">
+                                <strong>Complete All-in-One</strong><br>
+                                We replace your legacy system. <br>
+                                Includes <u>Certified Cloud-TSE</u>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="feature-list">
+                        <li>Digital Menu Card</li>
+                        <li>QR Dine-In Ordering</li>
+                        <li>Click & Collect</li>
+                        <li>Delivery w/ Tracker</li>
+                        <li>Kitchen Display (KDS)</li>
+                        <li>WhatsApp Alerts</li>
+                    </ul>
 
                     <div class="local-badge">
                         <div class="lb-icon">🤝</div>
@@ -312,33 +343,36 @@
         <div>
             <h2>Vorderseite (DE)</h2>
             <div class="card front">
-                <div class="front-visuals">
-                    <div class="img-top">
-                        <div class="img-badge">Küchen-Display (KDS)</div>
-                        <img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x300?text=pos-screen.jpg'">
-                    </div>
-                    <div class="img-bottom">
-                        <div class="img-badge">Gast Scannt</div>
-                        <img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x300?text=scan-table.png'">
-                    </div>
-                </div>
-                <div class="front-sidebar">
+                
+                <div class="front-text-area">
                     <div class="logo-area">
                         <img src="logo.png" alt="SAN Technologies" onerror="this.style.display='none';"> 
                     </div>
                     
                     <div class="system-tag">Neues KDS System</div>
 
-                    <div class="sidebar-headline">
-                        Warum <span class="highlight-red">30%</span><br>Gebühren zahlen?
+                    <div class="front-headline">
+                        Warum <span class="highlight-accent">30%</span><br>Gebühren zahlen?
                     </div>
-                    <div class="sidebar-sub">
-                        Sparen Sie sich die Provision.<br>
+                    <div class="front-sub">
+                        Sparen Sie die Provision.<br>
                         Nutzen Sie Ihr eigenes System.
                     </div>
 
                     <div class="bottom-tag">Made with <span class="heart">❤</span> in Euskirchen.</div>
                 </div>
+
+                <div class="front-visuals">
+                    <div class="visual-block">
+                        <div class="img-label">Küchen-Display</div>
+                        <img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x150?text=KDS+Screen'">
+                    </div>
+                    <div class="visual-block">
+                        <div class="img-label">QR-Bestellung</div>
+                        <img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'">
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -349,18 +383,33 @@
                     <div class="back-header">Modernisieren Sie Ihren Betrieb</div>
                     <div class="back-sub">Einfache Abläufe & keine Provisionen.</div>
 
-                    <table class="feature-table">
-                        <thead>
-                            <tr><th colspan="2">Modul</th><th>Inklusive</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="icon-cell">📜</td><td><strong>Digitale Speisekarte</strong><br><span style="color:#777; font-size:8px;">Immer aktuell. Keine Druckkosten.</span></td><td class="check-icon">✓ Ja</td></tr>
-                            <tr><td class="icon-cell">📱</td><td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:8px;">Gäste bestellen direkt am Tisch.</span></td><td class="check-icon">✓ Ja</td></tr>
-                            <tr><td class="icon-cell">🛍️</td><td><strong>Click & Collect</strong><br><span style="color:#777; font-size:8px;">Online bestellen, am Tresen abholen.</span></td><td class="check-icon">✓ Ja</td></tr>
-                            <tr><td class="icon-cell">🛵</td><td><strong>Lieferung & Logistik</strong><br><span style="color:#777; font-size:8px;">Inklusive Live-Fahrer-Tracking.</span></td><td class="check-icon">✓ Ja</td></tr>
-                            <tr><td class="icon-cell">📺</td><td><strong>Küchen-Monitor (KDS)</strong><br><span style="color:#777; font-size:8px;">Digitale Bons. Kein Papierchaos.</span></td><td class="check-icon">✓ Ja</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="options-box">
+                        <div class="option-row">
+                            <div class="opt-badge">ADD-ON</div>
+                            <div class="opt-text">
+                                <strong>Interaktives Bestell-Tool</strong><br>
+                                Wir übernehmen QR, KDS & Lieferungen. <br>
+                                Ihr <u>bestehendes System & TSE</u> bleiben.
+                            </div>
+                        </div>
+                        <div class="option-row">
+                            <div class="opt-badge full">KOMPLETT</div>
+                            <div class="opt-text">
+                                <strong>All-in-One System</strong><br>
+                                Wir ersetzen Ihr Altsystem vollständig. <br>
+                                Inklusive <u>Zertifizierter Cloud-TSE</u>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="feature-list">
+                        <li>Digitale Speisekarte</li>
+                        <li>QR Dine-In Bestellung</li>
+                        <li>Click & Collect</li>
+                        <li>Lieferung mit Tracker</li>
+                        <li>Küchen-Display (KDS)</li>
+                        <li>WhatsApp Benachrichtigung</li>
+                    </ul>
 
                     <div class="local-badge">
                         <div class="lb-icon">🤝</div>
