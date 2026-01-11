@@ -3,121 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Technologies | Digitalizing Gastronomy & Retail</title>
+    <title>SAN Technologies | Single Glance Flyer</title>
     <link rel="icon" type="image/png" href="favlogo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #ffffff;
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, #3b82f6, #2dd4bf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            transition: all 0.3s ease;
-        }
-
-        .lang-split {
-            border-left: 2px solid #3b82f6;
-            padding-left: 20px;
-        }
-
-        .qr-placeholder {
-            background: white;
-            padding: 10px;
-            border-radius: 12px;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap');
+        body { font-family: 'Outfit', sans-serif; background: #000; color: #fff; }
+        .flyer { width: 400px; height: 580px; background: #080808; border: 1px solid #222; position: relative; overflow: hidden; }
+        .gradient-bg { background: radial-gradient(circle at top right, #1d4ed833, transparent); }
+        .accent-gradient { background: linear-gradient(90deg, #3b82f6, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
-<body class="p-4 md:p-12">
+<body class="flex flex-col items-center gap-10 py-10">
 
-    <header class="text-center mb-12">
-        <img src="logo.png" alt="SAN Technologies Logo" class="h-16 mx-auto mb-4">
-        <p class="text-gray-400 tracking-widest uppercase text-sm">Software Engineering • Euskirchen</p>
-    </header>
+    <div class="flyer shadow-2xl p-8 flex flex-col justify-between gradient-bg rounded-3xl">
+        <div>
+            <img src="logo.png" alt="Logo" class="h-8 mb-10">
+            
+            <h1 class="text-4xl font-900 leading-tight mb-4">
+                No More<br><span class="accent-gradient">Paper Chaos.</span>
+            </h1>
+            <p class="text-xl text-gray-400 font-light mb-8">
+                The high-speed KDS & POS for Hotels and Restaurants.
+            </p>
 
-    <main class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        
-        <div class="card p-8 relative overflow-hidden">
-            <div class="absolute top-0 right-0 p-4 text-xs font-bold bg-blue-600 rounded-bl-xl">SAN SUITE</div>
-            
-            <h2 class="text-3xl font-800 mb-6 gradient-text">Gastronomy Redefined</h2>
-            
-            <div class="space-y-6">
-                <div class="lang-split">
-                    <p class="font-semibold text-blue-400">Schluss mit Zettelchaos.</p>
-                    <p class="text-gray-300">Digitale Küchenmonitore (KDS) & TSE-Kassensysteme für maximale Effizienz.</p>
+            <div class="space-y-4">
+                <div class="flex items-start gap-3">
+                    <div class="mt-1 w-5 h-5 bg-blue-600 rounded-full flex-shrink-0 flex items-center justify-center text-[10px]">✓</div>
+                    <div>
+                        <p class="font-bold text-sm">Digital Kitchen Display (KDS)</p>
+                        <p class="text-xs text-gray-500">Echtzeit-Synchronisierung in Sekunden.</p>
+                    </div>
                 </div>
-                <div class="lang-split">
-                    <p class="font-semibold text-teal-400">End the paper chaos.</p>
-                    <p class="text-gray-300">Digital Kitchen Displays (KDS) & TSE-POS systems for maximum efficiency.</p>
-                </div>
-            </div>
-
-            <ul class="mt-8 space-y-2 text-sm text-gray-400">
-                <li>• Real-time Sync (Zero Latency)</li>
-                <li>• 100% Tax Compliant (KassenSichV)</li>
-                <li>• Made in Euskirchen</li>
-            </ul>
-        </div>
-
-        <div class="card p-8 border-gray-800">
-            <div class="absolute top-0 right-0 p-4 text-xs font-bold bg-teal-600 rounded-bl-xl uppercase text-black">SAN Commerce</div>
-            
-            <h2 class="text-3xl font-800 mb-6 text-white">High-End E-Commerce</h2>
-            
-            <div class="space-y-6">
-                <div class="lang-split border-teal-500">
-                    <p class="font-semibold text-teal-400">Skalierbarer Onlinehandel.</p>
-                    <p class="text-gray-300">Maßgeschneiderte D2C-Lösungen für wachsende Marken und Händler.</p>
-                </div>
-                <div class="lang-split border-teal-500">
-                    <p class="font-semibold text-gray-100">Scalable Online Retail.</p>
-                    <p class="text-gray-300">Custom D2C solutions built for growing brands and wholesalers.</p>
+                <div class="flex items-start gap-3">
+                    <div class="mt-1 w-5 h-5 bg-blue-600 rounded-full flex-shrink-0 flex items-center justify-center text-[10px]">✓</div>
+                    <div>
+                        <p class="font-bold text-sm">100% Tax Compliant</p>
+                        <p class="text-xs text-gray-500">TSE / KassenSichV ready.</p>
+                    </div>
                 </div>
             </div>
-
-            <ul class="mt-8 space-y-2 text-sm text-gray-500">
-                <li>• Headless Architecture (React/Node)</li>
-                <li>• Custom Logistics Logic</li>
-                <li>• Performance Optimized</li>
-            </ul>
         </div>
 
-    </main>
+        <div class="bg-blue-600/10 border border-blue-600/30 p-4 rounded-2xl text-center">
+            <p class="text-[10px] text-blue-400 uppercase tracking-widest mb-1">Your Local Partner</p>
+            <p class="text-lg font-bold">Made in Euskirchen</p>
+        </div>
+    </div>
 
-    <section class="mt-16 text-center max-w-2xl mx-auto">
-        <div class="card p-10 bg-gradient-to-br from-blue-900/20 to-teal-900/20">
-            <h3 class="text-2xl font-bold mb-4">Request Your Demo / Live-Demo anfordern</h3>
-            <p class="text-gray-400 mb-8 italic">Scan to see SAN Suite in action.</p>
+    <div class="flyer shadow-2xl p-8 flex flex-col justify-between rounded-3xl">
+        <div>
+            <h2 class="text-2xl font-bold mb-6">Scale your business</h2>
             
-            <div class="qr-placeholder flex items-center justify-center text-black text-[10px] text-center font-bold">
-                [YOUR QR CODE HERE]
+            <div class="mb-8 p-4 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+                <h3 class="text-teal-400 font-bold text-sm mb-1 uppercase">SAN Commerce</h3>
+                <p class="text-xs text-gray-400">
+                    High-Performance Onlineshops für lokale Marken. Blitzschnell & individuell.
+                </p>
             </div>
-            
-            <p class="mt-8 text-xl font-semibold">santechnologies.de</p>
-            <p class="text-sm text-gray-500">Your local partner in Euskirchen</p>
-        </div>
-    </section>
 
-    <footer class="mt-12 text-center text-gray-600 text-xs">
-        &copy; 2024 SAN Technologies. All rights reserved.
-    </footer>
+            <div class="text-center py-6">
+                <p class="text-sm text-gray-300 mb-4">Besuchen Sie uns für eine Live-Demo:</p>
+                <div class="w-32 h-32 bg-white mx-auto rounded-xl p-2 mb-4">
+                    <div class="w-full h-full border-2 border-dashed border-black flex items-center justify-center text-black text-[10px] font-bold">
+                        SCAN<br>HERE
+                    </div>
+                </div>
+                <p class="text-2xl font-black tracking-tighter">santechnologies.de</p>
+            </div>
+        </div>
+
+        <div class="text-center border-t border-zinc-900 pt-6">
+            <p class="text-[10px] text-gray-500">
+                info@santechnologies.de • Euskirchen, Germany
+            </p>
+        </div>
+    </div>
 
 </body>
 </html>
