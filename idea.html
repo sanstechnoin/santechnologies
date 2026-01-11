@@ -2,98 +2,137 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Technologies | Lead Flyer</title>
+    <title>SAN Technologies - Vibrant Print Design</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #f0f0f0; color: #fff; padding: 40px; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
         
-        /* Simulated A6 Card */
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; margin: 0; padding: 40px; }
+        
+        /* A6 Card - Standard Print Size */
         .card { 
             width: 396px; 
             height: 560px; 
-            background: #000; 
-            border-radius: 24px; 
-            padding: 40px;
+            background: #020617; 
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            border-radius: 32px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            margin: 0 auto;
+            margin: 0 auto 50px auto;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .highlight-blue { color: #3b82f6; }
-        .text-balanced { text-wrap: balance; }
+        /* Dynamic Gradients for the "SAN" Style */
+        .bg-mesh {
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(6,182,212,0.4) 0%, rgba(59,130,246,0.2) 50%, transparent 100%);
+            filter: blur(60px);
+            z-index: 0;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+        }
+
+        .neon-border {
+            border-left: 4px solid #06b6d4;
+            box-shadow: -10px 0 20px -10px #06b6d4;
+        }
     </style>
 </head>
 <body>
 
-    <div class="card mb-10">
-        <div>
-            <div class="flex items-center gap-2 mb-12">
-                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold">S</div>
-                <span class="text-sm font-bold tracking-tight">SAN Technologies</span>
-            </div>
-
-            <h1 class="text-4xl font-900 leading-tight mb-4">
-                No More <br><span class="highlight-blue">Paper Chaos.</span>
-            </h1>
-            
-            <p class="text-gray-400 text-lg mb-10 leading-snug">
-                The high-speed KDS & POS for Hotels and Restaurants.
-            </p>
-
-            <div class="space-y-6">
-                <div class="flex gap-4">
-                    <svg class="w-6 h-6 text-blue-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                    <div>
-                        <p class="font-bold">Digital Kitchen Display (KDS)</p>
-                        <p class="text-xs text-gray-500 uppercase tracking-wide">Echtzeit-Synchronisierung</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <svg class="w-6 h-6 text-blue-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                    <div>
-                        <p class="font-bold">100% Tax Compliant</p>
-                        <p class="text-xs text-gray-500 uppercase tracking-wide">TSE / KassenSichV Ready</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-xl text-center">
-            <span class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] block mb-1">Your Local Partner</span>
-            <span class="text-lg font-bold">Made in Euskirchen</span>
-        </div>
-    </div>
-
     <div class="card">
-        <div>
-            <h2 class="text-2xl font-bold mb-8">Scale your business</h2>
-            
-            <div class="p-5 bg-blue-600/10 border border-blue-600/20 rounded-2xl mb-12">
-                <h3 class="text-blue-400 font-bold text-sm mb-2 uppercase tracking-wider">SAN Commerce</h3>
-                <p class="text-sm text-zinc-300">
-                    High-performance onlineshops for local brands. Scalable, fast, and custom-built.
+        <div class="bg-mesh"></div>
+        
+        <div class="relative z-10 p-8 flex flex-col h-full">
+            <div class="flex items-center gap-3 mb-14">
+                <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                    <span class="font-black text-white italic">S</span>
+                </div>
+                <span class="font-extrabold tracking-tighter text-lg uppercase">SAN Technologies</span>
+            </div>
+
+            <div class="mb-10">
+                <h1 class="text-[44px] font-800 leading-[1] tracking-tighter mb-4">
+                    Stop the<br>
+                    <span class="text-gradient">Paper Chaos.</span>
+                </h1>
+                <p class="text-gray-400 text-sm font-medium leading-relaxed max-w-[90%]">
+                    Modern Software for Gastronomy & Retail. Built for speed, reliability, and growth.
                 </p>
             </div>
 
-            <div class="text-center">
-                <p class="text-zinc-400 text-sm mb-6">Scan for Live Demo & References:</p>
-                <div class="w-32 h-32 bg-white mx-auto rounded-xl p-2 mb-6 flex items-center justify-center">
-                   <div class="w-full h-full border-2 border-dashed border-black flex items-center justify-center text-black text-[10px] font-bold text-center uppercase">
-                       [Insert Your<br>QR Code]
-                   </div>
+            <div class="space-y-4 mb-auto">
+                <div class="glass-panel p-4 neon-border">
+                    <p class="text-cyan-400 font-bold text-sm mb-1 uppercase tracking-tight">SAN Suite (KDS/POS)</p>
+                    <p class="text-[11px] text-gray-300">Synchronize kitchen & service in real-time. Full TSE compliance.</p>
                 </div>
-                <p class="text-2xl font-black tracking-tighter italic">santechnologies.de</p>
+                <div class="glass-panel p-4 border-l-4 border-blue-500">
+                    <p class="text-blue-400 font-bold text-sm mb-1 uppercase tracking-tight">IT Transformation</p>
+                    <p class="text-[11px] text-gray-300">High-performance systems built with German Engineering.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-white/10 flex justify-between items-center">
+                <span class="text-[10px] font-bold text-gray-500 tracking-widest uppercase italic">Based in Euskirchen</span>
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-[10px] font-bold text-cyan-500">Local Support</span>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="text-center pt-6 border-t border-zinc-900">
-            <p class="text-[10px] text-zinc-600 tracking-widest uppercase">
-                info@santechnologies.de • Euskirchen
-            </p>
+    <div class="card bg-[#010309]">
+        <div class="relative z-10 p-8 flex flex-col h-full">
+            <h2 class="text-2xl font-800 mb-2">Build Something Great</h2>
+            <p class="text-gray-500 text-xs mb-8 uppercase tracking-widest italic font-bold">Scaling Your Vision</p>
+
+            <div class="mb-8 p-6 glass-panel bg-gradient-to-br from-blue-600/10 to-transparent">
+                <h3 class="text-blue-400 font-extrabold text-sm mb-2 uppercase italic">SAN Commerce</h3>
+                <p class="text-[11px] text-gray-300 leading-relaxed mb-4">
+                    Beyond standard shop systems. We build headless D2C experiences with React & Node.js for maximum performance.
+                </p>
+                <div class="flex gap-2">
+                    <span class="px-2 py-1 bg-white/5 rounded text-[8px] text-gray-400">Inventory Sync</span>
+                    <span class="px-2 py-1 bg-white/5 rounded text-[8px] text-gray-400">Custom Logistics</span>
+                </div>
+            </div>
+
+            <div class="mt-auto text-center glass-panel p-8 border-none bg-zinc-900/40">
+                <p class="text-xs text-gray-400 mb-6">Ready for a Live Demo?</p>
+                
+                <div class="w-28 h-28 bg-white mx-auto rounded-2xl p-2 shadow-[0_0_30px_rgba(6,182,212,0.3)] mb-6">
+                    <div class="w-full h-full border-2 border-dashed border-black flex items-center justify-center text-[10px] text-black font-black uppercase text-center leading-none">
+                        SCAN TO<br>UPGRADE
+                    </div>
+                </div>
+
+                <p class="text-2xl font-black tracking-tighter text-white mb-1">santechnologies.de</p>
+                <p class="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">Avinash Vivekananthan</p>
+            </div>
+
+            <div class="pt-6 mt-6 border-t border-white/5 flex justify-between text-[9px] text-gray-600 font-bold tracking-widest uppercase">
+                <span>+49 2251 9599741</span>
+                <span>info@santechnologies.de</span>
+            </div>
         </div>
     </div>
 
