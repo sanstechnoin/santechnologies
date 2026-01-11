@@ -1,111 +1,109 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
+<head> 
     <meta charset="UTF-8">
-    <title>SAN Technologies - Hotel Solutions</title>
+    <title>SAN Technologies | Hotel IT Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
         
+        /* Force background to be dark so text is visible */
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: #020617; 
+            background-color: #020617; 
+            color: #ffffff;
             margin: 0; 
             display: flex; 
             justify-content: center; 
-            padding: 20px; 
+            padding: 40px; 
         }
 
         .postcard {
-            width: 480px;
-            background: #020617;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 40px;
+            width: 450px;
+            background: #0f172a; /* Deep Navy Blue */
+            border: 2px solid #1e293b;
+            border-radius: 32px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+            padding: 35px;
         }
 
-        .text-neon {
+        .neon-text {
             background: linear-gradient(to right, #22d3ee, #3b82f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .glass-card {
+        .feature-box {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
-        .hotel-tag { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .badge {
+            background: rgba(34, 211, 238, 0.1);
+            color: #22d3ee;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="postcard p-10 flex flex-col">
-        <div class="flex items-center justify-between mb-10">
+    <div class="postcard">
+        <div class="flex justify-between items-center mb-10">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
-                    <span class="text-white font-black text-xl italic">S</span>
-                </div>
-                <div>
-                    <span class="font-bold tracking-tighter text-white uppercase text-sm block">SAN Technologies</span>
-                    <span class="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Hotel IT Excellence</span>
-                </div>
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-black italic shadow-lg shadow-blue-500/20">S</div>
+                <span class="font-bold tracking-tighter text-sm uppercase">SAN Technologies</span>
             </div>
-            <span class="hotel-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest italic">Industry Edition</span>
+            <span class="badge tracking-widest italic">Industry Edition</span>
         </div>
 
-        <h1 class="text-[38px] font-800 leading-[1.1] tracking-tighter text-white mb-4">
-            Transforming Your <br><span class="text-neon underline decoration-cyan-500/20">Hotel Ecosystem.</span>
+        <h1 class="text-3xl font-800 leading-tight tracking-tighter mb-4">
+            Ihr Hotel-Geschäft <br>
+            <span class="neon-text">transformieren – mit Code.</span>
         </h1>
-        <p class="text-gray-400 text-sm mb-10 leading-relaxed italic">
-            "Technological excellence meets business mindset." 
-            <br><span class="text-white/80 font-bold">— Professional Solutions from Euskirchen.</span>
+        
+        <p class="text-xs text-slate-400 leading-relaxed mb-8 italic">
+            "Technologische Exzellenz trifft auf unternehmerisches Denken."
         </p>
 
-        <div class="space-y-5 mb-10">
-            
-            <div class="glass-card p-6 border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-500/5 to-transparent">
-                <div class="flex items-center gap-2 mb-2">
-                    <h3 class="text-white font-bold text-lg">SAN Suite: Gastro & KDS</h3>
-                </div>
-                <p class="text-xs text-gray-400 leading-relaxed">
-                    A proprietary system built for speed and reliability in gastronomy. Replace paper tickets with digital screens. Includes intuitive checkout interfaces and <span class="text-cyan-400 font-bold">Cloud-TSE (KassenSichV)</span> integration.
-                </p>
-            </div>
-
-            <div class="glass-card p-6 border-l-4 border-blue-600 bg-gradient-to-r from-blue-600/5 to-transparent">
-                <h3 class="text-white font-bold text-lg mb-2">Consulting & System Integration</h3>
-                <p class="text-xs text-gray-400 leading-relaxed">
-                    Your tools should talk to each other. I build bridges between <span class="text-blue-400 font-bold">CRM, Accounting, and Inventory</span>. Secure Cloud Hosting and maintenance for zero downtime.
-                </p>
-            </div>
-
+        <div class="feature-box border-l-4 border-cyan-500">
+            <h3 class="text-cyan-400 font-bold text-sm mb-2 uppercase">SAN Suite: Gastro-Software & KDS</h3>
+            <p class="text-[11px] text-slate-300 leading-relaxed">
+                Ein proprietäres System, gebaut für Geschwindigkeit und Zuverlässigkeit in der Gastronomie. Ersetzt Zettelchaos durch digitale Screens. Inklusive intuitiver Kassenoberfläche und <span class="font-bold">Cloud-TSE (KassenSichV) Integration.</span>
+            </p>
         </div>
 
-        <div class="mt-auto">
-            <div class="bg-white rounded-3xl p-7 flex items-center justify-between shadow-[0_0_30px_rgba(34,211,238,0.2)]">
-                <div>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1 leading-none">Book a System Audit</p>
-                    <p class="text-2xl font-black tracking-tighter text-black">santechnologies.de</p>
-                    <div class="flex gap-4 mt-3 text-[11px] font-bold text-blue-600 italic">
-                        <span>+49 2251 9599741</span>
-                        <span>Euskirchen, DE</span>
-                    </div>
-                </div>
-                
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-gray-50 rounded-2xl p-2 border-2 border-dashed border-gray-200 flex items-center justify-center">
-                        <span class="text-[8px] text-gray-400 font-black uppercase text-center leading-none">Scan for<br>Live Demo</span>
-                    </div>
-                </div>
+        <div class="feature-box border-l-4 border-blue-500">
+            <h3 class="text-blue-400 font-bold text-sm mb-2 uppercase">Consulting & Systemintegration</h3>
+            <p class="text-[11px] text-slate-300 leading-relaxed">
+                Ihre Tools sollten miteinander sprechen. Ich baue die Brücken zwischen <span class="font-bold text-blue-300">CRM, Buchhaltung und Inventar.</span> Sicheres Cloud-Hosting (AWS) und Wartung für einen reibungslosen Hotelbetrieb.
+            </p>
+        </div>
+
+        <div class="mt-8 bg-white rounded-2xl p-6 flex items-center justify-between shadow-xl">
+            <div>
+                <p class="text-[9px] font-extrabold uppercase text-slate-400 tracking-widest mb-1">System-Audit anfordern</p>
+                <p class="text-xl font-black text-slate-900 tracking-tighter leading-none">santechnologies.de</p>
+                <p class="text-[10px] font-bold text-blue-600 mt-2">+49 2251 9599741</p>
             </div>
             
-            <p class="text-center text-[9px] text-gray-600 font-bold mt-8 uppercase tracking-[0.4em]">Direct Contact. No Agency Overhead. German Engineering.</p>
+            <div class="w-16 h-16 bg-slate-100 rounded-xl flex items-center justify-center border-2 border-dashed border-slate-300">
+                <span class="text-[8px] font-black text-slate-400 text-center uppercase leading-none">Scan<br>Here</span>
+            </div>
         </div>
+
+        <p class="text-center text-[8px] text-slate-500 font-bold mt-8 uppercase tracking-[0.3em]">
+            Direkter Kontakt. Keine Agentur-Kosten. Deutsche Ingenieurskunst.
+        </p>
     </div>
 
 </body>
