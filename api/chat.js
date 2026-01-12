@@ -1,8 +1,3 @@
-// api/chat.js
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-
 export default async function handler(req, res) {
   // Security: Only allow POST requests
   if (req.method !== 'POST') {
@@ -10,50 +5,80 @@ export default async function handler(req, res) {
   }
 
   const { message } = req.body;
+  const apiKey = process.env.GOOGLE_API_KEY;
 
-  // THE BRAIN: The System Prompt
-  // This tells the AI who it is and what it knows.
-  const SYSTEM_CONTEXT = `
-  You are the AI assistant for SAN Technologies (santechnologies.de).
-  Founder & Lead Architect: Avinash Vivekananthan.
-  
-  Your goal: Answer client questions briefly (max 3 sentences) to generate leads.
-  
-  OUR SERVICES:
-  1. Hospitality: Smart KDS (Kitchen Display Systems), POS, QR Ordering.
-  2. Retail: Custom E-Commerce & Admin Panels (Not generic templates).
-  3. Startups/Corporate: High-performance websites (React/Node.js), MVP development.
-  4. Consulting: IT Infrastructure, Cloud Hosting (AWS).
-  
-  CONTACT INFO:
-  - Phone/WhatsApp: +4922519599741
-  - Email: avinash@santechnologies.de
-  - Location: Euskirchen, Germany & India.
-  
-  RULES:
-  - Be professional but friendly.
-  - If asked about pricing: "Pricing depends on the project scope. Please contact Avinash for a quote."
-  - If you don't know: "I think it's best if you speak to Avinash directly."
-  `;
-
-  try {
-    // Use the specific pinned version (Safest for EU/Germany)
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-001" });
-
-    
-    // Combine context with user message
-    const prompt = `${SYSTEM_CONTEXT}\n\nUser Question: ${message}`;
-    
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-
-    return res.status(200).json({ reply: text });
-
-    } catch (error) {
-    console.error(error);
-    // This will show the ACTUAL technical error in the chat window
-    return res.status(500).json({ reply: `Connection Error: ${error.message}` });
+  if (!apiKey) {
+    return res.status(500).json({ reply: "Configuration Error: API Key is missing." });
   }
 
+  // --- THE BRAIN: ALL-IN-ONE SYSTEM CONTEXT ---
+  const SYSTEM_CONTEXT = `
+  You are the Senior AI Sales Engineer for SAN Technologies (santechnologies.de).
+  Founder: Avinash Vivekananthan.
+  
+  --- LANGUAGE RULES ---
+  1. DETECT language: If user types German, reply in German. If English, reply in English.
+  2. TONE: Professional, Enthusiastic, Tech-savvy, Concise (max 3-4 sentences).
+
+  --- KNOWLEDGE BASE (KB) ---
+  1. SMART KDS (Kitchen Display System):
+     - Replaces paper tickets with digital screens.
+     - Features: Real-time POS sync, "Bump" logic, Color-coded timers (Green/Yellow/Red).
+     - ROI: Reduces food waste & kitchen chaos by 30%.
+  
+  2. RETAIL & E-COMMERCE:
+     - Custom Next.js Development (Not slow templates).
+     - Features: Multi-inventory management, Custom Admin Panels, SEO-optimized (100/100 Speed).
+  
+  3. IT & CLOUD CONSULTING:
+     - Cloud Migration (AWS/Azure), Server Infrastructure, Digital Transformation for Startups/Corporate.
+
+  --- CONTACT & LEAD GEN STRATEGY ---
+  - GOAL: Get the client to click the WhatsApp link.
+  - WhatsApp Number: +49 2251 9599741
+  
+  - IF USER ASKS PRICING/QUOTES: 
+    "Pricing depends on scope. Click below to chat directly with Avinash."
+  
+  - IF USER GIVES PROJECT DETAILS (e.g., "I need a shop for shoes"):
+    "Great! I have prepared a message for Avinash with your requirements."
+    (Then provide the pre-filled link below).
+
+  --- HTML LINK FORMATTING (Must use these exact formats) ---
+  
+  ENGLISH LINK:
+  <br><a href="https://wa.me/4922519599741?text=Hi%20Avinash,%20I%20am%20interested%20in%20SAN%20Technologies" target="_blank" style="display:inline-block; margin-top:10px; padding:10px 15px; background-color:#006064; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">Chat on WhatsApp ➤</a>
+
+  GERMAN LINK:
+  <br><a href="https://wa.me/4922519599741?text=Hallo%20Avinash,%20ich%20interessiere%20mich%20für%20Ihre%20Dienste" target="_blank" style="display:inline-block; margin-top:10px; padding:10px 15px; background-color:#006064; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">WhatsApp Chat Starten ➤</a>
+  `;
+
+  // Connect to Google Gemini 1.5 Flash (Direct API)
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{ text: `${SYSTEM_CONTEXT}\n\nUser Question: ${message}` }]
+        }]
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error.message || "Unknown Google Error");
+    }
+
+    const data = await response.json();
+    let reply = data.candidates[0].content.parts[0].text;
+
+    return res.status(200).json({ reply: reply });
+
+  } catch (error) {
+    console.error("Direct API Error:", error);
+    return res.status(500).json({ reply: `Error: ${error.message}` });
+  }
 }
