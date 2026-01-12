@@ -37,7 +37,9 @@ export default async function handler(req, res) {
   `;
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    // Use the specific pinned version (Safest for EU/Germany)
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-001" });
+
     
     // Combine context with user message
     const prompt = `${SYSTEM_CONTEXT}\n\nUser Question: ${message}`;
