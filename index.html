@@ -497,6 +497,27 @@
     border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 20px;
 }
 .close-modal-btn:hover { background: var(--accent); }
+
+#chat-btn {
+    /* Keep your existing positioning (bottom/right) */
+    width: 65px;         /* Increased size slightly for visibility */
+    height: 65px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    
+    /* NEW LINES TO MAKE THE IMAGE FIT */
+    padding: 0;
+    overflow: hidden; 
+    background: white;
+    transition: transform 0.3s ease;
+}
+
+#chat-btn:hover {
+    transform: scale(1.1);
+}
+			
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -1318,7 +1339,10 @@
             <button id="send-btn" onclick="sendMessage()">➤</button>
         </div>
     </div>
-    <button id="chat-btn" onclick="toggleChat()">💬</button>
+    
+    <button id="chat-btn" onclick="toggleChat()">
+        <img src="bot-icon.gif" alt="Chat" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+    </button>
 </div>
 
 <script>
@@ -1366,4 +1390,5 @@
 </script>
 </body>
 </html>
+
 
