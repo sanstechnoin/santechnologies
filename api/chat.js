@@ -48,8 +48,10 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ reply: text });
 
-  } catch (error) {
+    } catch (error) {
     console.error(error);
-    return res.status(500).json({ reply: "I am having trouble connecting. Please WhatsApp Avinash directly." });
+    // This will show the ACTUAL technical error in the chat window
+    return res.status(500).json({ reply: `Connection Error: ${error.message}` });
   }
+
 }
