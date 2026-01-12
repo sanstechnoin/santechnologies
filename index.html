@@ -1272,5 +1272,98 @@
       ]
     }
     </script>
+	<style>
+    #chat-widget {
+        position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+    #chat-btn {
+        background: #006064; color: white; border: none; padding: 0;
+        border-radius: 50%; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        font-size: 28px; width: 60px; height: 60px; transition: 0.3s;
+        display: flex; align-items: center; justify-content: center;
+    }
+    #chat-btn:hover { transform: scale(1.1); background: #00BCD4; }
+    
+    #chat-window {
+        display: none; position: absolute; bottom: 80px; right: 0;
+        width: 320px; height: 450px; background: white;
+        border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        flex-direction: column; overflow: hidden; border: 1px solid #eee;
+        animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .chat-header { background: linear-gradient(135deg, #006064 0%, #004d50 100%); color: white; padding: 15px; font-weight: bold; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+    .chat-messages { flex: 1; padding: 15px; overflow-y: auto; font-size: 13px; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px; }
+    .chat-input-area { display: flex; border-top: 1px solid #eee; padding: 10px; background: white; }
+    #chat-input { flex: 1; border: 1px solid #ddd; padding: 10px; border-radius: 20px; outline: none; font-size: 13px; }
+    #send-btn { background: #006064; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; margin-left: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    
+    .msg { padding: 10px 14px; border-radius: 12px; max-width: 80%; line-height: 1.4; font-size: 13px; }
+    .bot { background: #E0F2F1; color: #004d50; align-self: flex-start; border-bottom-left-radius: 2px; }
+    .user { background: #006064; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .typing { font-style: italic; color: #999; font-size: 11px; margin-left: 10px; display: none; }
+</style>
+
+<div id="chat-widget">
+    <div id="chat-window">
+        <div class="chat-header"><span>🤖</span> SAN AI Assistant</div>
+        <div class="chat-messages" id="messages">
+            <div class="msg bot">Hello! I am the SAN AI. Ask me about our KDS, E-Commerce, or Development services.</div>
+        </div>
+        <div class="typing" id="typing-indicator">AI is typing...</div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Ask a question..." onkeypress="handleEnter(event)">
+            <button id="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+    <button id="chat-btn" onclick="toggleChat()">💬</button>
+</div>
+
+<script>
+    function toggleChat() {
+        const win = document.getElementById('chat-window');
+        win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function handleEnter(e) {
+        if (e.key === 'Enter') sendMessage();
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById('chat-input');
+        const msgBox = document.getElementById('messages');
+        const typing = document.getElementById('typing-indicator');
+        const text = input.value.trim();
+        
+        if (!text) return;
+
+        // 1. Show User Message
+        msgBox.innerHTML += `<div class="msg user">${text}</div>`;
+        input.value = '';
+        msgBox.scrollTop = msgBox.scrollHeight;
+        typing.style.display = 'block'; // Show typing indicator
+
+        // 2. Send to Backend
+        try {
+            const res = await fetch('/api/chat', { // This talks to your new api/chat.js file
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+            const data = await res.json();
+            
+            // 3. Show AI Response
+            typing.style.display = 'none';
+            msgBox.innerHTML += `<div class="msg bot">${data.reply}</div>`;
+        } catch (err) {
+            typing.style.display = 'none';
+            msgBox.innerHTML += `<div class="msg bot">I am currently offline. Please WhatsApp Avinash directly.</div>`;
+        }
+        msgBox.scrollTop = msgBox.scrollHeight;
+    }
+</script>
 </body>
 </html>
+
