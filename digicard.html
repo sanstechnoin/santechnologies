@@ -42,40 +42,57 @@
             position: relative;
         }
 
-        /* LANGUAGE TOGGLE */
+        /* 3-WAY LANGUAGE SWITCHER */
         .lang-switch {
             position: absolute;
             top: 20px;
             right: 20px;
             z-index: 20;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            padding: 5px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            padding: 4px;
             border-radius: 20px;
             display: flex;
-            gap: 5px;
-            border: 1px solid rgba(255,255,255,0.3);
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         
         .lang-btn {
-            background: none;
+            background: transparent;
             border: none;
-            color: rgba(255,255,255,0.7);
-            font-size: 11px;
+            color: rgba(255,255,255,0.85);
+            font-size: 10px;
             font-weight: 700;
-            padding: 5px 10px;
-            border-radius: 15px;
+            padding: 6px 10px;
+            border-radius: 16px;
             cursor: pointer;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         
+        .lang-btn:hover { background: rgba(255,255,255,0.2); }
+
         .lang-btn.active {
             background: white;
             color: var(--primary);
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* HEADER IMAGE */
+        .flag-icon { height: 12px; width: auto; display: block; }
+        
+        .ta-letter { 
+            font-family: 'Arial', sans-serif; 
+            font-weight: bold; 
+            font-size: 13px; 
+            line-height: 1;
+            display: inline-block;
+            transform: translateY(1px);
+        }
+
+        /* HEADER */
         .header-bg {
             width: 100%;
             height: 160px;
@@ -85,7 +102,6 @@
             position: relative;
         }
 
-        /* PROFILE PICTURE */
         .profile-img {
             width: 120px;
             height: 120px;
@@ -99,13 +115,13 @@
             z-index: 10;
         }
 
-        /* TEXT INFO */
+        /* INFO */
         .info-section { padding: 20px; }
         .name { font-size: 24px; font-weight: 800; color: #1a1a1a; margin: 10px 0 5px 0; }
         .title { font-size: 14px; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
         .company { font-size: 12px; color: #888; margin-bottom: 20px; }
 
-        /* ACTION BUTTONS */
+        /* BUTTONS */
         .btn-container {
             display: flex;
             flex-direction: column;
@@ -141,7 +157,7 @@
             grid-template-columns: 1fr 1fr 1fr;
             gap: 15px;
             width: 85%;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .icon-box {
@@ -160,6 +176,59 @@
         .icon-box:hover { background: #eef1f2; }
         .icon-box svg { width: 24px; height: 24px; fill: var(--primary); }
 
+        /* NEW SERVICES SECTION */
+        .services-container {
+            width: 85%;
+            text-align: left;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 5px;
+        }
+        
+        .srv-header {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #999;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .srv-header::before, .srv-header::after {
+            content: "";
+            height: 1px;
+            background: #eee;
+            flex: 1;
+        }
+
+        .srv-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .srv-item {
+            display: flex;
+            align-items: center;
+            background: #f4fcfd;
+            border: 1px solid #e0f7fa;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #444;
+            transition: 0.3s;
+        }
+        .srv-item:hover {
+            border-color: var(--accent);
+            transform: translateX(3px);
+        }
+        .srv-icon { margin-right: 12px; font-size: 16px; }
+
         .footer {
             margin-top: auto;
             padding: 20px;
@@ -177,8 +246,15 @@
     <div class="mobile-container">
         
         <div class="lang-switch">
-            <button class="lang-btn active" onclick="setLang('en')">EN</button>
-            <button class="lang-btn" onclick="setLang('de')">DE</button>
+            <button class="lang-btn" onclick="setLang('de')" data-lang="de">
+                DE <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
+            </button>
+            <button class="lang-btn" onclick="setLang('en')" data-lang="en">
+                EN <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
+            </button>
+            <button class="lang-btn" onclick="setLang('ta')" data-lang="ta">
+                TA <span class="ta-letter">த</span>
+            </button>
         </div>
 
         <div class="header-bg"></div>
@@ -186,9 +262,9 @@
         <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/profile.jpg" alt="Avinash V." class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Avinash+V&background=006064&color=fff&size=256'">
 
         <div class="info-section">
-            <div class="name">Avinash Vivekananthan</div>
+            <div class="name" id="txt-name">Avinash Vivekananthan</div>
             <div class="title" id="txt-title">Software Engineer</div>
-            <div class="company">SAN Technologies | Euskirchen</div>
+            <div class="company" id="txt-comp">SAN Technologies | Euskirchen</div>
         </div>
 
         <div class="btn-container">
@@ -220,8 +296,26 @@
             </a>
         </div>
 
+        <div class="services-container">
+            <div class="srv-header" id="txt-srv-header">Our Expertise</div>
+            <div class="srv-list">
+                <div class="srv-item">
+                    <span class="srv-icon">🖥️</span>
+                    <span id="txt-srv-1">Smart Kitchen Systems (KDS)</span>
+                </div>
+                <div class="srv-item">
+                    <span class="srv-icon">🛒</span>
+                    <span id="txt-srv-2">E-Commerce & Admin Panels</span>
+                </div>
+                <div class="srv-item">
+                    <span class="srv-icon">🌐</span>
+                    <span id="txt-srv-3">Modern Corporate Websites</span>
+                </div>
+            </div>
+        </div>
+
         <div class="footer">
-            Made with ❤ in Euskirchen<br>
+            <span id="txt-footer">Made with ❤ in Euskirchen</span><br>
             © SAN Technologies
         </div>
 
@@ -231,39 +325,77 @@
         // TRANSLATIONS
         const translations = {
             en: {
+                name: "Avinash Vivekananthan",
                 title: "Software Engineer",
+                comp: "SAN Technologies | Euskirchen",
                 save: "Save Contact",
                 web: "Open Website",
-                call: "Call"
+                call: "Call",
+                srv_header: "Our Expertise",
+                srv_1: "Smart Kitchen Systems (KDS)",
+                srv_2: "E-Commerce & Admin Panels",
+                srv_3: "Modern Corporate Websites",
+                footer: "Made with ❤ in Euskirchen"
             },
             de: {
+                name: "Avinash Vivekananthan",
                 title: "Softwareentwickler",
+                comp: "SAN Technologies | Euskirchen",
                 save: "Kontakt Speichern",
                 web: "Website Öffnen",
-                call: "Anrufen"
+                call: "Anrufen",
+                srv_header: "Unsere Expertise",
+                srv_1: "Küchen-Display-Systeme (KDS)",
+                srv_2: "E-Commerce & Admin-Panels",
+                srv_3: "Moderne Firmen-Websites",
+                footer: "Gemacht mit ❤ in Euskirchen"
+            },
+            ta: {
+                name: "அவினாஷ் விவேகானந்தன்",
+                title: "மென்பொருள் பொறியாளர்",
+                comp: "SAN Technologies | யூஸ்கிர்சென்",
+                save: "தொடர்பைச் சேமிக்க",
+                web: "இணையதளம்",
+                call: "அழைக்க",
+                srv_header: "எங்கள் சேவைகள்",
+                srv_1: "சமையலறை திரை அமைப்புகள் (KDS)",
+                srv_2: "மின் வணிகம் & நிர்வாகம்",
+                srv_3: "நவீன நிறுவன இணையதளங்கள்",
+                footer: "யூஸ்கிர்செனில் ❤ உடன் உருவாக்கப்பட்டது"
             }
         };
 
         // 1. LANGUAGE TOGGLE LOGIC
         function setLang(lang) {
             // Update Text
-            document.getElementById('txt-title').innerText = translations[lang].title;
-            document.getElementById('txt-save').innerText = translations[lang].save;
-            document.getElementById('txt-web').innerText = translations[lang].web;
-            document.getElementById('txt-call').innerText = translations[lang].call;
+            const t = translations[lang];
+            document.getElementById('txt-name').innerText = t.name;
+            document.getElementById('txt-title').innerText = t.title;
+            document.getElementById('txt-comp').innerText = t.comp;
+            document.getElementById('txt-save').innerText = t.save;
+            document.getElementById('txt-web').innerText = t.web;
+            document.getElementById('txt-call').innerText = t.call;
+            document.getElementById('txt-footer').innerText = t.footer;
+            
+            // Update Services
+            document.getElementById('txt-srv-header').innerText = t.srv_header;
+            document.getElementById('txt-srv-1').innerText = t.srv_1;
+            document.getElementById('txt-srv-2').innerText = t.srv_2;
+            document.getElementById('txt-srv-3').innerText = t.srv_3;
 
             // Update Buttons Style
             const buttons = document.querySelectorAll('.lang-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             
-            // Find the clicked button and activate it
-            const activeBtn = Array.from(buttons).find(b => b.innerText.toLowerCase() === lang);
+            const activeBtn = document.querySelector(`.lang-btn[data-lang="${lang}"]`);
             if(activeBtn) activeBtn.classList.add('active');
+
+            // Save to memory
+            localStorage.setItem('vCardLang', lang);
         }
 
-        // 2. DYNAMIC VCARD GENERATOR (Fixes 404 Error)
+        // 2. DYNAMIC VCARD GENERATOR
         function downloadVCard() {
-            // VCard Content (Updated with your new number)
             const vCardData = `BEGIN:VCARD
 VERSION:3.0
 N:Vivekananthan;Avinash;;;
@@ -277,20 +409,20 @@ ADR;TYPE=WORK:;;Euskirchen;;;;Germany
 NOTE:Digital Solutions for Hotels & Restaurants
 END:VCARD`;
 
-            // Create a Blob
             const blob = new Blob([vCardData], { type: 'text/vcard' });
             const url = URL.createObjectURL(blob);
-            
-            // Create a hidden link and click it
             const link = document.createElement('a');
             link.href = url;
             link.download = 'Avinash_SAN.vcf';
             document.body.appendChild(link);
             link.click();
-            
-            // Cleanup
             document.body.removeChild(link);
         }
+
+        // 3. INITIAL LOAD
+        const savedLang = localStorage.getItem('vCardLang') || 'en';
+        setLang(savedLang);
+
     </script>
 
 </body>
