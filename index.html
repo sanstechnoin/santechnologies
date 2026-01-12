@@ -1344,51 +1344,84 @@
         <img src="bot-icon.gif" alt="Chat" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
     </button>
 </div>
-
 <script>
+    // 1. Toggle Chat Window
     function toggleChat() {
         const win = document.getElementById('chat-window');
-        win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+        if (win.style.display === 'flex') {
+            win.style.display = 'none';
+        } else {
+            win.style.display = 'flex';
+            // Auto-focus input when opening
+            document.getElementById('chat-input').focus();
+        }
     }
 
+    // 2. Handle "Enter" Key
     function handleEnter(e) {
         if (e.key === 'Enter') sendMessage();
     }
 
+    // 3. Helper to Add Messages (Fixes Scroll & HTML issues)
+    function appendMessage(sender, text) {
+        const messages = document.getElementById('messages');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `msg ${sender}`;
+        
+        // CRITICAL: 
+        // For Bot -> use innerHTML (Allows the WhatsApp Buttons to show)
+        // For User -> use textContent (Safe text only)
+        if (sender === 'bot') {
+            msgDiv.innerHTML = text; 
+        } else {
+            msgDiv.textContent = text;
+        }
+
+        messages.appendChild(msgDiv);
+        // Auto-scroll to the bottom
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    // 4. Send Message Logic
     async function sendMessage() {
         const input = document.getElementById('chat-input');
-        const msgBox = document.getElementById('messages');
         const typing = document.getElementById('typing-indicator');
         const text = input.value.trim();
         
         if (!text) return;
 
-        // 1. Show User Message
-        msgBox.innerHTML += `<div class="msg user">${text}</div>`;
+        // Show User Message
+        appendMessage('user', text);
+        
         input.value = '';
-        msgBox.scrollTop = msgBox.scrollHeight;
-        typing.style.display = 'block'; // Show typing indicator
+        typing.style.display = 'block'; // Show "AI is typing..."
 
-        // 2. Send to Backend
         try {
-            const res = await fetch('/api/chat', { // This talks to your new api/chat.js file
+            // Send to Backend
+            const res = await fetch('/api/chat', { 
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: text })
             });
+
+            if (!res.ok) throw new Error("Server Error");
+
             const data = await res.json();
             
-            // 3. Show AI Response
+            // Hide Typing & Show Bot Response
             typing.style.display = 'none';
-            msgBox.innerHTML += `<div class="msg bot">${data.reply}</div>`;
+            appendMessage('bot', data.reply);
+
         } catch (err) {
             typing.style.display = 'none';
-            msgBox.innerHTML += `<div class="msg bot">I am currently offline. Please WhatsApp Avinash directly.</div>`;
+            // Fallback error message with direct WhatsApp link
+            appendMessage('bot', 'I am currently offline. <br><a href="https://wa.me/4922519599741" style="color:#006064; font-weight:bold;">Click here to WhatsApp Avinash directly.</a>');
         }
-        msgBox.scrollTop = msgBox.scrollHeight;
     }
 </script>
+
 </body>
 </html>
+
 
 
