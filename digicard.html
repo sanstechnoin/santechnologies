@@ -42,7 +42,7 @@
             position: relative;
         }
 
-        /* 3-WAY LANGUAGE SWITCHER */
+        /* 3-WAY LANGUAGE SWITCHER (ICON ONLY) */
         .lang-switch {
             position: absolute;
             top: 20px;
@@ -51,7 +51,7 @@
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(8px);
             padding: 4px;
-            border-radius: 20px;
+            border-radius: 25px; /* More rounded */
             display: flex;
             gap: 4px;
             border: 1px solid rgba(255,255,255,0.4);
@@ -61,16 +61,14 @@
         .lang-btn {
             background: transparent;
             border: none;
-            color: rgba(255,255,255,0.85);
-            font-size: 10px;
-            font-weight: 700;
-            padding: 6px 10px;
-            border-radius: 16px;
+            color: rgba(255,255,255,0.9);
+            padding: 6px 10px; /* Adjusted padding for icons */
+            border-radius: 20px;
             cursor: pointer;
             transition: 0.3s;
             display: flex;
             align-items: center;
-            gap: 4px;
+            justify-content: center;
         }
         
         .lang-btn:hover { background: rgba(255,255,255,0.2); }
@@ -81,15 +79,19 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .flag-icon { height: 12px; width: auto; display: block; }
+        .lang-btn.active .ta-letter { color: var(--primary); }
+
+        /* Icon Sizes */
+        .flag-icon { height: 16px; width: auto; display: block; }
         
         .ta-letter { 
             font-family: 'Arial', sans-serif; 
-            font-weight: bold; 
-            font-size: 13px; 
+            font-weight: 800; 
+            font-size: 16px; /* Larger letter to match flag height */
             line-height: 1;
             display: inline-block;
             transform: translateY(1px);
+            color: white; /* Default white */
         }
 
         /* HEADER */
@@ -176,7 +178,7 @@
         .icon-box:hover { background: #eef1f2; }
         .icon-box svg { width: 24px; height: 24px; fill: var(--primary); }
 
-        /* NEW SERVICES SECTION */
+        /* SERVICES SECTION */
         .services-container {
             width: 85%;
             text-align: left;
@@ -246,14 +248,14 @@
     <div class="mobile-container">
         
         <div class="lang-switch">
-            <button class="lang-btn" onclick="setLang('de')" data-lang="de">
-                DE <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
+            <button class="lang-btn" onclick="setLang('de')" data-lang="de" title="Deutsch">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
             </button>
-            <button class="lang-btn" onclick="setLang('en')" data-lang="en">
-                EN <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
+            <button class="lang-btn" onclick="setLang('en')" data-lang="en" title="English">
+                <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
             </button>
-            <button class="lang-btn" onclick="setLang('ta')" data-lang="ta">
-                TA <span class="ta-letter">த</span>
+            <button class="lang-btn" onclick="setLang('ta')" data-lang="ta" title="Tamil">
+                <span class="ta-letter">த</span>
             </button>
         </div>
 
@@ -309,7 +311,7 @@
                 </div>
                 <div class="srv-item">
                     <span class="srv-icon">🌐</span>
-                    <span id="txt-srv-3">Modern Corporate Websites</span>
+                    <span id="txt-srv-3">Websites for Startups & Business</span>
                 </div>
             </div>
         </div>
@@ -334,7 +336,7 @@
                 srv_header: "Our Expertise",
                 srv_1: "Smart Kitchen Systems (KDS)",
                 srv_2: "E-Commerce & Admin Panels",
-                srv_3: "Modern Corporate Websites",
+                srv_3: "Websites for Startups & Business",
                 footer: "Made with ❤ in Euskirchen"
             },
             de: {
@@ -347,7 +349,7 @@
                 srv_header: "Unsere Expertise",
                 srv_1: "Küchen-Display-Systeme (KDS)",
                 srv_2: "E-Commerce & Admin-Panels",
-                srv_3: "Moderne Firmen-Websites",
+                srv_3: "Webseiten für Startups & Firmen",
                 footer: "Gemacht mit ❤ in Euskirchen"
             },
             ta: {
@@ -360,7 +362,7 @@
                 srv_header: "எங்கள் சேவைகள்",
                 srv_1: "சமையலறை திரை அமைப்புகள் (KDS)",
                 srv_2: "மின் வணிகம் & நிர்வாகம்",
-                srv_3: "நவீன நிறுவன இணையதளங்கள்",
+                srv_3: "ஸ்டார்ட்அப் & வணிக இணையதளங்கள்",
                 footer: "யூஸ்கிர்செனில் ❤ உடன் உருவாக்கப்பட்டது"
             }
         };
