@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avinash Vivekananthan | SAN Technologies</title>
     
-    <meta property="og:title" content="Avinash Vivekananthan - Software Engineer">
+    <meta property="og:title" content="Avinash Vivekananthan - Founder & Lead Architect">
     <meta property="og:description" content="Click to save contact info & visit SAN Technologies.">
     <meta property="og:image" content="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/card_with_logo.png">
     
@@ -51,7 +51,7 @@
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(8px);
             padding: 4px;
-            border-radius: 25px; /* More rounded */
+            border-radius: 25px;
             display: flex;
             gap: 4px;
             border: 1px solid rgba(255,255,255,0.4);
@@ -62,7 +62,7 @@
             background: transparent;
             border: none;
             color: rgba(255,255,255,0.9);
-            padding: 6px 10px; /* Adjusted padding for icons */
+            padding: 6px 10px;
             border-radius: 20px;
             cursor: pointer;
             transition: 0.3s;
@@ -81,17 +81,16 @@
 
         .lang-btn.active .ta-letter { color: var(--primary); }
 
-        /* Icon Sizes */
         .flag-icon { height: 16px; width: auto; display: block; }
         
         .ta-letter { 
             font-family: 'Arial', sans-serif; 
             font-weight: 800; 
-            font-size: 16px; /* Larger letter to match flag height */
+            font-size: 16px; 
             line-height: 1;
             display: inline-block;
             transform: translateY(1px);
-            color: white; /* Default white */
+            color: white; 
         }
 
         /* HEADER */
@@ -265,7 +264,7 @@
 
         <div class="info-section">
             <div class="name" id="txt-name">Avinash Vivekananthan</div>
-            <div class="title" id="txt-title">Software Engineer</div>
+            <div class="title" id="txt-title">Founder & Lead Architect</div>
             <div class="company" id="txt-comp">SAN Technologies | Euskirchen</div>
         </div>
 
@@ -328,7 +327,7 @@
         const translations = {
             en: {
                 name: "Avinash Vivekananthan",
-                title: "Software Engineer",
+                title: "Founder & Lead Architect",
                 comp: "SAN Technologies | Euskirchen",
                 save: "Save Contact",
                 web: "Open Website",
@@ -341,7 +340,7 @@
             },
             de: {
                 name: "Avinash Vivekananthan",
-                title: "Softwareentwickler",
+                title: "Gründer & Lead Architect",
                 comp: "SAN Technologies | Euskirchen",
                 save: "Kontakt Speichern",
                 web: "Website Öffnen",
@@ -354,7 +353,7 @@
             },
             ta: {
                 name: "அவினாஷ் விவேகானந்தன்",
-                title: "மென்பொருள் பொறியாளர்",
+                title: "நிறுவனர் & தலைமை வடிவமைப்பாளர்",
                 comp: "SAN Technologies | யூஸ்கிர்சென்",
                 save: "தொடர்பைச் சேமிக்க",
                 web: "இணையதளம்",
@@ -398,12 +397,13 @@
 
         // 2. DYNAMIC VCARD GENERATOR
         function downloadVCard() {
+            // UPDATED TITLE IN VCARD
             const vCardData = `BEGIN:VCARD
 VERSION:3.0
 N:Vivekananthan;Avinash;;;
 FN:Avinash Vivekananthan
 ORG:SAN Technologies
-TITLE:Software Engineer
+TITLE:Founder & Lead Architect
 TEL;TYPE=WORK,VOICE:+491623757839
 EMAIL;TYPE=PREF,INTERNET:avinash@santechnologies.de
 URL:https://santechnologies.de
