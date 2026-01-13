@@ -291,9 +291,261 @@
             }
         }
     </script>
+    <style>
+    /* 1. CONTAINER - HIDDEN INITIALLY */
+    #chat-widget {
+        position: fixed; bottom: 20px; right: 20px; z-index: 99999;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        display: flex; flex-direction: column; align-items: flex-end;
+        /* HIDDEN FOR PULSING EFFECT */
+        opacity: 0; 
+        pointer-events: none; 
+        transition: opacity 1s ease;
+    }
 
+    /* 2. PROMPT */
+    #chat-prompt {
+        background: white; padding: 12px 20px; border-radius: 12px 12px 0 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 12px;
+        font-size: 14px; font-weight: bold; color: #333; cursor: pointer;
+        border: 1px solid #f0f0f0; display: flex; align-items: center; gap: 8px;
+    }
+
+    /* 3. WINDOW */
+    #chat-window {
+        display: none; flex-direction: column;
+        position: absolute; bottom: 85px; right: 0;
+        width: 350px; height: 500px;
+        background: white; border-radius: 12px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        border: 1px solid #eee; overflow: hidden;
+    }
+
+    /* 4. HEADER */
+    .chat-header {
+        background: linear-gradient(135deg, #006064 0%, #004d50 100%);
+        color: white; padding: 15px; font-size: 15px; font-weight: bold;
+        display: flex; align-items: center; justify-content: space-between;
+    }
+    .close-chat { cursor: pointer; font-size: 22px; line-height: 1; opacity: 0.8; }
+
+    /* 5. MESSAGES */
+    .chat-messages {
+        flex: 1; padding: 15px; overflow-y: auto;
+        font-size: 14px; background: #fafafa;
+        display: flex; flex-direction: column; gap: 10px;
+    }
+    .msg {
+        padding: 10px 14px; border-radius: 10px;
+        max-width: 80%; line-height: 1.5; font-size: 13.5px;
+        word-wrap: break-word; overflow-wrap: anywhere; 
+        white-space: normal;
+    }
+    .bot { background: #E0F2F1; color: #004d50; align-self: flex-start; border-bottom-left-radius: 2px; }
+    .user { background: #006064; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .msg a { color: #00838F; font-weight: bold; text-decoration: none; }
+
+    /* 6. INPUT */
+    .chat-input-area {
+        display: flex; border-top: 1px solid #eee; padding: 12px; background: white;
+    }
+    #chat-input {
+        flex: 1; border: 1px solid #ddd; padding: 10px 14px; border-radius: 20px;
+        outline: none; font-size: 14px; background: #f9f9f9;
+    }
+    #chat-input:focus { border-color: #006064; background: white; }
+    #send-btn {
+        background: #006064; color: white; border: none; width: 40px; height: 40px;
+        border-radius: 50%; margin-left: 8px; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; font-size: 16px;
+    }
+
+    /* 7. FOOTER */
+    .typing { font-style: italic; color: #999; font-size: 12px; margin-left: 20px; margin-bottom: 5px; display: none; }
+    .chat-footer-disclaimer {
+        font-size: 10px; color: #aaa; text-align: center; padding: 6px;
+        background: #fdfdfd; border-top: 1px solid #f0f0f0;
+    }
+
+    /* 8. BUTTON */
+    #chat-btn {
+        background: white; border: none; padding: 0;
+        border-radius: 50%; cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        width: 60px; height: 60px; overflow: hidden;
+        transition: transform 0.2s;
+    }
+    #chat-btn:hover { transform: scale(1.05); }
+
+    @media (max-width: 450px) {
+        #chat-window { width: 90vw; right: 0; bottom: 85px; height: 65vh; }
+    }
+</style>
+
+<div id="chat-widget">
+    <div id="chat-prompt" onclick="toggleChat()">
+        <span>👋🏽</span> <span id="prompt-text">Ask SAN Laxa</span>
+    </div>
+
+    <div id="chat-window">
+        <div class="chat-header">
+            <span style="display:flex; align-items:center; gap:10px;">
+                <img src="bot-icon.gif" style="width:28px; height:28px; border-radius:50%; background:white;"> 
+                SAN Laxa
+            </span>
+            <span class="close-chat" onclick="closeAndResetChat()">×</span>
+        </div>
+        
+        <div class="chat-messages" id="messages"></div>
+        <div class="typing" id="typing-indicator">typing...</div>
+        <div class="chat-footer-disclaimer" id="disclaimer-text">AI Assistant</div>
+        
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="..." onkeypress="handleEnter(event)">
+            <button id="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+    
+    <button id="chat-btn" onclick="toggleChat()">
+        <img src="bot-icon.gif" alt="Chat" style="width: 100%; height: 100%; object-fit: cover;">
+    </button>
+</div>
+
+<script>
+    const CHAT_TEXTS = {
+        en: {
+            prompt: "Ask SAN Laxa",
+            typing: "SAN Laxa is typing...",
+            placeholder: "Ask a question...",
+            disclaimer: "SAN Laxa provides general information and does not replace professional consultation.",
+            welcome: "🙏🏽 I’m SAN Laxa, your AI assistant.<br>I can help you with SAN Suite, E-Commerce solutions, or your project enquiry."
+        },
+        de: {
+            prompt: "Frag SAN Laxa",
+            typing: "SAN Laxa tippt...",
+            placeholder: "Stellen Sie eine Frage...",
+            disclaimer: "SAN Laxa stellt allgemeine Informationen bereit und ersetzt keine professionelle Beratung.",
+            welcome: "🙏🏽 Ich bin SAN Laxa, Ihr KI-Assistent.<br>Ich helfe Ihnen gerne bei Fragen zur SAN Suite, zu E-Commerce-Lösungen oder zu Ihrem Projekt."
+        }
+    };
+
+    function getLang() { return localStorage.getItem('selectedLang') || 'de'; }
+
+    function updateChatUI() {
+        const lang = getLang();
+        const t = CHAT_TEXTS[lang];
+        if(document.getElementById('prompt-text')) document.getElementById('prompt-text').textContent = t.prompt;
+        if(document.getElementById('typing-indicator')) document.getElementById('typing-indicator').textContent = t.typing;
+        if(document.getElementById('chat-input')) document.getElementById('chat-input').placeholder = t.placeholder;
+        if(document.getElementById('disclaimer-text')) document.getElementById('disclaimer-text').textContent = t.disclaimer;
+    }
+
+    function getContext() { return sessionStorage.getItem('san_chat_context') || ""; }
+    function addToContext(role, text) {
+        sessionStorage.setItem('san_chat_context', getContext() + `${role}: ${text}\n`);
+    }
+
+    function initChat() {
+        updateChatUI();
+        const savedHTML = sessionStorage.getItem('san_chat_html');
+        const msgBox = document.getElementById('messages');
+        
+        if (savedHTML && savedHTML.trim() !== "") {
+            msgBox.innerHTML = savedHTML;
+            msgBox.scrollTop = msgBox.scrollHeight;
+        } else {
+            const lang = getLang();
+            msgBox.innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
+        }
+    }
+
+    function toggleChat() {
+        const win = document.getElementById('chat-window');
+        if (win.style.display === 'flex') { win.style.display = 'none'; document.getElementById('chat-prompt').style.display = 'flex'; }
+        else { win.style.display = 'flex'; document.getElementById('chat-prompt').style.display = 'none'; document.getElementById('chat-input').focus(); const mb = document.getElementById('messages'); mb.scrollTop = mb.scrollHeight; }
+    }
+
+    function closeAndResetChat() {
+        document.getElementById('chat-window').style.display = 'none'; 
+        document.getElementById('chat-prompt').style.display = 'flex';
+        sessionStorage.removeItem('san_chat_html');
+        sessionStorage.removeItem('san_chat_context');
+        const lang = getLang();
+        document.getElementById('messages').innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
+    }
+
+    function handleEnter(e) { if (e.key === 'Enter') sendMessage(); }
+
+    function appendMsg(sender, text, isHtml) {
+        const box = document.getElementById('messages');
+        const div = document.createElement('div');
+        div.className = `msg ${sender}`;
+        if (isHtml) div.innerHTML = text; else div.textContent = text;
+        box.appendChild(div);
+        box.scrollTop = box.scrollHeight;
+        sessionStorage.setItem('san_chat_html', box.innerHTML);
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById('chat-input');
+        const text = input.value.trim();
+        if (!text) return;
+
+        appendMsg('user', text, false);
+        addToContext('User', text);
+        input.value = '';
+        document.getElementById('typing-indicator').style.display = 'block';
+
+        try {
+            const res = await fetch('/api/chat', { 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text, history: getContext() })
+            });
+            const data = await res.json();
+            
+            document.getElementById('typing-indicator').style.display = 'none';
+            
+            if (!res.ok) {
+                appendMsg('bot', `⚠️ ${data.reply}`, false);
+            } else {
+                appendMsg('bot', data.reply, true);
+                addToContext('AI', data.reply);
+            }
+        } catch (err) {
+            document.getElementById('typing-indicator').style.display = 'none';
+            appendMsg('bot', "Offline Mode.", false);
+        }
+    }
+
+    // --- INIT & PULSING SYNC ---
+    document.addEventListener("DOMContentLoaded", () => {
+        initChat();
+        
+        // ** SYNC WITH PAGE LOADING EFFECT (3 SECONDS) **
+        setTimeout(() => {
+            const widget = document.getElementById('chat-widget');
+            widget.style.opacity = '1';
+            widget.style.pointerEvents = 'auto'; 
+        }, 3000); 
+
+        // Language Listener
+        document.querySelectorAll('.lang-toggle-input').forEach(t => {
+            t.addEventListener('change', () => {
+                setTimeout(() => { 
+                    updateChatUI();
+                    if (!sessionStorage.getItem('san_chat_context')) {
+                        sessionStorage.removeItem('san_chat_html');
+                        initChat();
+                    }
+                }, 100);
+            });
+        });
+    });
+</script>
 </body>
 </html>
+
 
 
 
