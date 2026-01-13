@@ -113,7 +113,7 @@ export default async function handler(req, res) {
 
   // Using the stable Gemini 2.0 Flash Experimental model
   // (This matches the "Gold Standard" we established)
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
   try {
     const response = await fetch(url, {
