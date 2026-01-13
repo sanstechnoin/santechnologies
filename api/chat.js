@@ -1,9 +1,9 @@
 export default async function handler(req, res) {
+  // Security: Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  // NOW ACCEPTING 'history' FROM FRONTEND
   const { message, history } = req.body;
   const apiKey = process.env.GOOGLE_API_KEY;
 
@@ -76,31 +76,39 @@ export default async function handler(req, res) {
   `;
 
   // ==========================================
-  // 🤖 THE HUMAN PERSONA
+  // 🤖 THE DESIGNER PERSONA
   // ==========================================
   const SYSTEM_PROMPT = `
   You are "SAN Agan", the Solutions Architect for SAN Technologies.
   
-  --- CRITICAL HUMAN RULES (DO NOT IGNORE) ---
-  1. **NO REPETITION:** Do NOT start messages with "I am SAN Agan" or "As an AI". You are in the middle of a conversation. Just answer the question directly.
-  2. **SHORT & NATURAL:** Write like a human on WhatsApp. Short sentences. No big paragraphs.
-  3. **CONSULTATIVE:** If they ask about KDS, ask if they need the Legal POS (Prime) too. If they ask about Shops, ask if they sell internationally.
+  --- VISUAL FORMATTING RULES (CRITICAL) ---
+  You MUST use HTML tags to structure your answer nicely.
   
+  1. **USE LISTS:** Never list items in a sentence. Use this format:
+     <br>1. <b style="color:#006064;">Product Name</b> - <i>Short description</i>
+     <br>2. <b style="color:#006064;">Product Name</b> - <i>Short description</i>
+  
+  2. **USE COLORS:** - When saying "SAN Suite" or "SAN Commerce", always wrap it like this: 
+       <b style="color:#006064;">SAN Suite</b>
+  
+  3. **USE BREAKS:** - Use <br> frequently to create white space. 
+     - Never write a paragraph longer than 2 lines.
+
+  4. **NO ROBOT INTROS:** Do not say "I am SAN Agan". Just answer directly.
+
   --- LANGUAGE ---
-  - Detect the language of the 'User Question'. Reply in that SAME language.
-  
-  --- LEAD GEN ---
-  - Only show the WhatsApp link if they ask for a Quote, Price, or Human.
-  - Link (EN): <br><a href="https://wa.me/4922519599741?text=Hi%20Avinash" style="color:#006064;font-weight:bold;">Chat with Avinash ➤</a>
-  - Link (DE): <br><a href="https://wa.me/4922519599741?text=Hallo%20Avinash" style="color:#006064;font-weight:bold;">Mit Avinash sprechen ➤</a>
+  - Detect User Language. Reply in the SAME language (German or English).
+
+  --- LEAD GEN LINKS ---
+  - Only show if intent is high (Price/Quote).
+  - English: <br><br><a href="https://wa.me/4922519599741" style="display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;font-weight:bold;">Chat with Avinash ➤</a>
+  - German: <br><br><a href="https://wa.me/4922519599741" style="display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;font-weight:bold;">WhatsApp Starten ➤</a>
   `;
 
-  // Using the STABLE Model
+  // --- 2026 MODEL CONNECTION ---
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
   try {
-    // PREPARE THE CONVERSATION HISTORY
-    // We limit history to the last ~1000 chars to save tokens/money
     const cleanHistory = history ? history.slice(-2000) : "";
 
     const response = await fetch(url, {
@@ -110,14 +118,11 @@ export default async function handler(req, res) {
         contents: [{
           parts: [{ text: `
             ${SYSTEM_PROMPT}
-            
-            --- KNOWLEDGE BASE ---
-            ${KNOWLEDGE_BASE}
-            
-            --- CONVERSATION HISTORY ---
+            --- HISTORY ---
             ${cleanHistory}
-            
-            --- CURRENT USER QUESTION ---
+            --- KNOWLEDGE ---
+            ${KNOWLEDGE_BASE}
+            --- USER QUESTION ---
             ${message}
           `}]
         }]
@@ -136,6 +141,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error("API Error:", error);
-    return res.status(500).json({ reply: "I'm having a quick connection blip. Please try again!" });
+    return res.status(500).json({ reply: "I am having a connection blip. Please try again." });
   }
 }
