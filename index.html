@@ -1383,6 +1383,7 @@
     }
 
     // 4. Send Message Logic
+        // DEBUG VERSION of sendMessage
     async function sendMessage() {
         const input = document.getElementById('chat-input');
         const typing = document.getElementById('typing-indicator');
@@ -1390,38 +1391,41 @@
         
         if (!text) return;
 
-        // Show User Message
         appendMessage('user', text);
-        
         input.value = '';
-        typing.style.display = 'block'; // Show "AI is typing..."
+        typing.style.display = 'block';
 
         try {
-            // Send to Backend
             const res = await fetch('/api/chat', { 
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: text })
             });
 
-            if (!res.ok) throw new Error("Server Error");
+            // 🔍 DEBUG: If there is an error, READ the error message first
+            if (!res.ok) {
+                const errorData = await res.json(); 
+                // This forces the REAL error to show in the chat
+                throw new Error(errorData.reply || "Unknown Server Error");
+            }
 
             const data = await res.json();
-            
-            // Hide Typing & Show Bot Response
             typing.style.display = 'none';
             appendMessage('bot', data.reply);
 
         } catch (err) {
             typing.style.display = 'none';
-            // Fallback error message with direct WhatsApp link
-            appendMessage('bot', 'I am currently offline. <br><a href="https://wa.me/4922519599741" style="color:#006064; font-weight:bold;">Click here to WhatsApp Avinash directly.</a>');
+            // 🚨 THIS WILL SHOW THE REAL ERROR ON YOUR SCREEN
+            appendMessage('bot', `⚠️ TECHNICAL ERROR: ${err.message}`);
+            console.error(err);
         }
     }
+
 </script>
 
 </body>
 </html>
+
 
 
 
