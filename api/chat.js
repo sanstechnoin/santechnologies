@@ -12,9 +12,9 @@ export default async function handler(req, res) {
   }
 
   // ==========================================
-  // 🧠 KNOWLEDGE BASE (Condensed for Efficiency)
+  // 🧠 KNOWLEDGE BASE (Detailed + Localized)
   // ==========================================
-   const KNOWLEDGE_BASE = `
+  const KNOWLEDGE_BASE = `
   --- COMPANY PROFILE ---
   - Name: SAN Technologies.
   - Founder: Avinash Vivekananthan (Freelance Software Engineer & IT Cluster Lead).
@@ -23,20 +23,23 @@ export default async function handler(req, res) {
   - Tech Stack: React.js, Node.js, AWS, WebSocket, ServiceNow.
 
   --- PRODUCT 1: SAN SUITE (Gastro Operating System) ---
+  - PAGE URL: /san-suite.html
+  - GLOBAL AVAILABILITY: Works in Germany & India (Adapts to local laws).
+  
   [Overview]
   - What is it?: A modular restaurant system. It works as a standalone system OR connects to existing POS.
   - Target Audience: Restaurants, Dark Kitchens, Cafes who want to ditch paper tickets.
-  
+   
   [The Two Editions]
   1. SAN Suite CORE (The Entry Level):
      - Best for: Kitchen management & Ordering only.
      - Features: Digital tickets, KDS (Kitchen Display), Waiter App, WhatsApp Notifications.
      - IMPORTANT: This is NOT a legal cash register (No TSE). You need a separate system for payments.
-  
+   
   2. SAN Suite PRIME (The Full Legal POS):
-     - Best for: Full legal compliance in Germany.
-     - Features: All CORE features + Cloud-TSE (Fiskaly Integration), Legal Receipts (QR Codes), 10-Year Audit Archive.
-     - Compliance: Fully meets KassenSichV regulations.
+     - Best for: Full legal compliance.
+     - GERMANY: Includes Cloud-TSE (Fiskaly Integration), Legal Receipts (QR Codes), 10-Year Audit Archive (KassenSichV).
+     - INDIA: Includes GST Billing logic and local tax compliance.
 
   [Key Features & Hardware]
   - Smart KDS: Replaces printers. Colors tickets Green/Yellow/Red based on prep time.
@@ -45,24 +48,27 @@ export default async function handler(req, res) {
   - Hardware: Runs on ANY browser (iPad, Android, Windows Touch Screens). We recommend IP54 rugged screens for grease resistance.
 
   --- PRODUCT 2: SAN COMMERCE (D2C Retail System) ---
+  - PAGE URL: /san-commerce.html
   [Overview]
   - What is it?: A "Headless" E-Commerce platform for D2C brands.
   - Difference from Shopify: Custom-built Logic, No Plugins required, <1s Load Time.
-  
+   
   [The Two Editions]
   1. SAN Commerce CORE (Frontend):
      - Focus: Speed & Conversion.
      - Tech: React/Next.js (Google PageSpeed 100/100).
      - UX: Fully custom design, not a template.
-  
+   
   2. SAN Commerce PRIME (Backend / Merchant OS):
      - Focus: Operations & Logistics.
      - Features: Custom OMS (Order Mgmt), Profit/ROI Calculator per order, Inventory Sync.
      - Logistics Logic: Automatically selects the cheapest shipping provider based on rules.
 
-  [Cross-Border Features (Germany & India)]
-  - Payments: Supports SEPA/PayPal/Klarna (DE) AND UPI/Razorpay (India) natively.
-  - Inventory: Routes orders to the correct local warehouse automatically.
+  [Global & Local Localization (Germany & India)]
+  - Description: The system detects the region and applies local laws/payments.
+  - Payments (Germany): Native support for SEPA, PayPal, Klarna.
+  - Payments (India): Native support for UPI, Razorpay.
+  - Inventory: Routes orders to the correct local warehouse automatically (if operating in multiple regions).
 
   --- SERVICES: IT CONSULTING ---
   - Cloud Migration: Moving legacy servers to AWS/Azure.
@@ -76,36 +82,34 @@ export default async function handler(req, res) {
   `;
 
   // ==========================================
-  // 🤖 THE DESIGNER PERSONA
+  // 🤖 THE SYSTEM PROMPT (Persona + HTML Formatting)
   // ==========================================
   const SYSTEM_PROMPT = `
   You are "SAN Agan", the Solutions Architect for SAN Technologies.
-  
-  --- VISUAL FORMATTING RULES (CRITICAL) ---
-  You MUST use HTML tags to structure your answer nicely.
-  
-  1. **USE LISTS:** Never list items in a sentence. Use this format:
-     <br>1. <b style="color:#006064;">Product Name</b> - <i>Short description</i>
-     <br>2. <b style="color:#006064;">Product Name</b> - <i>Short description</i>
-  
-  2. **USE COLORS:** - When saying "SAN Suite" or "SAN Commerce", always wrap it like this: 
-       <b style="color:#006064;">SAN Suite</b>
-  
-  3. **USE BREAKS:** - Use <br> frequently to create white space. 
-     - Never write a paragraph longer than 2 lines.
+   
+  --- CRITICAL HUMAN RULES ---
+  1. **NO REPETITION:** Do NOT start messages with "I am SAN Agan" if history shows we are talking.
+  2. **SHORT & NATURAL:** Write like a human on WhatsApp. Short sentences.
+  3. **CONSULTATIVE:** - If discussing POS/KDS, check if they need the Legal POS (Prime) for their country (TSE for Germany, GST for India).
+     - If discussing E-Commerce, mention we handle local payments (UPI/SEPA) natively.
 
-  4. **NO ROBOT INTROS:** Do not say "I am SAN Agan". Just answer directly.
+  --- VISUAL FORMATTING RULES (HTML ONLY) ---
+  1. **BOLDING:** Use <b style="color:#006064;">Key Terms</b> to highlight products.
+  2. **LISTS:** Use <br> breaks for lists.
+  3. **INTERNAL LINKS (Must Include):**
+     - If discussing SAN Suite: <br><a href="san-suite.html" style="color:#006064;font-weight:bold;text-decoration:underline;">View SAN Suite Details ➤</a>
+     - If discussing SAN Commerce: <br><a href="san-commerce.html" style="color:#006064;font-weight:bold;text-decoration:underline;">View SAN Commerce Details ➤</a>
 
   --- LANGUAGE ---
-  - Detect User Language. Reply in the SAME language (German or English).
-
-  --- LEAD GEN LINKS ---
-  - Only show if intent is high (Price/Quote).
-  - English: <br><br><a href="https://wa.me/4922519599741" style="display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;font-weight:bold;">Chat with Avinash ➤</a>
-  - German: <br><br><a href="https://wa.me/4922519599741" style="display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;font-weight:bold;">WhatsApp Starten ➤</a>
+  - Detect the language of the 'User Question'. Reply in that SAME language.
+   
+  --- LEAD GEN ---
+  - Only show the WhatsApp link if they ask for a Quote, Price, or Human.
+  - Link (EN): <br><br><a href="https://wa.me/4922519599741?text=Hi%20Avinash" style="display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;font-weight:bold;">Chat with Avinash ➤</a>
+  - Link (DE): <br><br><a href="https://wa.me/4922519599741?text=Hallo%20Avinash" style="display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;font-weight:bold;">Mit Avinash sprechen ➤</a>
   `;
 
-  // --- 2026 MODEL CONNECTION ---
+  // --- 2026 STABLE MODEL ---
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
   try {
@@ -118,11 +122,14 @@ export default async function handler(req, res) {
         contents: [{
           parts: [{ text: `
             ${SYSTEM_PROMPT}
-            --- HISTORY ---
+            
+            --- CONVERSATION HISTORY ---
             ${cleanHistory}
-            --- KNOWLEDGE ---
+            
+            --- KNOWLEDGE BASE ---
             ${KNOWLEDGE_BASE}
-            --- USER QUESTION ---
+            
+            --- CURRENT USER QUESTION ---
             ${message}
           `}]
         }]
@@ -141,6 +148,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error("API Error:", error);
-    return res.status(500).json({ reply: "I am having a connection blip. Please try again." });
+    return res.status(500).json({ reply: "I am having a quick connection blip. Please try again!" });
   }
 }
