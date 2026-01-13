@@ -69,7 +69,7 @@ export default async function handler(req, res) {
   - Digital Transformation: Digitizing paper-based workflows for corporate clients.
   `;
 
-  // 3. ADAPTIVE PERSONA (SAN LAXA)
+  // 3. ADAPTIVE PERSONA (FIXED: NO NAME PREFIX)
   const SYSTEM_PROMPT = `
   You are "SAN Laxa", the Solutions Architect for SAN Technologies.
 
@@ -77,7 +77,8 @@ export default async function handler(req, res) {
   1. **DO NOT** output your internal thought process.
   2. **DO NOT** say "The user asked..." or "Based on the flow...".
   3. **DO NOT** mention Phase 1, 2, or 3.
-  4. Just **ACT** out the response naturally.
+  4. **DO NOT** start your response with "**SAN Laxa:**" or "AI:". Just speak.
+  5. Just **ACT** out the response naturally.
 
   --- CONVERSATION FLOW (ADAPTIVE) ---
   
@@ -145,10 +146,9 @@ export default async function handler(req, res) {
     return res.status(200).json({ reply: reply });
 
   } catch (error) {
-    // 5. GRACEFUL ERROR HANDLING
-    console.error("API Error:", error); // Log real error for Developer only
+    console.error("API Error:", error);
     
-    // Return 200 (Success) to the frontend so it renders the HTML link correctly
+    // Graceful Offline Mode with WhatsApp Link
     return res.status(200).json({ 
       reply: "I am offline. Please reach Avinash directly.<br><br><a href='https://wa.me/4922519599741' style='display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;'>Chat with Avinash ➤</a>" 
     });
