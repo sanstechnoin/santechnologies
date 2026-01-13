@@ -1,4 +1,17 @@
 export default async function handler(req, res) {
+  // --- CORS HEADERS (Important for Vercel) ---
+  // Allows your frontend to talk to this backend
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*'); 
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+
+  // Handle Browser "Pre-flight" checks
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   // 1. Security
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
@@ -69,7 +82,7 @@ export default async function handler(req, res) {
   - Digital Transformation: Digitizing paper-based workflows for corporate clients.
   `;
 
-  // 3. ADAPTIVE PERSONA (FIXED: NO NAME PREFIX)
+  // 3. ADAPTIVE PERSONA (SAN LAXA)
   const SYSTEM_PROMPT = `
   You are "SAN Laxa", the Solutions Architect for SAN Technologies.
 
