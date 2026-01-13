@@ -1383,17 +1383,17 @@
     }
 
     // 4. Send Message Logic
-        // DEBUG VERSION of sendMessage
-    async function sendMessage() {
+    	async function sendMessage() {
         const input = document.getElementById('chat-input');
         const typing = document.getElementById('typing-indicator');
         const text = input.value.trim();
         
         if (!text) return;
 
+        // 1. Show user message
         appendMessage('user', text);
         input.value = '';
-        typing.style.display = 'block';
+        typing.style.display = 'block'; // Show typing animation
 
         try {
             const res = await fetch('/api/chat', { 
@@ -1402,22 +1402,26 @@
                 body: JSON.stringify({ message: text })
             });
 
-            // 🔍 DEBUG: If there is an error, READ the error message first
+            const data = await res.json();
+            
+            // Hide typing
+            typing.style.display = 'none';
+
             if (!res.ok) {
-                const errorData = await res.json(); 
-                // This forces the REAL error to show in the chat
-                throw new Error(errorData.reply || "Unknown Server Error");
+                // If there is an error, show a polite message, not the technical error
+                console.error("Server Error:", data.reply || res.statusText); // Log for you
+                appendMessage('bot', "I'm having a little trouble connecting right now. Please try again or click the WhatsApp button to chat with Avinash directly!");
+                return;
             }
 
-            const data = await res.json();
-            typing.style.display = 'none';
+            // 2. Show Bot Response
             appendMessage('bot', data.reply);
 
         } catch (err) {
             typing.style.display = 'none';
-            // 🚨 THIS WILL SHOW THE REAL ERROR ON YOUR SCREEN
-            appendMessage('bot', `⚠️ TECHNICAL ERROR: ${err.message}`);
-            console.error(err);
+            console.error("Network Error:", err);
+            // Fallback message for network issues
+            appendMessage('bot', "I'm having trouble reaching the server. Please check your connection or WhatsApp us!");
         }
     }
 
@@ -1425,6 +1429,7 @@
 
 </body>
 </html>
+
 
 
 
