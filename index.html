@@ -1277,83 +1277,224 @@
     }
     </script>
 	<style>
+    /* WIDGET CONTAINER */
     #chat-widget {
         position: fixed; bottom: 20px; right: 20px; z-index: 9999;
         font-family: 'Helvetica Neue', Arial, sans-serif;
+        display: flex; flex-direction: column; align-items: flex-end;
     }
+
+    /* PROMPT BOX (The "Speech Bubble" when closed) */
+    #chat-prompt {
+        background: white;
+        padding: 12px 20px;
+        border-radius: 12px 12px 0 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(10px);
+        animation: popIn 0.5s forwards 1s; /* Delays appearance slightly */
+        border: 1px solid #eee;
+        display: flex; align-items: center; gap: 8px;
+    }
+    @keyframes popIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* CHAT BUTTON (Avatar) */
     #chat-btn {
         background: #006064; color: white; border: none; padding: 0;
         border-radius: 50%; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        font-size: 28px; width: 60px; height: 60px; transition: 0.3s;
+        font-size: 28px; width: 65px; height: 65px; transition: 0.3s;
         display: flex; align-items: center; justify-content: center;
+        overflow: hidden;
     }
-    #chat-btn:hover { transform: scale(1.1); background: #00BCD4; }
-    
+    #chat-btn:hover { transform: scale(1.05); background: #00BCD4; }
+
+    /* MAIN CHAT WINDOW */
     #chat-window {
-        display: none; position: absolute; bottom: 80px; right: 0;
-        width: 320px; height: 450px; background: white;
-        border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        flex-direction: column; overflow: hidden; border: 1px solid #eee;
+        display: none; 
+        flex-direction: column;
+        position: absolute; bottom: 85px; right: 0;
+        width: 340px; height: 500px; 
+        background: white;
+        border-radius: 16px; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+        border: 1px solid #eee;
+        overflow: hidden;
         animation: slideUp 0.3s ease;
     }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    
-    .chat-header { background: linear-gradient(135deg, #006064 0%, #004d50 100%); color: white; padding: 15px; font-weight: bold; font-size: 15px; display: flex; align-items: center; gap: 10px; }
-    .chat-messages { flex: 1; padding: 15px; overflow-y: auto; font-size: 13px; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px; }
-    .chat-input-area { display: flex; border-top: 1px solid #eee; padding: 10px; background: white; }
-    #chat-input { flex: 1; border: 1px solid #ddd; padding: 10px; border-radius: 20px; outline: none; font-size: 13px; }
-    #send-btn { background: #006064; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; margin-left: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-    
-    .msg { padding: 10px 14px; border-radius: 12px; max-width: 80%; line-height: 1.4; font-size: 13px; }
+
+    /* HEADER */
+    .chat-header { 
+        background: linear-gradient(135deg, #006064 0%, #004d50 100%); 
+        color: white; padding: 16px; 
+        font-weight: bold; font-size: 16px; 
+        display: flex; align-items: center; justify-content: space-between; 
+    }
+    .close-chat { cursor: pointer; font-size: 20px; opacity: 0.8; }
+    .close-chat:hover { opacity: 1; }
+
+    /* MESSAGES AREA */
+    .chat-messages { 
+        flex: 1; padding: 15px; overflow-y: auto; 
+        font-size: 14px; background: #f9f9f9; 
+        display: flex; flex-direction: column; gap: 12px; 
+    }
+
+    /* BUBBLES */
+    .msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; line-height: 1.5; font-size: 13px; word-wrap: break-word; }
     .bot { background: #E0F2F1; color: #004d50; align-self: flex-start; border-bottom-left-radius: 2px; }
     .user { background: #006064; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-    .typing { font-style: italic; color: #999; font-size: 11px; margin-left: 10px; display: none; }
+
+    /* TYPING INDICATOR */
+    .typing { font-style: italic; color: #888; font-size: 12px; margin-left: 15px; margin-bottom: 5px; display: none; }
+
+    /* FOOTER (Disclaimer) */
+    .chat-footer-disclaimer {
+        font-size: 10px; color: #999; text-align: center; padding: 8px 15px;
+        background: #f1f1f1; border-top: 1px solid #eee; line-height: 1.3;
+    }
+
+    /* INPUT AREA */
+    .chat-input-area { display: flex; border-top: 1px solid #eee; padding: 12px; background: white; }
+    #chat-input { flex: 1; border: 1px solid #ddd; padding: 12px; border-radius: 25px; outline: none; font-size: 14px; background: #f8f9fa; }
+    #chat-input:focus { border-color: #006064; background: white; }
+    #send-btn { background: #006064; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; margin-left: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.2s; }
+    #send-btn:hover { background: #00BCD4; }
+
+    /* MOBILE ADJUSTMENTS */
+    @media (max-width: 450px) {
+        #chat-window { width: 90vw; right: 0; bottom: 80px; height: 70vh; }
+    }
 </style>
 
 <div id="chat-widget">
+    <div id="chat-prompt" onclick="toggleChat()">
+        <span>👋</span> <span id="prompt-text">Ask SAN Agan</span>
+    </div>
+
     <div id="chat-window">
-        <div class="chat-header"><span>🤖</span> SAN AI Assistant</div>
-        <div class="chat-messages" id="messages">
-            <div class="msg bot">Hello! I am the SAN AI. Ask me about our KDS, E-Commerce, or Development services.</div>
+        <div class="chat-header">
+            <span style="display:flex; align-items:center; gap:8px;">
+                <img src="bot-icon.gif" style="width:24px; height:24px; border-radius:50%; background:white;"> 
+                SAN Agan
+            </span>
+            <span class="close-chat" onclick="toggleChat()">×</span>
         </div>
-        <div class="typing" id="typing-indicator">AI is typing...</div>
+        
+        <div class="chat-messages" id="messages">
+            </div>
+        
+        <div class="typing" id="typing-indicator">SAN Agan is typing...</div>
+        
+        <div class="chat-footer-disclaimer" id="disclaimer-text">
+            SAN Agan provides general information and does not replace professional consultation.
+        </div>
+
         <div class="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Ask a question..." onkeypress="handleEnter(event)">
+            <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
             <button id="send-btn" onclick="sendMessage()">➤</button>
         </div>
     </div>
     
     <button id="chat-btn" onclick="toggleChat()">
-        <img src="bot-icon.gif" alt="Chat" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+        <img src="bot-icon.gif" alt="Chat" style="width: 100%; height: 100%; object-fit: cover;">
     </button>
 </div>
+
 <script>
-    // 1. Toggle Chat Window
-    function toggleChat() {
-        const win = document.getElementById('chat-window');
-        if (win.style.display === 'flex') {
-            win.style.display = 'none';
+    // --- CONFIGURATION ---
+    const TEXTS = {
+        en: {
+            prompt: "Ask SAN Agan",
+            typing: "SAN Agan is typing...",
+            placeholder: "Ask a question...",
+            disclaimer: "SAN Agan provides general information and does not replace professional consultation.",
+            welcome: "🙏🏽 I’m SAN Agan, your AI assistant.<br>I can help you with SAN Suite, E-Commerce solutions, or your project enquiry."
+        },
+        de: {
+            prompt: "Frag SAN Agan",
+            typing: "SAN Agan tippt...",
+            placeholder: "Stellen Sie eine Frage...",
+            disclaimer: "SAN Agan stellt allgemeine Informationen bereit und ersetzt keine professionelle Beratung.",
+            welcome: "🙏🏽 Ich bin SAN Agan, Ihr KI-Assistent.<br>Ich helfe Ihnen gerne bei Fragen zur SAN Suite, zu E-Commerce-Lösungen oder zu Ihrem Projekt."
+        }
+    };
+
+    // --- STATE MANAGEMENT ---
+    // 1. Get Language (Default to 'de' if not set)
+    function getCurrentLang() {
+        return localStorage.getItem('selectedLang') || 'de';
+    }
+
+    // 2. Initialize Widget Text
+    function updateWidgetText() {
+        const lang = getCurrentLang();
+        const t = TEXTS[lang];
+
+        document.getElementById('prompt-text').textContent = t.prompt;
+        document.getElementById('typing-indicator').textContent = t.typing;
+        document.getElementById('chat-input').placeholder = t.placeholder;
+        document.getElementById('disclaimer-text').textContent = t.disclaimer;
+    }
+
+    // 3. Load/Save History (SessionStorage = Clears when tab closes)
+    function loadChatHistory() {
+        const history = sessionStorage.getItem('san_chat_history');
+        const msgBox = document.getElementById('messages');
+        
+        if (history) {
+            // Restore previous messages
+            msgBox.innerHTML = history;
+            msgBox.scrollTop = msgBox.scrollHeight;
         } else {
-            win.style.display = 'flex';
-            // Auto-focus input when opening
-            document.getElementById('chat-input').focus();
+            // New Session: Show Welcome Message
+            const lang = getCurrentLang();
+            const welcomeMsg = `<div class="msg bot">${TEXTS[lang].welcome}</div>`;
+            msgBox.innerHTML = welcomeMsg;
+            saveChatHistory();
         }
     }
 
-    // 2. Handle "Enter" Key
+    function saveChatHistory() {
+        const msgBox = document.getElementById('messages');
+        sessionStorage.setItem('san_chat_history', msgBox.innerHTML);
+    }
+
+    // --- ACTIONS ---
+
+    function toggleChat() {
+        const win = document.getElementById('chat-window');
+        const prompt = document.getElementById('chat-prompt');
+        
+        if (win.style.display === 'flex') {
+            win.style.display = 'none';
+            prompt.style.display = 'flex'; // Show prompt again
+        } else {
+            win.style.display = 'flex';
+            prompt.style.display = 'none'; // Hide prompt while chatting
+            document.getElementById('chat-input').focus();
+            
+            // Scroll to bottom when opening
+            const msgBox = document.getElementById('messages');
+            msgBox.scrollTop = msgBox.scrollHeight;
+        }
+    }
+
     function handleEnter(e) {
         if (e.key === 'Enter') sendMessage();
     }
 
-    // 3. Helper to Add Messages (Fixes Scroll & HTML issues)
     function appendMessage(sender, text) {
         const messages = document.getElementById('messages');
         const msgDiv = document.createElement('div');
         msgDiv.className = `msg ${sender}`;
         
-        // CRITICAL: 
-        // For Bot -> use innerHTML (Allows the WhatsApp Buttons to show)
-        // For User -> use textContent (Safe text only)
+        // Render HTML for bot (links), Text for user (security)
         if (sender === 'bot') {
             msgDiv.innerHTML = text; 
         } else {
@@ -1361,22 +1502,27 @@
         }
 
         messages.appendChild(msgDiv);
-        // Auto-scroll to the bottom
         messages.scrollTop = messages.scrollHeight;
+        
+        // Save state after every message
+        saveChatHistory();
     }
 
-    // 4. Send Message Logic
-    	async function sendMessage() {
+    async function sendMessage() {
         const input = document.getElementById('chat-input');
         const typing = document.getElementById('typing-indicator');
         const text = input.value.trim();
         
         if (!text) return;
 
-        // 1. Show user message
+        // 1. Show User Message
         appendMessage('user', text);
         input.value = '';
-        typing.style.display = 'block'; // Show typing animation
+        
+        // 2. Show Typing Indicator
+        typing.style.display = 'block'; 
+        const messages = document.getElementById('messages');
+        messages.scrollTop = messages.scrollHeight;
 
         try {
             const res = await fetch('/api/chat', { 
@@ -1387,31 +1533,41 @@
 
             const data = await res.json();
             
-            // Hide typing
             typing.style.display = 'none';
 
             if (!res.ok) {
-                // If there is an error, show a polite message, not the technical error
-                console.error("Server Error:", data.reply || res.statusText); // Log for you
-                appendMessage('bot', "I'm having a little trouble connecting right now. Please try again or click the WhatsApp button to chat with Avinash directly!");
+                console.error("Server Error:", data.reply || res.statusText);
+                appendMessage('bot', "I'm having a little trouble connecting right now. Please try again or click the WhatsApp button.");
                 return;
             }
 
-            // 2. Show Bot Response
+            // 3. Show Bot Response
             appendMessage('bot', data.reply);
 
         } catch (err) {
             typing.style.display = 'none';
-            console.error("Network Error:", err);
-            // Fallback message for network issues
-            appendMessage('bot', "I'm having trouble reaching the server. Please check your connection or WhatsApp us!");
+            appendMessage('bot', "I'm having trouble reaching the server. Please check your connection.");
         }
     }
 
+    // --- INITIALIZATION ---
+    document.addEventListener("DOMContentLoaded", () => {
+        updateWidgetText(); // Set EN/DE text
+        loadChatHistory();  // Restore chat messages
+        
+        // Optional: Listen for language toggle clicks to update prompt text dynamically
+        const toggles = document.querySelectorAll('.lang-toggle-input');
+        toggles.forEach(toggle => {
+            toggle.addEventListener('change', () => {
+                setTimeout(updateWidgetText, 100); // Small delay to let localStorage update
+            });
+        });
+    });
 </script>
 
 </body>
 </html>
+
 
 
 
