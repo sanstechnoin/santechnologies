@@ -1277,95 +1277,94 @@
     }
     </script>
 	<style>
-    /* WIDGET CONTAINER */
+    /* 1. CONTAINER */
     #chat-widget {
-        position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+        position: fixed; bottom: 20px; right: 20px; z-index: 99999;
         font-family: 'Helvetica Neue', Arial, sans-serif;
         display: flex; flex-direction: column; align-items: flex-end;
     }
 
-    /* PROMPT BOX */
+    /* 2. PROMPT (Closed) */
     #chat-prompt {
-        background: white;
-        padding: 12px 20px;
-        border-radius: 12px 12px 0 12px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-        margin-bottom: 10px;
-        font-size: 14px;
-        font-weight: bold;
-        color: #333;
-        cursor: pointer;
-        opacity: 0;
-        transform: translateY(10px);
-        animation: popIn 0.5s forwards 1s;
-        border: 1px solid #eee;
-        display: flex; align-items: center; gap: 8px;
+        background: white; padding: 12px 20px; border-radius: 12px 12px 0 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 12px;
+        font-size: 14px; font-weight: bold; color: #333; cursor: pointer;
+        border: 1px solid #f0f0f0; display: flex; align-items: center; gap: 8px;
+        opacity: 0; transform: translateY(10px); animation: popIn 0.4s forwards 0.5s;
     }
     @keyframes popIn { to { opacity: 1; transform: translateY(0); } }
 
-    /* CHAT BUTTON */
-    #chat-btn {
-        background: #006064; color: white; border: none; padding: 0;
-        border-radius: 50%; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        font-size: 28px; width: 65px; height: 65px; transition: 0.3s;
-        display: flex; align-items: center; justify-content: center;
-        overflow: hidden;
-    }
-    #chat-btn:hover { transform: scale(1.05); background: #00BCD4; }
-
-    /* CHAT WINDOW */
+    /* 3. WINDOW */
     #chat-window {
-        display: none; 
-        flex-direction: column;
+        display: none; flex-direction: column;
         position: absolute; bottom: 85px; right: 0;
-        width: 340px; height: 500px; 
-        background: white;
-        border-radius: 16px; 
-        box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-        border: 1px solid #eee;
-        overflow: hidden;
-        animation: slideUp 0.3s ease;
+        width: 350px; height: 500px;
+        background: white; border-radius: 12px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        border: 1px solid #eee; overflow: hidden;
     }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* HEADER */
-    .chat-header { 
-        background: linear-gradient(135deg, #006064 0%, #004d50 100%); 
-        color: white; padding: 16px; 
-        font-weight: bold; font-size: 16px; 
-        display: flex; align-items: center; justify-content: space-between; 
+    /* 4. HEADER */
+    .chat-header {
+        background: linear-gradient(135deg, #006064 0%, #004d50 100%);
+        color: white; padding: 15px; font-size: 15px; font-weight: bold;
+        display: flex; align-items: center; justify-content: space-between;
     }
-    .close-chat { cursor: pointer; font-size: 20px; opacity: 0.8; }
+    .close-chat { cursor: pointer; font-size: 22px; line-height: 1; opacity: 0.8; }
     .close-chat:hover { opacity: 1; }
 
-    /* MESSAGES */
-    .chat-messages { 
-        flex: 1; padding: 15px; overflow-y: auto; 
-        font-size: 14px; background: #f9f9f9; 
-        display: flex; flex-direction: column; gap: 12px; 
+    /* 5. MESSAGES */
+    .chat-messages {
+        flex: 1; padding: 15px; overflow-y: auto;
+        font-size: 14px; background: #fafafa;
+        display: flex; flex-direction: column; gap: 10px;
     }
-    .msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; line-height: 1.5; font-size: 13px; word-wrap: break-word; }
+    .msg {
+        padding: 10px 14px; border-radius: 10px;
+        max-width: 80%; line-height: 1.5; font-size: 13.5px;
+        word-wrap: break-word; overflow-wrap: anywhere; 
+        white-space: normal;
+    }
     .bot { background: #E0F2F1; color: #004d50; align-self: flex-start; border-bottom-left-radius: 2px; }
     .user { background: #006064; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+    
+    .msg a { color: #00838F; font-weight: bold; text-decoration: none; }
+    .msg a:hover { text-decoration: underline; }
 
-    /* TYPING INDICATOR */
-    .typing { font-style: italic; color: #888; font-size: 12px; margin-left: 15px; margin-bottom: 5px; display: none; }
-
-    /* FOOTER */
-    .chat-footer-disclaimer {
-        font-size: 10px; color: #999; text-align: center; padding: 8px 15px;
-        background: #f1f1f1; border-top: 1px solid #eee; line-height: 1.3;
+    /* 6. INPUT */
+    .chat-input-area {
+        display: flex; border-top: 1px solid #eee; padding: 12px; background: white;
+    }
+    #chat-input {
+        flex: 1; border: 1px solid #ddd; padding: 10px 14px; border-radius: 20px;
+        outline: none; font-size: 14px; background: #f9f9f9;
+    }
+    #chat-input:focus { border-color: #006064; background: white; }
+    #send-btn {
+        background: #006064; color: white; border: none; width: 40px; height: 40px;
+        border-radius: 50%; margin-left: 8px; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; font-size: 16px;
     }
 
-    /* INPUT AREA */
-    .chat-input-area { display: flex; border-top: 1px solid #eee; padding: 12px; background: white; }
-    #chat-input { flex: 1; border: 1px solid #ddd; padding: 12px; border-radius: 25px; outline: none; font-size: 14px; background: #f8f9fa; }
-    #chat-input:focus { border-color: #006064; background: white; }
-    #send-btn { background: #006064; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; margin-left: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.2s; }
-    #send-btn:hover { background: #00BCD4; }
+    /* 7. FOOTER */
+    .typing { font-style: italic; color: #999; font-size: 12px; margin-left: 20px; margin-bottom: 5px; display: none; }
+    .chat-footer-disclaimer {
+        font-size: 10px; color: #aaa; text-align: center; padding: 6px;
+        background: #fdfdfd; border-top: 1px solid #f0f0f0;
+    }
+
+    /* 8. BUTTON */
+    #chat-btn {
+        background: white; border: none; padding: 0;
+        border-radius: 50%; cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        width: 60px; height: 60px; overflow: hidden;
+        transition: transform 0.2s;
+    }
+    #chat-btn:hover { transform: scale(1.05); }
 
     @media (max-width: 450px) {
-        #chat-window { width: 90vw; right: 0; bottom: 80px; height: 70vh; }
+        #chat-window { width: 90vw; right: 0; bottom: 85px; height: 65vh; }
     }
 </style>
 
@@ -1376,22 +1375,19 @@
 
     <div id="chat-window">
         <div class="chat-header">
-            <span style="display:flex; align-items:center; gap:8px;">
-                <img src="bot-icon.gif" style="width:24px; height:24px; border-radius:50%; background:white;"> 
+            <span style="display:flex; align-items:center; gap:10px;">
+                <img src="bot-icon.gif" style="width:28px; height:28px; border-radius:50%; background:white;"> 
                 SAN Agan
             </span>
-            <span class="close-chat" onclick="toggleChat()">×</span>
+            <span class="close-chat" onclick="closeAndResetChat()">×</span>
         </div>
         
         <div class="chat-messages" id="messages"></div>
-        <div class="typing" id="typing-indicator">SAN Agan is typing...</div>
+        <div class="typing" id="typing-indicator">typing...</div>
+        <div class="chat-footer-disclaimer" id="disclaimer-text">AI Assistant</div>
         
-        <div class="chat-footer-disclaimer" id="disclaimer-text">
-            SAN Agan provides general information and does not replace professional consultation.
-        </div>
-
         <div class="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
+            <input type="text" id="chat-input" placeholder="..." onkeypress="handleEnter(event)">
             <button id="send-btn" onclick="sendMessage()">➤</button>
         </div>
     </div>
@@ -1402,7 +1398,7 @@
 </div>
 
 <script>
-    // --- UNIQUE VARIABLES TO PREVENT CONFLICTS ---
+    // --- UPDATED TEXTS WITH NAMASTE & WAVE ---
     const CHAT_TEXTS = {
         en: {
             prompt: "Ask SAN Agan",
@@ -1420,139 +1416,125 @@
         }
     };
 
-    // 1. Get Language Safe Function
-    function getChatLang() {
-        return localStorage.getItem('selectedLang') || 'de';
-    }
+    function getLang() { return localStorage.getItem('selectedLang') || 'de'; }
 
-    // 2. Update Widget UI
+    // --- UI UPDATER ---
     function updateChatUI() {
-        const lang = getChatLang();
+        const lang = getLang();
         const t = CHAT_TEXTS[lang];
-
         if(document.getElementById('prompt-text')) document.getElementById('prompt-text').textContent = t.prompt;
         if(document.getElementById('typing-indicator')) document.getElementById('typing-indicator').textContent = t.typing;
         if(document.getElementById('chat-input')) document.getElementById('chat-input').placeholder = t.placeholder;
         if(document.getElementById('disclaimer-text')) document.getElementById('disclaimer-text').textContent = t.disclaimer;
     }
 
-    // 3. History Management
-    function loadChatHistory() {
-        const history = sessionStorage.getItem('san_chat_history');
+    // --- MEMORY SYSTEM ---
+    function getContext() { return sessionStorage.getItem('san_chat_context') || ""; }
+    function addToContext(role, text) {
+        sessionStorage.setItem('san_chat_context', getContext() + `${role}: ${text}\n`);
+    }
+
+    function initChat() {
+        updateChatUI();
+        const savedHTML = sessionStorage.getItem('san_chat_html');
         const msgBox = document.getElementById('messages');
         
-        if (history && history.trim() !== "") {
-            msgBox.innerHTML = history;
+        if (savedHTML && savedHTML.trim() !== "") {
+            msgBox.innerHTML = savedHTML;
             msgBox.scrollTop = msgBox.scrollHeight;
         } else {
-            const lang = getChatLang();
-            const welcomeMsg = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
-            msgBox.innerHTML = welcomeMsg;
-            sessionStorage.setItem('san_chat_history', msgBox.innerHTML);
+            const lang = getLang();
+            msgBox.innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
         }
     }
 
-    // 4. Toggle Chat
+    // --- TOGGLE & RESET ---
     function toggleChat() {
         const win = document.getElementById('chat-window');
         const prompt = document.getElementById('chat-prompt');
         
         if (win.style.display === 'flex') {
-            win.style.display = 'none';
-            prompt.style.display = 'flex';
+            win.style.display = 'none'; prompt.style.display = 'flex';
         } else {
-            win.style.display = 'flex';
-            prompt.style.display = 'none';
+            win.style.display = 'flex'; prompt.style.display = 'none';
             document.getElementById('chat-input').focus();
-            const msgBox = document.getElementById('messages');
-            msgBox.scrollTop = msgBox.scrollHeight;
+            const msgBox = document.getElementById('messages'); msgBox.scrollTop = msgBox.scrollHeight;
         }
     }
 
-    function handleEnter(e) {
-        if (e.key === 'Enter') sendMessage();
+    function closeAndResetChat() {
+        document.getElementById('chat-window').style.display = 'none'; 
+        document.getElementById('chat-prompt').style.display = 'flex';
+        sessionStorage.removeItem('san_chat_html');
+        sessionStorage.removeItem('san_chat_context');
+        const lang = getLang();
+        document.getElementById('messages').innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
     }
 
-    function appendMessage(sender, text) {
-        const messages = document.getElementById('messages');
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `msg ${sender}`;
-        
-        if (sender === 'bot') {
-            msgDiv.innerHTML = text; 
-        } else {
-            msgDiv.textContent = text;
-        }
+    // --- SENDING ---
+    function handleEnter(e) { if (e.key === 'Enter') sendMessage(); }
 
-        messages.appendChild(msgDiv);
-        messages.scrollTop = messages.scrollHeight;
-        sessionStorage.setItem('san_chat_history', messages.innerHTML);
+    function appendMsg(sender, text, isHtml) {
+        const box = document.getElementById('messages');
+        const div = document.createElement('div');
+        div.className = `msg ${sender}`;
+        if (isHtml) div.innerHTML = text; else div.textContent = text;
+        box.appendChild(div);
+        box.scrollTop = box.scrollHeight;
+        sessionStorage.setItem('san_chat_html', box.innerHTML);
     }
 
     async function sendMessage() {
         const input = document.getElementById('chat-input');
-        const typing = document.getElementById('typing-indicator');
         const text = input.value.trim();
-        
         if (!text) return;
 
-        appendMessage('user', text);
+        appendMsg('user', text, false);
+        addToContext('User', text);
         input.value = '';
-        
-        typing.style.display = 'block'; 
-        const messages = document.getElementById('messages');
-        messages.scrollTop = messages.scrollHeight;
+        document.getElementById('typing-indicator').style.display = 'block';
 
         try {
             const res = await fetch('/api/chat', { 
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text })
+                body: JSON.stringify({ message: text, history: getContext() })
             });
-
             const data = await res.json();
-            typing.style.display = 'none';
-
+            
+            document.getElementById('typing-indicator').style.display = 'none';
+            
             if (!res.ok) {
-                appendMessage('bot', "I'm having a little trouble connecting right now. Please try again.");
-                return;
+                appendMsg('bot', "Connection unstable. Please retry.", false);
+            } else {
+                appendMsg('bot', data.reply, true);
+                addToContext('AI', data.reply);
             }
-            appendMessage('bot', data.reply);
-
         } catch (err) {
-            typing.style.display = 'none';
-            appendMessage('bot', "I'm having trouble reaching the server.");
+            document.getElementById('typing-indicator').style.display = 'none';
+            appendMsg('bot', "Offline Mode.", false);
         }
     }
 
-    // 5. Initialize & Listen for Language Changes
+    // --- INIT ---
     document.addEventListener("DOMContentLoaded", () => {
-        updateChatUI(); 
-        loadChatHistory();
-        
-        // Find existing toggles safely and attach listener
-        const siteToggles = document.querySelectorAll('.lang-toggle-input');
-        siteToggles.forEach(toggle => {
-            toggle.addEventListener('change', () => {
-                // Wait 50ms for main site to update localStorage
-                setTimeout(() => {
+        initChat();
+        document.querySelectorAll('.lang-toggle-input').forEach(t => {
+            t.addEventListener('change', () => {
+                setTimeout(() => { 
                     updateChatUI();
-                    // Optional: If chat is empty/welcome only, update welcome message language too
-                    const msgBox = document.getElementById('messages');
-                    const history = sessionStorage.getItem('san_chat_history');
-                    // Very simple check: if history is short (just welcome), reload it in new lang
-                    if (history && history.length < 300) {
-                        sessionStorage.removeItem('san_chat_history');
-                        loadChatHistory();
+                    if (!sessionStorage.getItem('san_chat_context')) {
+                        sessionStorage.removeItem('san_chat_html');
+                        initChat();
                     }
-                }, 50);
+                }, 100);
             });
         });
     });
 </script>
-
 </body>
 </html>
+
 
 
 
