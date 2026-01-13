@@ -112,7 +112,7 @@ export default async function handler(req, res) {
   `;
 
   // 4. MODEL: Gemini 2.5 flash Preview
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
   try {
     const cleanHistory = history ? history.slice(-3000) : "";
