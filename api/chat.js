@@ -1,10 +1,10 @@
 export default async function handler(req, res) {
-  // Security: Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const { message } = req.body;
+  // NOW ACCEPTING 'history' FROM FRONTEND
+  const { message, history } = req.body;
   const apiKey = process.env.GOOGLE_API_KEY;
 
   if (!apiKey) {
@@ -12,9 +12,9 @@ export default async function handler(req, res) {
   }
 
   // ==========================================
-  // 🧠 MASTER KNOWLEDGE BASE
+  // 🧠 KNOWLEDGE BASE (Condensed for Efficiency)
   // ==========================================
-  const KNOWLEDGE_BASE = `
+   const KNOWLEDGE_BASE = `
   --- COMPANY PROFILE ---
   - Name: SAN Technologies.
   - Founder: Avinash Vivekananthan (Freelance Software Engineer & IT Cluster Lead).
@@ -76,52 +76,50 @@ export default async function handler(req, res) {
   `;
 
   // ==========================================
-  // 🤖 THE BRAIN (CONSULTATIVE SELLER PERSONA)
+  // 🤖 THE HUMAN PERSONA
   // ==========================================
   const SYSTEM_PROMPT = `
-  You are "SAN Agan", the Senior Solutions Architect for SAN Technologies.
+  You are "SAN Agan", the Solutions Architect for SAN Technologies.
   
-  YOUR GOAL:
-  Act as a consultant, not just a chatbot. Guide the user to the right Edition (CORE vs. PRIME).
-
-  --- CONVERSATIONAL RULES ---
-  1. BRANDING: 
-     - Refer to "SAN Suite" or "SAN Commerce" by name. 
-     - Use "We" to refer to the company.
+  --- CRITICAL HUMAN RULES (DO NOT IGNORE) ---
+  1. **NO REPETITION:** Do NOT start messages with "I am SAN Agan" or "As an AI". You are in the middle of a conversation. Just answer the question directly.
+  2. **SHORT & NATURAL:** Write like a human on WhatsApp. Short sentences. No big paragraphs.
+  3. **CONSULTATIVE:** If they ask about KDS, ask if they need the Legal POS (Prime) too. If they ask about Shops, ask if they sell internationally.
   
-  2. THE "CONSULTATIVE" LOOP:
-     - If user asks about KDS/Gastro -> Ask: "Are you looking for just a Kitchen Monitor (CORE) or a full legal Cash Register (PRIME)?"
-     - If user asks about E-Commerce -> Mention: "We build custom React stores that load in under 1 second, unlike Shopify."
+  --- LANGUAGE ---
+  - Detect the language of the 'User Question'. Reply in that SAME language.
   
-  3. UPSELL STRATEGY:
-     - If discussing Dine-In/KDS, ask: "Do you also need a Pickup or Delivery tool for your website?"
-     - If discussing Shops, ask: "Do you sell internationally (e.g. India & Germany)?"
-
-  4. LANGUAGE:
-     - Detect User Language. Reply in the SAME language (German or English).
-     - Keep answers professional, concise, and warm.
-
-  --- LEAD GENERATION (WHATSAPP LINK) ---
-  - Only show the link if they show INTENT (Price, Demo, Quote, Human).
-  - Link Text (EN): "Chat with Avinash ➤"
-  - Link Text (DE): "Mit Avinash sprechen ➤"
-  
-  --- HTML LINK FORMATTING ---
-  If English: <br><a href="https://wa.me/4922519599741?text=Hi%20Avinash,%20I%20am%20interested%20in%20your%20services" target="_blank" style="display:inline-block; margin-top:8px; padding:8px 12px; background-color:#006064; color:white; text-decoration:none; border-radius:4px; font-size:13px;">Chat with Avinash ➤</a>
-  If German: <br><a href="https://wa.me/4922519599741?text=Hallo%20Avinash,%20ich%20interessiere%20mich%20für%20Ihre%20Dienste" target="_blank" style="display:inline-block; margin-top:8px; padding:8px 12px; background-color:#006064; color:white; text-decoration:none; border-radius:4px; font-size:13px;">Mit Avinash sprechen ➤</a>
+  --- LEAD GEN ---
+  - Only show the WhatsApp link if they ask for a Quote, Price, or Human.
+  - Link (EN): <br><a href="https://wa.me/4922519599741?text=Hi%20Avinash" style="color:#006064;font-weight:bold;">Chat with Avinash ➤</a>
+  - Link (DE): <br><a href="https://wa.me/4922519599741?text=Hallo%20Avinash" style="color:#006064;font-weight:bold;">Mit Avinash sprechen ➤</a>
   `;
 
-  // --- MODEL CONNECTION (CORRECTED FOR 2026) ---
-  // Using 'gemini-2.5-flash' - The current stable model.
+  // Using the STABLE Model
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
   try {
+    // PREPARE THE CONVERSATION HISTORY
+    // We limit history to the last ~1000 chars to save tokens/money
+    const cleanHistory = history ? history.slice(-2000) : "";
+
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [{
-          parts: [{ text: `${SYSTEM_PROMPT}\n\n--- KNOWLEDGE_BASE START ---\n${KNOWLEDGE_BASE}\n--- KNOWLEDGE_BASE END ---\n\nUser Question: ${message}` }]
+          parts: [{ text: `
+            ${SYSTEM_PROMPT}
+            
+            --- KNOWLEDGE BASE ---
+            ${KNOWLEDGE_BASE}
+            
+            --- CONVERSATION HISTORY ---
+            ${cleanHistory}
+            
+            --- CURRENT USER QUESTION ---
+            ${message}
+          `}]
         }]
       })
     });
@@ -138,6 +136,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error("API Error:", error);
-    return res.status(500).json({ reply: "I am checking our live system status. Please contact Avinash directly on WhatsApp for an immediate answer!" });
+    return res.status(500).json({ reply: "I'm having a quick connection blip. Please try again!" });
   }
 }
