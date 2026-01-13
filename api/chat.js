@@ -161,8 +161,8 @@ export default async function handler(req, res) {
   - Link (DE): <br><br><a href="https://wa.me/4922519599741?text=Hallo%20Avinash" style="display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;">Mit Avinash sprechen ➤</a>
   `;
 
-  // 5. Connect to Google (USING 2.0 FLASH EXP - THIS IS THE WORKING MODEL)
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`;
+  // 5. Connect to Google 
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
   try {
     const cleanHistory = history ? history.slice(-3000) : "";
