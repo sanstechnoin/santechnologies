@@ -12,7 +12,6 @@ export default async function handler(req, res) {
   }
 
   // --- THE BRAIN: ALL-IN-ONE SYSTEM CONTEXT ---
-  // I have preserved your exact Knowledge Base and Contact Strategy below.
   const SYSTEM_CONTEXT = `
   You are the Senior AI Sales Engineer for SAN Technologies (santechnologies.de).
   Founder: Avinash Vivekananthan.
@@ -55,8 +54,9 @@ export default async function handler(req, res) {
   `;
 
   // --- MODEL CONNECTION ---
-    // Trying 'gemini-1.5-pro' since Flash is missing
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`;
+  // UPDATED: Using 'gemini-2.5-flash' because it is valid in your account list.
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+
   try {
     const response = await fetch(url, {
       method: 'POST',
