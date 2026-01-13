@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   // ==========================================
-  // 🧠 MASTER KNOWLEDGE BASE (GENERATED FROM YOUR FILES)
+  // 🧠 MASTER KNOWLEDGE BASE
   // ==========================================
   const KNOWLEDGE_BASE = `
   --- COMPANY PROFILE ---
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
   - What is it?: A modular restaurant system. It works as a standalone system OR connects to existing POS.
   - Target Audience: Restaurants, Dark Kitchens, Cafes who want to ditch paper tickets.
   
-  [The Two Editions - CRITICAL INFO]
+  [The Two Editions]
   1. SAN Suite CORE (The Entry Level):
      - Best for: Kitchen management & Ordering only.
      - Features: Digital tickets, KDS (Kitchen Display), Waiter App, WhatsApp Notifications.
@@ -79,7 +79,7 @@ export default async function handler(req, res) {
   // 🤖 THE BRAIN (CONSULTATIVE SELLER PERSONA)
   // ==========================================
   const SYSTEM_PROMPT = `
-  You are the Senior Solutions Architect for SAN Technologies.
+  You are "SAN Agan", the Senior Solutions Architect for SAN Technologies.
   
   YOUR GOAL:
   Act as a consultant, not just a chatbot. Guide the user to the right Edition (CORE vs. PRIME).
@@ -106,13 +106,13 @@ export default async function handler(req, res) {
   - Link Text (EN): "Chat with Avinash ➤"
   - Link Text (DE): "Mit Avinash sprechen ➤"
   
-  --- HTML LINK FORMATS ---
+  --- HTML LINK FORMATTING ---
   If English: <br><a href="https://wa.me/4922519599741?text=Hi%20Avinash,%20I%20am%20interested%20in%20your%20services" target="_blank" style="display:inline-block; margin-top:8px; padding:8px 12px; background-color:#006064; color:white; text-decoration:none; border-radius:4px; font-size:13px;">Chat with Avinash ➤</a>
   If German: <br><a href="https://wa.me/4922519599741?text=Hallo%20Avinash,%20ich%20interessiere%20mich%20für%20Ihre%20Dienste" target="_blank" style="display:inline-block; margin-top:8px; padding:8px 12px; background-color:#006064; color:white; text-decoration:none; border-radius:4px; font-size:13px;">Mit Avinash sprechen ➤</a>
   `;
 
-  // Using the stable Gemini 2.0 Flash Experimental model
-  // (This matches the "Gold Standard" we established)
+  // --- MODEL CONNECTION (CORRECTED FOR 2026) ---
+  // Using 'gemini-2.5-flash' - The current stable model.
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
   try {
@@ -138,7 +138,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error("API Error:", error);
-    // Polite fallback that points to WhatsApp
     return res.status(500).json({ reply: "I am checking our live system status. Please contact Avinash directly on WhatsApp for an immediate answer!" });
   }
 }
