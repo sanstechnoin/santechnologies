@@ -500,7 +500,7 @@ display: flex;
         display: flex; flex-direction: column; align-items: flex-end;
     }
 
-    /* PROMPT BOX (The "Speech Bubble" when closed) */
+    /* PROMPT BOX (Closed State) */
     #chat-prompt {
         background: white;
         padding: 12px 20px;
@@ -511,11 +511,10 @@ display: flex;
         font-weight: bold;
         color: #333;
         cursor: pointer;
-        opacity: 0;
-        transform: translateY(10px);
-        animation: popIn 0.5s forwards 1s; /* Delays appearance slightly */
         border: 1px solid #eee;
         display: flex; align-items: center; gap: 8px;
+        /* Animation to pop in */
+        opacity: 0; transform: translateY(10px); animation: popIn 0.5s forwards 1s;
     }
     @keyframes popIn { to { opacity: 1; transform: translateY(0); } }
 
@@ -582,7 +581,6 @@ display: flex;
     #send-btn { background: #006064; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; margin-left: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.2s; }
     #send-btn:hover { background: #00BCD4; }
 
-    /* MOBILE ADJUSTMENTS */
     @media (max-width: 450px) {
         #chat-window { width: 90vw; right: 0; bottom: 80px; height: 70vh; }
     }
@@ -602,9 +600,7 @@ display: flex;
             <span class="close-chat" onclick="toggleChat()">×</span>
         </div>
         
-        <div class="chat-messages" id="messages">
-            </div>
-        
+        <div class="chat-messages" id="messages"></div>
         <div class="typing" id="typing-indicator">SAN Agan is typing...</div>
         
         <div class="chat-footer-disclaimer" id="disclaimer-text">
@@ -623,8 +619,8 @@ display: flex;
 </div>
 
 <script>
-    // --- CONFIGURATION ---
-    const TEXTS = {
+    // --- 1. DESIGN & TEXT CONFIGURATION ---
+    const CHAT_TEXTS = {
         en: {
             prompt: "Ask SAN Agan",
             typing: "SAN Agan is typing...",
@@ -641,48 +637,38 @@ display: flex;
         }
     };
 
-    // --- STATE MANAGEMENT ---
-    // 1. Get Language (Default to 'de' if not set)
-    function getCurrentLang() {
+    // --- 2. UNIQUE FUNCTIONS (Conflict-Free) ---
+    function getChatLanguage() {
         return localStorage.getItem('selectedLang') || 'de';
     }
 
-    // 2. Initialize Widget Text
-    function updateWidgetText() {
-        const lang = getCurrentLang();
-        const t = TEXTS[lang];
+    function updateChatDesign() {
+        const lang = getChatLanguage();
+        const t = CHAT_TEXTS[lang];
 
-        document.getElementById('prompt-text').textContent = t.prompt;
-        document.getElementById('typing-indicator').textContent = t.typing;
-        document.getElementById('chat-input').placeholder = t.placeholder;
-        document.getElementById('disclaimer-text').textContent = t.disclaimer;
+        if(document.getElementById('prompt-text')) document.getElementById('prompt-text').textContent = t.prompt;
+        if(document.getElementById('typing-indicator')) document.getElementById('typing-indicator').textContent = t.typing;
+        if(document.getElementById('chat-input')) document.getElementById('chat-input').placeholder = t.placeholder;
+        if(document.getElementById('disclaimer-text')) document.getElementById('disclaimer-text').textContent = t.disclaimer;
     }
 
-    // 3. Load/Save History (SessionStorage = Clears when tab closes)
-    function loadChatHistory() {
+    // --- 3. LOAD HISTORY (Persistence) ---
+    function loadChatSession() {
         const history = sessionStorage.getItem('san_chat_history');
         const msgBox = document.getElementById('messages');
         
-        if (history) {
-            // Restore previous messages
+        if (history && history.trim() !== "") {
             msgBox.innerHTML = history;
             msgBox.scrollTop = msgBox.scrollHeight;
         } else {
-            // New Session: Show Welcome Message
-            const lang = getCurrentLang();
-            const welcomeMsg = `<div class="msg bot">${TEXTS[lang].welcome}</div>`;
+            const lang = getChatLanguage();
+            const welcomeMsg = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
             msgBox.innerHTML = welcomeMsg;
-            saveChatHistory();
+            sessionStorage.setItem('san_chat_history', msgBox.innerHTML);
         }
     }
 
-    function saveChatHistory() {
-        const msgBox = document.getElementById('messages');
-        sessionStorage.setItem('san_chat_history', msgBox.innerHTML);
-    }
-
-    // --- ACTIONS ---
-
+    // --- 4. TOGGLE LOGIC ---
     function toggleChat() {
         const win = document.getElementById('chat-window');
         const prompt = document.getElementById('chat-prompt');
@@ -692,15 +678,14 @@ display: flex;
             prompt.style.display = 'flex'; // Show prompt again
         } else {
             win.style.display = 'flex';
-            prompt.style.display = 'none'; // Hide prompt while chatting
+            prompt.style.display = 'none'; // Hide prompt
             document.getElementById('chat-input').focus();
-            
-            // Scroll to bottom when opening
             const msgBox = document.getElementById('messages');
             msgBox.scrollTop = msgBox.scrollHeight;
         }
     }
 
+    // --- 5. SEND MESSAGE (The "Perfect" Logic) ---
     function handleEnter(e) {
         if (e.key === 'Enter') sendMessage();
     }
@@ -710,7 +695,7 @@ display: flex;
         const msgDiv = document.createElement('div');
         msgDiv.className = `msg ${sender}`;
         
-        // Render HTML for bot (links), Text for user (security)
+        // Bot gets HTML (for Links), User gets Text (Security)
         if (sender === 'bot') {
             msgDiv.innerHTML = text; 
         } else {
@@ -719,9 +704,7 @@ display: flex;
 
         messages.appendChild(msgDiv);
         messages.scrollTop = messages.scrollHeight;
-        
-        // Save state after every message
-        saveChatHistory();
+        sessionStorage.setItem('san_chat_history', messages.innerHTML);
     }
 
     async function sendMessage() {
@@ -731,11 +714,11 @@ display: flex;
         
         if (!text) return;
 
-        // 1. Show User Message
+        // Show User Message
         appendMessage('user', text);
         input.value = '';
         
-        // 2. Show Typing Indicator
+        // Show Typing
         typing.style.display = 'block'; 
         const messages = document.getElementById('messages');
         messages.scrollTop = messages.scrollHeight;
@@ -748,7 +731,6 @@ display: flex;
             });
 
             const data = await res.json();
-            
             typing.style.display = 'none';
 
             if (!res.ok) {
@@ -757,7 +739,7 @@ display: flex;
                 return;
             }
 
-            // 3. Show Bot Response
+            // Show Bot Response
             appendMessage('bot', data.reply);
 
         } catch (err) {
@@ -766,21 +748,31 @@ display: flex;
         }
     }
 
-    // --- INITIALIZATION ---
+    // --- 6. INITIALIZATION & LANGUAGE LISTENER ---
     document.addEventListener("DOMContentLoaded", () => {
-        updateWidgetText(); // Set EN/DE text
-        loadChatHistory();  // Restore chat messages
+        updateChatDesign(); 
+        loadChatSession();
         
-        // Optional: Listen for language toggle clicks to update prompt text dynamically
-        const toggles = document.querySelectorAll('.lang-toggle-input');
-        toggles.forEach(toggle => {
+        // Listen for language toggles from your Main Site
+        // We use a unique listener that won't crash your other scripts
+        const siteToggles = document.querySelectorAll('.lang-toggle-input');
+        siteToggles.forEach(toggle => {
             toggle.addEventListener('change', () => {
-                setTimeout(updateWidgetText, 100); // Small delay to let localStorage update
+                setTimeout(() => {
+                    updateChatDesign();
+                    // Optional: Reset chat if it's just the welcome message
+                    const history = sessionStorage.getItem('san_chat_history');
+                    if (history && history.length < 350) {
+                        sessionStorage.removeItem('san_chat_history');
+                        loadChatSession();
+                    }
+                }, 100);
             });
         });
     });
 </script>
 </body>
 </html>
+
 
 
