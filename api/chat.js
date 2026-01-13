@@ -111,7 +111,7 @@ export default async function handler(req, res) {
   - Link (DE): <br><br><a href="https://wa.me/4922519599741" style="display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;">Mit Avinash sprechen ➤</a>
   `;
 
-  // 4. MODEL: gemini-2.5-flash-preview
+  // 4. MODEL: Gemini 2.5 flash Preview
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview:generateContent?key=${apiKey}`;
 
   try {
