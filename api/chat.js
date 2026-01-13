@@ -55,9 +55,8 @@ export default async function handler(req, res) {
   `;
 
   // --- MODEL CONNECTION ---
-  // UPDATED: Using 'gemini-2.0-flash-exp' (The new fast/free model you found).
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`;
-
+    // Trying 'gemini-1.5-pro' since Flash is missing
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`;
   try {
     const response = await fetch(url, {
       method: 'POST',
