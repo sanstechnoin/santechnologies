@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>SAN Technologies - Business Cards</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        /* RESET & PRINT SETUP */
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+        body { 
+            background: #f0f2f5; 
+            font-family: 'Inter', Helvetica, Arial, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 40px; 
+            gap: 60px;
+        }
+
+        h2 { 
+            color: #333; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            font-size: 14px; 
+            margin-bottom: 20px; 
+            text-align: center;
+        }
+
+        /* --- CARD DIMENSIONS (Standard 85mm x 55mm) --- */
+        .card-row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            width: 85mm;
+            height: 55mm;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            display: flex;
+        }
+
+        /* --- COLORS --- */
+        :root {
+            --san-dark: #006064;    /* Deep Teal */
+            --san-light: #00BCD4;   /* Bright Cyan */
+            --san-black: #0f172a;   /* Modern Black */
+            --san-white: #ffffff;
+        }
+
+        /* ============================================================
+           OPTION 1: THE "DARK MODE" (Matches Digicard Directly)
+           Best for: Showing you are a modern tech company.
+           ============================================================ */
+        
+        /* FRONT */
+        .opt1-front {
+            background: var(--san-black);
+            color: white;
+            padding: 6mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* A subtle tech accent line */
+        .opt1-front::after {
+            content: ''; position: absolute; top: 0; right: 20mm;
+            width: 60mm; height: 100%;
+            background: linear-gradient(120deg, transparent 40%, rgba(0, 188, 212, 0.05) 41%);
+            z-index: 0;
+        }
+
+        .opt1-header { z-index: 1; display: flex; align-items: center; gap: 10px; }
+        .opt1-logo { height: 10mm; width: auto; filter: brightness(0) invert(1); } /* Whiten Logo */
+        
+        .opt1-main { z-index: 1; margin-top: auto; margin-bottom: auto;}
+        .opt1-name { font-size: 13pt; font-weight: 800; letter-spacing: -0.5px; color: white; }
+        .opt1-title { font-size: 7pt; font-weight: 500; color: var(--san-light); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+        .opt1-footer { z-index: 1; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 3mm; display: flex; justify-content: space-between; align-items: flex-end;}
+        .opt1-contact { font-size: 6pt; color: #cbd5e1; line-height: 1.6; }
+        .opt1-highlight { color: var(--san-light); font-weight: 600; }
+
+        /* BACK */
+        .opt1-back {
+            background: var(--san-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .opt1-qr-container {
+            background: white;
+            padding: 3px;
+            border-radius: 4px;
+            height: 24mm;
+            width: 24mm;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .opt1-qr-text {
+            color: white;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .opt1-cta { font-size: 10pt; font-weight: 700; line-height: 1.2; margin-bottom: 4px;}
+        .opt1-sub { font-size: 6pt; opacity: 0.8; font-weight: 300;}
+
+
+        /* ============================================================
+           OPTION 2: THE "CLEAN EXECUTIVE" (Classic White)
+           Best for: Corporate meetings, Banks, Traditional Clients.
+           ============================================================ */
+
+        /* FRONT */
+        .opt2-front {
+            background: white;
+            padding: 0; /* Layout handled by grid */
+            display: grid;
+            grid-template-columns: 8mm 1fr; /* Cyan Bar | Content */
+        }
+        
+        .opt2-bar { background: var(--san-dark); height: 100%; width: 100%; }
+        
+        .opt2-content {
+            padding: 6mm 6mm 6mm 8mm;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+
+        .opt2-logo { height: 10mm; width: auto; margin-bottom: 4mm; }
+        
+        .opt2-name { font-size: 12pt; font-weight: 800; color: var(--san-black); letter-spacing: -0.3px;}
+        .opt2-title { font-size: 6.5pt; font-weight: 600; color: var(--san-dark); text-transform: uppercase; margin-bottom: 4mm; }
+        
+        .opt2-info { font-size: 6.5pt; color: #555; line-height: 1.6; }
+        .opt2-info span { color: var(--san-dark); font-weight: bold; margin-right: 5px; }
+
+        /* BACK */
+        .opt2-back {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 1px solid #eee; /* Light border for print definition */
+        }
+        .opt2-back::before {
+            content:''; position: absolute; top:0; left:0; right:0; height: 3px; background: var(--san-light);
+        }
+
+        .opt2-tagline { font-size: 8pt; font-weight: 700; color: var(--san-black); margin-bottom: 4mm; text-transform: uppercase; letter-spacing: 1px;}
+        .opt2-qr { width: 22mm; height: 22mm; margin-bottom: 2mm; }
+        .opt2-scan { font-size: 6pt; color: #888; }
+
+
+    </style>
+</head>
+<body>
+
+    <div>
+        <h2>Option 1: The "Digicard" (Dark Mode Tech)</h2>
+        <div class="card-row">
+            <div class="card opt1-front">
+                <div class="opt1-header">
+                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" class="opt1-logo"> 
+                </div>
+                <div class="opt1-main">
+                    <div class="opt1-name">Avinash Vivekananthan</div>
+                    <div class="opt1-title">Freelance Software Engineer</div>
+                </div>
+                <div class="opt1-footer">
+                    <div class="opt1-contact">
+                        +49 2251 9599741<br>
+                        avinash@santechnologies.de
+                    </div>
+                    <div class="opt1-contact" style="text-align: right;">
+                        <span class="opt1-highlight">www.santechnologies.de</span><br>
+                        Euskirchen, DE
+                    </div>
+                </div>
+            </div>
+
+            <div class="card opt1-back">
+                <div class="opt1-qr-container">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard.html" style="width:100%;">
+                </div>
+                <div class="opt1-qr-text">
+                    <div class="opt1-cta">Scan for<br>Digital Profile</div>
+                    <div class="opt1-sub">Portfolio & Services</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br><br><br>
+
+
+    <div>
+        <h2>Option 2: The "Classic Executive" (Light Mode)</h2>
+        <div class="card-row">
+            <div class="card opt2-front">
+                <div class="opt2-bar"></div>
+                <div class="opt2-content">
+                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" class="opt2-logo">
+                    <div class="opt2-name">Avinash Vivekananthan</div>
+                    <div class="opt2-title">Freelance Software Engineer</div>
+                    
+                    <div class="opt2-info">
+                        <div><span>T</span> +49 2251 9599741</div>
+                        <div><span>E</span> avinash@santechnologies.de</div>
+                        <div style="margin-top:2px; color:var(--san-dark); font-weight:600;">www.santechnologies.de</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card opt2-back">
+                <div class="opt2-tagline">Transform Business<br>Through Custom Code</div>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard.html" class="opt2-qr">
+                <div class="opt2-scan">Scan to view Digital Portfolio</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
