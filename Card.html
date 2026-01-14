@@ -2,20 +2,20 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>SAN Technologies - Final Cards Fixed</title>
+    <title>SAN Technologies - Final Production Card</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&display=swap');
 
         /* RESET & PRINT SETUP */
         * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
         body { 
-            background: #f0f2f5; 
+            background: #eef2f6; 
             font-family: 'Inter', Helvetica, Arial, sans-serif; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             padding: 40px; 
-            gap: 60px;
+            gap: 40px;
         }
 
         h2 { 
@@ -23,16 +23,16 @@
         }
 
         /* --- CARD DIMENSIONS (Standard 85mm x 55mm) --- */
-        .card-row {
+        .card-container {
             display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;
         }
 
         .card {
             width: 85mm; height: 55mm;
             position: relative; overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             display: flex;
-            background: white; /* Default */
+            border-radius: 2px; /* Slight radius for modern feel, or 0 for sharp */
         }
 
         /* --- COLORS --- */
@@ -43,155 +43,162 @@
         }
 
         /* HELPER: Degree Styling */
-        .degrees { font-size: 0.6em; font-weight: 500; opacity: 0.9; margin-left: 4px; white-space: nowrap; }
+        .degrees { 
+            font-size: 0.55em; font-weight: 500; opacity: 0.8; 
+            margin-left: 5px; white-space: nowrap; vertical-align: middle;
+            color: var(--san-light);
+        }
 
         /* ============================================================
-           OPTION 1: THE "DIGICARD DARK" (Recommended)
+           FRONT SIDE (Contact Info - Location Removed)
            ============================================================ */
-        .opt1-front {
+        .front {
             background: var(--san-black); color: white;
             padding: 6mm;
             display: flex; flex-direction: column; justify-content: space-between;
         }
-        .opt1-front::after {
+        /* Tech Abstract Background Art */
+        .front::after {
             content: ''; position: absolute; top: 0; right: 20mm; width: 60mm; height: 100%;
-            background: linear-gradient(120deg, transparent 40%, rgba(0, 188, 212, 0.05) 41%); z-index: 0;
+            background: linear-gradient(120deg, transparent 40%, rgba(0, 188, 212, 0.05) 41%); 
+            z-index: 0; pointer-events: none;
         }
-        .opt1-header { z-index: 1; }
-        /* Logo Fix: Added object-fit and flex-shrink */
-        .opt1-logo { height: 9mm; width: auto; object-fit: contain; filter: brightness(0) invert(1); flex-shrink: 0; } 
-        
-        .opt1-main { z-index: 1; margin-top: auto; margin-bottom: auto;}
-        .opt1-name { font-size: 11pt; font-weight: 800; letter-spacing: -0.3px; color: white; line-height: 1.2;}
-        .opt1-title { font-size: 6.5pt; font-weight: 500; color: var(--san-light); text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
 
-        .opt1-footer { z-index: 1; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 3mm; display: flex; justify-content: space-between; align-items: flex-end;}
-        .opt1-contact { font-size: 6pt; color: #cbd5e1; line-height: 1.6; }
-        .opt1-highlight { color: var(--san-light); font-weight: 600; }
+        /* HEADER: Logo */
+        .header { z-index: 1; }
+        .logo { 
+            height: 9mm; width: auto; 
+            object-fit: contain; filter: brightness(0) invert(1); 
+            display: block;
+        }
 
-        .opt1-back {
+        /* MAIN: Name & Title */
+        .main { z-index: 1; margin-top: auto; margin-bottom: auto; padding-top: 2mm;}
+        .name { 
+            font-size: 11pt; font-weight: 800; letter-spacing: -0.3px; 
+            color: white; line-height: 1.2; display: flex; align-items: center;
+        }
+        .title { 
+            font-size: 6.5pt; font-weight: 500; color: var(--san-light); 
+            text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; 
+        }
+
+        /* FOOTER: Contact Details */
+        .footer { 
+            z-index: 1; 
+            border-top: 1px solid rgba(255,255,255,0.15); 
+            padding-top: 3mm; 
+            display: flex; justify-content: space-between; align-items: flex-end;
+        }
+        .contact-block { font-size: 6.5pt; color: #cbd5e1; line-height: 1.7; font-weight: 300; }
+        .highlight { color: var(--san-light); font-weight: 600; text-decoration: none;}
+
+        /* ============================================================
+           BACK SIDE (Bilingual Services)
+           ============================================================ */
+        .back {
             background: var(--san-dark);
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 6mm;
         }
-        .opt1-services-list { flex: 1; padding-right: 4mm; }
-        .opt1-tag { color: white; font-weight: 800; font-size: 10pt; line-height: 1.2; margin-bottom: 3mm; }
-        .opt1-bullets { font-size: 6.5pt; color: rgba(255,255,255,0.9); list-style: none; padding: 0; margin: 0; line-height: 1.8; }
-        .opt1-bullets li::before { content: '✓'; color: var(--san-light); margin-right: 5px; font-weight: bold;}
-        .opt1-qr-container {
-            background: white; padding: 3px; border-radius: 4px; height: 22mm; width: 22mm; flex-shrink: 0;
-        }
 
-        /* ============================================================
-           OPTION 2: THE "CLEAN EXECUTIVE" (White - FIXED)
-           ============================================================ */
-        .opt2-front {
-            display: grid; grid-template-columns: 6mm 1fr; 
-        }
-        .opt2-bar { background: var(--san-dark); height: 100%; width: 100%; }
+        /* LEFT: Bilingual Service List */
+        .services-area { flex: 1; padding-right: 3mm; z-index: 1; }
         
-        .opt2-content {
-            /* FIX: Removed justify-content: center. Used specific padding to pack content tightly */
-            padding: 8mm 6mm 6mm 8mm; /* Top Right Bottom Left */
-            display: flex; flex-direction: column; 
-            align-items: flex-start; /* Ensure left align */
+        .headline {
+            color: white; font-weight: 800; font-size: 9pt; line-height: 1.2; margin-bottom: 4mm;
         }
-        /* Logo Fix: Added object-fit, align-self, and flex-shrink */
-        .opt2-logo { 
-            height: 9mm; width: auto; 
-            object-fit: contain; align-self: flex-start; flex-shrink: 0;
-            margin-bottom: 5mm; 
+        
+        .bilingual-list {
+            list-style: none; padding: 0; margin: 0;
         }
-        .opt2-name { font-size: 11pt; font-weight: 800; color: var(--san-black); letter-spacing: -0.3px; line-height: 1.2; }
-        .opt2-title { font-size: 6.5pt; font-weight: 600; color: var(--san-dark); text-transform: uppercase; margin-bottom: 5mm; margin-top: 2px;}
-        .opt2-info { font-size: 6.5pt; color: #555; line-height: 1.7; }
-        .opt2-info span { color: var(--san-dark); font-weight: bold; margin-right: 5px; display: inline-block; width: 10px;}
+        
+        .b-item {
+            margin-bottom: 3mm;
+            line-height: 1.2;
+        }
+        
+        .en-text {
+            display: block;
+            color: white;
+            font-size: 7.5pt;
+            font-weight: 700;
+        }
+        
+        .de-text {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            font-size: 6pt;
+            font-weight: 400;
+            margin-top: 1px;
+            font-style: italic;
+        }
 
-        .opt2-back {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; border: 1px solid #eee;
+        /* RIGHT: QR Code */
+        .qr-area {
+            background: white; padding: 3px; border-radius: 4px; 
+            height: 22mm; width: 22mm; flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
         }
-        .opt2-back::before { content:''; position: absolute; top:0; left:0; right:0; height: 3px; background: var(--san-light); }
-        .opt2-headline { font-size: 9pt; font-weight: 800; color: var(--san-black); margin-bottom: 1mm; text-transform: uppercase;}
-        .opt2-subhead { font-size: 6.5pt; color: #666; margin-bottom: 4mm; font-weight: 400;}
-        .opt2-qr { width: 18mm; height: 18mm; margin-bottom: 2mm; object-fit: contain; }
-        .opt2-scan { font-size: 6pt; color: var(--san-dark); font-weight: 600; }
+        .qr-img { width: 100%; height: 100%; }
 
     </style>
 </head>
 <body>
 
     <div>
-        <h2>Option 1: The "Digicard" (Professional Tech)</h2>
-        <div class="card-row">
-            <div class="card opt1-front">
-                <div class="opt1-header">
-                     <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" class="opt1-logo"> 
+        <h2>Final Production Design (Bilingual & Global)</h2>
+        <div class="card-container">
+            
+            <div class="card front">
+                <div class="header">
+                     <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" class="logo"> 
                 </div>
-                <div class="opt1-main">
-                    <div class="opt1-name">
+                
+                <div class="main">
+                    <div class="name">
                         Avinash Vivekananthan <span class="degrees">B.Sc IT, MBA</span>
                     </div>
-                    <div class="opt1-title">Founder & Lead Architect</div>
+                    <div class="title">Founder & Lead Architect</div>
                 </div>
-                <div class="opt1-footer">
-                    <div class="opt1-contact">
+                
+                <div class="footer">
+                    <div class="contact-block">
                         +49 2251 9599741<br>
                         avinash@santechnologies.de
                     </div>
-                    <div class="opt1-contact" style="text-align: right;">
-                        <span class="opt1-highlight">www.santechnologies.de</span><br>
-                        Euskirchen, DE
-                    </div>
+                    <div class="contact-block" style="text-align: right;">
+                        <span class="highlight">www.santechnologies.de</span><br>
+                        </div>
                 </div>
             </div>
 
-            <div class="card opt1-back">
-                <div class="opt1-services-list">
-                    <div class="opt1-tag">Transforming Business<br>Through Custom Code</div>
-                    <ul class="opt1-bullets">
-                        <li>Website Design & Development</li>
-                        <li>Custom Software & Apps</li>
-                        <li>IT Consulting & Cloud</li>
+            <div class="card back">
+                <div class="services-area">
+                    <div class="headline">Digital Solutions<br><span style="color:var(--san-light); font-size:0.8em;">Digitale Lösungen</span></div>
+                    
+                    <ul class="bilingual-list">
+                        <li class="b-item">
+                            <span class="en-text">Website Design & Development</span>
+                            <span class="de-text">Webdesign & Entwicklung</span>
+                        </li>
+                        <li class="b-item">
+                            <span class="en-text">Custom Software & Apps</span>
+                            <span class="de-text">Individualsoftware & Apps</span>
+                        </li>
+                        <li class="b-item">
+                            <span class="en-text">IT Consulting & Cloud</span>
+                            <span class="de-text">IT-Beratung & Cloud</span>
+                        </li>
                     </ul>
                 </div>
-                <div class="opt1-qr-container">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard.html" style="width:100%;">
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <br><br><br>
-
-
-    <div>
-        <h2>Option 2: The "Classic Executive" (Fixed Layout)</h2>
-        <div class="card-row">
-            <div class="card opt2-front">
-                <div class="opt2-bar"></div>
-                <div class="opt2-content">
-                    <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" class="opt2-logo">
-                    <div class="opt2-name">
-                        Avinash Vivekananthan <span style="font-size:0.65em; color:#666; font-weight:400;">B.Sc IT, MBA</span>
-                    </div>
-                    <div class="opt2-title">Founder & Lead Architect</div>
-                    
-                    <div class="opt2-info">
-                        <div><span>T</span> +49 2251 9599741</div>
-                        <div><span>E</span> avinash@santechnologies.de</div>
-                        <div style="margin-top:4px; color:var(--san-dark); font-weight:700;">www.santechnologies.de</div>
-                    </div>
+                
+                <div class="qr-area">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard.html" class="qr-img">
                 </div>
             </div>
 
-            <div class="card opt2-back">
-                <div class="opt2-headline">Website Design & Software</div>
-                <div class="opt2-subhead">Custom Solutions for Modern Businesses</div>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard.html" class="opt2-qr">
-                <div class="opt2-scan">Scan for Digital Portfolio</div>
-            </div>
         </div>
     </div>
 
