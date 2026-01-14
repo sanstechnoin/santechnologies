@@ -2,35 +2,35 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>SAN Technologies - Final Fixed</title>
+    <title>SAN Technologies - Final Production V3</title>
     <style>
-        /* Imported Fonts: Inter for Text, Roboto Mono for Uniform Numbers */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=Roboto+Mono:wght@400;500&display=swap');
 
-        /* RESET & SETUP */
+        /* RESET */
         * { box-sizing: border-box; -webkit-print-color-adjust: exact; margin: 0; padding: 0; }
         body { 
             background: #e0e5ec; 
             font-family: 'Inter', Helvetica, Arial, sans-serif; 
             display: flex; flex-direction: column; align-items: center; 
-            padding: 40px; gap: 40px;
+            padding: 40px; gap: 60px;
         }
 
         h2 { 
-            color: #444; text-transform: uppercase; letter-spacing: 2px; 
-            font-size: 14px; margin-bottom: 20px; text-align: center; font-weight: 600;
+            color: #333; text-transform: uppercase; letter-spacing: 2px; 
+            font-size: 16px; margin-bottom: 20px; text-align: center; font-weight: 700;
+            border-bottom: 2px solid #ccc; padding-bottom: 10px; display: inline-block;
         }
 
         /* --- CARD CONTAINER --- */
-        .card-row { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+        .card-row { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
 
         /* --- CARD BASE (85mm x 55mm) --- */
         .card {
             width: 85mm; height: 55mm;
             position: relative; overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             display: flex;
-            border-radius: 0; 
+            border-radius: 0; /* Sharp Professional Edge */
         }
 
         /* --- COLORS --- */
@@ -42,60 +42,43 @@
 
         /* --- ICONS --- */
         .icon-svg {
-            width: 12px; height: 12px; display: inline-block; vertical-align: middle;
-            fill: currentColor;
-            margin-right: 6px;
+            width: 11px; height: 11px; display: inline-block; vertical-align: middle;
+            fill: currentColor; margin-right: 5px;
         }
 
         /* ============================================================
-           DESIGN A: DARK MODE (Premium Tech)
+           SHARED LAYOUT STYLES (Front)
            ============================================================ */
-        .dark-front {
-            background: var(--san-black); color: white;
+        .front-layout {
             padding: 5mm;
             flex-direction: column;
             justify-content: space-between;
-        }
-        /* Background Art */
-        .dark-front::after {
-            content: ''; position: absolute; top: 0; right: 20mm; width: 60mm; height: 100%;
-            background: linear-gradient(120deg, transparent 40%, rgba(0, 188, 212, 0.05) 41%); 
-            pointer-events: none; z-index: 0;
-        }
-
-        /* HEADER */
-        .d-header { z-index: 1; width: 100%; display: flex; justify-content: flex-start; }
-        .d-header .logo { 
-            height: 7mm; width: auto; object-fit: contain; 
-            filter: brightness(0) invert(1); display: block; 
-        }
-
-        /* MAIN (CENTERED NAME) */
-        .d-main { 
-            z-index: 1; 
-            text-align: center; 
             width: 100%;
-            margin-top: -2mm; /* Visual Balance */
         }
-        .d-name { 
-            font-size: 11pt; font-weight: 800; letter-spacing: -0.3px; color: white; 
-            display: inline-block;
+
+        /* HEADER (Logo) */
+        .header { z-index: 1; width: 100%; }
+        .logo { height: 7mm; width: auto; object-fit: contain; display: block; }
+
+        /* MAIN (Centered Name) */
+        .main-content { 
+            z-index: 1; text-align: center; width: 100%; margin-top: -2mm; 
+        }
+        .name-text { 
+            font-size: 11pt; font-weight: 800; letter-spacing: -0.3px; line-height: 1.2;
         }
         .degrees { 
-            font-size: 0.6em; font-weight: 400; color: var(--san-light); margin-left: 4px; vertical-align: middle;
+            font-size: 0.6em; font-weight: 500; margin-left: 4px; vertical-align: middle;
         }
-        .d-title { 
-            font-size: 6pt; font-weight: 600; color: var(--san-light); 
-            text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; 
-            display: block;
+        .title-text { 
+            font-size: 6pt; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; display: block;
         }
 
-        /* FOOTER LAYOUT */
+        /* FOOTER (Contact Grid) */
         .footer-container {
-            z-index: 1;
-            border-top: 1px solid rgba(255,255,255,0.15);
+            z-index: 1; width: 100%;
+            border-top: 1px solid rgba(0,0,0,0.1); /* Default light border */
             padding-top: 2.5mm;
-            width: 100%;
         }
         
         .contact-row {
@@ -106,135 +89,196 @@
         .col-left { text-align: left; }
         .col-right { text-align: right; }
 
-        /* Typography for Contact Info */
         .info-line { 
             display: flex; align-items: center; 
-            font-size: 5.5pt; color: #cbd5e1; margin-bottom: 2.5px;
+            font-size: 5.5pt; margin-bottom: 3px;
         }
         .info-line.right { justify-content: flex-end; }
         
-        /* MONOSPACE NUMBERS for Uniformity */
+        /* Monospace Numbers */
         .mono-num {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 5pt; /* Slightly adjusted for monospace width */
-            letter-spacing: -0.2px;
+            font-family: 'Roboto Mono', monospace; font-size: 5pt; letter-spacing: -0.2px; font-weight: 500;
         }
 
-        /* Labels */
-        .label {
-            color: var(--san-light); font-weight: 700; font-size: 5.5pt; 
-            display: inline-block; width: 12px; /* Fixed width for alignment */
-        }
-
-        /* Bottom Website Bar */
+        /* Bottom Website */
         .website-bar {
-            text-align: center;
-            font-size: 6pt; font-weight: 600; letter-spacing: 0.5px;
-            color: var(--san-light);
-            margin-top: 1mm;
+            text-align: center; font-size: 6pt; font-weight: 700; letter-spacing: 0.5px; margin-top: 1mm;
         }
 
 
         /* ============================================================
-           BACK SIDE (Layout Fixed)
+           SPECIFIC DESIGN OVERRIDES
            ============================================================ */
-        .back {
-            background: var(--san-dark);
-            /* FORCE ROW LAYOUT */
-            display: flex; 
-            flex-direction: row; 
-            align-items: center; 
-            justify-content: space-between;
-            padding: 0 6mm;
+        
+        /* DESIGN A: DARK */
+        .dark-card { background: var(--san-black); color: white; }
+        .dark-card .logo { filter: brightness(0) invert(1); }
+        .dark-card .degrees { color: var(--san-light); }
+        .dark-card .title-text { color: var(--san-light); }
+        .dark-card .footer-container { border-top: 1px solid rgba(255,255,255,0.15); }
+        .dark-card .info-line { color: #cbd5e1; }
+        .dark-card .website-bar { color: var(--san-light); }
+        .dark-card::after {
+            content: ''; position: absolute; top: 0; right: 20mm; width: 60mm; height: 100%;
+            background: linear-gradient(120deg, transparent 40%, rgba(0, 188, 212, 0.05) 41%); 
+            pointer-events: none;
         }
 
-        /* LEFT SIDE: Text */
-        .services-area { 
-            flex: 1; 
-            padding-right: 4mm; 
-            z-index: 1;
-            display: flex; flex-direction: column; justify-content: center;
-        }
+        /* DESIGN B: WHITE */
+        .white-card { background: white; color: var(--san-black); }
+        .white-card .logo { /* Original Colors */ }
+        .white-card .degrees { color: #777; }
+        .white-card .title-text { color: var(--san-dark); }
+        .white-card .footer-container { border-top: 1px solid #eee; }
+        .white-card .info-line { color: #555; }
+        .white-card .website-bar { color: var(--san-dark); }
+
+
+        /* ============================================================
+           BACK SIDE (Shared Layout)
+           ============================================================ */
+        .back-dark { background: var(--san-dark); padding: 0 6mm; flex-direction: row; align-items: center; justify-content: space-between; }
+        .back-white { background: white; padding: 0 6mm; flex-direction: row; align-items: center; justify-content: space-between; border: 1px solid #eee; }
+
+        .services-area { flex: 1; padding-right: 4mm; display: flex; flex-direction: column; justify-content: center; }
         
-        .headline { 
-            color: white; font-weight: 800; font-size: 9pt; line-height: 1.2; margin-bottom: 3mm; 
-        }
+        .headline { font-weight: 800; font-size: 9pt; line-height: 1.2; margin-bottom: 3mm; }
+        .headline.dark { color: white; }
+        .headline.light { color: var(--san-dark); }
         
         .b-item { margin-bottom: 2.5mm; line-height: 1.1; }
-        .en-text { display: block; color: white; font-size: 7.5pt; font-weight: 700; }
-        .de-text { display: block; color: rgba(255,255,255,0.7); font-size: 5.5pt; font-weight: 400; margin-top: 1px; font-style: italic; }
+        
+        .en-text { display: block; font-size: 7.5pt; font-weight: 700; }
+        .en-text.dark { color: white; }
+        .en-text.light { color: #333; }
 
-        /* RIGHT SIDE: QR Code */
+        .de-text { display: block; font-size: 5.5pt; font-weight: 400; margin-top: 1px; font-style: italic; }
+        .de-text.dark { color: rgba(255,255,255,0.7); }
+        .de-text.light { color: #888; }
+
         .qr-area {
             background: white; padding: 3px; border-radius: 4px; 
-            height: 22mm; width: 22mm; 
-            flex-shrink: 0; /* Prevents squashing */
+            height: 22mm; width: 22mm; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
         }
+        .qr-area.bordered { border: 1px solid #ddd; } /* For white card */
 
     </style>
 </head>
 <body>
 
     <div>
-        <h2>Final Production Design (Fixed Layout)</h2>
+        <h2>Option A: Dark Premium</h2>
         <div class="card-row">
             
-            <div class="card dark-front">
-                <div class="d-header">
+            <div class="card dark-card front-layout">
+                <div class="header">
                      <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" class="logo"> 
                 </div>
                 
-                <div class="d-main">
-                    <div class="d-name">
+                <div class="main-content">
+                    <div class="name-text">
                         Avinash Vivekananthan <span class="degrees">B.Sc IT, MBA</span>
                     </div>
-                    <div class="d-title">Founder & Lead Architect</div>
+                    <div class="title-text">Founder & Lead Architect</div>
                 </div>
 
                 <div class="footer-container">
                     <div class="contact-row">
                         <div class="col-left">
                             <div class="info-line">
-                                <svg class="icon-svg" viewBox="0 0 24 24" style="fill:#00BCD4;"><path d="M19.005 3.675c-2.347-2.348-5.468-3.638-8.785-3.638-6.852 0-12.429 5.576-12.433 12.43 0 2.191.571 4.33 1.658 6.215l-1.762 6.435 6.582-1.726c1.815 0.99 3.86 1.512 5.952 1.513h0.005c6.854 0 12.432-5.578 12.436-12.431 0-3.321-1.292-6.444-3.642-8.79zM10.74 16.92v-1.32c0-0.48 0.18-0.78 0.72-0.9 1.56-0.36 2.22-1.68 2.22-2.82 0-1.74-1.14-2.88-3.12-2.88h-1.56v7.92h-1.68v-10.92h3.9c1.92 0 3.06 0.42 3.96 1.32 0.72 0.78 1.14 1.8 1.14 3.12 0 1.98-0.96 3.12-2.1 3.66 1.44 0.42 2.52 1.62 2.52 3.42 0 3.06-2.34 4.32-5.46 4.32h-4.32v-2.94h3.78z"/></svg>
+                                <svg class="icon-svg" viewBox="0 0 24 24" style="fill:#00BCD4;"><path d="M20.52 3.449C18.238 1.186 15.222 0 12.043 0 5.485 0 .151 5.335.151 11.892c0 2.096.547 4.14 1.588 5.945L.05 24l6.327-1.658c1.725.941 3.666 1.436 5.663 1.437h.005c6.555 0 11.89-5.335 11.893-11.89 0-3.179-1.238-6.166-3.418-8.44zM12.046 21.84h-.004c-1.782 0-3.529-.48-5.055-1.385l-.362-.215-3.759.985 1.003-3.663-.236-.375c-.993-1.579-1.516-3.407-1.516-5.295 0-5.467 4.45-9.917 9.924-9.917 2.651 0 5.143 1.032 7.016 2.906s2.903 4.367 2.903 7.021c-.004 5.469-4.453 9.923-9.914 9.923zm.914-14.582H9.373v10.235h3.632c2.724 0 4.29-1.764 4.29-4.996 0-3.328-1.785-5.239-4.335-5.239zm.06 8.258h-1.66V9.166h1.72c1.393 0 2.302.946 2.302 2.502 0 1.696-.867 2.43-2.362 2.43z"/></svg>
                                 <span class="mono-num">+49 2251 9599741</span>
                             </div>
                             <div class="info-line">
-                                <span style="font-size:9px; width:12px; margin-right:6px; color:#00BCD4; text-align:center;">✉</span> 
+                                <span style="font-size:9px; width:11px; margin-right:5px; color:#00BCD4; text-align:center;">✉</span> 
                                 <span class="mono-num" style="font-family:'Inter', sans-serif;">avinash@santechnologies.de</span>
                             </div>
                         </div>
 
                         <div class="col-right">
                             <div class="info-line right">
-                                <span class="label">DE</span> <span class="mono-num">+49 162 3757839</span>
+                                <span style="margin-right:4px;">🇩🇪</span> <span class="mono-num">+49 162 3757839</span>
                             </div>
                             <div class="info-line right">
-                                <span class="label">IN</span> <span class="mono-num">+91 99941 71004</span>
+                                <span style="margin-right:4px;">🇮🇳</span> <span class="mono-num">+91 99941 71004</span>
                             </div>
                         </div>
                     </div>
-
-                    <div class="website-bar">
-                        www.santechnologies.de
-                    </div>
+                    <div class="website-bar">www.santechnologies.de</div>
                 </div>
             </div>
 
-            <div class="card back">
+            <div class="card back-dark">
                 <div class="services-area">
-                    <div class="headline">Digital Solutions<br><span style="color:var(--san-light); font-size:0.8em;">Digitale Lösungen</span></div>
+                    <div class="headline dark">Digital Solutions<br><span style="color:var(--san-light); font-size:0.8em;">Digitale Lösungen</span></div>
                     <ul style="list-style:none; padding:0;">
-                        <li class="b-item"><span class="en-text">Website Design & Development</span><span class="de-text">Webdesign & Entwicklung</span></li>
-                        <li class="b-item"><span class="en-text">Custom Software & Apps</span><span class="de-text">Individualsoftware & Apps</span></li>
-                        <li class="b-item"><span class="en-text">IT Consulting & Cloud</span><span class="de-text">IT-Beratung & Cloud</span></li>
+                        <li class="b-item"><span class="en-text dark">Website Design & Development</span><span class="de-text dark">Webdesign & Entwicklung</span></li>
+                        <li class="b-item"><span class="en-text dark">Custom Software & Apps</span><span class="de-text dark">Individualsoftware & Apps</span></li>
                     </ul>
                 </div>
                 <div class="qr-area">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard.html" style="width:100%;">
                 </div>
             </div>
+        </div>
+    </div>
 
+
+    <div>
+        <h2>Option B: White Corporate</h2>
+        <div class="card-row">
+            
+            <div class="card white-card front-layout">
+                <div class="header">
+                     <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/logo.png" class="logo"> 
+                </div>
+                
+                <div class="main-content">
+                    <div class="name-text">
+                        Avinash Vivekananthan <span class="degrees">B.Sc IT, MBA</span>
+                    </div>
+                    <div class="title-text">Founder & Lead Architect</div>
+                </div>
+
+                <div class="footer-container">
+                    <div class="contact-row">
+                        <div class="col-left">
+                            <div class="info-line">
+                                <svg class="icon-svg" viewBox="0 0 24 24" style="fill:#006064;"><path d="M20.52 3.449C18.238 1.186 15.222 0 12.043 0 5.485 0 .151 5.335.151 11.892c0 2.096.547 4.14 1.588 5.945L.05 24l6.327-1.658c1.725.941 3.666 1.436 5.663 1.437h.005c6.555 0 11.89-5.335 11.893-11.89 0-3.179-1.238-6.166-3.418-8.44zM12.046 21.84h-.004c-1.782 0-3.529-.48-5.055-1.385l-.362-.215-3.759.985 1.003-3.663-.236-.375c-.993-1.579-1.516-3.407-1.516-5.295 0-5.467 4.45-9.917 9.924-9.917 2.651 0 5.143 1.032 7.016 2.906s2.903 4.367 2.903 7.021c-.004 5.469-4.453 9.923-9.914 9.923zm.914-14.582H9.373v10.235h3.632c2.724 0 4.29-1.764 4.29-4.996 0-3.328-1.785-5.239-4.335-5.239zm.06 8.258h-1.66V9.166h1.72c1.393 0 2.302.946 2.302 2.502 0 1.696-.867 2.43-2.362 2.43z"/></svg>
+                                <span class="mono-num">+49 2251 9599741</span>
+                            </div>
+                            <div class="info-line">
+                                <span style="font-size:9px; width:11px; margin-right:5px; color:#006064; text-align:center;">✉</span> 
+                                <span class="mono-num" style="font-family:'Inter', sans-serif;">avinash@santechnologies.de</span>
+                            </div>
+                        </div>
+
+                        <div class="col-right">
+                            <div class="info-line right">
+                                <span style="margin-right:4px;">🇩🇪</span> <span class="mono-num">+49 162 3757839</span>
+                            </div>
+                            <div class="info-line right">
+                                <span style="margin-right:4px;">🇮🇳</span> <span class="mono-num">+91 99941 71004</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="website-bar">www.santechnologies.de</div>
+                </div>
+            </div>
+
+            <div class="card back-white">
+                <div class="services-area">
+                    <div class="headline light">Digital Solutions<br><span style="color:#006064; font-size:0.8em;">Digitale Lösungen</span></div>
+                    <ul style="list-style:none; padding:0;">
+                        <li class="b-item"><span class="en-text light">Website Design & Development</span><span class="de-text light">Webdesign & Entwicklung</span></li>
+                        <li class="b-item"><span class="en-text light">Custom Software & Apps</span><span class="de-text light">Individualsoftware & Apps</span></li>
+                    </ul>
+                </div>
+                <div class="qr-area bordered">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard.html" style="width:100%;">
+                </div>
+            </div>
         </div>
     </div>
 
