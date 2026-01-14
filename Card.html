@@ -2,12 +2,14 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>SAN Technologies - Final Production V3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=0.6"> 
+    <title>SAN Technologies - Final Production V4</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=Roboto+Mono:wght@400;500&display=swap');
 
         /* RESET */
         * { box-sizing: border-box; -webkit-print-color-adjust: exact; margin: 0; padding: 0; }
+        
         body { 
             background: #e0e5ec; 
             font-family: 'Inter', Helvetica, Arial, sans-serif; 
@@ -22,15 +24,22 @@
         }
 
         /* --- CARD CONTAINER --- */
-        .card-row { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
+        .card-row { 
+            display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; width: 100%;
+        }
 
         /* --- CARD BASE (85mm x 55mm) --- */
         .card {
-            width: 85mm; height: 55mm;
+            width: 85mm; 
+            height: 55mm;
+            /* CRITICAL FIXES FOR SIZING */
+            min-width: 85mm; min-height: 55mm;
+            flex-shrink: 0; /* STOPS SQUASHING */
+            
             position: relative; overflow: hidden;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             display: flex;
-            border-radius: 0; /* Sharp Professional Edge */
+            border-radius: 0; 
         }
 
         /* --- COLORS --- */
@@ -40,14 +49,41 @@
             --san-black: #0f172a;   /* Modern Black */
         }
 
-        /* --- ICONS --- */
+        /* --- CUSTOM ICONS --- */
+        /* WhatsApp Business 'B' Icon Construction */
+        .wa-biz-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 12px; height: 12px;
+            background-color: transparent;
+            border: 1.5px solid #00BCD4; /* The Bubble Outline */
+            border-radius: 50% 50% 0 50%; /* Bubble Shape */
+            transform: rotate(-45deg); /* Tilt it correctly */
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .wa-biz-icon::after {
+            content: 'B';
+            color: #00BCD4;
+            font-size: 7px;
+            font-weight: 800;
+            transform: rotate(45deg); /* Rotate text back */
+            font-family: sans-serif;
+            margin-left: 0.5px; margin-bottom: 0.5px;
+        }
+
         .icon-svg {
             width: 11px; height: 11px; display: inline-block; vertical-align: middle;
             fill: currentColor; margin-right: 5px;
         }
 
+        /* --- FLAGS FIX --- */
+        .flag {
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            margin-right: 4px; font-size: 1.1em; vertical-align: middle;
+        }
+
         /* ============================================================
-           SHARED LAYOUT STYLES (Front)
+           SHARED LAYOUT STYLES
            ============================================================ */
         .front-layout {
             padding: 5mm;
@@ -56,28 +92,19 @@
             width: 100%;
         }
 
-        /* HEADER (Logo) */
         .header { z-index: 1; width: 100%; }
         .logo { height: 7mm; width: auto; object-fit: contain; display: block; }
 
-        /* MAIN (Centered Name) */
         .main-content { 
             z-index: 1; text-align: center; width: 100%; margin-top: -2mm; 
         }
-        .name-text { 
-            font-size: 11pt; font-weight: 800; letter-spacing: -0.3px; line-height: 1.2;
-        }
-        .degrees { 
-            font-size: 0.6em; font-weight: 500; margin-left: 4px; vertical-align: middle;
-        }
-        .title-text { 
-            font-size: 6pt; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; display: block;
-        }
+        .name-text { font-size: 11pt; font-weight: 800; letter-spacing: -0.3px; line-height: 1.2; }
+        .degrees { font-size: 0.6em; font-weight: 500; margin-left: 4px; vertical-align: middle; }
+        .title-text { font-size: 6pt; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; display: block; }
 
-        /* FOOTER (Contact Grid) */
         .footer-container {
             z-index: 1; width: 100%;
-            border-top: 1px solid rgba(0,0,0,0.1); /* Default light border */
+            border-top: 1px solid rgba(0,0,0,0.1);
             padding-top: 2.5mm;
         }
         
@@ -89,10 +116,7 @@
         .col-left { text-align: left; }
         .col-right { text-align: right; }
 
-        .info-line { 
-            display: flex; align-items: center; 
-            font-size: 5.5pt; margin-bottom: 3px;
-        }
+        .info-line { display: flex; align-items: center; font-size: 5.5pt; margin-bottom: 3px; }
         .info-line.right { justify-content: flex-end; }
         
         /* Monospace Numbers */
@@ -100,17 +124,16 @@
             font-family: 'Roboto Mono', monospace; font-size: 5pt; letter-spacing: -0.2px; font-weight: 500;
         }
 
-        /* Bottom Website */
         .website-bar {
             text-align: center; font-size: 6pt; font-weight: 700; letter-spacing: 0.5px; margin-top: 1mm;
         }
 
 
         /* ============================================================
-           SPECIFIC DESIGN OVERRIDES
+           DESIGN VARIANTS
            ============================================================ */
         
-        /* DESIGN A: DARK */
+        /* DARK CARD */
         .dark-card { background: var(--san-black); color: white; }
         .dark-card .logo { filter: brightness(0) invert(1); }
         .dark-card .degrees { color: var(--san-light); }
@@ -124,21 +147,27 @@
             pointer-events: none;
         }
 
-        /* DESIGN B: WHITE */
+        /* WHITE CARD */
         .white-card { background: white; color: var(--san-black); }
-        .white-card .logo { /* Original Colors */ }
         .white-card .degrees { color: #777; }
         .white-card .title-text { color: var(--san-dark); }
         .white-card .footer-container { border-top: 1px solid #eee; }
         .white-card .info-line { color: #555; }
         .white-card .website-bar { color: var(--san-dark); }
+        /* White Card specific icon colors override */
+        .white-card .wa-biz-icon { border-color: #006064; }
+        .white-card .wa-biz-icon::after { color: #006064; }
 
 
-        /* ============================================================
-           BACK SIDE (Shared Layout)
-           ============================================================ */
-        .back-dark { background: var(--san-dark); padding: 0 6mm; flex-direction: row; align-items: center; justify-content: space-between; }
-        .back-white { background: white; padding: 0 6mm; flex-direction: row; align-items: center; justify-content: space-between; border: 1px solid #eee; }
+        /* BACK SIDE (Shared) */
+        .back-dark { background: var(--san-dark); }
+        .back-white { background: white; border: 1px solid #eee; }
+
+        .back-layout {
+            padding: 0 6mm;
+            display: flex; flex-direction: row; /* FORCE ROW */
+            align-items: center; justify-content: space-between;
+        }
 
         .services-area { flex: 1; padding-right: 4mm; display: flex; flex-direction: column; justify-content: center; }
         
@@ -146,7 +175,7 @@
         .headline.dark { color: white; }
         .headline.light { color: var(--san-dark); }
         
-        .b-item { margin-bottom: 2.5mm; line-height: 1.1; }
+        .b-item { margin-bottom: 2.5mm; line-height: 1.1; list-style: none; }
         
         .en-text { display: block; font-size: 7.5pt; font-weight: 700; }
         .en-text.dark { color: white; }
@@ -161,14 +190,14 @@
             height: 22mm; width: 22mm; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
         }
-        .qr-area.bordered { border: 1px solid #ddd; } /* For white card */
+        .qr-area.bordered { border: 1px solid #ddd; }
 
     </style>
 </head>
 <body>
 
     <div>
-        <h2>Option A: Dark Premium</h2>
+        <h2>Option A: Dark Premium (Fixed)</h2>
         <div class="card-row">
             
             <div class="card dark-card front-layout">
@@ -187,21 +216,21 @@
                     <div class="contact-row">
                         <div class="col-left">
                             <div class="info-line">
-                                <svg class="icon-svg" viewBox="0 0 24 24" style="fill:#00BCD4;"><path d="M20.52 3.449C18.238 1.186 15.222 0 12.043 0 5.485 0 .151 5.335.151 11.892c0 2.096.547 4.14 1.588 5.945L.05 24l6.327-1.658c1.725.941 3.666 1.436 5.663 1.437h.005c6.555 0 11.89-5.335 11.893-11.89 0-3.179-1.238-6.166-3.418-8.44zM12.046 21.84h-.004c-1.782 0-3.529-.48-5.055-1.385l-.362-.215-3.759.985 1.003-3.663-.236-.375c-.993-1.579-1.516-3.407-1.516-5.295 0-5.467 4.45-9.917 9.924-9.917 2.651 0 5.143 1.032 7.016 2.906s2.903 4.367 2.903 7.021c-.004 5.469-4.453 9.923-9.914 9.923zm.914-14.582H9.373v10.235h3.632c2.724 0 4.29-1.764 4.29-4.996 0-3.328-1.785-5.239-4.335-5.239zm.06 8.258h-1.66V9.166h1.72c1.393 0 2.302.946 2.302 2.502 0 1.696-.867 2.43-2.362 2.43z"/></svg>
+                                <div class="wa-biz-icon"></div>
                                 <span class="mono-num">+49 2251 9599741</span>
                             </div>
                             <div class="info-line">
-                                <span style="font-size:9px; width:11px; margin-right:5px; color:#00BCD4; text-align:center;">✉</span> 
+                                <span style="font-size:9px; width:12px; margin-right:6px; color:#00BCD4; text-align:center;">✉</span> 
                                 <span class="mono-num" style="font-family:'Inter', sans-serif;">avinash@santechnologies.de</span>
                             </div>
                         </div>
 
                         <div class="col-right">
                             <div class="info-line right">
-                                <span style="margin-right:4px;">🇩🇪</span> <span class="mono-num">+49 162 3757839</span>
+                                <span class="flag">🇩🇪</span> <span class="mono-num">+49 162 3757839</span>
                             </div>
                             <div class="info-line right">
-                                <span style="margin-right:4px;">🇮🇳</span> <span class="mono-num">+91 99941 71004</span>
+                                <span class="flag">🇮🇳</span> <span class="mono-num">+91 99941 71004</span>
                             </div>
                         </div>
                     </div>
@@ -209,10 +238,10 @@
                 </div>
             </div>
 
-            <div class="card back-dark">
+            <div class="card back-dark back-layout">
                 <div class="services-area">
                     <div class="headline dark">Digital Solutions<br><span style="color:var(--san-light); font-size:0.8em;">Digitale Lösungen</span></div>
-                    <ul style="list-style:none; padding:0;">
+                    <ul>
                         <li class="b-item"><span class="en-text dark">Website Design & Development</span><span class="de-text dark">Webdesign & Entwicklung</span></li>
                         <li class="b-item"><span class="en-text dark">Custom Software & Apps</span><span class="de-text dark">Individualsoftware & Apps</span></li>
                     </ul>
@@ -226,7 +255,7 @@
 
 
     <div>
-        <h2>Option B: White Corporate</h2>
+        <h2>Option B: White Corporate (Fixed)</h2>
         <div class="card-row">
             
             <div class="card white-card front-layout">
@@ -245,21 +274,21 @@
                     <div class="contact-row">
                         <div class="col-left">
                             <div class="info-line">
-                                <svg class="icon-svg" viewBox="0 0 24 24" style="fill:#006064;"><path d="M20.52 3.449C18.238 1.186 15.222 0 12.043 0 5.485 0 .151 5.335.151 11.892c0 2.096.547 4.14 1.588 5.945L.05 24l6.327-1.658c1.725.941 3.666 1.436 5.663 1.437h.005c6.555 0 11.89-5.335 11.893-11.89 0-3.179-1.238-6.166-3.418-8.44zM12.046 21.84h-.004c-1.782 0-3.529-.48-5.055-1.385l-.362-.215-3.759.985 1.003-3.663-.236-.375c-.993-1.579-1.516-3.407-1.516-5.295 0-5.467 4.45-9.917 9.924-9.917 2.651 0 5.143 1.032 7.016 2.906s2.903 4.367 2.903 7.021c-.004 5.469-4.453 9.923-9.914 9.923zm.914-14.582H9.373v10.235h3.632c2.724 0 4.29-1.764 4.29-4.996 0-3.328-1.785-5.239-4.335-5.239zm.06 8.258h-1.66V9.166h1.72c1.393 0 2.302.946 2.302 2.502 0 1.696-.867 2.43-2.362 2.43z"/></svg>
+                                <div class="wa-biz-icon"></div>
                                 <span class="mono-num">+49 2251 9599741</span>
                             </div>
                             <div class="info-line">
-                                <span style="font-size:9px; width:11px; margin-right:5px; color:#006064; text-align:center;">✉</span> 
+                                <span style="font-size:9px; width:12px; margin-right:6px; color:#006064; text-align:center;">✉</span> 
                                 <span class="mono-num" style="font-family:'Inter', sans-serif;">avinash@santechnologies.de</span>
                             </div>
                         </div>
 
                         <div class="col-right">
                             <div class="info-line right">
-                                <span style="margin-right:4px;">🇩🇪</span> <span class="mono-num">+49 162 3757839</span>
+                                <span class="flag">🇩🇪</span> <span class="mono-num">+49 162 3757839</span>
                             </div>
                             <div class="info-line right">
-                                <span style="margin-right:4px;">🇮🇳</span> <span class="mono-num">+91 99941 71004</span>
+                                <span class="flag">🇮🇳</span> <span class="mono-num">+91 99941 71004</span>
                             </div>
                         </div>
                     </div>
@@ -267,10 +296,10 @@
                 </div>
             </div>
 
-            <div class="card back-white">
+            <div class="card back-white back-layout">
                 <div class="services-area">
                     <div class="headline light">Digital Solutions<br><span style="color:#006064; font-size:0.8em;">Digitale Lösungen</span></div>
-                    <ul style="list-style:none; padding:0;">
+                    <ul>
                         <li class="b-item"><span class="en-text light">Website Design & Development</span><span class="de-text light">Webdesign & Entwicklung</span></li>
                         <li class="b-item"><span class="en-text light">Custom Software & Apps</span><span class="de-text light">Individualsoftware & Apps</span></li>
                     </ul>
