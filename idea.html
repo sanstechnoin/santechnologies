@@ -2,20 +2,20 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>SAN Suite - Xerox A4 Print Layout</title>
+    <title>SAN Suite - Exact A4 Print Layout</title>
     <style>
-        /* --- KEEPING YOUR EXACT FONTS & CSS --- */
+        /* --- ORIGINAL FONTS --- */
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
-        /* RESET FOR PRINTING */
+        /* RESET */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact; }
 
         body {
-            background: #ccc; /* Grey for preview */
+            background: #ccc; 
             display: flex; flex-direction: column; align-items: center; 
         }
 
-        /* --- A4 SHEET SETUP --- */
+        /* --- A4 SHEET SETUP (FIXED FOR XEROX) --- */
         @media print {
             body { background: none; }
             .sheet { box-shadow: none; margin: 0; page-break-after: always; }
@@ -23,35 +23,52 @@
 
         .sheet {
             width: 210mm;
-            height: 297mm;
+            height: 296mm; /* Exact A4 height (minus 1mm safety) */
             background: white;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 1px; /* Cutting line guide */
-            border: 1px solid #ddd;
-            margin: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            /* FORCE 4-QUADRANT GRID */
+            grid-template-columns: 105mm 105mm;
+            grid-template-rows: 148mm 148mm;
+            gap: 0;
+            border: 0;
+            overflow: hidden;
+            margin: 0 auto;
         }
 
         .card-slot {
+            width: 105mm;
+            height: 148mm;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            border: 1px dashed #eee; /* Light cutting guide */
+            border: 1px dashed #ddd; /* Cutting guide */
+            overflow: hidden; 
+            position: relative;
         }
 
-        /* SCALER: Shrinks your 600px card to fit A6 slot on A4 */
+        /* --- GHOST WRAPPER (The Layout Fix) --- */
+        /* This renders the card at 0x0 size so it doesn't break the grid, then shows the content visually */
+        .ghost-wrapper {
+            width: 0;
+            height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* SCALER: Shrinks 600x400 to fit A6 slot */
         .scaler {
-            transform: scale(0.62); 
-            width: 600px; height: 400px;
+            transform: scale(0.64); 
+            width: 600px; 
+            height: 400px;
+            display: flex; 
+            flex-shrink: 0;
         }
 
-        /* --- YOUR EXACT CSS BELOW --- */
+        /* --- YOUR EXACT ORIGINAL CSS --- */
         :root {
-            --primary: #006064;  /* Deep Cyan */
-            --accent: #00BCD4;   /* Bright Cyan */
+            --primary: #006064; 
+            --accent: #00BCD4; 
             --dark: #1a1a1a;
             --light: #f4f7f6;
             --white: #ffffff;
@@ -66,156 +83,63 @@
             position: relative;
             overflow: hidden;
             display: flex;
-            /* Removed shadow for print clarity */
             box-shadow: none; border: 1px solid #ddd;
         }
 
-        /* --- FRONT SIDE --- */
-        .front { 
-            background-color: var(--dark); 
-            color: white; 
-            flex-direction: column; 
-        }
-
-        /* TOP SECTION (75%) */
+        /* FRONT */
+        .front { background-color: var(--dark); color: white; flex-direction: column; }
+        
         .front-top {
             flex: 3; 
             background: linear-gradient(135deg, var(--primary) 0%, #004d50 100%);
-            display: flex;
-            padding: 40px; 
-            position: relative;
+            display: flex; padding: 40px; position: relative;
             border-bottom: 4px solid var(--accent);
-            align-items: center; 
-            justify-content: space-between; 
+            align-items: center; justify-content: space-between; 
         }
 
-        /* Left Column: Text */
-        .front-text-col {
-            flex: 1;
-            padding-right: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /* Right Column: Logo Box */
-        .front-logo-col {
-            flex: 0 0 180px; 
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end; 
-            justify-content: center;
-        }
-
-        /* The White Logo Box with ROUNDED CORNERS */
+        .front-text-col { flex: 1; padding-right: 20px; display: flex; flex-direction: column; justify-content: center; }
+        .front-logo-col { flex: 0 0 180px; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; }
+        
         .logo-box-square {
-            background: white;
-            width: 180px;
-            height: 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 15px; /* <--- ROUNDED CORNERS ADDED */
+            background: white; width: 180px; height: 160px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); padding: 15px;
+            margin-bottom: 15px; border-radius: 15px;
         }
-        .logo-box-square img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
+        .logo-box-square img { width: 100%; height: auto; object-fit: contain; }
 
         .system-tag {
-            background: white;
-            color: var(--primary);
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            padding: 5px 10px;
-            border-radius: 4px;
-            align-self: flex-start;
-            margin-bottom: 15px;
+            background: white; color: var(--primary); font-size: 10px; font-weight: 800;
+            text-transform: uppercase; padding: 5px 10px; border-radius: 4px;
+            align-self: flex-start; margin-bottom: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .front-headline { 
-            font-size: 34px; 
-            font-weight: 800; 
-            color: white; 
-            line-height: 1.05; 
-            margin-bottom: 12px;
-        }
-        
+        .front-headline { font-size: 34px; font-weight: 800; color: white; line-height: 1.05; margin-bottom: 12px; }
         .highlight-accent { color: var(--accent); }
+        .front-sub { font-size: 14px; color: rgba(255,255,255,0.9); font-weight: 500; line-height: 1.4; }
 
-        .front-sub {
-            font-size: 14px;
-            color: rgba(255,255,255,0.9);
-            font-weight: 500;
-            line-height: 1.4;
-        }
-
-        .made-in-text {
-            font-size: 10px;
-            color: rgba(255,255,255,0.7);
-            font-weight: 500;
-            text-align: right;
-            width: 100%;
-        }
+        .made-in-text { font-size: 10px; color: rgba(255,255,255,0.7); font-weight: 500; text-align: right; width: 100%; }
         .heart { color: #ff4d4d; font-size: 12px; }
 
-        /* BOTTOM SECTION: IMAGES (25%) */
-        .front-visuals {
-            flex: 1; 
-            display: flex;
-            flex-direction: row; 
-            background: #000;
-        }
-
-        .visual-block {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-            border-right: 1px solid rgba(255,255,255,0.2);
-        }
+        .front-visuals { flex: 1; display: flex; flex-direction: row; background: #000; }
+        .visual-block { flex: 1; position: relative; overflow: hidden; border-right: 1px solid rgba(255,255,255,0.2); }
         .visual-block:last-child { border-right: none; }
-        
-        .visual-block img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            object-position: center; 
-            opacity: 0.9; 
-        }
+        .visual-block img { width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0.9; }
         
         .img-label {
-            position: absolute; bottom: 8px; left: 10px;
-            color: white; font-size: 9px; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 0.5px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-            z-index: 2;
+            position: absolute; bottom: 8px; left: 10px; color: white;
+            font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8); z-index: 2;
         }
 
-        /* --- BACK SIDE --- */
+        /* BACK */
         .back { background: white; flex-direction: row; }
-
-        .back-content {
-            flex: 6.5;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-        }
-
+        .back-content { flex: 6.5; padding: 25px; display: flex; flex-direction: column; }
         .back-header { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
         .back-sub { font-size: 11px; color: #666; margin-bottom: 15px; font-weight: 500; }
 
-        .feature-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 10px;
-            margin-bottom: auto;
-        }
+        .feature-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-bottom: auto; }
         .feature-table th { text-align: left; color: #888; font-weight: 500; border-bottom: 1px solid #eee; padding-bottom: 4px; }
         .feature-table td { padding: 6px 0; border-bottom: 1px solid #f4f4f4; color: var(--dark); vertical-align: middle; }
         .feature-table td:last-child { text-align: right; color: var(--primary); font-weight: 700; }
@@ -224,38 +148,20 @@
         .check-icon { color: var(--accent); font-weight: bold; font-size: 10px; }
 
         .local-badge {
-            margin-top: auto;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-top: auto; border-top: 1px solid #eee; padding-top: 10px;
+            display: flex; align-items: center; gap: 10px;
         }
         .lb-icon { font-size: 16px; }
         .lb-text { font-size: 9px; color: var(--primary); line-height: 1.3; }
         .lb-text strong { font-size: 9px; font-weight: 700; display: block; }
 
-        .disclaimer-box {
-            margin-top: 10px;
-            border-top: 1px solid #eee;
-            padding-top: 8px;
-            font-size: 8px;
-            color: #888;
-            line-height: 1.3;
-        }
+        .disclaimer-box { margin-top: 10px; border-top: 1px solid #eee; padding-top: 8px; font-size: 8px; color: #888; line-height: 1.3; }
 
         .back-action {
-            flex: 3.5;
-            background: var(--light);
-            border-left: 1px solid #eee;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            flex: 3.5; background: var(--light); border-left: 1px solid #eee;
+            padding: 20px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
         }
-
         .qr-code { width: 110px; height: 110px; background: white; padding: 5px; border: 1px solid #ddd; margin-bottom: 10px; }
         
         .cta-btn {
@@ -263,14 +169,13 @@
             font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 4px;
             display: inline-block; margin-bottom: 10px;
         }
-
         .contact-info { font-size: 9px; color: #555; line-height: 1.5; }
     </style>
 </head>
 <body>
 
     <div class="sheet">
-        <div class="card-slot"><div class="scaler">
+        <div class="card-slot"><div class="ghost-wrapper"><div class="scaler">
             <div class="card front">
                 <div class="front-top">
                     <div class="front-text-col">
@@ -288,9 +193,9 @@
                     <div class="visual-block"><div class="img-label">QR-Bestellung</div><img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'"></div>
                 </div>
             </div>
-        </div></div>
+        </div></div></div>
         
-        <div class="card-slot"><div class="scaler">
+        <div class="card-slot"><div class="ghost-wrapper"><div class="scaler">
             <div class="card front">
                 <div class="front-top">
                     <div class="front-text-col">
@@ -308,9 +213,9 @@
                     <div class="visual-block"><div class="img-label">QR-Bestellung</div><img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'"></div>
                 </div>
             </div>
-        </div></div>
+        </div></div></div>
 
-        <div class="card-slot"><div class="scaler">
+        <div class="card-slot"><div class="ghost-wrapper"><div class="scaler">
             <div class="card front">
                 <div class="front-top">
                     <div class="front-text-col">
@@ -328,9 +233,9 @@
                     <div class="visual-block"><div class="img-label">QR-Bestellung</div><img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'"></div>
                 </div>
             </div>
-        </div></div>
+        </div></div></div>
 
-        <div class="card-slot"><div class="scaler">
+        <div class="card-slot"><div class="ghost-wrapper"><div class="scaler">
             <div class="card front">
                 <div class="front-top">
                     <div class="front-text-col">
@@ -348,11 +253,11 @@
                     <div class="visual-block"><div class="img-label">QR-Bestellung</div><img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'"></div>
                 </div>
             </div>
-        </div></div>
+        </div></div></div>
     </div>
 
     <div class="sheet">
-        <div class="card-slot"><div class="scaler">
+        <div class="card-slot"><div class="ghost-wrapper"><div class="scaler">
             <div class="card back">
                 <div class="back-content">
                     <div class="back-header">Modernisieren Sie Ihren Betrieb</div>
@@ -379,9 +284,9 @@
                     <div class="contact-info"><strong>Avinash Vivekananthan</strong><br>Software Engineer<br>+49 2251 9599741<br>avinash@santechnologies.de</div>
                 </div>
             </div>
-        </div></div>
+        </div></div></div>
 
-        <div class="card-slot"><div class="scaler">
+        <div class="card-slot"><div class="ghost-wrapper"><div class="scaler">
             <div class="card back">
                 <div class="back-content">
                     <div class="back-header">Modernisieren Sie Ihren Betrieb</div>
@@ -408,9 +313,9 @@
                     <div class="contact-info"><strong>Avinash Vivekananthan</strong><br>Software Engineer<br>+49 2251 9599741<br>avinash@santechnologies.de</div>
                 </div>
             </div>
-        </div></div>
+        </div></div></div>
 
-        <div class="card-slot"><div class="scaler">
+        <div class="card-slot"><div class="ghost-wrapper"><div class="scaler">
             <div class="card back">
                 <div class="back-content">
                     <div class="back-header">Modernisieren Sie Ihren Betrieb</div>
@@ -437,9 +342,9 @@
                     <div class="contact-info"><strong>Avinash Vivekananthan</strong><br>Software Engineer<br>+49 2251 9599741<br>avinash@santechnologies.de</div>
                 </div>
             </div>
-        </div></div>
+        </div></div></div>
 
-        <div class="card-slot"><div class="scaler">
+        <div class="card-slot"><div class="ghost-wrapper"><div class="scaler">
             <div class="card back">
                 <div class="back-content">
                     <div class="back-header">Modernisieren Sie Ihren Betrieb</div>
@@ -466,7 +371,7 @@
                     <div class="contact-info"><strong>Avinash Vivekananthan</strong><br>Software Engineer<br>+49 2251 9599741<br>avinash@santechnologies.de</div>
                 </div>
             </div>
-        </div></div>
+        </div></div></div>
     </div>
 
 </body>
