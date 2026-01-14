@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Technologies - Final Production V6</title>
+    <title>SAN Technologies - Final Production V7</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=Roboto+Mono:wght@400;500&display=swap');
 
@@ -33,13 +33,11 @@
 
         .card-row { 
             display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; 
-            /* FORCE ROW TO BE AT LEAST WIDTH OF ONE CARD */
             min-width: 85mm; 
         }
 
-        /* --- THE MASTER CARD CLASS (Used for Front & Back) --- */
+        /* --- THE MASTER CARD CLASS --- */
         .card {
-            /* STICT DIMENSIONS - The "Back Card" Trick */
             width: 85mm; 
             height: 55mm;
             min-width: 85mm; 
@@ -71,7 +69,7 @@
         }
 
         /* ============================================================
-           FRONT CARD LAYOUT (Vertical Stack)
+           FRONT CARD LAYOUT
            ============================================================ */
         .front-layout {
             padding: 5mm;
@@ -112,7 +110,7 @@
 
 
         /* ============================================================
-           BACK CARD LAYOUT (Horizontal Row)
+           BACK CARD LAYOUT
            ============================================================ */
         .back-layout {
             padding: 0 6mm;
@@ -125,7 +123,7 @@
         .headline.dark { color: white; }
         .headline.light { color: var(--san-dark); }
         
-        .b-item { margin-bottom: 2.5mm; line-height: 1.1; list-style: none; }
+        .b-item { margin-bottom: 2mm; line-height: 1.1; list-style: none; } /* Reduced margin slightly to fit 3 items comfortably */
         .en-text { display: block; font-size: 7.5pt; font-weight: 700; }
         .en-text.dark { color: white; } .en-text.light { color: #333; }
         .de-text { display: block; font-size: 5.5pt; font-weight: 400; margin-top: 1px; font-style: italic; }
@@ -207,6 +205,7 @@
                         <ul>
                             <li class="b-item"><span class="en-text dark">Website Design & Development</span><span class="de-text dark">Webdesign & Entwicklung</span></li>
                             <li class="b-item"><span class="en-text dark">Custom Software & Apps</span><span class="de-text dark">Individualsoftware & Apps</span></li>
+                            <li class="b-item"><span class="en-text dark">IT Consulting & Cloud</span><span class="de-text dark">IT-Beratung & Cloud</span></li>
                         </ul>
                     </div>
                     <div class="qr-area">
@@ -256,6 +255,7 @@
                         <ul>
                             <li class="b-item"><span class="en-text light">Website Design & Development</span><span class="de-text light">Webdesign & Entwicklung</span></li>
                             <li class="b-item"><span class="en-text light">Custom Software & Apps</span><span class="de-text light">Individualsoftware & Apps</span></li>
+                            <li class="b-item"><span class="en-text light">IT Consulting & Cloud</span><span class="de-text light">IT-Beratung & Cloud</span></li>
                         </ul>
                     </div>
                     <div class="qr-area bordered">
