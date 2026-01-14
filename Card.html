@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>SAN Technologies - Print Ready File</title>
+    <title>SAN Technologies - Final Print File (Corrected)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=Roboto+Mono:wght@400;500&display=swap');
 
@@ -11,7 +11,7 @@
         
         body { 
             margin: 0; padding: 0; 
-            background: #ccc; /* Grey background to see the card on screen */
+            background: #ccc; 
             display: flex; flex-direction: column; align-items: center; gap: 20px;
         }
 
@@ -19,21 +19,18 @@
         @media print {
             body { background: none; display: block; }
             .page-break { page-break-after: always; }
-            /* Hide the instructions when printing */
             .no-print { display: none; }
         }
 
         /* --- THE CARD CONTAINER (WITH BLEED) --- */
-        /* WirMachenDruck requires 85x55 + 2mm bleed all around = 89mm x 59mm */
+        /* 85x55 + 2mm bleed = 89mm x 59mm */
         .print-card {
             width: 89mm; 
             height: 59mm;
             position: relative; 
             overflow: hidden;
             display: flex;
-            background: var(--san-black); /* Dark Background covers bleed */
-            
-            /* Center the 85x55 content inside the 89x59 bleed area */
+            background: var(--san-black);
             align-items: center; justify-content: center;
         }
 
@@ -64,8 +61,14 @@
         .header { width: 100%; }
         .logo { height: 7mm; width: auto; object-fit: contain; display: block; filter: brightness(0) invert(1); }
         .main-content { text-align: center; width: 100%; margin-top: -2mm; }
+        
         .name-text { font-size: 11pt; font-weight: 800; letter-spacing: -0.3px; line-height: 1.2; color: white; }
-        .degrees { font-size: 0.6em; font-weight: 500; margin-left: 4px; vertical-align: middle; color: var(--san-light); }
+        
+        /* UPDATED DEGREES STYLE */
+        .degrees { 
+            font-size: 0.6em; font-weight: 500; margin-left: 4px; vertical-align: middle; color: var(--san-light); 
+        }
+        
         .title-text { font-size: 6pt; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; display: block; color: var(--san-light); }
 
         .footer-container { width: 100%; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 2.5mm; }
@@ -76,7 +79,6 @@
         .mono-num { font-family: 'Roboto Mono', monospace; font-size: 5pt; letter-spacing: -0.2px; font-weight: 500; }
         .website-bar { text-align: center; font-size: 6pt; font-weight: 700; letter-spacing: 0.5px; margin-top: 1mm; color: var(--san-light); }
         
-        /* Background Art for Front */
         .print-card.front::after {
             content: ''; position: absolute; top: 0; right: 20mm; width: 60mm; height: 100%;
             background: linear-gradient(120deg, transparent 40%, rgba(0, 188, 212, 0.05) 41%); 
@@ -101,7 +103,6 @@
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* Helper Instructions Style */
         .instructions {
             background: white; padding: 20px; border-radius: 8px; max-width: 600px; margin-top: 20px;
             font-family: sans-serif; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -111,14 +112,12 @@
 <body>
 
     <div class="instructions no-print">
-        <h3>How to Save as PDF:</h3>
+        <h3>Final Checklist for WirMachenDruck:</h3>
         <ol>
-            <li>Press <b>Ctrl + P</b> (Print).</li>
-            <li>Select <b>"Save as PDF"</b>.</li>
-            <li>Margins: <b>None</b> (Keine).</li>
-            <li>Scale: <b>100%</b>.</li>
-            <li>Background Graphics: <b>Checked</b>.</li>
-            <li>Click Save. Upload this PDF to WirMachenDruck.</li>
+            <li>Save as PDF (Margins: None, Scale: 100%).</li>
+            <li>Upload to "Visitenkarten 85 x 55 mm".</li>
+            <li>Select <b>300g folienkaschiert matt</b>.</li>
+            <li>Relax and wait for delivery! 🚀</li>
         </ol>
     </div>
 
@@ -130,7 +129,7 @@
             
             <div class="main-content">
                 <div class="name-text">
-                    Avinash Vivekananthan <span class="degrees">B.Sc IT, MBA</span>
+                    Avinash Vivekananthan <span class="degrees">B.Sc. (IT), MBA</span>
                 </div>
                 <div class="title-text">Founder & Lead Architect</div>
             </div>
@@ -147,7 +146,6 @@
                             <span class="mono-num" style="font-family:'Inter', sans-serif;">avinash@santechnologies.de</span>
                         </div>
                     </div>
-
                     <div class="col-right">
                         <div class="info-line right">
                             <span class="flag">🇩🇪</span> <span class="mono-num">+49 162 3757839</span>
