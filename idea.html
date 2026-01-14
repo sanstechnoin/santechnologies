@@ -2,11 +2,53 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Suite - Final Rounded Logo Box</title>
+    <title>SAN Suite - Xerox A4 Print Layout</title>
     <style>
+        /* --- KEEPING YOUR EXACT FONTS & CSS --- */
         @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700;800&display=swap');
 
+        /* RESET FOR PRINTING */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact; }
+
+        body {
+            background: #ccc; /* Grey for preview */
+            display: flex; flex-direction: column; align-items: center; 
+        }
+
+        /* --- A4 SHEET SETUP --- */
+        @media print {
+            body { background: none; }
+            .sheet { box-shadow: none; margin: 0; page-break-after: always; }
+        }
+
+        .sheet {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 1px; /* Cutting line guide */
+            border: 1px solid #ddd;
+            margin: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .card-slot {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px dashed #eee; /* Light cutting guide */
+        }
+
+        /* SCALER: Shrinks your 600px card to fit A6 slot on A4 */
+        .scaler {
+            transform: scale(0.62); 
+            width: 600px; height: 400px;
+        }
+
+        /* --- YOUR EXACT CSS BELOW --- */
         :root {
             --primary: #006064;  /* Deep Cyan */
             --accent: #00BCD4;   /* Bright Cyan */
@@ -17,39 +59,15 @@
             --card-height: 400px;
         }
 
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #e0e0e0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px;
-            gap: 60px;
-        }
-
-        .version-label {
-            font-size: 24px;
-            font-weight: 800;
-            color: #333;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-bottom: 3px solid var(--primary);
-            padding-bottom: 10px;
-            margin-top: 20px;
-        }
-
-        h2 { color: #666; text-transform: uppercase; letter-spacing: 1px; font-size: 14px; margin-bottom: 10px; text-align: center; }
-
-        .card-container { display: flex; flex-direction: column; gap: 20px; }
-
         .card {
             width: var(--card-width);
             height: var(--card-height);
             background: white;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             position: relative;
             overflow: hidden;
             display: flex;
+            /* Removed shadow for print clarity */
+            box-shadow: none; border: 1px solid #ddd;
         }
 
         /* --- FRONT SIDE --- */
@@ -251,144 +269,96 @@
 </head>
 <body>
 
-    <div class="version-label">ENGLISH VERSION</div>
-    
-    <div class="card-container">
-        <div>
-            <h2>Front Side (EN)</h2>
+    <div class="sheet">
+        <div class="card-slot"><div class="scaler">
             <div class="card front">
-                
-                <div class="front-top">
-                    <div class="front-text-col">
-                        <div class="system-tag">New KDS System</div>
-                        <div class="front-headline">
-                            Why pay <span class="highlight-accent">15-30%</span><br>delivery fees?
-                        </div>
-                        <div class="front-sub">
-                            Keep the profit. Use your own system.<br>
-                            Perfect for Hotels & Restaurants.
-                        </div>
-                    </div>
-
-                    <div class="front-logo-col">
-                        <div class="logo-box-square">
-                            <img src="Master_Email_Logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x100?text=LOGO'"> 
-                        </div>
-                        <div class="made-in-text">Made with <span class="heart">❤</span> in Euskirchen.</div>
-                    </div>
-                </div>
-
-                <div class="front-visuals">
-                    <div class="visual-block">
-                        <div class="img-label">Kitchen Display</div>
-                        <img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x150?text=KDS+Screen'">
-                    </div>
-                    <div class="visual-block">
-                        <div class="img-label">Guest Order</div>
-                        <img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div>
-            <h2>Back Side (EN)</h2>
-            <div class="card back">
-                <div class="back-content">
-                    <div class="back-header">Modernize Your Operations</div>
-                    <div class="back-sub">Save money with direct orders & efficiency.</div>
-
-                    <table class="feature-table">
-                        <thead>
-                            <tr><th colspan="2">Module</th><th>Included</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="icon-cell">📜</td><td><strong>Digital Menu Card</strong><br><span style="color:#777; font-size:8px;">Always up-to-date. No printing costs.</span></td><td class="check-icon">✓ Yes</td></tr>
-                            <tr><td class="icon-cell">📱</td><td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:8px;">Guests scan & order at the table.</span></td><td class="check-icon">✓ Yes</td></tr>
-                            <tr><td class="icon-cell">🛍️</td><td><strong>Click & Collect</strong><br><span style="color:#777; font-size:8px;">Order online & pick up at the counter.</span></td><td class="check-icon">✓ Yes</td></tr>
-                            <tr><td class="icon-cell">🛵</td><td><strong>Delivery & Logistics</strong><br><span style="color:#777; font-size:8px;">Includes Live Driver Tracking.</span></td><td class="check-icon">✓ Yes</td></tr>
-                            <tr><td class="icon-cell">📺</td><td><strong>Kitchen Display (KDS)</strong><br><span style="color:#777; font-size:8px;">Digital tickets. Zero paper chaos.</span></td><td class="check-icon">✓ Yes</td></tr>
-                        </tbody>
-                    </table>
-
-                    <div class="local-badge">
-                        <div class="lb-icon">🤝</div>
-                        <div class="lb-text">
-                            <strong>Your Local Partner in Euskirchen.</strong>
-                            No Hotline. No Call Center. Personal support on-site.
-                        </div>
-                    </div>
-
-                    <div class="disclaimer-box">
-                        <strong>*Legal Note:</strong> SAN Suite CORE is designed for order management and kitchen workflow. It requires a separate, legally compliant POS system for final payment processing (unless upgraded to SAN Suite PRIME).
-                    </div>
-                </div>
-
-                <div class="back-action">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard.html" class="qr-code" alt="Scan QR">
-                    <a href="https://santechnologies.de/digicard.html" class="cta-btn">REQUEST DEMO</a>
-                    <div class="contact-info">
-                        <strong>Avinash Vivekananthan</strong><br>Software Engineer<br>+49 2251 9599741<br>avinash@santechnologies.de
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="version-label">DEUTSCHE VERSION</div>
-
-    <div class="card-container">
-        <div>
-            <h2>Vorderseite (DE)</h2>
-            <div class="card front">
-                
                 <div class="front-top">
                     <div class="front-text-col">
                         <div class="system-tag">Neues KDS System</div>
-                        <div class="front-headline">
-                            Warum <span class="highlight-accent">15-30%</span><br>Gebühren zahlen?
-                        </div>
-                        <div class="front-sub">
-                            Sparen Sie die Provision.<br>
-                            Nutzen Sie Ihr eigenes System.
-                        </div>
+                        <div class="front-headline">Warum <span class="highlight-accent">15-30%</span><br>Gebühren zahlen?</div>
+                        <div class="front-sub">Sparen Sie die Provision.<br>Nutzen Sie Ihr eigenes System.</div>
                     </div>
-
                     <div class="front-logo-col">
-                        <div class="logo-box-square">
-                            <img src="Master_Email_Logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x100?text=LOGO'"> 
-                        </div>
+                        <div class="logo-box-square"><img src="Master_Email_Logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x100?text=LOGO'"></div>
                         <div class="made-in-text">Made with <span class="heart">❤</span> in Euskirchen.</div>
                     </div>
                 </div>
-
                 <div class="front-visuals">
-                    <div class="visual-block">
-                        <div class="img-label">Küchen-Display</div>
-                        <img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x150?text=KDS+Screen'">
+                    <div class="visual-block"><div class="img-label">Küchen-Display</div><img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x150?text=KDS+Screen'"></div>
+                    <div class="visual-block"><div class="img-label">QR-Bestellung</div><img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'"></div>
+                </div>
+            </div>
+        </div></div>
+        
+        <div class="card-slot"><div class="scaler">
+            <div class="card front">
+                <div class="front-top">
+                    <div class="front-text-col">
+                        <div class="system-tag">Neues KDS System</div>
+                        <div class="front-headline">Warum <span class="highlight-accent">15-30%</span><br>Gebühren zahlen?</div>
+                        <div class="front-sub">Sparen Sie die Provision.<br>Nutzen Sie Ihr eigenes System.</div>
                     </div>
-                    <div class="visual-block">
-                        <div class="img-label">QR-Bestellung</div>
-                        <img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'">
+                    <div class="front-logo-col">
+                        <div class="logo-box-square"><img src="Master_Email_Logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x100?text=LOGO'"></div>
+                        <div class="made-in-text">Made with <span class="heart">❤</span> in Euskirchen.</div>
                     </div>
                 </div>
-
+                <div class="front-visuals">
+                    <div class="visual-block"><div class="img-label">Küchen-Display</div><img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x150?text=KDS+Screen'"></div>
+                    <div class="visual-block"><div class="img-label">QR-Bestellung</div><img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'"></div>
+                </div>
             </div>
-        </div>
+        </div></div>
 
-        <div>
-            <h2>Rückseite (DE)</h2>
+        <div class="card-slot"><div class="scaler">
+            <div class="card front">
+                <div class="front-top">
+                    <div class="front-text-col">
+                        <div class="system-tag">Neues KDS System</div>
+                        <div class="front-headline">Warum <span class="highlight-accent">15-30%</span><br>Gebühren zahlen?</div>
+                        <div class="front-sub">Sparen Sie die Provision.<br>Nutzen Sie Ihr eigenes System.</div>
+                    </div>
+                    <div class="front-logo-col">
+                        <div class="logo-box-square"><img src="Master_Email_Logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x100?text=LOGO'"></div>
+                        <div class="made-in-text">Made with <span class="heart">❤</span> in Euskirchen.</div>
+                    </div>
+                </div>
+                <div class="front-visuals">
+                    <div class="visual-block"><div class="img-label">Küchen-Display</div><img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x150?text=KDS+Screen'"></div>
+                    <div class="visual-block"><div class="img-label">QR-Bestellung</div><img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'"></div>
+                </div>
+            </div>
+        </div></div>
+
+        <div class="card-slot"><div class="scaler">
+            <div class="card front">
+                <div class="front-top">
+                    <div class="front-text-col">
+                        <div class="system-tag">Neues KDS System</div>
+                        <div class="front-headline">Warum <span class="highlight-accent">15-30%</span><br>Gebühren zahlen?</div>
+                        <div class="front-sub">Sparen Sie die Provision.<br>Nutzen Sie Ihr eigenes System.</div>
+                    </div>
+                    <div class="front-logo-col">
+                        <div class="logo-box-square"><img src="Master_Email_Logo.png" alt="SAN Technologies" onerror="this.src='https://via.placeholder.com/150x100?text=LOGO'"></div>
+                        <div class="made-in-text">Made with <span class="heart">❤</span> in Euskirchen.</div>
+                    </div>
+                </div>
+                <div class="front-visuals">
+                    <div class="visual-block"><div class="img-label">Küchen-Display</div><img src="pos-screen.jpg" alt="Kitchen Display" onerror="this.src='https://via.placeholder.com/400x150?text=KDS+Screen'"></div>
+                    <div class="visual-block"><div class="img-label">QR-Bestellung</div><img src="scan-table.png" alt="Scanning QR Code" onerror="this.src='https://via.placeholder.com/400x150?text=QR+Scan'"></div>
+                </div>
+            </div>
+        </div></div>
+    </div>
+
+    <div class="sheet">
+        <div class="card-slot"><div class="scaler">
             <div class="card back">
                 <div class="back-content">
                     <div class="back-header">Modernisieren Sie Ihren Betrieb</div>
                     <div class="back-sub">Einfache Abläufe & keine Provisionen.</div>
-
                     <table class="feature-table">
-                        <thead>
-                            <tr><th colspan="2">Modul</th><th>Inklusive</th></tr>
-                        </thead>
+                        <thead><tr><th colspan="2">Modul</th><th>Inklusive</th></tr></thead>
                         <tbody>
                             <tr><td class="icon-cell">📜</td><td><strong>Digitale Speisekarte</strong><br><span style="color:#777; font-size:8px;">Immer aktuell. Keine Druckkosten.</span></td><td class="check-icon">✓ Ja</td></tr>
                             <tr><td class="icon-cell">📱</td><td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:8px;">Gäste bestellen direkt am Tisch.</span></td><td class="check-icon">✓ Ja</td></tr>
@@ -397,29 +367,106 @@
                             <tr><td class="icon-cell">📺</td><td><strong>Küchen-Monitor (KDS)</strong><br><span style="color:#777; font-size:8px;">Digitale Bons. Kein Papierchaos.</span></td><td class="check-icon">✓ Ja</td></tr>
                         </tbody>
                     </table>
-
                     <div class="local-badge">
                         <div class="lb-icon">🤝</div>
-                        <div class="lb-text">
-                            <strong>Ihr lokaler Partner in Euskirchen.</strong>
-                            Keine Hotline. Kein Callcenter. Persönlicher Support vor Ort.
-                        </div>
+                        <div class="lb-text"><strong>Ihr lokaler Partner in Euskirchen.</strong> Keine Hotline. Kein Callcenter. Persönlicher Support vor Ort.</div>
                     </div>
-
-                    <div class="disclaimer-box">
-                        <strong>*Rechtlicher Hinweis:</strong> SAN Suite CORE dient dem Bestellmanagement und Küchen-Workflow. Die Zahlungsabwicklung erfolgt über Ihr bestehendes Kassensystem (sofern kein Upgrade auf SAN Suite PRIME erfolgt).
-                    </div>
+                    <div class="disclaimer-box"><strong>*Rechtlicher Hinweis:</strong> SAN Suite CORE dient dem Bestellmanagement und Küchen-Workflow. Die Zahlungsabwicklung erfolgt über Ihr bestehendes Kassensystem.</div>
                 </div>
-
                 <div class="back-action">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard" class="qr-code" alt="Scan QR">
                     <a href="https://santechnologies.de/digicard" class="cta-btn">DEMO ANFORDERN</a>
-                    <div class="contact-info">
-                        <strong>Avinash Vivekananthan</strong><br>Software Engineer<br>+49 2251 9599741<br>avinash@santechnologies.de
-                    </div>
+                    <div class="contact-info"><strong>Avinash Vivekananthan</strong><br>Software Engineer<br>+49 2251 9599741<br>avinash@santechnologies.de</div>
                 </div>
             </div>
-        </div>
+        </div></div>
+
+        <div class="card-slot"><div class="scaler">
+            <div class="card back">
+                <div class="back-content">
+                    <div class="back-header">Modernisieren Sie Ihren Betrieb</div>
+                    <div class="back-sub">Einfache Abläufe & keine Provisionen.</div>
+                    <table class="feature-table">
+                        <thead><tr><th colspan="2">Modul</th><th>Inklusive</th></tr></thead>
+                        <tbody>
+                            <tr><td class="icon-cell">📜</td><td><strong>Digitale Speisekarte</strong><br><span style="color:#777; font-size:8px;">Immer aktuell. Keine Druckkosten.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">📱</td><td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:8px;">Gäste bestellen direkt am Tisch.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">🛍️</td><td><strong>Click & Collect</strong><br><span style="color:#777; font-size:8px;">Online bestellen, am Tresen abholen.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">🛵</td><td><strong>Lieferung & Logistik</strong><br><span style="color:#777; font-size:8px;">Inklusive Live-Fahrer-Tracking.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">📺</td><td><strong>Küchen-Monitor (KDS)</strong><br><span style="color:#777; font-size:8px;">Digitale Bons. Kein Papierchaos.</span></td><td class="check-icon">✓ Ja</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="local-badge">
+                        <div class="lb-icon">🤝</div>
+                        <div class="lb-text"><strong>Ihr lokaler Partner in Euskirchen.</strong> Keine Hotline. Kein Callcenter. Persönlicher Support vor Ort.</div>
+                    </div>
+                    <div class="disclaimer-box"><strong>*Rechtlicher Hinweis:</strong> SAN Suite CORE dient dem Bestellmanagement und Küchen-Workflow. Die Zahlungsabwicklung erfolgt über Ihr bestehendes Kassensystem.</div>
+                </div>
+                <div class="back-action">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard" class="qr-code" alt="Scan QR">
+                    <a href="https://santechnologies.de/digicard" class="cta-btn">DEMO ANFORDERN</a>
+                    <div class="contact-info"><strong>Avinash Vivekananthan</strong><br>Software Engineer<br>+49 2251 9599741<br>avinash@santechnologies.de</div>
+                </div>
+            </div>
+        </div></div>
+
+        <div class="card-slot"><div class="scaler">
+            <div class="card back">
+                <div class="back-content">
+                    <div class="back-header">Modernisieren Sie Ihren Betrieb</div>
+                    <div class="back-sub">Einfache Abläufe & keine Provisionen.</div>
+                    <table class="feature-table">
+                        <thead><tr><th colspan="2">Modul</th><th>Inklusive</th></tr></thead>
+                        <tbody>
+                            <tr><td class="icon-cell">📜</td><td><strong>Digitale Speisekarte</strong><br><span style="color:#777; font-size:8px;">Immer aktuell. Keine Druckkosten.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">📱</td><td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:8px;">Gäste bestellen direkt am Tisch.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">🛍️</td><td><strong>Click & Collect</strong><br><span style="color:#777; font-size:8px;">Online bestellen, am Tresen abholen.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">🛵</td><td><strong>Lieferung & Logistik</strong><br><span style="color:#777; font-size:8px;">Inklusive Live-Fahrer-Tracking.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">📺</td><td><strong>Küchen-Monitor (KDS)</strong><br><span style="color:#777; font-size:8px;">Digitale Bons. Kein Papierchaos.</span></td><td class="check-icon">✓ Ja</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="local-badge">
+                        <div class="lb-icon">🤝</div>
+                        <div class="lb-text"><strong>Ihr lokaler Partner in Euskirchen.</strong> Keine Hotline. Kein Callcenter. Persönlicher Support vor Ort.</div>
+                    </div>
+                    <div class="disclaimer-box"><strong>*Rechtlicher Hinweis:</strong> SAN Suite CORE dient dem Bestellmanagement und Küchen-Workflow. Die Zahlungsabwicklung erfolgt über Ihr bestehendes Kassensystem.</div>
+                </div>
+                <div class="back-action">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard" class="qr-code" alt="Scan QR">
+                    <a href="https://santechnologies.de/digicard" class="cta-btn">DEMO ANFORDERN</a>
+                    <div class="contact-info"><strong>Avinash Vivekananthan</strong><br>Software Engineer<br>+49 2251 9599741<br>avinash@santechnologies.de</div>
+                </div>
+            </div>
+        </div></div>
+
+        <div class="card-slot"><div class="scaler">
+            <div class="card back">
+                <div class="back-content">
+                    <div class="back-header">Modernisieren Sie Ihren Betrieb</div>
+                    <div class="back-sub">Einfache Abläufe & keine Provisionen.</div>
+                    <table class="feature-table">
+                        <thead><tr><th colspan="2">Modul</th><th>Inklusive</th></tr></thead>
+                        <tbody>
+                            <tr><td class="icon-cell">📜</td><td><strong>Digitale Speisekarte</strong><br><span style="color:#777; font-size:8px;">Immer aktuell. Keine Druckkosten.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">📱</td><td><strong>QR Dine-In</strong><br><span style="color:#777; font-size:8px;">Gäste bestellen direkt am Tisch.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">🛍️</td><td><strong>Click & Collect</strong><br><span style="color:#777; font-size:8px;">Online bestellen, am Tresen abholen.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">🛵</td><td><strong>Lieferung & Logistik</strong><br><span style="color:#777; font-size:8px;">Inklusive Live-Fahrer-Tracking.</span></td><td class="check-icon">✓ Ja</td></tr>
+                            <tr><td class="icon-cell">📺</td><td><strong>Küchen-Monitor (KDS)</strong><br><span style="color:#777; font-size:8px;">Digitale Bons. Kein Papierchaos.</span></td><td class="check-icon">✓ Ja</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="local-badge">
+                        <div class="lb-icon">🤝</div>
+                        <div class="lb-text"><strong>Ihr lokaler Partner in Euskirchen.</strong> Keine Hotline. Kein Callcenter. Persönlicher Support vor Ort.</div>
+                    </div>
+                    <div class="disclaimer-box"><strong>*Rechtlicher Hinweis:</strong> SAN Suite CORE dient dem Bestellmanagement und Küchen-Workflow. Die Zahlungsabwicklung erfolgt über Ihr bestehendes Kassensystem.</div>
+                </div>
+                <div class="back-action">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://santechnologies.de/digicard" class="qr-code" alt="Scan QR">
+                    <a href="https://santechnologies.de/digicard" class="cta-btn">DEMO ANFORDERN</a>
+                    <div class="contact-info"><strong>Avinash Vivekananthan</strong><br>Software Engineer<br>+49 2251 9599741<br>avinash@santechnologies.de</div>
+                </div>
+            </div>
+        </div></div>
     </div>
 
 </body>
