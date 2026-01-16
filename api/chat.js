@@ -22,8 +22,9 @@ export default async function handler(req, res) {
   const KNOWLEDGE_BASE = `
   --- COMPANY PROFILE ---
   - Name: SAN Technologies.
-  - Founder: Avinash Vivekananthan (Freelance Software Engineer & IT Cluster Lead).
+  - Founder: Avinash Vivekananthan (Global IT Cluster Lead & MBA).
   - Location: Euskirchen, Germany (Jahnstraße 10, 53879).
+  - Origin & Authority: Launched in **January 2026**, SAN Technologies is the **powerhouse evolution** of a **15-year global career**. Founded by a **Global IT Cluster Lead** who managed critical infrastructure for **Fortune 500 enterprises**, we fuse **MBA strategic vision** with **elite software engineering** to bring enterprise-grade solutions to local businesses.
   - Mission: "Transforming Business through Custom Code." No website builders, only high-performance custom software.
    
   --- PRODUCT 1: SAN SUITE (Gastro Operating System) ---
