@@ -221,7 +221,7 @@
 
     <div class="paper">
         <div class="inv-header">
-            <div class="company-brand">
+            <div class="company-brand" id="brandBox">
                 <h1>SAN Technologies</h1>
                 <p>Transforming Business through Custom Code</p>
             </div>
@@ -380,6 +380,7 @@
             // Decode Content (Base64)
             const content = decodeURIComponent(escape(window.atob(json.content)));
             appState.data = JSON.parse(content);
+            applyAdminSettings();
             
             indicator.classList.add('connected');
             renderClientDropdown();
@@ -549,6 +550,54 @@
     function toggleModal(id) {
         const el = document.getElementById(id);
         el.style.display = el.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function applyAdminSettings() {
+        const s = appState.data.settings;
+        if (!s || Object.keys(s).length === 0) return;
+
+        // 1. Logo & Brand
+        const brandBox = document.getElementById('brandBox');
+        if (s.logo) {
+            brandBox.innerHTML = `<img src="${s.logo}" style="height:60px; margin-bottom:10px;">`;
+        } else if (s.company) {
+            brandBox.innerHTML = `<h1>${s.company}</h1>`;
+        }
+        
+        // 2. Sender Address
+        if (s.address) {
+            // Find the "From" box content and update it
+            const fromBox = document.querySelectorAll('.addr-content')[0];
+            fromBox.innerHTML = `<p><strong>${s.company || 'Me'}</strong><br>${s.address.replace(/\n/g, '<br>')}</p>`;
+        }
+
+        // 3. Footer / Bank Details
+        const footerCols = document.querySelectorAll('.footer div');
+        
+        // Bank Column
+        if (s.iban) {
+            footerCols[0].innerHTML = `
+                <strong>Bank Details</strong>
+                Bank: ${s.bank || ''}<br>
+                IBAN: ${s.iban}<br>
+                BIC: ${s.bic || ''}
+            `;
+        }
+
+        // Tax Column
+        if (s.taxId) {
+            footerCols[1].innerHTML = `
+                <strong>Tax Info</strong>
+                Tax ID: ${s.taxId}<br>
+                VAT ID: ${s.vatId || ''}<br>
+                Jurisdiction: ${s.court || ''}
+            `;
+        }
+
+        // Contact Column
+        if (s.contact) {
+            footerCols[2].innerHTML = `<strong>Contact</strong><br>${s.contact.replace(/\n/g, '<br>')}`;
+        }
     }
 </script>
 
