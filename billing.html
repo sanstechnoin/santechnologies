@@ -501,6 +501,7 @@
             applyAdminSettings();
             indicator.classList.add('connected');
             renderClientDropdown();
+            renderProductDatalist();
             showToast('Data synced with GitHub', 'success');
         } catch (err) {
             console.error(err);
@@ -559,9 +560,21 @@
     }
 
     function saveSettings() {
-        appState.config.owner = document.getElementById('ghOwner').value;
-        appState.config.repo = document.getElementById('ghRepo').value;
-        appState.config.token = document.getElementById('ghToken').value;
+        const owner = document.getElementById('ghOwner').value.trim();
+        const repo = document.getElementById('ghRepo').value.trim();
+        const token = document.getElementById('ghToken').value.trim();
+
+        if (!owner || !repo || !token) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        appState.config.owner = owner;
+        appState.config.repo = repo;
+        appState.config.token = token;
+
+        console.log("Attempting to connect to:", `https://api.github.com/repos/${owner}/${repo}/contents/db.json`);
+
         localStorage.setItem('san_billing_config', JSON.stringify(appState.config));
         toggleModal('settingsModal');
         fetchFromGitHub();
@@ -601,17 +614,17 @@
     }
 
     function addItem() {
-        const tbody = document.getElementById('itemsBody');
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><input type="text" placeholder="Item" class="inp-desc"></td>
-            <td><input type="number" value="1" class="inp-qty" oninput="calculateTotals()" style="text-align:right"></td>
-            <td><input type="number" placeholder="0.00" class="inp-price" oninput="calculateTotals()" style="text-align:right"></td>
-            <td style="text-align:right" class="row-total">0,00 €</td>
-            <td class="col-action"><button class="btn-outline" style="border:none; color:#d32f2f;" onclick="this.closest('tr').remove(); calculateTotals();"><i class="fa-solid fa-trash"></i></button></td>
-        `;
-        tbody.appendChild(tr);
-    }
+    const tbody = document.getElementById('itemsBody');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td><input type="text" placeholder="Item description" class="inp-desc" list="productList" onchange="fillPrice(this)"></td>
+        <td><input type="number" value="1" class="inp-qty" oninput="calculateTotals()" style="text-align:right"></td>
+        <td><input type="number" placeholder="0.00" class="inp-price" oninput="calculateTotals()" style="text-align:right"></td>
+        <td style="text-align:right" class="row-total">0,00 €</td>
+        <td class="col-action"><button class="btn-outline" style="border:none; color:#d32f2f;" onclick="this.closest('tr').remove(); calculateTotals();"><i class="fa-solid fa-trash"></i></button></td>
+    `;
+    tbody.appendChild(tr);
+}
 
     function calculateTotals() {
         const rows = document.querySelectorAll('#itemsBody tr');
@@ -645,6 +658,45 @@
         
         if (s.address) document.querySelectorAll('.addr-content')[0].innerHTML = `<p><strong>${s.company || 'Me'}</strong><br>${s.address.replace(/\n/g, '<br>')}</p>`;
     }
+
+    // Render the invisible list of products from Admin DB
+function renderProductDatalist() {
+    const old = document.getElementById('productList');
+    if(old) old.remove();
+
+    const datalist = document.createElement('datalist');
+    datalist.id = 'productList';
+
+    if(appState.data.products) {
+        appState.data.products.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.name; // What user types
+            opt.dataset.price = p.price; // Hidden price
+            opt.dataset.desc = p.desc;   // Hidden desc
+            datalist.appendChild(opt);
+        });
+    }
+    document.body.appendChild(datalist);
+}
+
+// Auto-fill price when user picks a product
+function fillPrice(input) {
+    const val = input.value;
+    const list = document.getElementById('productList');
+    const options = Array.from(list.options);
+
+    const found = options.find(o => o.value === val);
+
+    if(found) {
+        const row = input.closest('tr');
+        // Auto-fill Description if you want, or just append it
+        if(found.dataset.desc) input.value = `${val} - ${found.dataset.desc}`;
+
+        // Auto-fill Price
+        row.querySelector('.inp-price').value = found.dataset.price;
+        calculateTotals();
+    }
+}
 </script>
 
 </body>
