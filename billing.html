@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAN Billing Lite</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjsll.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --primary: #006064;      /* SAN Teal */
@@ -397,6 +397,29 @@
         const { owner, repo, token } = appState.config;
         if (!owner || !repo || !token) return alert('Please configure GitHub settings first.');
 
+        const url = `https://api.github.com/repos/${owner}/${repo}/contents/db.json`;
+
+        // --- STEP 1: Get the latest SHA first (The Fix) ---
+        try {
+            const checkRes = await fetch(url, {
+                headers: { 
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+            
+            if (checkRes.ok) {
+                const json = await checkRes.json();
+                appState.fileSha = json.sha; // Update local SHA
+                
+                // Optional: Reload data to merge? For now, we overwrite to save your current invoice.
+                // If you want to be safe, you could merge here, but let's just fix the save first.
+            }
+        } catch (e) {
+            console.log("File likely doesn't exist yet, proceeding to create.");
+        }
+
+        // --- STEP 2: Prepare Data ---
         // Current Invoice Snapshot
         const currentInvoice = {
             id: document.getElementById('invNumber').value,
@@ -406,21 +429,24 @@
             type: document.getElementById('docType').value
         };
 
-        // Add to history if unique ID
-        const exists = appState.data.invoices.find(i => i.id === currentInvoice.id);
-        if(!exists) appState.data.invoices.push(currentInvoice);
+        // Add to history if unique ID (Prevent duplicates)
+        const existsIndex = appState.data.invoices.findIndex(i => i.id === currentInvoice.id);
+        if (existsIndex > -1) {
+            appState.data.invoices[existsIndex] = currentInvoice; // Update existing
+        } else {
+            appState.data.invoices.push(currentInvoice); // Add new
+        }
 
         // Encode Content
         const contentStr = JSON.stringify(appState.data, null, 2);
         const contentBase64 = window.btoa(unescape(encodeURIComponent(contentStr)));
-
-        const url = `https://api.github.com/repos/${owner}/${repo}/contents/db.json`;
         
-        // --- FIX: Only include SHA if updating an existing file ---
+        // --- STEP 3: Send Update ---
         const body = {
             message: `Update Invoice ${currentInvoice.id}`,
             content: contentBase64
         };
+        // CRITICAL: Include the SHA we just fetched
         if (appState.fileSha) {
             body.sha = appState.fileSha;
         }
@@ -436,13 +462,12 @@
             });
 
             if (!res.ok) {
-                // Read the error message from GitHub
                 const errJson = await res.json();
                 throw new Error(errJson.message || 'Save failed');
             }
             
             const json = await res.json();
-            appState.fileSha = json.content.sha; // Update SHA for next save
+            appState.fileSha = json.content.sha; // Update SHA for next time
             alert('Saved to GitHub successfully! ✅');
 
         } catch (err) {
