@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAN Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #006064;
+            --accent: #00BCD4;
+            --bg: #f0f2f5;
+            --sidebar: #1a1a1a;
+            --white: #ffffff;
+            --text: #333;
+            --danger: #d32f2f;
+            --success: #2e7d32;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { margin: 0; display: flex; height: 100vh; background: var(--bg); color: var(--text); overflow: hidden; }
+
+        /* --- MOBILE HEADER (Visible only on small screens) --- */
+        .mobile-header {
+            display: none;
+            background: var(--sidebar);
+            color: white;
+            padding: 15px;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 2000;
+        }
+        .mobile-brand { font-size: 18px; font-weight: bold; color: var(--accent); }
+        .hamburger-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            height: 100vh;
+            transition: transform 0.3s ease;
+            z-index: 1001;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        .brand { font-size: 20px; font-weight: bold; margin-bottom: 40px; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+        .nav-item {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #aaa;
+        }
+        .nav-item:hover, .nav-item.active { background: var(--primary); color: white; }
+        .nav-item i { width: 20px; text-align: center; }
+        .spacer { flex: 1; }
+        .user-info { font-size: 12px; color: #666; margin-top: 20px; border-top: 1px solid #333; padding-top: 10px; }
+
+        /* --- SIDEBAR OVERLAY (Background dimming) --- */
+        .sidebar-overlay {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; width: 100%; }
+        .header {
+            background: var(--white);
+            padding: 15px 30px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h2 { margin: 0; font-size: 18px; }
+        .save-btn {
+            background: var(--success); color: white; border: none;
+            padding: 10px 20px; border-radius: 5px; cursor: pointer;
+            font-weight: bold; display: flex; align-items: center; gap: 8px;
+        }
+        .save-btn:hover { background: #1b5e20; }
+
+        .content-area { padding: 30px; overflow-y: auto; flex: 1; }
+        
+        /* --- TABS --- */
+        .tab-view { display: none; animation: fadeIn 0.3s; }
+        .tab-view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- CARDS & FORMS --- */
+        .card { background: white; border-radius: 8px; padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .card h3 { margin-top: 0; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #666; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;
+        }
+        .form-group input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+
+        /* --- TABLES --- */
+        /* Wrapper for horizontal scrolling on mobile */
+        .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 15px; }
+        
+        .data-table { width: 100%; border-collapse: collapse; min-width: 600px; /* Forces scroll on small screens */ }
+        .data-table th { text-align: left; padding: 12px; background: #f8f9fa; color: #666; font-size: 12px; border-bottom: 2px solid #ddd; }
+        .data-table td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+        .action-btn { background: none; border: none; cursor: pointer; color: #666; transition: 0.2s; }
+        .action-btn:hover { color: var(--primary); }
+        .btn-del:hover { color: var(--danger); }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .badge-inv { background: #e3f2fd; color: #1565c0; }
+
+        /* --- DASHBOARD STATS --- */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 20px; }
+        .stat-card { background: white; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .stat-val { font-size: 24px; font-weight: bold; color: var(--primary); margin: 5px 0; }
+        .stat-label { font-size: 12px; color: #888; text-transform: uppercase; }
+
+        /* --- MOBILE RESPONSIVE CSS --- */
+        @media (max-width: 768px) {
+            body { flex-direction: column; height: 100%; overflow: auto; }
+            
+            /* Show Mobile Header */
+            .mobile-header { display: flex; }
+
+            /* Fix Sidebar: Hidden by default, slides in */
+            .sidebar {
+                position: fixed;
+                top: 0; left: 0;
+                height: 100%;
+                width: 280px;
+                transform: translateX(-100%); /* Hide left */
+                box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+            }
+            .sidebar.active { transform: translateX(0); } /* Slide in */
+            .sidebar-overlay.active { display: block; }
+
+            /* Main Content Adjustments */
+            .main { width: 100%; margin-top: 60px; /* Space for mobile header */ }
+            .header { padding: 15px; flex-direction: column; gap: 10px; align-items: flex-start; }
+            .header h2 { font-size: 20px; }
+            .save-btn { width: 100%; justify-content: center; }
+            
+            .content-area { padding: 15px; }
+
+            /* Grids to 1 Column */
+            .stats-grid { grid-template-columns: 1fr; } /* Stack stats */
+            .form-grid { grid-template-columns: 1fr; } /* Stack inputs */
+            
+            /* Brand inside sidebar not needed on mobile since we have top bar */
+            .sidebar .brand { display: none; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="mobile-header">
+        <div class="mobile-brand"><i class="fa-solid fa-layer-group"></i> SAN Admin</div>
+        <button class="hamburger-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="brand"><i class="fa-solid fa-layer-group"></i> SAN Admin</div>
+        
+        <div class="nav-item active" onclick="switchTab('dashboard', this); toggleSidebar()">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+        </div>
+        <div class="nav-item" onclick="switchTab('settings', this); toggleSidebar()">
+            <i class="fa-solid fa-building"></i> Company Settings
+        </div>
+        <div class="nav-item" onclick="switchTab('products', this); toggleSidebar()">
+            <i class="fa-solid fa-box-open"></i> Products & Services
+        </div>
+        <div class="nav-item" onclick="switchTab('clients', this); toggleSidebar()">
+            <i class="fa-solid fa-users"></i> Clients
+        </div>
+        <div class="nav-item" onclick="switchTab('invoices', this); toggleSidebar()">
+            <i class="fa-solid fa-file-invoice"></i> Invoice History
+        </div>
+
+        <div class="spacer"></div>
+        <div class="user-info" id="repoInfo">Not Connected</div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <h2 id="pageTitle">Dashboard</h2>
+            <button class="save-btn" onclick="saveToGitHub()">
+                <i class="fa-solid fa-cloud-upload"></i> Save Changes
+            </button>
+        </div>
+
+        <div class="content-area">
+
+            <div id="dashboard" class="tab-view active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-val" id="statRevenue">0 €</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val" id="statInvoices">0</div>
+                        <div class="stat-label">Invoices Generated</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val" id="statClients">0</div>
+                        <div class="stat-label">Active Clients</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val" id="statProducts">0</div>
+                        <div class="stat-label">Products Saved</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Recent Invoices</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead><tr><th>ID</th><th>Date</th><th>Client</th><th>Amount</th><th>Type</th></tr></thead>
+                            <tbody id="recentInvoicesBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="settings" class="tab-view">
+                <div class="card">
+                    <h3><i class="fa-solid fa-image"></i> Branding</h3>
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" id="setCompany" placeholder="SAN Technologies">
+                    </div>
+                    <div class="form-group">
+                        <label>Logo Image URL</label>
+                        <input type="text" id="setLogo" placeholder="https://your-website.com/logo.png">
+                        <small style="color:#888;">Paste a direct link to your logo (PNG/JPG).</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fa-solid fa-map-pin"></i> Address & Contact</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Full Address (Multi-line)</label>
+                            <textarea id="setAddress" rows="4" placeholder="Name&#10;Street&#10;City"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Info (Footer)</label>
+                            <textarea id="setContact" rows="4" placeholder="Email&#10;Phone&#10;Web"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fa-solid fa-landmark"></i> Bank & Tax Details</h3>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Bank Name</label><input type="text" id="setBank"></div>
+                        <div class="form-group"><label>IBAN</label><input type="text" id="setIban"></div>
+                        <div class="form-group"><label>BIC</label><input type="text" id="setBic"></div>
+                        <div class="form-group"><label>Tax ID (Steuernummer)</label><input type="text" id="setTaxId"></div>
+                        <div class="form-group"><label>VAT ID (USt-IdNr)</label><input type="text" id="setVatId"></div>
+                        <div class="form-group"><label>Jurisdiction (Gerichtsstand)</label><input type="text" id="setCourt"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="products" class="tab-view">
+                <div class="card">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                        <h3>Product Catalog</h3>
+                        <button class="action-btn" onclick="addProductRow()" style="color:var(--primary); font-weight:bold;">+ Add New Item</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead><tr><th>Item Name</th><th>Description</th><th>Default Price (€)</th><th>Action</th></tr></thead>
+                            <tbody id="productsBody"></tbody>
+                        </table>
+                    </div>
+                    <p style="font-size:12px; color:#888; margin-top:10px;">* Tip: Use negative prices for Discounts.</p>
+                </div>
+            </div>
+
+            <div id="clients" class="tab-view">
+                <div class="card">
+                    <h3>Manage Clients</h3>
+                    <div style="margin-bottom:15px; display:flex; gap:10px;">
+                        <input type="text" id="newClientInput" placeholder="Paste full client address here..." style="flex:1; padding:10px; border:1px solid #ddd; border-radius:5px;">
+                        <button class="save-btn" onclick="addNewClient()" style="padding:5px 15px;">Add</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead><tr><th>Client Preview (First Line)</th><th>Full Details</th><th>Action</th></tr></thead>
+                            <tbody id="clientsBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="invoices" class="tab-view">
+                <div class="card">
+                    <h3>Full Invoice History</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead><tr><th>ID</th><th>Date</th><th>Client</th><th>Amount</th><th>Type</th></tr></thead>
+                            <tbody id="fullInvoicesBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<script>
+    /* --- STATE --- */
+    let appState = {
+        config: { owner: '', repo: '', token: '' },
+        data: { settings: {}, clients: [], products: [], invoices: [] },
+        fileSha: null
+    };
+
+    /* --- MOBILE MENU --- */
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.querySelector('.sidebar-overlay');
+        
+        // Toggle Active Classes
+        if (sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        } else {
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+        }
+    }
+
+    /* --- INIT --- */
+    window.onload = () => {
+        const savedConfig = localStorage.getItem('san_billing_config');
+        if (!savedConfig) {
+            alert("No configuration found! Please login via the Billing App first.");
+            return;
+        }
+        appState.config = JSON.parse(savedConfig);
+        document.getElementById('repoInfo').innerText = `Connected: ${appState.config.repo}`;
+        fetchData();
+    };
+
+    /* --- NAVIGATION --- */
+    function switchTab(tabId, el) {
+        document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        el.classList.add('active');
+        document.getElementById('pageTitle').innerText = el.innerText;
+    }
+
+    /* --- GITHUB SYNC --- */
+    async function fetchData() {
+        const { owner, repo, token } = appState.config;
+        const url = `https://api.github.com/repos/${owner}/${repo}/contents/db.json`;
+
+        try {
+            const res = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
+            if (!res.ok) throw new Error('Failed to load data');
+            const json = await res.json();
+            appState.fileSha = json.sha;
+            const content = decodeURIComponent(escape(window.atob(json.content)));
+            
+            const parsed = JSON.parse(content);
+            appState.data = {
+                settings: parsed.settings || {},
+                clients: parsed.clients || [],
+                products: parsed.products || [],
+                invoices: parsed.invoices || []
+            };
+
+            renderAll();
+        } catch (err) {
+            console.error(err);
+            alert("Could not load data from GitHub. Check console.");
+        }
+    }
+
+    async function saveToGitHub() {
+        // Collect Data
+        appState.data.settings = {
+            company: document.getElementById('setCompany').value,
+            logo: document.getElementById('setLogo').value,
+            address: document.getElementById('setAddress').value,
+            contact: document.getElementById('setContact').value,
+            bank: document.getElementById('setBank').value,
+            iban: document.getElementById('setIban').value,
+            bic: document.getElementById('setBic').value,
+            taxId: document.getElementById('setTaxId').value,
+            vatId: document.getElementById('setVatId').value,
+            court: document.getElementById('setCourt').value
+        };
+
+        const productRows = document.querySelectorAll('#productsBody tr');
+        appState.data.products = Array.from(productRows).map(row => ({
+            name: row.querySelector('.p-name').value,
+            desc: row.querySelector('.p-desc').value,
+            price: row.querySelector('.p-price').value
+        })).filter(p => p.name);
+
+        const { owner, repo, token } = appState.config;
+        const contentStr = JSON.stringify(appState.data, null, 2);
+        const contentBase64 = window.btoa(unescape(encodeURIComponent(contentStr)));
+
+        const body = {
+            message: "Update from Admin Dashboard",
+            content: contentBase64
+        };
+        if(appState.fileSha) body.sha = appState.fileSha;
+
+        try {
+            const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/db.json`, {
+                method: 'PUT',
+                headers: { 
+                    'Authorization': `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+
+            if (!res.ok) throw new Error('Save Failed');
+            const json = await res.json();
+            appState.fileSha = json.content.sha;
+            alert("✅ Settings & Data Saved Successfully!");
+        } catch (err) {
+            alert("Error saving: " + err.message);
+        }
+    }
+
+    /* --- RENDERING --- */
+    function renderAll() {
+        renderStats();
+        renderSettings();
+        renderProducts();
+        renderClients();
+        renderInvoices();
+    }
+
+    function renderStats() {
+        const invs = appState.data.invoices;
+        document.getElementById('statInvoices').innerText = invs.length;
+        document.getElementById('statClients').innerText = appState.data.clients.length;
+        document.getElementById('statProducts').innerText = appState.data.products.length;
+        let total = 0;
+        invs.forEach(i => {
+            let val = parseFloat(i.total.replace(/[^\d,-]/g, '').replace(',', '.'));
+            if(!isNaN(val)) total += val;
+        });
+        document.getElementById('statRevenue').innerText = total.toLocaleString('de-DE', {style:'currency', currency:'EUR'});
+    }
+
+    function renderSettings() {
+        const s = appState.data.settings;
+        document.getElementById('setCompany').value = s.company || '';
+        document.getElementById('setLogo').value = s.logo || '';
+        document.getElementById('setAddress').value = s.address || '';
+        document.getElementById('setContact').value = s.contact || '';
+        document.getElementById('setBank').value = s.bank || '';
+        document.getElementById('setIban').value = s.iban || '';
+        document.getElementById('setBic').value = s.bic || '';
+        document.getElementById('setTaxId').value = s.taxId || '';
+        document.getElementById('setVatId').value = s.vatId || '';
+        document.getElementById('setCourt').value = s.court || '';
+    }
+
+    function renderProducts() {
+        const tbody = document.getElementById('productsBody');
+        tbody.innerHTML = '';
+        appState.data.products.forEach(p => { addProductRow(p); });
+    }
+
+    function addProductRow(data = {name:'', desc:'', price:''}) {
+        const tbody = document.getElementById('productsBody');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input type="text" class="p-name" value="${data.name}" placeholder="Item Name"></td>
+            <td><input type="text" class="p-desc" value="${data.desc}" placeholder="Description"></td>
+            <td><input type="number" class="p-price" value="${data.price}" placeholder="0.00"></td>
+            <td><button class="action-btn btn-del" onclick="this.closest('tr').remove()"><i class="fa-solid fa-trash"></i></button></td>
+        `;
+        tbody.appendChild(tr);
+    }
+
+    function renderClients() {
+        const tbody = document.getElementById('clientsBody');
+        tbody.innerHTML = '';
+        appState.data.clients.forEach((c, index) => {
+            const tr = document.createElement('tr');
+            const firstLine = c.split('\n')[0];
+            tr.innerHTML = `
+                <td><strong>${firstLine}</strong></td>
+                <td style="font-size:12px; color:#666;">${c.replace(/\n/g, ', ')}</td>
+                <td><button class="action-btn btn-del" onclick="removeClient(${index})"><i class="fa-solid fa-trash"></i></button></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function addNewClient() {
+        const val = document.getElementById('newClientInput').value;
+        if(val) {
+            appState.data.clients.push(val);
+            document.getElementById('newClientInput').value = '';
+            renderClients();
+        }
+    }
+
+    function removeClient(index) {
+        if(confirm("Delete this client?")) {
+            appState.data.clients.splice(index, 1);
+            renderClients();
+        }
+    }
+
+    function renderInvoices() {
+        const tbodyFull = document.getElementById('fullInvoicesBody');
+        const tbodyRecent = document.getElementById('recentInvoicesBody');
+        
+        const html = appState.data.invoices.map(i => `
+            <tr>
+                <td><span class="badge badge-inv">${i.id}</span></td>
+                <td>${i.date}</td>
+                <td>${i.client.split('\n')[0]}</td>
+                <td style="font-weight:bold;">${i.total}</td>
+                <td style="font-size:12px; text-transform:uppercase;">${i.type}</td>
+            </tr>
+        `).reverse().join('');
+
+        tbodyFull.innerHTML = html;
+        tbodyRecent.innerHTML = appState.data.invoices.slice(-5).reverse().map(i => `
+             <tr>
+                <td><span class="badge badge-inv">${i.id}</span></td>
+                <td>${i.date}</td>
+                <td>${i.client.split('\n')[0]}</td>
+                <td style="font-weight:bold;">${i.total}</td>
+                <td style="font-size:12px; text-transform:uppercase;">${i.type}</td>
+            </tr>
+        `).join('');
+    }
+</script>
+</body>
+</html>
