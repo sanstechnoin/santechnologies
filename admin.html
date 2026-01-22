@@ -308,58 +308,118 @@
     // --- RENDERERS ---
     function renderAll() {
         const d = appState.data;
-        // Stats
+        
+        // 1. Stats Calculation
         document.getElementById('statInvoices').innerText = (d.invoices||[]).length;
         document.getElementById('statClients').innerText = (d.clients||[]).length;
         document.getElementById('statProducts').innerText = (d.products||[]).length;
-        let rev = 0; (d.invoices||[]).forEach(i => { rev += parseFloat(i.total.replace(/[^\d,-]/g, '').replace(',', '.')) || 0; });
+        
+        let rev = 0; 
+        (d.invoices||[]).forEach(i => { 
+            // Remove currency symbols if present to calculate raw sum
+            let cleanTotal = i.total.replace(/[€₹$]/g, '').trim(); 
+            rev += parseFloat(cleanTotal.replace(/[^\d,-]/g, '').replace(',', '.')) || 0; 
+        });
         document.getElementById('statRevenue').innerText = rev.toLocaleString('de-DE', {style:'currency', currency:'EUR'});
 
-        // Settings
+        // 2. Settings Form
         const s = d.settings || {};
         ['Company','Logo','Address','Contact','Bank','Iban','Bic','TaxId','VatId','Court'].forEach(k => {
             if(document.getElementById('set'+k)) document.getElementById('set'+k).value = s[k.toLowerCase().charAt(0) + k.slice(1)] || '';
         });
 
-        // Products
-        const pb = document.getElementById('productsBody'); pb.innerHTML = '';
-        (d.products||[]).forEach(p => addProductRow(p));
+        // 3. Products Table
+        const pb = document.getElementById('productsBody'); 
+        if(pb) {
+            pb.innerHTML = '';
+            (d.products||[]).forEach(p => addProductRow(p));
+        }
 
-        // Clients
-        const cb = document.getElementById('clientsBody'); cb.innerHTML = '';
-        (d.clients||[]).forEach((c, i) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td><strong>${c.split('\n')[0]}</strong></td><td style="font-size:12px; color:#666;">${c.replace(/\n/g, ', ')}</td><td><button class="action-btn btn-del" onclick="removeClient(${i})"><i class="fa-solid fa-trash"></i></button></td>`;
-            cb.appendChild(tr);
-        });
+        // 4. Clients Table
+        const cb = document.getElementById('clientsBody'); 
+        if(cb) {
+            cb.innerHTML = '';
+            (d.clients||[]).forEach((c, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${c.split('\n')[0]}</strong></td>
+                    <td style="font-size:12px; color:#666;">${c.replace(/\n/g, ', ')}</td>
+                    <td><button class="action-btn btn-del" onclick="removeClient(${i})"><i class="fa-solid fa-trash"></i></button></td>
+                `;
+                cb.appendChild(tr);
+            });
+        }
 
-        // Invoices
+        // 5. Invoices Table (UPDATED for Pro Features)
+        const renderRow = (i) => `
+            <tr>
+                <td><span class="badge badge-inv">${i.id}</span></td>
+                <td>${i.date}</td>
+                <td>${i.client ? i.client.split('\n')[0] : 'Unknown'}</td>
+                <td style="font-weight:bold;">${i.total} ${i.currency === 'INR' ? '₹' : '€'}</td>
+                <td style="font-size:12px;">
+                    ${i.recurring === 'Monthly' 
+                        ? '<span style="color:#2e7d32; font-weight:bold;"><i class="fa-solid fa-rotate"></i> Monthly</span>' 
+                        : '<span style="color:#aaa">One-time</span>'}
+                </td>
+            </tr>
+        `;
+
         const ib = document.getElementById('fullInvoicesBody'); 
         const ir = document.getElementById('recentInvoicesBody');
-        const rows = (d.invoices||[]).slice().reverse().map(i => `<tr><td><span class="badge badge-inv">${i.id}</span></td><td>${i.date}</td><td>${i.client.split('\n')[0]}</td><td style="font-weight:bold;">${i.total}</td><td style="font-size:12px; text-transform:uppercase;">${i.type}</td></tr>`).join('');
-        ib.innerHTML = rows;
-        ir.innerHTML = (d.invoices||[]).slice(-5).reverse().map(i => `<tr><td><span class="badge badge-inv">${i.id}</span></td><td>${i.date}</td><td>${i.client.split('\n')[0]}</td><td style="font-weight:bold;">${i.total}</td><td style="font-size:12px; text-transform:uppercase;">${i.type}</td></tr>`).join('');
+        
+        // Full History List
+        if(ib) ib.innerHTML = (d.invoices||[]).slice().reverse().map(renderRow).join('');
+        
+        // Recent Dashboard List (Top 5)
+        if(ir) ir.innerHTML = (d.invoices||[]).slice(-5).reverse().map(renderRow).join('');
     }
 
     function addProductRow(p={name:'',desc:'',price:''}) {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td><input class="p-name" value="${p.name}"></td><td><input class="p-desc" value="${p.desc}"></td><td><input class="p-price" value="${p.price}"></td><td><button class="action-btn btn-del" onclick="this.closest('tr').remove()"><i class="fa-solid fa-trash"></i></button></td>`;
+        tr.innerHTML = `
+            <td><input class="p-name" value="${p.name}"></td>
+            <td><input class="p-desc" value="${p.desc}"></td>
+            <td><input class="p-price" value="${p.price}"></td>
+            <td><button class="action-btn btn-del" onclick="this.closest('tr').remove()"><i class="fa-solid fa-trash"></i></button></td>
+        `;
         document.getElementById('productsBody').appendChild(tr);
     }
 
     function addNewClient() {
         const v = document.getElementById('newClientInput').value;
-        if(v) { if(!appState.data.clients) appState.data.clients=[]; appState.data.clients.push(v); document.getElementById('newClientInput').value=''; renderAll(); }
+        if(v) { 
+            if(!appState.data.clients) appState.data.clients=[]; 
+            appState.data.clients.push(v); 
+            document.getElementById('newClientInput').value=''; 
+            renderAll(); 
+        }
     }
-    function removeClient(i) { if(confirm("Delete?")) { appState.data.clients.splice(i,1); renderAll(); } }
+
+    function removeClient(i) { 
+        if(confirm("Delete this client?")) { 
+            appState.data.clients.splice(i,1); 
+            renderAll(); 
+        } 
+    }
 
     function toggleSidebar() {
-        const s = document.getElementById('sidebar'); const o = document.querySelector('.sidebar-overlay');
-        if(s.classList.contains('active')) { s.classList.remove('active'); o.classList.remove('active'); } else { s.classList.add('active'); o.classList.add('active'); }
+        const s = document.getElementById('sidebar'); 
+        const o = document.querySelector('.sidebar-overlay');
+        if(s.classList.contains('active')) { 
+            s.classList.remove('active'); 
+            o.classList.remove('active'); 
+        } else { 
+            s.classList.add('active'); 
+            o.classList.add('active'); 
+        }
     }
+
     function switchTab(id, el) {
-        document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active')); document.getElementById(id).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active');
+        document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active')); 
+        document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); 
+        el.classList.add('active');
         document.getElementById('pageTitle').innerText = el.innerText;
     }
 </script>
