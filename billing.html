@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAN Billing Lite</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #006064;      /* SAN Teal */
+            --accent: #00BCD4;       /* SAN Cyan */
+            --bg: #f4f7f6;
+            --text: #1a1a1a;
+            --border: #ddd;
+            --white: #ffffff;
+            --danger: #d32f2f;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- APP CONTAINER --- */
+        .app-container {
+            width: 100%;
+            max-width: 210mm; /* A4 Width */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* --- CONTROLS (Hidden in Print) --- */
+        .controls-bar {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 4px solid var(--accent);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #004d50; }
+        .btn-outline { background: transparent; color: var(--primary); border: 1px solid var(--primary); }
+        .btn-outline:hover { background: #e0f7fa; }
+        .btn-danger { background: var(--danger); }
+
+        select, input {
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* --- INVOICE PAPER --- */
+        .paper {
+            background: var(--white);
+            width: 100%;
+            min-height: 297mm; /* A4 Height */
+            padding: 40px 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* HEADER */
+        .inv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 20px;
+        }
+        .company-brand h1 { margin: 0; color: var(--primary); font-size: 28px; letter-spacing: 1px; }
+        .company-brand p { margin: 5px 0 0; color: #666; font-size: 12px; }
+        
+        .inv-meta { text-align: right; }
+        .inv-meta h2 { margin: 0 0 10px 0; color: var(--text); text-transform: uppercase; font-size: 24px; }
+        .meta-row { display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 5px; font-size: 14px; }
+        .meta-label { font-weight: bold; color: #666; }
+
+        /* ADDRESS GRID */
+        .address-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .addr-box h3 { font-size: 12px; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .addr-content input, .addr-content textarea { width: 100%; border: none; background: transparent; font-size: 14px; resize: none; font-family: inherit; }
+        .addr-content input:focus, .addr-content textarea:focus { background: #f0f8ff; outline: none; }
+
+        /* ITEMS TABLE */
+        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .items-table th { background: var(--primary); color: white; text-align: left; padding: 10px; font-size: 12px; text-transform: uppercase; }
+        .items-table td { border-bottom: 1px solid #eee; padding: 10px; vertical-align: top; }
+        .items-table input { width: 100%; border: none; background: transparent; }
+        .items-table input:focus { background: #f0f8ff; }
+        .col-desc { width: 50%; }
+        .col-num { width: 15%; text-align: right; }
+        .col-action { width: 5%; text-align: center; }
+
+        /* TOTALS */
+        .totals-section { display: flex; justify-content: flex-end; }
+        .totals-box { width: 300px; }
+        .total-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 14px; }
+        .total-row.grand { font-size: 18px; font-weight: bold; border-top: 2px solid var(--text); margin-top: 10px; padding-top: 10px; color: var(--primary); }
+
+        /* FOOTER & LEGAL */
+        .legal-text { margin-top: 40px; font-size: 12px; color: #555; font-style: italic; }
+        .footer {
+            margin-top: 60px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            font-size: 10px;
+            color: #777;
+        }
+        .footer strong { color: var(--primary); display: block; margin-bottom: 3px; }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000;
+            display: none; justify-content: center; align-items: center;
+        }
+        .modal { background: white; padding: 30px; border-radius: 8px; width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .modal h2 { margin-top: 0; color: var(--primary); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 12px; font-weight: bold; }
+        .form-group input { width: 100%; }
+
+        /* --- PRINT CSS --- */
+        @media print {
+            body { background: white; margin: 0; padding: 0; }
+            .app-container { max-width: none; width: 100%; }
+            .controls-bar, .no-print, .col-action, .modal-overlay { display: none !important; }
+            .paper { box-shadow: none; padding: 0; min-height: auto; }
+            input, textarea { border: none !important; resize: none; }
+            /* Hide empty rows if any */
+            @page { margin: 20mm; }
+        }
+
+        /* UTILS */
+        .hidden { display: none; }
+        .status-dot { height: 10px; width: 10px; background-color: #ccc; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .status-dot.connected { background-color: #4CAF50; }
+    </style>
+</head>
+<body>
+
+<div class="modal-overlay" id="settingsModal">
+    <div class="modal">
+        <h2><i class="fa-brands fa-github"></i> GitHub Connect</h2>
+        <p style="font-size:12px; color:#666; margin-bottom:20px;">Connect to your private repository to save invoices.</p>
+        <div class="form-group">
+            <label>GitHub Username</label>
+            <input type="text" id="ghOwner" placeholder="e.g. avinashv">
+        </div>
+        <div class="form-group">
+            <label>Repository Name</label>
+            <input type="text" id="ghRepo" placeholder="e.g. billing-db">
+        </div>
+        <div class="form-group">
+            <label>Personal Access Token (PAT)</label>
+            <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx">
+            <small style="color:#888; font-size:10px;">Requires 'repo' scope.</small>
+        </div>
+        <div style="text-align:right;">
+            <button class="btn btn-outline" onclick="toggleModal('settingsModal')">Cancel</button>
+            <button class="btn" onclick="saveSettings()">Save & Connect</button>
+        </div>
+    </div>
+</div>
+
+<div class="app-container">
+
+    <div class="controls-bar">
+        <div style="display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-outline" onclick="toggleModal('settingsModal')">
+                <span id="connectionStatus" class="status-dot"></span> Settings
+            </button>
+            <div style="height:20px; border-left:1px solid #ddd;"></div>
+            <select id="docType" onchange="updateDocType()">
+                <option value="Rechnung">Rechnung (Invoice)</option>
+                <option value="Angebot">Angebot (Quote)</option>
+                <option value="Gutschrift">Gutschrift (Credit)</option>
+            </select>
+            <select id="taxMode" onchange="calculateTotals()">
+                <option value="klein">§19 Kleinunternehmer (0%)</option>
+                <option value="standard">Standard (19%)</option>
+                <option value="international">International (0%)</option>
+            </select>
+            <select id="clientSelect" onchange="loadClient()">
+                <option value="">-- Load Client --</option>
+            </select>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="saveToGitHub()"><i class="fa-solid fa-cloud-upload"></i> Save to DB</button>
+            <button class="btn" onclick="window.print()"><i class="fa-solid fa-print"></i> Print / PDF</button>
+        </div>
+    </div>
+
+    <div class="paper">
+        <div class="inv-header">
+            <div class="company-brand">
+                <h1>SAN Technologies</h1>
+                <p>Transforming Business through Custom Code</p>
+            </div>
+            <div class="inv-meta">
+                <h2 id="displayDocType">RECHNUNG</h2>
+                <div class="meta-row">
+                    <span class="meta-label">Nr:</span>
+                    <input type="text" id="invNumber" value="INV-2026-001" style="text-align:right; width:120px;">
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">Date:</span>
+                    <input type="date" id="invDate" style="text-align:right; width:120px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="address-grid">
+            <div class="addr-box">
+                <h3>From</h3>
+                <div class="addr-content">
+                    <p><strong>Avinash Vivekananthan</strong><br>
+                    Jahnstraße 10<br>
+                    53879 Euskirchen<br>
+                    Germany</p>
+                </div>
+            </div>
+            <div class="addr-box">
+                <h3>To (Client)</h3>
+                <div class="addr-content">
+                    <textarea id="clientDetails" rows="4" placeholder="Client Name&#10;Street Address&#10;Zip City&#10;Country"></textarea>
+                    <button class="btn btn-outline no-print" style="font-size:10px; padding:2px 5px; margin-top:5px;" onclick="saveClientToState()">+ Save Client</button>
+                </div>
+            </div>
+        </div>
+
+        <table class="items-table" id="itemsTable">
+            <thead>
+                <tr>
+                    <th class="col-desc">Description</th>
+                    <th class="col-num">Qty</th>
+                    <th class="col-num">Price (€)</th>
+                    <th class="col-num">Total (€)</th>
+                    <th class="col-action"></th>
+                </tr>
+            </thead>
+            <tbody id="itemsBody">
+                </tbody>
+        </table>
+        <button class="btn btn-outline no-print" onclick="addItem()"><i class="fa-solid fa-plus"></i> Add Line</button>
+
+        <div class="totals-section">
+            <div class="totals-box">
+                <div class="total-row">
+                    <span>Net Total:</span>
+                    <span id="valNet">0,00 €</span>
+                </div>
+                <div class="total-row" id="rowTax">
+                    <span>VAT (19%):</span>
+                    <span id="valTax">0,00 €</span>
+                </div>
+                <div class="total-row grand">
+                    <span>Total Amount:</span>
+                    <span id="valGrand">0,00 €</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="legal-text" id="legalText">
+            </div>
+
+        <div class="footer">
+            <div>
+                <strong>Bank Details</strong>
+                IBAN: DE00 0000 0000 0000 00<br>
+                BIC: XXXXXXXX<br>
+                Bank: Sparkasse Euskirchen
+            </div>
+            <div>
+                <strong>Tax Info</strong>
+                Tax ID: 000/0000/0000<br>
+                VAT ID: DE 000000000<br>
+                Jurisdiction: Euskirchen
+            </div>
+            <div>
+                <strong>Contact</strong>
+                avinash@santechnologies.de<br>
+                +49 2251 9599741<br>
+                www.santechnologies.de
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* --- STATE MANAGEMENT --- */
+    let appState = {
+        config: { owner: '', repo: '', token: '' },
+        data: {
+            clients: [],
+            invoices: []
+        },
+        fileSha: null // For GitHub API updates
+    };
+
+    /* --- INITIALIZATION --- */
+    window.onload = () => {
+        // Load Config from LocalStorage
+        const savedConfig = localStorage.getItem('san_billing_config');
+        if (savedConfig) {
+            appState.config = JSON.parse(savedConfig);
+            document.getElementById('ghOwner').value = appState.config.owner;
+            document.getElementById('ghRepo').value = appState.config.repo;
+            document.getElementById('ghToken').value = appState.config.token;
+            fetchFromGitHub();
+        } else {
+            toggleModal('settingsModal');
+        }
+
+        // Set Date to Today
+        document.getElementById('invDate').valueAsDate = new Date();
+        
+        // Add one empty row
+        addItem();
+        updateDocType();
+        calculateTotals();
+    };
+
+    /* --- GITHUB API --- */
+    async function fetchFromGitHub() {
+        const { owner, repo, token } = appState.config;
+        if (!owner || !repo || !token) return;
+
+        const url = `https://api.github.com/repos/${owner}/${repo}/contents/db.json`;
+        const indicator = document.getElementById('connectionStatus');
+
+        try {
+            const res = await fetch(url, {
+                headers: { 
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+
+            if (res.status === 404) {
+                // File doesn't exist, will be created on save
+                indicator.classList.add('connected');
+                alert('Connected! db.json not found, will be created on first save.');
+                return;
+            }
+
+            if (!res.ok) throw new Error('GitHub API Error');
+
+            const json = await res.json();
+            appState.fileSha = json.sha; // Important for updates
+            
+            // Decode Content (Base64)
+            const content = decodeURIComponent(escape(window.atob(json.content)));
+            appState.data = JSON.parse(content);
+            
+            indicator.classList.add('connected');
+            renderClientDropdown();
+            console.log('Data loaded:', appState.data);
+
+        } catch (err) {
+            console.error(err);
+            alert('Failed to connect to GitHub. Check settings.');
+            indicator.classList.remove('connected');
+        }
+    }
+
+    async function saveToGitHub() {
+        const { owner, repo, token } = appState.config;
+        if (!owner || !repo || !token) return alert('Please configure GitHub settings first.');
+
+        // Current Invoice Snapshot
+        const currentInvoice = {
+            id: document.getElementById('invNumber').value,
+            date: document.getElementById('invDate').value,
+            client: document.getElementById('clientDetails').value,
+            total: document.getElementById('valGrand').innerText,
+            type: document.getElementById('docType').value
+        };
+
+        // Add to history if unique ID
+        const exists = appState.data.invoices.find(i => i.id === currentInvoice.id);
+        if(!exists) appState.data.invoices.push(currentInvoice);
+
+        // Encode Content
+        const contentStr = JSON.stringify(appState.data, null, 2);
+        const contentBase64 = window.btoa(unescape(encodeURIComponent(contentStr)));
+
+        const url = `https://api.github.com/repos/${owner}/${repo}/contents/db.json`;
+        const body = {
+            message: `Update Invoice ${currentInvoice.id}`,
+            content: contentBase64,
+            sha: appState.fileSha // Include SHA if updating
+        };
+
+        try {
+            const res = await fetch(url, {
+                method: 'PUT',
+                headers: { 
+                    'Authorization': `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+
+            if (!res.ok) throw new Error('Save failed');
+            
+            const json = await res.json();
+            appState.fileSha = json.content.sha; // Update SHA for next save
+            alert('Saved to GitHub successfully! ✅');
+
+        } catch (err) {
+            alert('Error saving to GitHub: ' + err.message);
+        }
+    }
+
+    function saveSettings() {
+        appState.config.owner = document.getElementById('ghOwner').value;
+        appState.config.repo = document.getElementById('ghRepo').value;
+        appState.config.token = document.getElementById('ghToken').value;
+
+        localStorage.setItem('san_billing_config', JSON.stringify(appState.config));
+        toggleModal('settingsModal');
+        fetchFromGitHub();
+    }
+
+    /* --- APP LOGIC --- */
+    function updateDocType() {
+        const type = document.getElementById('docType').value;
+        document.getElementById('displayDocType').innerText = type.toUpperCase();
+    }
+
+    function saveClientToState() {
+        const text = document.getElementById('clientDetails').value;
+        if (!text.trim()) return;
+        
+        // Check if exists
+        if (!appState.data.clients.includes(text)) {
+            appState.data.clients.push(text);
+            renderClientDropdown();
+            alert('Client added to local list. Click "Save to DB" to persist.');
+        }
+    }
+
+    function renderClientDropdown() {
+        const select = document.getElementById('clientSelect');
+        select.innerHTML = '<option value="">-- Load Client --</option>';
+        appState.data.clients.forEach((c, index) => {
+            const opt = document.createElement('option');
+            opt.value = index;
+            // Get first line for display
+            opt.innerText = c.split('\n')[0];
+            select.appendChild(opt);
+        });
+    }
+
+    function loadClient() {
+        const index = document.getElementById('clientSelect').value;
+        if (index !== "") {
+            document.getElementById('clientDetails').value = appState.data.clients[index];
+        }
+    }
+
+    /* --- TABLE & CALCS --- */
+    function addItem() {
+        const tbody = document.getElementById('itemsBody');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input type="text" placeholder="Item description" class="inp-desc"></td>
+            <td><input type="number" value="1" class="inp-qty" oninput="calculateTotals()" style="text-align:right"></td>
+            <td><input type="number" placeholder="0.00" class="inp-price" oninput="calculateTotals()" style="text-align:right"></td>
+            <td style="text-align:right" class="row-total">0,00 €</td>
+            <td class="col-action"><button class="btn-outline" style="border:none; color:#d32f2f;" onclick="this.closest('tr').remove(); calculateTotals();"><i class="fa-solid fa-trash"></i></button></td>
+        `;
+        tbody.appendChild(tr);
+    }
+
+    function calculateTotals() {
+        const rows = document.querySelectorAll('#itemsBody tr');
+        let netTotal = 0;
+
+        rows.forEach(row => {
+            const qty = parseFloat(row.querySelector('.inp-qty').value) || 0;
+            const price = parseFloat(row.querySelector('.inp-price').value) || 0;
+            const rowSum = qty * price;
+            
+            row.querySelector('.row-total').innerText = formatMoney(rowSum);
+            netTotal += rowSum;
+        });
+
+        const taxMode = document.getElementById('taxMode').value;
+        let taxRate = 0;
+        let legalStr = "";
+
+        if (taxMode === 'standard') {
+            taxRate = 0.19;
+            document.getElementById('rowTax').classList.remove('hidden');
+        } else if (taxMode === 'klein') {
+            taxRate = 0;
+            legalStr = "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.";
+            document.getElementById('rowTax').classList.add('hidden');
+        } else {
+            // International
+            taxRate = 0;
+            legalStr = "VAT Exempt / Tax Free Export.";
+            document.getElementById('rowTax').classList.add('hidden');
+        }
+
+        const taxAmount = netTotal * taxRate;
+        const grandTotal = netTotal + taxAmount;
+
+        document.getElementById('valNet').innerText = formatMoney(netTotal);
+        document.getElementById('valTax').innerText = formatMoney(taxAmount);
+        document.getElementById('valGrand').innerText = formatMoney(grandTotal);
+        document.getElementById('legalText').innerText = legalStr;
+    }
+
+    function formatMoney(num) {
+        return num.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+    }
+
+    function toggleModal(id) {
+        const el = document.getElementById(id);
+        el.style.display = el.style.display === 'flex' ? 'none' : 'flex';
+    }
+</script>
+
+</body>
+</html>
