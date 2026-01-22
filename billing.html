@@ -415,11 +415,15 @@
         const contentBase64 = window.btoa(unescape(encodeURIComponent(contentStr)));
 
         const url = `https://api.github.com/repos/${owner}/${repo}/contents/db.json`;
+        
+        // --- FIX: Only include SHA if updating an existing file ---
         const body = {
             message: `Update Invoice ${currentInvoice.id}`,
-            content: contentBase64,
-            sha: appState.fileSha // Include SHA if updating
+            content: contentBase64
         };
+        if (appState.fileSha) {
+            body.sha = appState.fileSha;
+        }
 
         try {
             const res = await fetch(url, {
@@ -431,13 +435,18 @@
                 body: JSON.stringify(body)
             });
 
-            if (!res.ok) throw new Error('Save failed');
+            if (!res.ok) {
+                // Read the error message from GitHub
+                const errJson = await res.json();
+                throw new Error(errJson.message || 'Save failed');
+            }
             
             const json = await res.json();
             appState.fileSha = json.content.sha; // Update SHA for next save
             alert('Saved to GitHub successfully! ✅');
 
         } catch (err) {
+            console.error(err);
             alert('Error saving to GitHub: ' + err.message);
         }
     }
