@@ -342,7 +342,6 @@
         const sidebar = document.getElementById('sidebar');
         const overlay = document.querySelector('.sidebar-overlay');
         
-        // Toggle Active Classes
         if (sidebar.classList.contains('active')) {
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
@@ -354,13 +353,16 @@
 
     /* --- INIT --- */
     window.onload = () => {
+        // 1. Load Credentials from the Billing App's storage
         const savedConfig = localStorage.getItem('san_billing_config');
         if (!savedConfig) {
-            alert("No configuration found! Please login via the Billing App first.");
+            alert("No configuration found! Please login via the Billing App first to set your GitHub credentials.");
             return;
         }
         appState.config = JSON.parse(savedConfig);
         document.getElementById('repoInfo').innerText = `Connected: ${appState.config.repo}`;
+        
+        // 2. Fetch Data
         fetchData();
     };
 
@@ -380,12 +382,24 @@
 
         try {
             const res = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
-            if (!res.ok) throw new Error('Failed to load data');
-            const json = await res.json();
-            appState.fileSha = json.sha;
-            const content = decodeURIComponent(escape(window.atob(json.content)));
             
+            // Handle New/Empty Repo (404)
+            if (res.status === 404) {
+                console.log("Database file not found. Starting with empty data.");
+                appState.data = { settings: {}, clients: [], products: [], invoices: [] };
+                return; // Don't throw error, just start empty
+            }
+
+            if (!res.ok) throw new Error('Failed to load data');
+            
+            const json = await res.json();
+            appState.fileSha = json.sha; // Save the SHA (Version ID)
+            
+            // Decode Content
+            const content = decodeURIComponent(escape(window.atob(json.content)));
             const parsed = JSON.parse(content);
+            
+            // Merge defaults to prevent crashes
             appState.data = {
                 settings: parsed.settings || {},
                 clients: parsed.clients || [],
@@ -394,14 +408,32 @@
             };
 
             renderAll();
+            
         } catch (err) {
             console.error(err);
-            alert("Could not load data from GitHub. Check console.");
+            alert("Connection Error: Could not load data. Check if your GitHub Token has 'Repo' access.");
         }
     }
 
     async function saveToGitHub() {
-        // Collect Data
+        const { owner, repo, token } = appState.config;
+        const url = `https://api.github.com/repos/${owner}/${repo}/contents/db.json`;
+
+        // --- STEP 1: Get Latest SHA (The Fix) ---
+        // We must ask GitHub for the current version ID before saving, 
+        // otherwise it rejects the update to prevent conflicts.
+        try {
+            const check = await fetch(url, { 
+                headers: { 'Authorization': `token ${token}`, 'Cache-Control': 'no-cache' } 
+            });
+            if (check.ok) {
+                const json = await check.json();
+                appState.fileSha = json.sha; // Update local SHA
+            }
+        } catch(e) { console.log("File likely doesn't exist yet, creating new."); }
+
+
+        // --- STEP 2: Collect Form Data ---
         appState.data.settings = {
             company: document.getElementById('setCompany').value,
             logo: document.getElementById('setLogo').value,
@@ -415,14 +447,15 @@
             court: document.getElementById('setCourt').value
         };
 
+        // Collect Products
         const productRows = document.querySelectorAll('#productsBody tr');
         appState.data.products = Array.from(productRows).map(row => ({
             name: row.querySelector('.p-name').value,
             desc: row.querySelector('.p-desc').value,
             price: row.querySelector('.p-price').value
-        })).filter(p => p.name);
+        })).filter(p => p.name); // Filter out empty rows
 
-        const { owner, repo, token } = appState.config;
+        // --- STEP 3: Save ---
         const contentStr = JSON.stringify(appState.data, null, 2);
         const contentBase64 = window.btoa(unescape(encodeURIComponent(contentStr)));
 
@@ -430,10 +463,12 @@
             message: "Update from Admin Dashboard",
             content: contentBase64
         };
+        
+        // Critical: Attach the SHA if we found one
         if(appState.fileSha) body.sha = appState.fileSha;
 
         try {
-            const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/db.json`, {
+            const res = await fetch(url, {
                 method: 'PUT',
                 headers: { 
                     'Authorization': `token ${token}`,
@@ -442,16 +477,22 @@
                 body: JSON.stringify(body)
             });
 
-            if (!res.ok) throw new Error('Save Failed');
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.message || 'Save Failed');
+            }
+
             const json = await res.json();
-            appState.fileSha = json.content.sha;
+            appState.fileSha = json.content.sha; // Update SHA for next save
             alert("✅ Settings & Data Saved Successfully!");
+            
         } catch (err) {
+            console.error(err);
             alert("Error saving: " + err.message);
         }
     }
 
-    /* --- RENDERING --- */
+    /* --- RENDERING FUNCTIONS --- */
     function renderAll() {
         renderStats();
         renderSettings();
@@ -461,12 +502,14 @@
     }
 
     function renderStats() {
-        const invs = appState.data.invoices;
+        const invs = appState.data.invoices || [];
         document.getElementById('statInvoices').innerText = invs.length;
-        document.getElementById('statClients').innerText = appState.data.clients.length;
-        document.getElementById('statProducts').innerText = appState.data.products.length;
+        document.getElementById('statClients').innerText = (appState.data.clients || []).length;
+        document.getElementById('statProducts').innerText = (appState.data.products || []).length;
+        
         let total = 0;
         invs.forEach(i => {
+            // Clean currency string to float
             let val = parseFloat(i.total.replace(/[^\d,-]/g, '').replace(',', '.'));
             if(!isNaN(val)) total += val;
         });
@@ -474,7 +517,7 @@
     }
 
     function renderSettings() {
-        const s = appState.data.settings;
+        const s = appState.data.settings || {};
         document.getElementById('setCompany').value = s.company || '';
         document.getElementById('setLogo').value = s.logo || '';
         document.getElementById('setAddress').value = s.address || '';
@@ -490,7 +533,9 @@
     function renderProducts() {
         const tbody = document.getElementById('productsBody');
         tbody.innerHTML = '';
-        appState.data.products.forEach(p => { addProductRow(p); });
+        if(appState.data.products) {
+            appState.data.products.forEach(p => { addProductRow(p); });
+        }
     }
 
     function addProductRow(data = {name:'', desc:'', price:''}) {
@@ -508,21 +553,24 @@
     function renderClients() {
         const tbody = document.getElementById('clientsBody');
         tbody.innerHTML = '';
-        appState.data.clients.forEach((c, index) => {
-            const tr = document.createElement('tr');
-            const firstLine = c.split('\n')[0];
-            tr.innerHTML = `
-                <td><strong>${firstLine}</strong></td>
-                <td style="font-size:12px; color:#666;">${c.replace(/\n/g, ', ')}</td>
-                <td><button class="action-btn btn-del" onclick="removeClient(${index})"><i class="fa-solid fa-trash"></i></button></td>
-            `;
-            tbody.appendChild(tr);
-        });
+        if(appState.data.clients) {
+            appState.data.clients.forEach((c, index) => {
+                const tr = document.createElement('tr');
+                const firstLine = c.split('\n')[0];
+                tr.innerHTML = `
+                    <td><strong>${firstLine}</strong></td>
+                    <td style="font-size:12px; color:#666;">${c.replace(/\n/g, ', ')}</td>
+                    <td><button class="action-btn btn-del" onclick="removeClient(${index})"><i class="fa-solid fa-trash"></i></button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
     }
 
     function addNewClient() {
         const val = document.getElementById('newClientInput').value;
         if(val) {
+            if(!appState.data.clients) appState.data.clients = [];
             appState.data.clients.push(val);
             document.getElementById('newClientInput').value = '';
             renderClients();
@@ -539,23 +587,24 @@
     function renderInvoices() {
         const tbodyFull = document.getElementById('fullInvoicesBody');
         const tbodyRecent = document.getElementById('recentInvoicesBody');
-        
-        const html = appState.data.invoices.map(i => `
+        const invs = appState.data.invoices || [];
+
+        const html = invs.map(i => `
             <tr>
                 <td><span class="badge badge-inv">${i.id}</span></td>
                 <td>${i.date}</td>
-                <td>${i.client.split('\n')[0]}</td>
+                <td>${i.client ? i.client.split('\n')[0] : 'Unknown'}</td>
                 <td style="font-weight:bold;">${i.total}</td>
                 <td style="font-size:12px; text-transform:uppercase;">${i.type}</td>
             </tr>
         `).reverse().join('');
 
         tbodyFull.innerHTML = html;
-        tbodyRecent.innerHTML = appState.data.invoices.slice(-5).reverse().map(i => `
+        tbodyRecent.innerHTML = invs.slice(-5).reverse().map(i => `
              <tr>
                 <td><span class="badge badge-inv">${i.id}</span></td>
                 <td>${i.date}</td>
-                <td>${i.client.split('\n')[0]}</td>
+                <td>${i.client ? i.client.split('\n')[0] : 'Unknown'}</td>
                 <td style="font-weight:bold;">${i.total}</td>
                 <td style="font-size:12px; text-transform:uppercase;">${i.type}</td>
             </tr>
