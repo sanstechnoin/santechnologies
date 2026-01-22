@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SAN Billing (ZUGFeRD Pro)</title>
+    <title>SAN Billing Pro</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* --- YOUR ORIGINAL DESIGN PRESERVED --- */
+        /* --- YOUR EXACT STYLE (UNCHANGED) --- */
         :root { --primary: #006064; --accent: #00BCD4; --bg: #f0f2f5; --text: #1a1a1a; --border: #ddd; --white: #ffffff; --danger: #d32f2f; --success: #2e7d32; }
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; justify-content: center; min-height: 100vh; }
-
-        /* APP SHELL */
+        
         .app-container { width: 100%; max-width: 210mm; display: none; flex-direction: column; gap: 20px; }
         
-        /* NEW CONTROLS BAR (Updated for Pro Features) */
-        .controls-bar { background: var(--white); padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 10px; border-top: 4px solid var(--accent); }
-        .control-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
+        /* UPDATED CONTROLS FOR PRO FEATURES */
+        .controls-bar { background: var(--white); padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 12px; border-top: 4px solid var(--accent); }
+        .control-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
         .control-group { display: flex; gap: 8px; flex: 1; min-width: 140px; align-items: center; }
         
         .btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; white-space: nowrap; flex:1; }
@@ -24,24 +23,21 @@
         .btn-outline { background: transparent; color: var(--primary); border: 1px solid var(--primary); }
         
         select, input, textarea { padding: 8px; border: 1px solid var(--border); border-radius: 4px; width: 100%; font-size: 14px; }
-        label { font-size: 11px; font-weight: bold; color: #666; margin-right: 5px; }
+        label { font-size: 11px; font-weight: bold; color: #666; white-space: nowrap; }
 
-        /* CURRENCY TOGGLE */
-        .curr-switch { display: flex; border: 1px solid var(--primary); border-radius: 4px; overflow: hidden; }
-        .curr-btn { padding: 8px 12px; border: none; background: white; color: var(--primary); cursor: pointer; font-size: 12px; font-weight: bold; }
+        /* CURRENCY TOGGLE STYLE */
+        .curr-switch { display: flex; border: 1px solid var(--primary); border-radius: 4px; overflow: hidden; margin-left: auto; }
+        .curr-btn { padding: 6px 12px; border: none; background: white; color: var(--primary); cursor: pointer; font-size: 12px; font-weight: bold; }
         .curr-btn.active { background: var(--primary); color: white; }
 
-        /* --- ZUGFeRD / PDF LAYOUT --- */
+        /* PAPER & LAYOUT */
         .paper { background: white; width: 100%; min-height: 297mm; padding: 40px 50px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; position: relative; }
-        
-        /* 1. Header Section */
         .doc-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
         .doc-title h1 { margin: 0; color: var(--text); font-size: 28px; text-transform: uppercase; letter-spacing: 1px; }
         .doc-meta { text-align: right; font-size: 14px; line-height: 1.6; }
         .meta-row { display: flex; justify-content: flex-end; gap: 15px; align-items: center; }
         .meta-val input { text-align: right; border: none; font-weight: bold; width: 130px; background: transparent; }
 
-        /* 2. Addresses */
         .address-section { display: flex; justify-content: space-between; margin-bottom: 40px; gap: 40px; }
         .sender-col { flex: 1; font-size: 12px; color: #555; line-height: 1.5; }
         .receiver-col { flex: 1; }
@@ -49,7 +45,6 @@
         .receiver-col h3 { font-size: 12px; color: #999; text-transform: uppercase; margin-bottom: 5px; font-weight: normal; }
         .client-box { width: 100%; border: 1px dashed #ccc; padding: 10px; background: #fafafa; font-family: inherit; font-size: 14px; resize: none; min-height: 100px; }
 
-        /* 3. Items Table */
         .items-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
         .items-table th { text-align: left; border-bottom: 2px solid #000; padding: 8px 5px; font-size: 12px; text-transform: uppercase; font-weight: bold; }
         .items-table td { padding: 10px 5px; border-bottom: 1px solid #eee; font-size: 14px; vertical-align: top; }
@@ -57,23 +52,19 @@
         .inp-trans { border: none; background: transparent; width: 100%; font-family: inherit; }
         .inp-right { text-align: right; }
 
-        /* 4. Totals */
         .totals-area { display: flex; justify-content: flex-end; margin-bottom: 40px; }
         .totals-table { width: 300px; }
         .totals-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 14px; }
         .grand-total { font-weight: bold; font-size: 16px; border-top: 1px solid #000; margin-top: 5px; padding-top: 5px; }
 
-        /* 5. Footer */
         .doc-footer { margin-top: auto; border-top: 1px solid #ccc; padding-top: 15px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; font-size: 10px; color: #666; }
         .doc-footer strong { display: block; color: #000; margin-bottom: 2px; }
 
-        /* HELPERS */
         .pin-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:var(--primary); z-index:9999; display:flex; justify-content:center; align-items:center; }
         .pin-card { background:white; padding:30px; border-radius:12px; width:300px; text-align:center; box-shadow:0 10px 40px rgba(0,0,0,0.3); }
-        .pin-input { font-size:24px; letter-spacing:5px; text-align:center; margin:20px 0; border-radius:8px; padding:10px; width:100%; -webkit-text-security: disc;}
+        .pin-input { font-size:24px; letter-spacing:5px; text-align:center; margin:20px 0; border-radius:8px; padding:10px; width:100%; -webkit-text-security: disc; }
         .hidden { display: none !important; }
         
-        /* RESPONSIVE */
         @media screen and (max-width: 768px) {
             body { padding: 0; background: #fff; }
             .paper { padding: 20px; box-shadow: none; width: 100%; }
@@ -96,7 +87,6 @@
 <div class="pin-overlay" id="pinScreen">
     <div class="pin-card">
         <h2 style="margin-top:0; color:#006064;">SAN Billing</h2>
-        <p>Enter 6-Digit PIN</p>
         <input type="tel" id="pinInput" class="pin-input" maxlength="6" placeholder="******">
         <button class="btn" style="width:100%" onclick="unlockApp()">Unlock</button>
     </div>
@@ -106,7 +96,7 @@
     <div class="controls-bar">
         <div class="control-row">
             <div class="control-group">
-                <select id="docType" onchange="updateUI()">
+                <select id="docType" onchange="updateUI()" style="width:auto; font-weight:bold;">
                     <option value="Rechnung">Invoice</option>
                     <option value="Angebot">Quote</option>
                     <option value="Gutschrift">Credit Note</option>
@@ -126,13 +116,13 @@
         </div>
 
         <div class="control-row">
-            <div class="control-group">
+            <div class="control-group" style="flex:2;">
                 <select id="payTerms" onchange="updateDue()">
                     <option value="0">Due on Receipt</option>
-                    <option value="14">Net 14</option>
-                    <option value="30">Net 30</option>
+                    <option value="14">Net 14 Days</option>
+                    <option value="30">Net 30 Days</option>
                 </select>
-                <select id="paymentMode">
+                <select id="paymentMode" onchange="updatePaymentText()">
                     <option value="Bank Transfer">Bank Transfer</option>
                     <option value="Cash">Cash</option>
                     <option value="PayPal">PayPal</option>
@@ -148,7 +138,7 @@
         </div>
 
         <div class="control-row">
-            <select id="clientSelect" onchange="loadClient()" style="flex:2;"><option value="">-- Load Client --</option></select>
+            <select id="clientSelect" onchange="loadClient()" style="flex:2;"><option value="">-- Load Client from DB --</option></select>
             <button class="btn" onclick="saveToGitHub()"><i class="fa-solid fa-cloud-upload"></i> Save</button>
             <button class="btn" onclick="window.print()"><i class="fa-solid fa-print"></i> PDF</button>
         </div>
@@ -168,8 +158,8 @@
             <div class="sender-col" id="senderBox">Loading...</div>
             <div class="receiver-col">
                 <h3>Rechnungsadresse</h3>
-                <textarea id="clientDetails" class="client-box" placeholder="Client Name&#10;Street Address&#10;Zip City"></textarea>
-                <button class="btn-outline no-print" onclick="saveClientLocal()" style="font-size:10px; margin-top:5px;">+ Update Client List</button>
+                <textarea id="clientDetails" class="client-box" placeholder="Client Name&#10;Street Address&#10;Zip City&#10;Country"></textarea>
+                <button class="btn-outline no-print" onclick="saveClientLocal()" style="font-size:10px; margin-top:5px;">+ Add to Client List</button>
             </div>
         </div>
 
@@ -244,6 +234,10 @@
         const termsText = document.getElementById('payTerms').options[document.getElementById('payTerms').selectedIndex].text;
         document.getElementById('printTerms').innerText = termsText;
     }
+    
+    function updatePaymentText() {
+        document.getElementById('printMode').innerText = document.getElementById('paymentMode').value;
+    }
 
     /* --- GITHUB DATA --- */
     async function fetchData() {
@@ -256,11 +250,11 @@
             appState.fileSha = json.sha;
             appState.data = JSON.parse(decodeURIComponent(escape(window.atob(json.content))));
             renderUI();
-        } catch(e) { alert("Load Error"); }
+        } catch(e) { alert("Load Error: Check Token"); }
     }
 
     async function saveToGitHub() {
-        // Collect Invoice
+        // 1. Capture Invoice
         const inv = {
             id: document.getElementById('invNumber').value,
             date: document.getElementById('invDate').value,
@@ -273,6 +267,13 @@
         
         if(!appState.data.invoices) appState.data.invoices=[];
         appState.data.invoices.push(inv);
+
+        // 2. Capture New Client (If manually entered)
+        const currentClient = document.getElementById('clientDetails').value.trim();
+        if(currentClient && (!appState.data.clients || !appState.data.clients.includes(currentClient))) {
+            if(!appState.data.clients) appState.data.clients = [];
+            appState.data.clients.push(currentClient);
+        }
 
         try {
             const check = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/db.json`, { 
@@ -294,6 +295,7 @@
             if(!res.ok) throw new Error("Save Failed");
             appState.fileSha = (await res.json()).content.sha;
             alert("Saved!");
+            renderUI(); // Refresh lists
         } catch(e) { alert("Error: " + e.message); }
     }
 
@@ -345,9 +347,6 @@
         document.getElementById('valGrand').innerText = fmt(sum+tax);
         document.getElementById('legalText').innerText = taxRate===0 ? "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet." : "";
         document.getElementById('rowTax').style.display = taxRate===0 ? 'none' : 'flex';
-        
-        // Update Print Mode text
-        document.getElementById('printMode').innerText = document.getElementById('paymentMode').value;
     }
 
     function fmt(n) { return n.toLocaleString('de-DE', {minimumFractionDigits:2}) + (appState.currency==='EUR'?' €':' ₹'); }
