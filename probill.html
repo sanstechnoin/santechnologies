@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAN Billing Pro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #006064; --bg: #f8f9fa; --border: #e0e0e0; --text: #333; }
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+
+        /* --- EDITOR LAYOUT (Screen Only) --- */
+        .editor-container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        .currency-toggle { background: #eee; border-radius: 20px; padding: 5px; display: flex; gap: 5px; }
+        .curr-btn { padding: 5px 15px; border-radius: 15px; border: none; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .curr-btn.active { background: var(--primary); color: white; }
+
+        /* Form Grid */
+        .form-section { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 12px; color: #666; margin-bottom: 5px; font-weight: 600; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px; font-size: 14px; transition: 0.2s; }
+        .form-control:focus { border-color: var(--primary); outline: none; }
+        textarea.form-control { resize: vertical; min-height: 80px; background: #fafafa; }
+
+        /* Table */
+        .item-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .item-table th { text-align: left; font-size: 11px; text-transform: uppercase; color: #777; padding: 10px 5px; border-bottom: 2px solid var(--border); }
+        .item-table td { padding: 10px 5px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+        .item-table input { border: 1px solid transparent; background: transparent; width: 100%; padding: 5px; }
+        .item-table input:hover, .item-table input:focus { border-color: #ddd; background: white; }
+        
+        /* Footer Area */
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
+        .totals-panel { background: #fcfcfc; padding: 20px; border-radius: 6px; border: 1px solid var(--border); }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
+        .total-final { font-size: 18px; font-weight: bold; border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px; color: var(--primary); }
+
+        /* Action Bar */
+        .action-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 15px; border-top: 1px solid #ddd; display: flex; justify-content: flex-end; gap: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+        .btn { padding: 10px 20px; border-radius: 4px; border: none; font-weight: 600; cursor: pointer; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-default { background: #fff; border: 1px solid #ccc; color: #333; }
+
+        /* PRINT ONLY (Hides Editor Chrome) */
+        @media print {
+            body { background: white; padding: 0; }
+            .editor-container { box-shadow: none; max-width: none; padding: 0; }
+            .top-bar, .action-bar, .no-print, .currency-toggle { display: none !important; }
+            .form-control, input, textarea { border: none !important; resize: none; padding: 0; background: transparent !important; }
+            .form-section { gap: 10px; } 
+            /* Enforce A4 Layout Logic Here if needed, but the Clean Grid usually works well */
+            @page { margin: 15mm; }
+        }
+
+        /* PIN LOCK */
+        .pin-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:var(--primary); z-index:9999; display:flex; justify-content:center; align-items:center; color:white; }
+        .pin-box { background:white; padding:30px; border-radius:8px; text-align:center; color:#333; width:300px; }
+        .pin-input { font-size:24px; letter-spacing:5px; text-align:center; width:100%; margin:20px 0; padding:10px; }
+    </style>
+</head>
+<body>
+
+<div class="pin-overlay" id="pinScreen">
+    <div class="pin-box">
+        <h3><i class="fa-solid fa-lock"></i> SAN Secure</h3>
+        <p>Enter 6-Digit PIN</p>
+        <input type="tel" id="pinInput" class="pin-input" maxlength="6">
+        <button class="btn btn-primary" onclick="unlockApp()" style="width:100%">Access</button>
+    </div>
+</div>
+
+<div class="editor-container" id="mainApp" style="display:none;">
+    
+    <div class="top-bar">
+        <h2 style="margin:0; color:var(--primary);">New Invoice</h2>
+        <div style="display:flex; gap:15px; align-items:center;">
+            <div class="currency-toggle">
+                <button class="curr-btn active" id="btnEUR" onclick="setCurrency('EUR')">€ EUR</button>
+                <button class="curr-btn" id="btnINR" onclick="setCurrency('INR')">₹ INR</button>
+            </div>
+            <select id="docType" class="form-control" style="width:auto;"><option>Invoice</option><option>Quote</option></select>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div>
+            <div class="form-group">
+                <label style="color:#d32f2f;">Customer Name *</label>
+                <div style="display:flex; gap:5px;">
+                    <select id="clientSelect" class="form-control" onchange="loadClient()">
+                        <option value="">Select Customer</option>
+                    </select>
+                    <button class="btn btn-default no-print" onclick="saveClientLocal()" title="Save Current Address">+</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Billing Address</label>
+                <textarea id="clientDetails" class="form-control" placeholder="Street, City, Zip, Country"></textarea>
+            </div>
+        </div>
+
+        <div>
+            <div class="form-group">
+                <label style="color:#d32f2f;">Invoice # *</label>
+                <input type="text" id="invNumber" class="form-control" value="INV-00001">
+            </div>
+            <div class="form-group">
+                <label>Order Number</label>
+                <input type="text" id="ordNumber" class="form-control">
+            </div>
+            <div class="form-group">
+                <label style="color:#d32f2f;">Invoice Date *</label>
+                <input type="date" id="invDate" class="form-control">
+            </div>
+        </div>
+
+        <div>
+            <div class="form-group">
+                <label>Terms</label>
+                <select id="invTerms" class="form-control" onchange="calcDueDate()">
+                    <option value="0">Due on Receipt</option>
+                    <option value="15">Net 15</option>
+                    <option value="30">Net 30</option>
+                    <option value="60">Net 60</option>
+                    <option value="0">Custom</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Due Date</label>
+                <input type="date" id="invDue" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Recurring?</label>
+                <select id="invRecurring" class="form-control">
+                    <option value="No">No</option>
+                    <option value="Monthly">Yes, Monthly</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <table class="item-table">
+        <thead>
+            <tr>
+                <th width="40%">Item Details</th>
+                <th width="15%" style="text-align:right">Quantity</th>
+                <th width="15%" style="text-align:right">Rate</th>
+                <th width="15%" style="text-align:right">Amount</th>
+                <th width="5%" class="no-print"></th>
+            </tr>
+        </thead>
+        <tbody id="itemsBody"></tbody>
+    </table>
+    <button class="btn btn-default no-print" style="font-size:12px;" onclick="addItem()">+ Add Line Item</button>
+
+    <div class="footer-grid">
+        <div>
+            <div class="form-group">
+                <label>Customer Notes</label>
+                <textarea id="notes" class="form-control" placeholder="Payment details..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Terms & Conditions</label>
+                <textarea id="terms" class="form-control">Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</textarea>
+            </div>
+            <div class="form-group">
+                <label>Payment Mode</label>
+                <select id="payMode" class="form-control">
+                    <option>Bank Transfer (SEPA)</option>
+                    <option>Cash</option>
+                    <option>UPI</option>
+                    <option>Cheque</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="totals-panel">
+            <div class="total-row"><span>Sub Total</span><span id="valNet">0.00</span></div>
+            <div class="total-row">
+                <span>Shipping Charges</span>
+                <input type="number" id="valShip" value="0" oninput="calc()" style="width:60px; text-align:right; border:1px solid #ddd; border-radius:3px;">
+            </div>
+            <div class="total-row">
+                <span>Adjustment</span>
+                <input type="number" id="valAdj" value="0" oninput="calc()" style="width:60px; text-align:right; border:1px solid #ddd; border-radius:3px;">
+            </div>
+            <div class="total-row total-final">
+                <span>Total (<span id="currSym">€</span>)</span>
+                <span id="valGrand">0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="senderHidden" class="no-print" style="display:none;"></div>
+
+</div>
+
+<div class="action-bar" id="actionBar" style="display:none;">
+    <span id="status" style="margin-right:auto; align-self:center; font-size:12px; color:#aaa;">Ready</span>
+    <button class="btn btn-default" onclick="window.print()">Print / PDF</button>
+    <button class="btn btn-primary" onclick="saveToGitHub()">Save Invoice</button>
+</div>
+
+<datalist id="prodList"></datalist>
+
+<script>
+    /* --- CONFIGURATION --- */
+    // 1. UPDATE THESE TOKENS!
+    const PART_A = "ghp_"; 
+    const PART_B = "PASTE_YOUR_REST_TOKEN_HERE"; 
+    
+    const CONFIG = { owner: "santechnoin", repo: "billing-db", token: PART_A + PART_B };
+    const PIN = "110327";
+    let appState = { data: { clients:[], products:[], invoices:[] }, sha:null, curr:'EUR' };
+
+    /* --- PIN SYSTEM --- */
+    function unlockApp() {
+        if(document.getElementById('pinInput').value === PIN) {
+            document.getElementById('pinScreen').style.display='none';
+            document.getElementById('mainApp').style.display='block';
+            document.getElementById('actionBar').style.display='flex';
+            init();
+        } else alert("Invalid PIN");
+    }
+
+    /* --- INIT --- */
+    function init() {
+        document.getElementById('invDate').valueAsDate = new Date();
+        calcDueDate();
+        addItem();
+        fetchData();
+    }
+
+    function setCurrency(c) {
+        appState.curr = c;
+        document.getElementById('currSym').innerText = c === 'EUR' ? '€' : '₹';
+        document.getElementById('btnEUR').className = c === 'EUR' ? 'curr-btn active' : 'curr-btn';
+        document.getElementById('btnINR').className = c === 'INR' ? 'curr-btn active' : 'curr-btn';
+        calc();
+    }
+
+    function calcDueDate() {
+        const days = parseInt(document.getElementById('invTerms').value) || 0;
+        const date = document.getElementById('invDate').valueAsDate || new Date();
+        date.setDate(date.getDate() + days);
+        document.getElementById('invDue').valueAsDate = date;
+    }
+
+    /* --- DATA LAYER --- */
+    async function fetchData() {
+        try {
+            const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/db.json`, {
+                headers: { 'Authorization': `token ${CONFIG.token}` }
+            });
+            if(res.status===404) return;
+            const json = await res.json();
+            appState.sha = json.sha;
+            appState.data = JSON.parse(decodeURIComponent(escape(window.atob(json.content))));
+            
+            // Populate Dropdowns
+            const cs = document.getElementById('clientSelect');
+            cs.innerHTML = '<option value="">Select Customer</option>';
+            (appState.data.clients||[]).forEach((c,i) => {
+                let opt = document.createElement('option');
+                opt.value=i; opt.innerText=c.split('\n')[0];
+                cs.appendChild(opt);
+            });
+
+            // Products
+            const dl = document.getElementById('prodList'); dl.innerHTML='';
+            (appState.data.products||[]).forEach(p => {
+                let op = document.createElement('option');
+                op.value = p.name; op.dataset.price = p.price;
+                dl.appendChild(op);
+            });
+
+            // Populate Sender (Hidden for print logic)
+            const s = appState.data.settings || {};
+            document.getElementById('senderHidden').innerHTML = `<b>${s.company}</b><br>${s.address}`;
+
+        } catch(e) { console.log(e); }
+    }
+
+    async function saveToGitHub() {
+        document.getElementById('status').innerText = "Saving...";
+        
+        const inv = {
+            id: document.getElementById('invNumber').value,
+            date: document.getElementById('invDate').value,
+            client: document.getElementById('clientSelect').options[document.getElementById('clientSelect').selectedIndex]?.text || "Unknown",
+            total: document.getElementById('valGrand').innerText,
+            currency: appState.curr,
+            recurring: document.getElementById('invRecurring').value
+        };
+
+        if(!appState.data.invoices) appState.data.invoices=[];
+        appState.data.invoices.push(inv);
+
+        // Save logic similar to before...
+        try {
+            const check = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/db.json`, { 
+                headers: { 'Authorization': `token ${CONFIG.token}`, 'Cache-Control': 'no-cache' } 
+            });
+            if(check.ok) appState.sha = (await check.json()).sha;
+
+            const body = {
+                message: "Save Invoice",
+                content: window.btoa(unescape(encodeURIComponent(JSON.stringify(appState.data, null, 2)))),
+                sha: appState.sha
+            };
+
+            const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/db.json`, {
+                method: 'PUT',
+                headers: { 'Authorization': `token ${CONFIG.token}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            if(res.ok) {
+                appState.sha = (await res.json()).content.sha;
+                document.getElementById('status').innerText = "Saved!";
+                alert("Saved Successfully!");
+            }
+        } catch(e) { alert("Error: "+e.message); }
+    }
+
+    /* --- UI ACTIONS --- */
+    function loadClient() {
+        const i = document.getElementById('clientSelect').value;
+        if(i!=="") document.getElementById('clientDetails').value = appState.data.clients[i];
+    }
+
+    function saveClientLocal() {
+        const txt = document.getElementById('clientDetails').value;
+        if(txt) {
+            if(!appState.data.clients) appState.data.clients=[];
+            appState.data.clients.push(txt);
+            fetchData(); // Refresh list
+        }
+    }
+
+    function addItem() {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input list="prodList" onchange="fillPrice(this)" placeholder="Item Name / Description"></td>
+            <td><input type="number" value="1" oninput="calc()" style="text-align:right"></td>
+            <td><input type="number" placeholder="0.00" oninput="calc()" style="text-align:right"></td>
+            <td style="text-align:right" class="row-tot">0.00</td>
+            <td class="no-print"><i class="fa-solid fa-trash" style="color:red; cursor:pointer;" onclick="this.closest('tr').remove(); calc()"></i></td>
+        `;
+        document.getElementById('itemsBody').appendChild(tr);
+    }
+
+    function fillPrice(el) {
+        const val = el.value;
+        const opts = document.getElementById('prodList').options;
+        for(let i=0; i<opts.length; i++) {
+            if(opts[i].value === val) {
+                el.closest('tr').querySelectorAll('input')[2].value = opts[i].dataset.price;
+                calc(); break;
+            }
+        }
+    }
+
+    function calc() {
+        let total = 0;
+        document.querySelectorAll('#itemsBody tr').forEach(row => {
+            const inps = row.querySelectorAll('input');
+            const sum = (parseFloat(inps[1].value)||0) * (parseFloat(inps[2].value)||0);
+            row.querySelector('.row-tot').innerText = sum.toFixed(2);
+            total += sum;
+        });
+        
+        const ship = parseFloat(document.getElementById('valShip').value)||0;
+        const adj = parseFloat(document.getElementById('valAdj').value)||0;
+        
+        document.getElementById('valNet').innerText = total.toFixed(2);
+        document.getElementById('valGrand').innerText = (total + ship + adj).toFixed(2);
+    }
+</script>
+</body>
+</html>
