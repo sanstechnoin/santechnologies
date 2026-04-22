@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-translate="team_page_title">Core Team | SAN Technologies</title>
+    <title data-translate="team_page_title">Leadership | SAN Technologies</title>
     
-    <meta name="description" content="The core team behind SAN Technologies. Human strategy combined with AI-driven technical architecture." data-translate-meta="team_meta_desc">
+    <meta name="description" content="The leadership team behind SAN Technologies. Human strategy combined with creative excellence." data-translate-meta="team_meta_desc">
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
@@ -61,40 +61,33 @@
         .plain-box h2 { color: var(--primary); }
         .plain-box p { font-size: 1.1rem; max-width: 800px; margin: 0 auto; color: #444; }
 
-        /* --- TEAM GRID --- */
-        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-top: 20px; }
-        .team-card { background: var(--white); border-radius: 20px; padding: 50px 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; border: 2px solid #eee; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; align-items: center; }
-        .team-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--accent); }
+        /* --- TEAM VERTICAL STACK --- */
+        .team-stack { display: flex; flex-direction: column; align-items: center; gap: 50px; margin-top: 20px; }
+        .team-card { background: var(--white); border-radius: 20px; padding: 50px 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; border: 2px solid #eee; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; align-items: center; max-width: 750px; width: 100%; }
+        .team-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--accent); }
         
-        .team-avatar { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 25px; border: 4px solid var(--bg-suite); background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #999; }
+        /* Larger avatar for the top (CEO) card if desired, but kept uniform here for cleanliness */
+        .team-avatar { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; margin-bottom: 25px; border: 4px solid var(--bg-suite); background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #999; }
         
         .role-tag { background: var(--primary); color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: inline-block;}
-        .role-tag.ai { background: #333; color: #00BCD4; border: 1px solid #00BCD4; }
+        .role-tag.creative { background: var(--accent); color: #004d50; }
         
-        .team-card h3 { margin-bottom: 5px; font-size: 1.6rem; }
-        .team-card p { color: #666; font-size: 0.95rem; line-height: 1.7; }
-
-        /* --- NETWORK BANNER --- */
-        .network-banner { background: var(--white); border: 1px solid #ddd; border-radius: 15px; padding: 40px; margin-top: 60px; text-align: left; display: flex; align-items: center; gap: 30px; }
-        .network-icon { font-size: 3rem; }
-        .network-text h3 { color: var(--primary); margin-bottom: 5px; }
-        .network-text p { margin: 0; font-size: 0.95rem; color: #555; }
+        .team-card h3 { margin-bottom: 5px; font-size: 1.8rem; }
+        .team-card p { color: #666; font-size: 1rem; line-height: 1.7; }
 
         /* --- CTA & FOOTER --- */
         .cta-section { text-align: center; background: #111; color: white; padding: 100px 0; }
         .btn { display: inline-block; background: var(--accent); color: white; padding: 18px 45px; border-radius: 50px; font-weight: bold; margin-top: 30px; }
         footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; }
 
-        @media (max-width: 768px) {
-            .network-banner { flex-direction: column; text-align: center; }
-            .team-hero h1 { font-size: 2.5rem; }
-        }
         @media (max-width: 600px) {
             .logo img { height: 45px; } 
             .nav-right { gap: 15px; } 
             .nav-desktop a span[data-translate="nav_back"] { display: none; }
             .nav-desktop a span:first-child { font-size: 1.8rem; line-height: 1; }
             .header-content { padding: 0 15px; }
+            .team-hero h1 { font-size: 2.5rem; }
+            .team-card { padding: 40px 20px; }
         }
     </style>
 </head>
@@ -121,9 +114,9 @@
 
     <section class="team-hero">
         <div class="container">
-            <span class="trust-line" data-translate="hero_trust">Menschliche Strategie · KI-Infrastruktur</span>
-            <h1 data-translate="hero_title">Das Kern-Team</h1>
-            <p class="hero-subline" data-translate="hero_sub">Lean Management. Maximaler Output für unsere Kunden.</p>
+            <span class="trust-line" data-translate="hero_trust">Strategie · Technologie · Design</span>
+            <h1 data-translate="hero_title">Leadership Team</h1>
+            <p class="hero-subline" data-translate="hero_sub">Die Expertise hinter SAN Technologies und SAN Studio.</p>
         </div>
     </section>
 
@@ -131,41 +124,32 @@
         <div class="container">
             <div class="plain-box">
                 <h2 data-translate="phil_title">Agentur-Leistung ohne Agentur-Overhead</h2>
-                <p data-translate="phil_desc">SAN Technologies operiert nach einem strikten "Minimum Spend, Maximum Output"-Prinzip. Statt auf riesige Teams setzen wir auf einen klaren, inhabergeführten Ansatz, kombiniert mit fortschrittlichster KI-Architektur für die Code-Entwicklung. Das Ergebnis: Schnellere Ladezeiten, profitablere Shops und keine versteckten Agenturkosten für Sie.</p>
+                <p data-translate="phil_desc">SAN Technologies operiert nach einem strikten "Minimum Spend, Maximum Output"-Prinzip. Wir setzen auf einen klaren, inhabergeführten Ansatz, kombiniert mit spezialisierten Experten für kreative Produktionen. Das Ergebnis: Skalierbare Software, hochwertige Markenidentitäten und direkte Ansprechpartner ohne versteckte Agenturkosten.</p>
             </div>
         </div>
     </section>
 
     <section style="background-color: var(--bg-suite); border-top: 1px solid #e0e0e0;">
         <div class="container">
-            <div class="team-grid">
+            
+            <div class="team-stack">
                 
                 <div class="team-card">
                     <img src="profile.jpg" alt="Founder & CEO" class="team-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23999\' viewBox=\'0 0 24 24\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'">
                     
                     <span class="role-tag" data-translate="role_ceo">Founder & CEO</span>
-                    <h3 data-translate="name_ceo">Geschäftsführung</h3>
-                    <p data-translate="desc_ceo">Verantwortlich für die kaufmännische Strategie, Projektkalkulation und Kundenbetreuung vor Ort. Leitet die operative Ausrichtung von SAN Technologies und sichert ab, dass jede technische Lösung direkten geschäftlichen ROI für unsere Klienten liefert.</p>
+                    <h3 data-translate="name_ceo">Geschäftsführung & Tech</h3>
+                    <p data-translate="desc_ceo">Verantwortlich für die gesamte kaufmännische Strategie, Projektkalkulation und Kundenbetreuung vor Ort. Leitet die operative und technologische Ausrichtung von SAN Technologies und stellt sicher, dass jede IT-Lösung einen direkten geschäftlichen ROI für unsere Klienten liefert.</p>
                 </div>
 
                 <div class="team-card">
-                    <div class="team-avatar" style="background: #222; border-color: var(--accent);">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                    </div>
+                    <img src="profile-creative.jpg" alt="Head of Studio" class="team-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23999\' viewBox=\'0 0 24 24\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'">
                     
-                    <span class="role-tag ai" data-translate="role_cto">AI-Powered CTO</span>
-                    <h3 data-translate="name_cto">Technische Architektur</h3>
-                    <p data-translate="desc_cto">Der technologische Motor von SAN Technologies. Ein hochmodernes, dediziertes KI-System, das für die fehlerfreie Programmierung, die Systemarchitektur der Headless-Shops und die rasante Bereitstellung von Code-Infrastruktur zuständig ist.</p>
+                    <span class="role-tag creative" data-translate="role_cd">Head of SAN Studio</span>
+                    <h3 data-translate="name_cd">Creative Partner</h3>
+                    <p data-translate="desc_cd">Leitet die kreative Vision, das UX/UI-Design und die visuelle Produktion für unsere Kundenprojekte. Sie verwandelt funktionale Plattformen in starke, konvertierende Marken durch hochwertige Fotografie, Videografie und visuelles Branding.</p>
                 </div>
 
-            </div>
-
-            <div class="network-banner">
-                <div class="network-icon">🎨</div>
-                <div class="network-text">
-                    <h3 data-translate="net_title">Das SAN Studio Partner-Netzwerk</h3>
-                    <p data-translate="net_desc">Für alle visuellen Disziplinen – von UX/UI Design bis hin zu professioneller Fotografie und Social Media Produktionen – greifen wir exklusiv auf unser geprüftes Netzwerk unabhängiger Creative Professionals zurück. Sie erhalten erstklassige Visuals, gesteuert durch unser zentrales Projektmanagement.</p>
-                </div>
             </div>
 
         </div>
@@ -174,7 +158,7 @@
     <section id="contact" class="cta-section">
         <div class="container">
             <h2 data-translate="cta_title">Bereit für den nächsten Schritt?</h2>
-            <p data-translate="cta_sub">Sprechen Sie direkt mit der Geschäftsführung über Ihr Projekt.</p>
+            <p data-translate="cta_sub">Sprechen Sie direkt mit uns über Ihr Projekt.</p>
             <a href="index.html#contact" class="btn" data-translate="cta_btn">Kontakt aufnehmen</a>
         </div>
     </section>
@@ -194,59 +178,53 @@
     <script>
         const translations = {
             'de': {
-                'team_page_title': 'Core Team | SAN Technologies',
-                'team_meta_desc': 'Das Kern-Team hinter SAN Technologies. Menschliche Strategie kombiniert mit KI-gestützter technischer Architektur.',
+                'team_page_title': 'Leadership | SAN Technologies',
+                'team_meta_desc': 'Das Team hinter SAN Technologies. Menschliche Strategie kombiniert mit kreativer Exzellenz.',
                 'nav_back': 'Startseite zurück',
                 
-                'hero_trust': 'Menschliche Strategie · KI-Infrastruktur',
-                'hero_title': 'Das Kern-Team',
-                'hero_sub': 'Lean Management. Maximaler Output für unsere Kunden.',
+                'hero_trust': 'Strategie · Technologie · Design',
+                'hero_title': 'Leadership Team',
+                'hero_sub': 'Die Expertise hinter SAN Technologies und SAN Studio.',
                 
                 'phil_title': 'Agentur-Leistung ohne Agentur-Overhead',
-                'phil_desc': 'SAN Technologies operiert nach einem strikten "Minimum Spend, Maximum Output"-Prinzip. Statt auf riesige Teams setzen wir auf einen klaren, inhabergeführten Ansatz, kombiniert mit fortschrittlichster KI-Architektur für die Code-Entwicklung. Das Ergebnis: Schnellere Ladezeiten, profitablere Shops und keine versteckten Agenturkosten für Sie.',
+                'phil_desc': 'SAN Technologies operiert nach einem strikten "Minimum Spend, Maximum Output"-Prinzip. Wir setzen auf einen klaren, inhabergeführten Ansatz, kombiniert mit spezialisierten Experten für kreative Produktionen. Das Ergebnis: Skalierbare Software, hochwertige Markenidentitäten und direkte Ansprechpartner ohne versteckte Agenturkosten.',
                 
                 'role_ceo': 'Founder & CEO',
-                'name_ceo': 'Geschäftsführung',
-                'desc_ceo': 'Verantwortlich für die kaufmännische Strategie, Projektkalkulation und Kundenbetreuung vor Ort. Leitet die operative Ausrichtung von SAN Technologies und sichert ab, dass jede technische Lösung direkten geschäftlichen ROI für unsere Klienten liefert.',
+                'name_ceo': 'Geschäftsführung & Tech',
+                'desc_ceo': 'Verantwortlich für die gesamte kaufmännische Strategie, Projektkalkulation und Kundenbetreuung vor Ort. Leitet die operative und technologische Ausrichtung von SAN Technologies und stellt sicher, dass jede IT-Lösung einen direkten geschäftlichen ROI für unsere Klienten liefert.',
                 
-                'role_cto': 'AI-Powered CTO',
-                'name_cto': 'Technische Architektur',
-                'desc_cto': 'Der technologische Motor von SAN Technologies. Ein hochmodernes, KI-gestütztes System, das für die Programmierung, die Systemarchitektur der Headless-Shops und die rasante Bereitstellung von Code-Infrastruktur zuständig ist.',
-                
-                'net_title': 'Das SAN Studio Partner-Netzwerk',
-                'net_desc': 'Für alle visuellen Disziplinen – von UX/UI Design bis hin zu professioneller Fotografie und Social Media Produktionen – greifen wir exklusiv auf unser geprüftes Netzwerk unabhängiger Creative Professionals zurück. Sie erhalten erstklassige Visuals, gesteuert durch unser zentrales Projektmanagement.',
+                'role_cd': 'Head of SAN Studio',
+                'name_cd': 'Creative Partner',
+                'desc_cd': 'Leitet die kreative Vision, das UX/UI-Design und die visuelle Produktion für unsere Kundenprojekte. Sie verwandelt funktionale Plattformen in starke, konvertierende Marken durch hochwertige Fotografie, Videografie und visuelles Branding.',
                 
                 'cta_title': 'Bereit für den nächsten Schritt?',
-                'cta_sub': 'Sprechen Sie direkt mit der Geschäftsführung über Ihr Projekt.',
+                'cta_sub': 'Sprechen Sie direkt mit uns über Ihr Projekt.',
                 'cta_btn': 'Kontakt aufnehmen',
                 'footer_privacy': 'Datenschutz',
                 'footer_impressum': 'Impressum'
             },
             'en': {
-                'team_page_title': 'Core Team | SAN Technologies',
-                'team_meta_desc': 'The core team behind SAN Technologies. Human strategy combined with AI-driven technical architecture.',
+                'team_page_title': 'Leadership | SAN Technologies',
+                'team_meta_desc': 'The leadership team behind SAN Technologies. Human strategy combined with creative excellence.',
                 'nav_back': 'Back to Home',
                 
-                'hero_trust': 'Human Strategy · AI Infrastructure',
-                'hero_title': 'The Core Team',
-                'hero_sub': 'Lean Management. Maximum output for our clients.',
+                'hero_trust': 'Strategy · Technology · Design',
+                'hero_title': 'Leadership Team',
+                'hero_sub': 'The expertise behind SAN Technologies and SAN Studio.',
                 
                 'phil_title': 'Agency Performance without Agency Overhead',
-                'phil_desc': 'SAN Technologies operates on a strict "Minimum Spend, Maximum Output" principle. Instead of massive teams, we rely on a clear, owner-led approach combined with state-of-the-art AI architecture for code development. The result: faster load times, more profitable shops, and no hidden agency fees for you.',
+                'phil_desc': 'SAN Technologies operates on a strict "Minimum Spend, Maximum Output" principle. We rely on a clear, owner-led approach, combined with specialized experts for creative productions. The result: Scalable software, premium brand identities, and direct points of contact without hidden agency fees.',
                 
                 'role_ceo': 'Founder & CEO',
-                'name_ceo': 'Managing Director',
-                'desc_ceo': 'Responsible for business strategy, project calculation, and on-site client relations. Leads the operational direction of SAN Technologies and ensures that every technical solution delivers direct business ROI for our clients.',
+                'name_ceo': 'Managing Director & Tech',
+                'desc_ceo': 'Responsible for overall business strategy, project calculation, and on-site client relations. Leads the operational and technological direction of SAN Technologies, ensuring every IT solution delivers direct business ROI for our clients.',
                 
-                'role_cto': 'AI-Powered CTO',
-                'name_cto': 'Technical Architecture',
-                'desc_cto': 'The technological engine of SAN Technologies. A state-of-the-art AI-driven system responsible for flawless programming, the system architecture of our headless shops, and the rapid deployment of code infrastructure.',
-                
-                'net_title': 'The SAN Studio Partner Network',
-                'net_desc': 'For all visual disciplines—from UX/UI design to professional photography and social media productions—we rely exclusively on our vetted network of independent creative professionals. You receive top-tier visuals, directed entirely through our central project management.',
+                'role_cd': 'Head of SAN Studio',
+                'name_cd': 'Creative Partner',
+                'desc_cd': 'Leads the creative vision, UX/UI design, and visual production for our client projects. She transforms functional platforms into strong, converting brands through high-quality photography, videography, and visual branding.',
                 
                 'cta_title': 'Ready for the next step?',
-                'cta_sub': 'Speak directly with the Managing Director about your project.',
+                'cta_sub': 'Speak directly with us about your project.',
                 'cta_btn': 'Get in Touch',
                 'footer_privacy': 'Privacy Policy',
                 'footer_impressum': 'Legal Notice'
