@@ -274,6 +274,7 @@
     </div>
 
     <script>
+        // --- 1. LIGHTBOX LOGIC ---
         function openModal(src) {
             if(!src) return;
             const modal = document.getElementById("imageModal");
@@ -288,6 +289,33 @@
         }
         document.addEventListener('keydown', function(event) { if (event.key === "Escape") closeModal(); });
 
+        // --- 2. FILTER LOGIC ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active to the clicked button
+                    btn.classList.add('active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    // Show or Hide gallery items
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'flex'; // Show item
+                        } else {
+                            item.style.display = 'none'; // Hide item
+                        }
+                    });
+                });
+            });
+        });
+
+        // --- 3. TRANSLATIONS DICTIONARY ---
         const translations = {
             'de': {
                 'studio_page_title': 'Creative & Visual Production | SAN Studio',
@@ -310,7 +338,13 @@
                 'step1_title': 'Verstehen', 'step2_title': 'Konzept', 'step3_title': 'Design', 'step4_title': 'Produktion', 'step5_title': 'Review', 'step6_title': 'Lieferung',
                 'work_title': 'Ausgewählte Arbeiten', 'work_sub': 'Einblick in aktuelle Produktionen und Brandings.',
                 'cta_title': 'Inhalte schaffen, die Ihre Marke repräsentieren.', 'cta_sub': 'Professionell. Zuverlässig. Auf den Punkt.', 'cta_btn': 'Projekt anfragen',
-                'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum'
+                'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
+                
+                /* FILTER BUTTONS */
+                'flt_all': 'Alle Projekte',
+                'flt_food': 'Food & Gastro',
+                'flt_product': 'Produkte',
+                'flt_ui': 'UX/UI Design'
             },
             'en': {
                 'studio_page_title': 'Creative & Visual Production | SAN Studio',
@@ -333,21 +367,32 @@
                 'step1_title': 'Understand', 'step2_title': 'Concept', 'step3_title': 'Design', 'step4_title': 'Production', 'step5_title': 'Review', 'step6_title': 'Delivery',
                 'work_title': 'Selected Work', 'work_sub': 'A glimpse into our recent productions and branding projects.',
                 'cta_title': 'Let’s create content that represents your brand.', 'cta_sub': 'Professional. Reliable. On point.', 'cta_btn': 'Request Project',
-                'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice'
+                'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
+                
+                /* FILTER BUTTONS */
+                'flt_all': 'All Projects',
+                'flt_food': 'Food & Hospitality',
+                'flt_product': 'Products',
+                'flt_ui': 'UX/UI Design'
             }
         };
 
+        // --- 4. LANGUAGE TOGGLE LOGIC ---
         const toggles = document.querySelectorAll('.lang-toggle-input');
         document.addEventListener('contextmenu', event => event.preventDefault());
 
         function updateLanguage(lang) {
             document.querySelectorAll('[data-translate]').forEach(el => {
                 const key = el.getAttribute('data-translate');
-                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
             });
             document.querySelectorAll('[data-translate-meta]').forEach(el => {
                 const key = el.getAttribute('data-translate-meta');
-                if (translations[lang][key]) el.setAttribute('content', translations[lang][key]);
+                if (translations[lang][key]) {
+                    el.setAttribute('content', translations[lang][key]);
+                }
             });
             document.documentElement.lang = lang;
         }
