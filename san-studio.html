@@ -6,31 +6,38 @@
     <title data-translate="studio_page_title">Creative & Visual Production | SAN Studio</title>
     
     <meta name="description" content="SAN Studio: End-to-end visual content creation for modern brands. Photography, videography, and social media content tailored for European businesses." data-translate-meta="studio_meta_desc">
-    
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
-        /* --- CSS VARIABLES (Synced with SAN Ecosystem) --- */
+        /* --- CSS VARIABLES (Strictly Synced with SAN Suite & Commerce) --- */
         :root {
             --primary: #006064;
             --accent: #00BCD4;
-            --dark: #222222;
-            --light: #fdfdfd;
+            --dark: #333333;
+            --light: #f8f9fa;
             --white: #ffffff;
-            --bg-suite: #f4f6f8; 
+            --bg-suite: #f0f4f8; 
             --container-width: 1150px;
         }
 
+        /* --- GLOBAL RESET & LAYOUT --- */
         * { box-sizing: border-box; }
-        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: var(--dark); line-height: 1.6; background-color: var(--white); scroll-behavior: smooth; }
+        body { 
+            margin: 0; 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            color: var(--dark); 
+            line-height: 1.6; 
+            background-color: var(--white); 
+            scroll-behavior: smooth;
+        }
         
         .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; width: 100%; }
         h1, h2, h3, h4 { font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; margin-top: 0; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
-        p { margin: 0 0 20px 0; color: #555; }
+        p { margin: 0 0 20px 0; }
 
         /* --- HEADER --- */
-        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); display: flex; align-items: center; }
+        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
         .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .logo img { height: 65px; width: auto; }
         .nav-right { display: flex; align-items: center; gap: 30px; }
@@ -48,69 +55,68 @@
         .flag-icon { height: 14px; width: auto; vertical-align: middle; }
 
         /* --- SECTIONS --- */
-        section { padding: 90px 0; }
-        .section-header { text-align: center; margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        section { padding: 80px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; max-width: 900px; margin-left: auto; margin-right: auto; }
 
-        /* --- HERO (Studio specific dark aesthetic) --- */
-        .studio-hero { background: #111; color: var(--white); text-align: center; padding: 120px 0 100px; }
-        .studio-hero h1 { font-size: 4rem; margin-bottom: 15px; line-height: 1.1; letter-spacing: -1px; }
-        .hero-subline { font-size: 1.3rem; opacity: 0.8; max-width: 700px; margin: 0 auto 40px; color: #ddd; }
-        .trust-line { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-weight: 800; display: block; margin-bottom: 20px; }
+        /* --- HERO (Synced with SAN Ecosystem) --- */
+        .studio-hero { 
+            background: linear-gradient(135deg, var(--primary) 0%, #003d40 100%); 
+            color: var(--white); text-align: center; padding: 100px 0;
+        }
+        .studio-hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        .hero-subline { font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 30px; }
+        .trust-line { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.9); font-weight: 800; }
 
-        /* --- ABOUT / PLAIN BOX --- */
-        .plain-box { background: var(--bg-suite); padding: 60px; border-radius: 20px; text-align: center; border: 1px solid #eaeaea; }
-        .plain-box h2 { color: var(--primary); }
-        .plain-box p { font-size: 1.1rem; max-width: 800px; margin: 0 auto; }
+        /* --- PLAIN EXPLANATION (About) --- */
+        .plain-box { background: var(--bg-suite); padding: 50px; border-radius: 25px; text-align: center; margin: 40px 0; }
+        .integration-note { background: var(--white); padding: 20px 30px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; margin-top: 20px; }
 
-        /* --- SERVICES GRID --- */
-        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .service-card { background: var(--white); padding: 40px 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #f0f0f0; transition: transform 0.3s; }
-        .service-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .service-icon { font-size: 2.5rem; margin-bottom: 20px; display: block; }
-        .service-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        /* --- EXTENSIONS GRID (For Services) --- */
+        .ext-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; }
+        .ext-card { padding: 30px; background: var(--light); border-radius: 15px; text-align: center; transition: 0.3s; }
+        .ext-card:hover { transform: translateY(-5px); background: var(--white); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .ext-card span { font-size: 2.5rem; display: block; margin-bottom: 15px; }
 
-        /* --- PROCESS GRID --- */
-        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: left; }
-        .step-card { padding: 30px; border-radius: 12px; background: var(--bg-suite); border-left: 4px solid var(--accent); }
-        .step-num { font-size: 0.9rem; font-weight: bold; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 10px; }
-        .step-card h4 { margin-bottom: 8px; }
+        /* --- PROCESS STEPS (Exact match to Suite) --- */
+        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; text-align: center; margin-top: 40px; }
+        .step { padding: 20px; border-radius: 12px; background: var(--bg-suite); font-weight: bold; }
+        .step span { color: var(--accent); display: block; font-size: 1.5rem; margin-bottom: 5px; }
 
-        /* --- WHY US (Minimal List) --- */
-        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; align-items: center; }
-        .why-list { list-style: none; padding: 0; }
-        .why-list li { margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-start; }
-        .why-icon { background: #E0F7FA; color: var(--primary); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
-        .why-text h4 { margin-bottom: 5px; font-size: 1.1rem; }
-        .why-text p { font-size: 0.95rem; margin: 0; }
-
-        /* --- PORTFOLIO GALLERY (From previous plan) --- */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .gallery-item { position: relative; overflow: hidden; border-radius: 12px; cursor: zoom-in; aspect-ratio: 4/3; background: #eee; display: flex; align-items: center; justify-content: center;}
+        /* --- PORTFOLIO GALLERY GRID --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 40px; }
+        .gallery-item { position: relative; overflow: hidden; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: zoom-in; aspect-ratio: 4/3; background: #eee; display: flex; align-items: center; justify-content: center; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-        .gallery-item:hover img { transform: scale(1.03); }
-        .gallery-caption { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; padding: 30px 20px 15px; font-size: 1rem; font-weight: bold; opacity: 0; transition: opacity 0.3s ease; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-caption { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; padding: 20px 15px 10px; font-size: 0.9rem; font-weight: bold; opacity: 0; transition: opacity 0.3s ease; }
         .gallery-item:hover .gallery-caption { opacity: 1; }
         .placeholder-text { color: #999; font-weight: bold; }
 
-        /* --- IMAGE MODAL --- */
-        .img-modal { display: none; position: fixed; z-index: 10001; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); }
-        .img-modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 5px; }
-        .close-img { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; z-index: 10002; }
+        /* --- PORTFOLIO FILTERS --- */
+        .portfolio-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
+        .filter-btn { background: transparent; border: 2px solid var(--primary); color: var(--primary); padding: 8px 24px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.95rem; }
+        .filter-btn:hover, .filter-btn.active { background: var(--primary); color: white; }
+        .gallery-item.hide { display: none; }
 
-        /* --- CTA --- */
-        .cta-section { text-align: center; background: var(--primary); color: white; padding: 100px 0; }
-        .cta-section p { color: rgba(255,255,255,0.9); font-size: 1.2rem; }
-        .btn { display: inline-block; background: var(--accent); color: white; padding: 18px 45px; border-radius: 50px; font-weight: bold; margin-top: 30px; border: none; cursor: pointer; font-size: 1rem; }
-        .btn:hover { background: #009eb3; }
+        /* --- IMAGE MODAL (LIGHTBOX) --- */
+        .img-modal { display: none; position: fixed; z-index: 10001; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .img-modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 5px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .close-img { position: absolute; top: 20px; right: 30px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; z-index: 10002; }
+        .close-img:hover { color: var(--accent); }
 
-        footer { background: #111; color: #666; padding: 40px 0; font-size: 0.85rem; text-align: center; }
+        /* --- CTA & FOOTER --- */
+        .cta-section { text-align: center; background: #111; color: white; padding: 100px 0; }
+        .btn { display: inline-block; background: var(--accent); color: white; padding: 18px 45px; border-radius: 50px; font-weight: bold; margin-top: 30px; }
+        footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; }
 
-        @media (max-width: 768px) {
-            .studio-hero h1 { font-size: 2.8rem; }
-            .header-content { padding: 0 15px; }
+        /* --- MOBILE TWEAKS --- */
+        @media (max-width: 600px) {
+            .logo img { height: 45px; } 
+            .nav-right { gap: 15px; } 
             .nav-desktop a span[data-translate="nav_back"] { display: none; }
-            .nav-desktop a span:first-child { font-size: 1.8rem; }
+            .nav-desktop a span:first-child { font-size: 1.8rem; line-height: 1; }
+            .header-content { padding: 0 15px; }
         }
+        @media (max-width: 900px) { .studio-hero h1 { font-size: 2.5rem; } }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -120,7 +126,10 @@
             <div class="logo"><a href="index.html"><img src="logo.png" alt="SAN Technologies"></a></div>
             <div class="nav-right">
                 <nav class="nav-desktop">
-                    <a href="index.html"><span>←</span> <span data-translate="nav_back">Startseite zurück</span></a>
+                    <a href="index.html">
+                        <span>←</span> 
+                        <span data-translate="nav_back">Startseite zurück</span>
+                    </a>
                 </nav>
                 <div class="lang-switch-container">
                     <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
@@ -133,47 +142,20 @@
 
     <section class="studio-hero">
         <div class="container">
-            <span class="trust-line">SAN Studio</span>
-            <h1 data-translate="hero_title">Bauen Sie eine Marke, die so gut aussieht, wie sie performt.</h1>
-            <p class="hero-subline" data-translate="hero_sub">Professionelle visuelle Produktion für moderne Unternehmen. Klare Prozesse, konsistente Qualität.</p>
-            <a href="index.html#contact" class="btn" data-translate="hero_btn">Projekt anfragen</a>
-        </div>
-    </section>
-
-    <section>
-        <div class="container">
-            <div class="plain-box">
-                <h2 data-translate="about_title">Ihre Vision, professionell umgesetzt.</h2>
-                <p data-translate="about_desc">SAN Studio ist Ihr Partner für End-to-End Content Kreation. Von der ersten Konzeption bis zum finalen Shooting und der Postproduktion kümmern wir uns um den gesamten visuellen Auftritt Ihrer Marke. Ein zentraler Ansprechpartner, ein professioneller Standard.</p>
-            </div>
+            <span class="trust-line" data-translate="hero_trust">Premium Visual Content · European Standard</span>
+            <h1 data-translate="hero_title">SAN Studio</h1>
+            <p class="hero-subline" data-translate="hero_sub">Bauen Sie eine Marke, die so gut aussieht, wie sie performt.</p>
+            <p data-translate="hero_desc">Professionelle Fotografie, Videografie und UX/UI Design für moderne Unternehmen. Klare Prozesse, konsistente Qualität.</p>
         </div>
     </section>
 
     <section style="background-color: var(--white);">
         <div class="container">
-            <div class="section-header">
-                <h2 data-translate="services_title">Unsere Disziplinen</h2>
-            </div>
-            <div class="service-grid">
-                <div class="service-card">
-                    <span class="service-icon">📸</span>
-                    <h3 data-translate="srv1_title">Fotografie</h3>
-                    <p data-translate="srv1_desc">Gestochen scharfe Produktaufnahmen, atmosphärische Restaurantbilder und authentische Corporate-Porträts, die Vertrauen schaffen.</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-icon">🎥</span>
-                    <h3 data-translate="srv2_title">Videografie</h3>
-                    <p data-translate="srv2_desc">Hochwertige Markenfilme und Werbespots, die Ihre Unternehmensgeschichte klar und ästhetisch kommunizieren.</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-icon">📱</span>
-                    <h3 data-translate="srv3_title">Social Media Content</h3>
-                    <p data-translate="srv3_desc">Aufmerksamkeitsstarke Kurzvideos (Reels, TikToks), optimiert für moderne Plattform-Algorithmen und maximale Reichweite.</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-icon">🎨</span>
-                    <h3 data-translate="srv4_title">Visual Branding</h3>
-                    <p data-translate="srv4_desc">Entwicklung einer konsistenten visuellen Identität, damit Ihre Marke über alle Kanäle hinweg professionell und einheitlich wirkt.</p>
+            <div class="plain-box">
+                <h2 data-translate="about_title">Ihre Vision, professionell umgesetzt.</h2>
+                <p data-translate="about_desc">SAN Studio ist Ihr Partner für End-to-End Content Kreation. Von der ersten Konzeption über das UI-Design bis zum finalen Shooting kümmern wir uns um den gesamten visuellen Auftritt Ihrer Marke. Ein zentraler Ansprechpartner, ein professioneller Standard.</p>
+                <div class="integration-note">
+                    <p data-translate="about_note">💡 Teil der SAN Unternehmensgruppe: Strategie, Software und Content aus einer Hand.</p>
                 </div>
             </div>
         </div>
@@ -182,29 +164,29 @@
     <section style="background-color: var(--bg-suite);">
         <div class="container">
             <div class="section-header">
-                <h2 data-translate="process_title">So arbeiten wir zusammen</h2>
-                <p data-translate="process_sub">Ein strukturierter Ablauf für stressfreie Produktionen.</p>
+                <h2 data-translate="services_title">Unsere Disziplinen</h2>
+                <p data-translate="services_sub">Visuelle Performance für Restaurants und D2C Brands.</p>
             </div>
-            <div class="process-grid">
-                <div class="step-card">
-                    <span class="step-num" data-translate="step1_num">Schritt 01</span>
-                    <h4 data-translate="step1_title">Verstehen</h4>
-                    <p data-translate="step1_desc">Wir analysieren Ihre Marke, Ihre Zielgruppe und die Anforderungen an das Endprodukt.</p>
+            <div class="ext-grid">
+                <div class="ext-card">
+                    <span>📸</span>
+                    <h3 data-translate="srv1_title" style="margin-bottom: 5px;">Fotografie</h3>
+                    <p data-translate="srv1_desc" style="font-size: 0.9rem; color: #555;">Produktaufnahmen, Restaurantbilder und Corporate-Porträts.</p>
                 </div>
-                <div class="step-card">
-                    <span class="step-num" data-translate="step2_num">Schritt 02</span>
-                    <h4 data-translate="step2_title">Planen</h4>
-                    <p data-translate="step2_desc">Erstellung eines klaren Konzeptboards und Planung des Shooting-Tages bis ins Detail.</p>
+                <div class="ext-card">
+                    <span>🎥</span>
+                    <h3 data-translate="srv2_title" style="margin-bottom: 5px;">Videografie</h3>
+                    <p data-translate="srv2_desc" style="font-size: 0.9rem; color: #555;">Markenfilme und Werbespots für klare Kommunikation.</p>
                 </div>
-                <div class="step-card">
-                    <span class="step-num" data-translate="step3_num">Schritt 03</span>
-                    <h4 data-translate="step3_title">Produzieren</h4>
-                    <p data-translate="step3_desc">Unser Netzwerk aus erfahrenen Kreativen setzt das Konzept vor Ort professionell um.</p>
+                <div class="ext-card">
+                    <span>📱</span>
+                    <h3 data-translate="srv3_title" style="margin-bottom: 5px;">Social Media</h3>
+                    <p data-translate="srv3_desc" style="font-size: 0.9rem; color: #555;">Kurzvideos (Reels) optimiert für maximale Reichweite.</p>
                 </div>
-                <div class="step-card">
-                    <span class="step-num" data-translate="step4_num">Schritt 04</span>
-                    <h4 data-translate="step4_title">Liefern</h4>
-                    <p data-translate="step4_desc">Sie erhalten fertig bearbeitete, sofort einsatzbereite Medien in den benötigten Formaten.</p>
+                <div class="ext-card">
+                    <span>🎨</span>
+                    <h3 data-translate="srv4_title" style="margin-bottom: 5px;">UX/UI & Branding</h3>
+                    <p data-translate="srv4_desc" style="font-size: 0.9rem; color: #555;">Konsistente visuelle Identität und Interface-Design.</p>
                 </div>
             </div>
         </div>
@@ -212,38 +194,16 @@
 
     <section>
         <div class="container">
-            <div class="why-grid">
-                <div>
-                    <h2 data-translate="why_title">Warum SAN Studio?</h2>
-                    <p data-translate="why_sub" style="margin-bottom: 30px;">Wir kombinieren kreative Exzellenz mit der Verlässlichkeit einer Agentur.</p>
-                    <ul class="why-list">
-                        <li>
-                            <div class="why-icon">✓</div>
-                            <div class="why-text">
-                                <h4 data-translate="why1_t">Ein Ansprechpartner</h4>
-                                <p data-translate="why1_p">Wir koordinieren das gesamte Kreativteam. Sie kommunizieren nur mit uns.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="why-icon">✓</div>
-                            <div class="why-text">
-                                <h4 data-translate="why2_t">Konsistente Qualität</h4>
-                                <p data-translate="why2_p">Standardisierte Qualitätskontrolle vor jeder finalen Auslieferung.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="why-icon">✓</div>
-                            <div class="why-text">
-                                <h4 data-translate="why3_t">Digitale DNA</h4>
-                                <p data-translate="why3_p">Wir wissen genau, welche Formate auf modernen Websites und Social Media konvertieren.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div style="background: var(--bg-suite); border-radius: 20px; padding: 40px; text-align: center;">
-                    <h3 style="color: var(--primary);">SAN Technologies</h3>
-                    <p data-translate="why_box_p">Teil der SAN Unternehmensgruppe.<br>Strategie, Software und Content aus einer Hand.</p>
-                </div>
+            <div class="section-header">
+                <h2 data-translate="process_title">So arbeiten wir zusammen</h2>
+            </div>
+            <div class="process-grid">
+                <div class="step"><span>1</span><p data-translate="step1_title">Verstehen</p></div>
+                <div class="step"><span>2</span><p data-translate="step2_title">Konzept</p></div>
+                <div class="step"><span>3</span><p data-translate="step3_title">Design</p></div>
+                <div class="step"><span>4</span><p data-translate="step4_title">Produktion</p></div>
+                <div class="step"><span>5</span><p data-translate="step5_title">Review</p></div>
+                <div class="step"><span>6</span><p data-translate="step6_title">Lieferung</p></div>
             </div>
         </div>
     </section>
@@ -254,26 +214,45 @@
                 <h2 data-translate="work_title">Ausgewählte Arbeiten</h2>
                 <p data-translate="work_sub">Einblick in aktuelle Produktionen und Brandings.</p>
             </div>
+
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all" data-translate="flt_all">Alle Projekte</button>
+                <button class="filter-btn" data-filter="food" data-translate="flt_food">Food & Gastro</button>
+                <button class="filter-btn" data-filter="product" data-translate="flt_product">Produkte</button>
+                <button class="filter-btn" data-filter="ui" data-translate="flt_ui">UX/UI Design</button>
+            </div>
             
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <span class="placeholder-text">Coming Soon: Food</span>
+            <div class="gallery-grid" id="portfolio-grid">
+                
+                <div class="gallery-item" data-category="food" onclick="openModal('https://images.unsplash.com/photo-1544025162-811114215b14?auto=format&fit=crop&w=800&q=80')">
+                    <img src="https://images.unsplash.com/photo-1544025162-811114215b14?auto=format&fit=crop&w=600&q=80" alt="Food Photography">
+                    <div class="gallery-caption">Restaurant Menu Shoot</div>
                 </div>
-                <div class="gallery-item">
-                    <span class="placeholder-text">Coming Soon: Product</span>
+
+                <div class="gallery-item" data-category="ui" onclick="openModal('https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&w=800&q=80')">
+                    <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&w=600&q=80" alt="UI Design">
+                    <div class="gallery-caption">Mobile App Concept</div>
                 </div>
-                <div class="gallery-item">
-                    <span class="placeholder-text">Coming Soon: Corporate</span>
+
+                <div class="gallery-item" data-category="product" onclick="openModal('https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80')">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" alt="Product Photography">
+                    <div class="gallery-caption">D2C Brand Product</div>
                 </div>
+
+                <div class="gallery-item" data-category="food" onclick="openModal('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80')">
+                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" alt="Atmosphere">
+                    <div class="gallery-caption">Interior Atmosphere</div>
+                </div>
+
             </div>
         </div>
     </section>
 
     <section id="contact" class="cta-section">
         <div class="container">
-            <h2 data-translate="cta_title">Lassen Sie uns Inhalte schaffen, die Ihre Marke repräsentieren.</h2>
+            <h2 data-translate="cta_title">Inhalte schaffen, die Ihre Marke repräsentieren.</h2>
             <p data-translate="cta_sub">Professionell. Zuverlässig. Auf den Punkt.</p>
-            <a href="index.html#contact" class="btn" data-translate="cta_btn">Gespräch vereinbaren</a>
+            <a href="index.html#contact" class="btn" data-translate="cta_btn">Projekt anfragen</a>
         </div>
     </section>
 
@@ -282,9 +261,9 @@
             <p>
                 &copy; 2025 SAN Technologies. 
                 <span style="margin: 0 8px; color: #444;">|</span> 
-                <a href="datenschutz.html" style="color: inherit; transition: 0.3s;" data-translate="footer_privacy">Datenschutz</a>
+                <a href="datenschutz.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_privacy">Datenschutz</a>
                 <span style="margin: 0 8px; color: #444;">|</span> 
-                <a href="impressum.html" style="color: inherit; transition: 0.3s;" data-translate="footer_impressum">Impressum</a>
+                <a href="impressum.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_impressum">Impressum</a>
             </p>
         </div>
     </footer>
@@ -312,64 +291,55 @@
         const translations = {
             'de': {
                 'studio_page_title': 'Creative & Visual Production | SAN Studio',
-                'studio_meta_desc': 'SAN Studio: End-to-end visuelle Content Kreation für moderne Marken. Fotografie, Videografie und Social Media Content für europäische Unternehmen.',
+                'studio_meta_desc': 'SAN Studio: End-to-end visuelle Content Kreation für moderne Marken. Fotografie, Videografie und UX Design.',
                 'nav_back': 'Startseite zurück',
-                'hero_title': 'Bauen Sie eine Marke, die so gut aussieht, wie sie performt.',
-                'hero_sub': 'Professionelle visuelle Produktion für moderne Unternehmen. Klare Prozesse, konsistente Qualität.',
-                'hero_btn': 'Projekt anfragen',
+                'hero_trust': 'Premium Visual Content · European Standard',
+                'hero_title': 'SAN Studio',
+                'hero_sub': 'Bauen Sie eine Marke, die so gut aussieht, wie sie performt.',
+                'hero_desc': 'Professionelle Fotografie, Videografie und UX/UI Design für moderne Unternehmen. Klare Prozesse, konsistente Qualität.',
                 'about_title': 'Ihre Vision, professionell umgesetzt.',
-                'about_desc': 'SAN Studio ist Ihr Partner für End-to-End Content Kreation. Von der ersten Konzeption bis zum finalen Shooting kümmern wir uns um den gesamten visuellen Auftritt Ihrer Marke. Ein zentraler Ansprechpartner, ein professioneller Standard.',
+                'about_desc': 'SAN Studio ist Ihr Partner für End-to-End Content Kreation. Von der ersten Konzeption über das UI-Design bis zum finalen Shooting kümmern wir uns um den gesamten visuellen Auftritt Ihrer Marke. Ein zentraler Ansprechpartner, ein professioneller Standard.',
+                'about_note': '💡 Teil der SAN Unternehmensgruppe: Strategie, Software und Content aus einer Hand.',
                 'services_title': 'Unsere Disziplinen',
-                'srv1_title': 'Fotografie', 'srv1_desc': 'Gestochen scharfe Produktaufnahmen, atmosphärische Restaurantbilder und authentische Corporate-Porträts.',
-                'srv2_title': 'Videografie', 'srv2_desc': 'Hochwertige Markenfilme und Werbespots, die Ihre Unternehmensgeschichte klar kommunizieren.',
-                'srv3_title': 'Social Media Content', 'srv3_desc': 'Aufmerksamkeitsstarke Kurzvideos (Reels, TikToks), optimiert für maximale Reichweite.',
-                'srv4_title': 'Visual Branding', 'srv4_desc': 'Entwicklung einer konsistenten visuellen Identität über alle Kanäle hinweg.',
-                'process_title': 'So arbeiten wir zusammen', 'process_sub': 'Ein strukturierter Ablauf für stressfreie Produktionen.',
-                'step1_num': 'Schritt 01', 'step1_title': 'Verstehen', 'step1_desc': 'Wir analysieren Ihre Marke, Zielgruppe und Anforderungen.',
-                'step2_num': 'Schritt 02', 'step2_title': 'Planen', 'step2_desc': 'Erstellung eines klaren Konzeptboards und Shooting-Planung.',
-                'step3_num': 'Schritt 03', 'step3_title': 'Produzieren', 'step3_desc': 'Unser Netzwerk aus Kreativen setzt das Konzept professionell um.',
-                'step4_num': 'Schritt 04', 'step4_title': 'Liefern', 'step4_desc': 'Sie erhalten fertig bearbeitete, einsatzbereite Medien.',
-                'why_title': 'Warum SAN Studio?', 'why_sub': 'Wir kombinieren kreative Exzellenz mit der Verlässlichkeit einer Agentur.',
-                'why1_t': 'Ein Ansprechpartner', 'why1_p': 'Wir koordinieren das gesamte Kreativteam. Sie kommunizieren nur mit uns.',
-                'why2_t': 'Konsistente Qualität', 'why2_p': 'Standardisierte Qualitätskontrolle vor jeder finalen Auslieferung.',
-                'why3_t': 'Digitale DNA', 'why3_p': 'Wir wissen, welche Formate auf modernen Websites und Social Media konvertieren.',
-                'why_box_p': 'Teil der SAN Unternehmensgruppe.<br>Strategie, Software und Content aus einer Hand.',
+                'services_sub': 'Visuelle Performance für Restaurants und D2C Brands.',
+                'srv1_title': 'Fotografie', 'srv1_desc': 'Produktaufnahmen, Restaurantbilder und Corporate-Porträts.',
+                'srv2_title': 'Videografie', 'srv2_desc': 'Markenfilme und Werbespots für klare Kommunikation.',
+                'srv3_title': 'Social Media', 'srv3_desc': 'Kurzvideos (Reels) optimiert für maximale Reichweite.',
+                'srv4_title': 'UX/UI & Branding', 'srv4_desc': 'Konsistente visuelle Identität und Interface-Design.',
+                'process_title': 'So arbeiten wir zusammen',
+                'step1_title': 'Verstehen', 'step2_title': 'Konzept', 'step3_title': 'Design', 'step4_title': 'Produktion', 'step5_title': 'Review', 'step6_title': 'Lieferung',
                 'work_title': 'Ausgewählte Arbeiten', 'work_sub': 'Einblick in aktuelle Produktionen und Brandings.',
-                'cta_title': 'Lassen Sie uns Inhalte schaffen, die Ihre Marke repräsentieren.', 'cta_sub': 'Professionell. Zuverlässig. Auf den Punkt.', 'cta_btn': 'Gespräch vereinbaren',
+                'cta_title': 'Inhalte schaffen, die Ihre Marke repräsentieren.', 'cta_sub': 'Professionell. Zuverlässig. Auf den Punkt.', 'cta_btn': 'Projekt anfragen',
                 'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum'
             },
             'en': {
                 'studio_page_title': 'Creative & Visual Production | SAN Studio',
-                'studio_meta_desc': 'SAN Studio: End-to-end visual content creation for modern brands. Photography, videography, and social media content tailored for European businesses.',
+                'studio_meta_desc': 'SAN Studio: End-to-end visual content creation for modern brands. Photography, videography, and UX design.',
                 'nav_back': 'Back to Home',
-                'hero_title': 'Build a Brand That Looks as Good as It Performs.',
-                'hero_sub': 'Professional visual production for modern businesses. Clear processes, consistent quality.',
-                'hero_btn': 'Start a Project',
+                'hero_trust': 'Premium Visual Content · European Standard',
+                'hero_title': 'SAN Studio',
+                'hero_sub': 'Build a Brand That Looks as Good as It Performs.',
+                'hero_desc': 'Professional photography, videography, and UX/UI design for modern businesses. Clear processes, consistent quality.',
                 'about_title': 'Your Vision, Professionally Executed.',
-                'about_desc': 'SAN Studio is your partner for end-to-end content creation. From initial concept to the final shoot, we manage your brand’s entire visual presence. One point of contact, one professional standard.',
+                'about_desc': 'SAN Studio is your partner for end-to-end content creation. From initial concept and UI design to the final shoot, we manage your brand’s entire visual presence. One point of contact, one professional standard.',
+                'about_note': '💡 Part of the SAN Technologies group: Strategy, Software, and Content from a single source.',
                 'services_title': 'Our Disciplines',
-                'srv1_title': 'Photography', 'srv1_desc': 'Crisp product shots, atmospheric restaurant imagery, and authentic corporate portraits.',
-                'srv2_title': 'Videography', 'srv2_desc': 'High-quality brand videos and commercials that clearly communicate your story.',
-                'srv3_title': 'Social Media Content', 'srv3_desc': 'Engaging short-form videos (Reels, TikToks) optimized for maximum reach.',
-                'srv4_title': 'Visual Branding', 'srv4_desc': 'Developing a consistent visual identity across all your digital channels.',
-                'process_title': 'How It Works', 'process_sub': 'A structured process for stress-free productions.',
-                'step1_num': 'Step 01', 'step1_title': 'Understand', 'step1_desc': 'We analyze your brand, target audience, and project requirements.',
-                'step2_num': 'Step 02', 'step2_title': 'Plan', 'step2_desc': 'Creating clear concept boards and detailed shoot planning.',
-                'step3_num': 'Step 03', 'step3_title': 'Create', 'step3_desc': 'Our network of creative professionals executes the concept on-site.',
-                'step4_num': 'Step 04', 'step4_title': 'Deliver', 'step4_desc': 'You receive fully edited, ready-to-use media in all required formats.',
-                'why_title': 'Why SAN Studio?', 'why_sub': 'We combine creative excellence with the reliability of an agency.',
-                'why1_t': 'One Point of Contact', 'why1_p': 'We coordinate the entire creative team. You only communicate with us.',
-                'why2_t': 'Consistent Quality', 'why2_p': 'Standardized quality control before every final delivery.',
-                'why3_t': 'Digital DNA', 'why3_p': 'We know exactly which formats convert on modern websites and social media.',
-                'why_box_p': 'Part of the SAN Technologies group.<br>Strategy, Software, and Content from a single source.',
+                'services_sub': 'Visual Performance for Restaurants and D2C Brands.',
+                'srv1_title': 'Photography', 'srv1_desc': 'Product shots, restaurant imagery, and corporate portraits.',
+                'srv2_title': 'Videography', 'srv2_desc': 'Brand videos and commercials for clear communication.',
+                'srv3_title': 'Social Media', 'srv3_desc': 'Short videos (Reels) optimized for maximum reach.',
+                'srv4_title': 'UX/UI & Branding', 'srv4_desc': 'Consistent visual identity and interface design.',
+                'process_title': 'Implementation & Process',
+                'step1_title': 'Understand', 'step2_title': 'Concept', 'step3_title': 'Design', 'step4_title': 'Production', 'step5_title': 'Review', 'step6_title': 'Delivery',
                 'work_title': 'Selected Work', 'work_sub': 'A glimpse into our recent productions and branding projects.',
-                'cta_title': 'Let’s create content that represents your brand the right way.', 'cta_sub': 'Professional. Reliable. On point.', 'cta_btn': 'Get in Touch',
+                'cta_title': 'Let’s create content that represents your brand.', 'cta_sub': 'Professional. Reliable. On point.', 'cta_btn': 'Request Project',
                 'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice'
             }
         };
 
         const toggles = document.querySelectorAll('.lang-toggle-input');
-        
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
         function updateLanguage(lang) {
             document.querySelectorAll('[data-translate]').forEach(el => {
                 const key = el.getAttribute('data-translate');
