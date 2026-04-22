@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="team_page_title">Core Team | SAN Technologies</title>
+    
+    <meta name="description" content="The core team behind SAN Technologies. Human strategy combined with AI-driven technical architecture." data-translate-meta="team_meta_desc">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --primary: #006064;
+            --accent: #00BCD4;
+            --dark: #333333;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --bg-suite: #f0f4f8; 
+            --container-width: 1150px;
+        }
+
+        /* --- GLOBAL RESET & LAYOUT --- */
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: var(--dark); line-height: 1.6; background-color: var(--white); scroll-behavior: smooth; }
+        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; width: 100%; }
+        h1, h2, h3, h4 { font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; margin-top: 0; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        p { margin: 0 0 20px 0; }
+
+        /* --- HEADER --- */
+        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo img { height: 65px; width: auto; }
+        .nav-right { display: flex; align-items: center; gap: 30px; }
+        .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; }
+        .nav-desktop a:hover { color: var(--primary); }
+
+        /* --- LANG TOGGLE --- */
+        .lang-switch-container { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 2px solid #ddd; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 2px; background-color: var(--primary); transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #E0F7FA; border-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .flag-icon { height: 14px; width: auto; vertical-align: middle; }
+
+        /* --- SECTIONS --- */
+        section { padding: 80px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; max-width: 900px; margin-left: auto; margin-right: auto; }
+
+        /* --- HERO --- */
+        .team-hero { background: linear-gradient(135deg, var(--primary) 0%, #003d40 100%); color: var(--white); text-align: center; padding: 100px 0; }
+        .team-hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        .hero-subline { font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 30px; }
+        .trust-line { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.9); font-weight: 800; }
+
+        /* --- PHILOSOPHY BOX --- */
+        .plain-box { background: var(--bg-suite); padding: 50px; border-radius: 25px; text-align: center; margin: 40px 0; border: 1px solid #e0e0e0; }
+        .plain-box h2 { color: var(--primary); }
+        .plain-box p { font-size: 1.1rem; max-width: 800px; margin: 0 auto; color: #444; }
+
+        /* --- TEAM GRID --- */
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-top: 20px; }
+        .team-card { background: var(--white); border-radius: 20px; padding: 50px 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; border: 2px solid #eee; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; align-items: center; }
+        .team-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--accent); }
+        
+        .team-avatar { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 25px; border: 4px solid var(--bg-suite); background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #999; }
+        
+        .role-tag { background: var(--primary); color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: inline-block;}
+        .role-tag.ai { background: #333; color: #00BCD4; border: 1px solid #00BCD4; }
+        
+        .team-card h3 { margin-bottom: 5px; font-size: 1.6rem; }
+        .team-card p { color: #666; font-size: 0.95rem; line-height: 1.7; }
+
+        /* --- NETWORK BANNER --- */
+        .network-banner { background: var(--white); border: 1px solid #ddd; border-radius: 15px; padding: 40px; margin-top: 60px; text-align: left; display: flex; align-items: center; gap: 30px; }
+        .network-icon { font-size: 3rem; }
+        .network-text h3 { color: var(--primary); margin-bottom: 5px; }
+        .network-text p { margin: 0; font-size: 0.95rem; color: #555; }
+
+        /* --- CTA & FOOTER --- */
+        .cta-section { text-align: center; background: #111; color: white; padding: 100px 0; }
+        .btn { display: inline-block; background: var(--accent); color: white; padding: 18px 45px; border-radius: 50px; font-weight: bold; margin-top: 30px; }
+        footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; }
+
+        @media (max-width: 768px) {
+            .network-banner { flex-direction: column; text-align: center; }
+            .team-hero h1 { font-size: 2.5rem; }
+        }
+        @media (max-width: 600px) {
+            .logo img { height: 45px; } 
+            .nav-right { gap: 15px; } 
+            .nav-desktop a span[data-translate="nav_back"] { display: none; }
+            .nav-desktop a span:first-child { font-size: 1.8rem; line-height: 1; }
+            .header-content { padding: 0 15px; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <header>
+        <div class="container header-content">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="SAN Technologies"></a></div>
+            <div class="nav-right">
+                <nav class="nav-desktop">
+                    <a href="index.html">
+                        <span>←</span> 
+                        <span data-translate="nav_back">Startseite zurück</span>
+                    </a>
+                </nav>
+                <div class="lang-switch-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
+                    <label class="switch"><input type="checkbox" class="lang-toggle-input"><span class="slider"></span></label>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="team-hero">
+        <div class="container">
+            <span class="trust-line" data-translate="hero_trust">Menschliche Strategie · KI-Infrastruktur</span>
+            <h1 data-translate="hero_title">Das Kern-Team</h1>
+            <p class="hero-subline" data-translate="hero_sub">Lean Management. Maximaler Output für unsere Kunden.</p>
+        </div>
+    </section>
+
+    <section style="background-color: var(--white);">
+        <div class="container">
+            <div class="plain-box">
+                <h2 data-translate="phil_title">Agentur-Leistung ohne Agentur-Overhead</h2>
+                <p data-translate="phil_desc">SAN Technologies operiert nach einem strikten "Minimum Spend, Maximum Output"-Prinzip. Statt auf riesige Teams setzen wir auf einen klaren, inhabergeführten Ansatz, kombiniert mit fortschrittlichster KI-Architektur für die Code-Entwicklung. Das Ergebnis: Schnellere Ladezeiten, profitablere Shops und keine versteckten Agenturkosten für Sie.</p>
+            </div>
+        </div>
+    </section>
+
+    <section style="background-color: var(--bg-suite); border-top: 1px solid #e0e0e0;">
+        <div class="container">
+            <div class="team-grid">
+                
+                <div class="team-card">
+                    <img src="profile.jpg" alt="Founder & CEO" class="team-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23999\' viewBox=\'0 0 24 24\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'">
+                    
+                    <span class="role-tag" data-translate="role_ceo">Founder & CEO</span>
+                    <h3 data-translate="name_ceo">Geschäftsführung</h3>
+                    <p data-translate="desc_ceo">Verantwortlich für die kaufmännische Strategie, Projektkalkulation und Kundenbetreuung vor Ort. Leitet die operative Ausrichtung von SAN Technologies und sichert ab, dass jede technische Lösung direkten geschäftlichen ROI für unsere Klienten liefert.</p>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar" style="background: #222; border-color: var(--accent);">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    </div>
+                    
+                    <span class="role-tag ai" data-translate="role_cto">AI-Powered CTO</span>
+                    <h3 data-translate="name_cto">Technische Architektur</h3>
+                    <p data-translate="desc_cto">Der technologische Motor von SAN Technologies. Ein hochmodernes, dediziertes KI-System, das für die fehlerfreie Programmierung, die Systemarchitektur der Headless-Shops und die rasante Bereitstellung von Code-Infrastruktur zuständig ist.</p>
+                </div>
+
+            </div>
+
+            <div class="network-banner">
+                <div class="network-icon">🎨</div>
+                <div class="network-text">
+                    <h3 data-translate="net_title">Das SAN Studio Partner-Netzwerk</h3>
+                    <p data-translate="net_desc">Für alle visuellen Disziplinen – von UX/UI Design bis hin zu professioneller Fotografie und Social Media Produktionen – greifen wir exklusiv auf unser geprüftes Netzwerk unabhängiger Creative Professionals zurück. Sie erhalten erstklassige Visuals, gesteuert durch unser zentrales Projektmanagement.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2 data-translate="cta_title">Bereit für den nächsten Schritt?</h2>
+            <p data-translate="cta_sub">Sprechen Sie direkt mit der Geschäftsführung über Ihr Projekt.</p>
+            <a href="index.html#contact" class="btn" data-translate="cta_btn">Kontakt aufnehmen</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>
+                &copy; 2025 SAN Technologies. 
+                <span style="margin: 0 8px; color: #444;">|</span> 
+                <a href="datenschutz.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_privacy">Datenschutz</a>
+                <span style="margin: 0 8px; color: #444;">|</span> 
+                <a href="impressum.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_impressum">Impressum</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            'de': {
+                'team_page_title': 'Core Team | SAN Technologies',
+                'team_meta_desc': 'Das Kern-Team hinter SAN Technologies. Menschliche Strategie kombiniert mit KI-gestützter technischer Architektur.',
+                'nav_back': 'Startseite zurück',
+                
+                'hero_trust': 'Menschliche Strategie · KI-Infrastruktur',
+                'hero_title': 'Das Kern-Team',
+                'hero_sub': 'Lean Management. Maximaler Output für unsere Kunden.',
+                
+                'phil_title': 'Agentur-Leistung ohne Agentur-Overhead',
+                'phil_desc': 'SAN Technologies operiert nach einem strikten "Minimum Spend, Maximum Output"-Prinzip. Statt auf riesige Teams setzen wir auf einen klaren, inhabergeführten Ansatz, kombiniert mit fortschrittlichster KI-Architektur für die Code-Entwicklung. Das Ergebnis: Schnellere Ladezeiten, profitablere Shops und keine versteckten Agenturkosten für Sie.',
+                
+                'role_ceo': 'Founder & CEO',
+                'name_ceo': 'Geschäftsführung',
+                'desc_ceo': 'Verantwortlich für die kaufmännische Strategie, Projektkalkulation und Kundenbetreuung vor Ort. Leitet die operative Ausrichtung von SAN Technologies und sichert ab, dass jede technische Lösung direkten geschäftlichen ROI für unsere Klienten liefert.',
+                
+                'role_cto': 'AI-Powered CTO',
+                'name_cto': 'Technische Architektur',
+                'desc_cto': 'Der technologische Motor von SAN Technologies. Ein hochmodernes, KI-gestütztes System, das für die Programmierung, die Systemarchitektur der Headless-Shops und die rasante Bereitstellung von Code-Infrastruktur zuständig ist.',
+                
+                'net_title': 'Das SAN Studio Partner-Netzwerk',
+                'net_desc': 'Für alle visuellen Disziplinen – von UX/UI Design bis hin zu professioneller Fotografie und Social Media Produktionen – greifen wir exklusiv auf unser geprüftes Netzwerk unabhängiger Creative Professionals zurück. Sie erhalten erstklassige Visuals, gesteuert durch unser zentrales Projektmanagement.',
+                
+                'cta_title': 'Bereit für den nächsten Schritt?',
+                'cta_sub': 'Sprechen Sie direkt mit der Geschäftsführung über Ihr Projekt.',
+                'cta_btn': 'Kontakt aufnehmen',
+                'footer_privacy': 'Datenschutz',
+                'footer_impressum': 'Impressum'
+            },
+            'en': {
+                'team_page_title': 'Core Team | SAN Technologies',
+                'team_meta_desc': 'The core team behind SAN Technologies. Human strategy combined with AI-driven technical architecture.',
+                'nav_back': 'Back to Home',
+                
+                'hero_trust': 'Human Strategy · AI Infrastructure',
+                'hero_title': 'The Core Team',
+                'hero_sub': 'Lean Management. Maximum output for our clients.',
+                
+                'phil_title': 'Agency Performance without Agency Overhead',
+                'phil_desc': 'SAN Technologies operates on a strict "Minimum Spend, Maximum Output" principle. Instead of massive teams, we rely on a clear, owner-led approach combined with state-of-the-art AI architecture for code development. The result: faster load times, more profitable shops, and no hidden agency fees for you.',
+                
+                'role_ceo': 'Founder & CEO',
+                'name_ceo': 'Managing Director',
+                'desc_ceo': 'Responsible for business strategy, project calculation, and on-site client relations. Leads the operational direction of SAN Technologies and ensures that every technical solution delivers direct business ROI for our clients.',
+                
+                'role_cto': 'AI-Powered CTO',
+                'name_cto': 'Technical Architecture',
+                'desc_cto': 'The technological engine of SAN Technologies. A state-of-the-art AI-driven system responsible for flawless programming, the system architecture of our headless shops, and the rapid deployment of code infrastructure.',
+                
+                'net_title': 'The SAN Studio Partner Network',
+                'net_desc': 'For all visual disciplines—from UX/UI design to professional photography and social media productions—we rely exclusively on our vetted network of independent creative professionals. You receive top-tier visuals, directed entirely through our central project management.',
+                
+                'cta_title': 'Ready for the next step?',
+                'cta_sub': 'Speak directly with the Managing Director about your project.',
+                'cta_btn': 'Get in Touch',
+                'footer_privacy': 'Privacy Policy',
+                'footer_impressum': 'Legal Notice'
+            }
+        };
+
+        const toggles = document.querySelectorAll('.lang-toggle-input');
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        function updateLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            document.querySelectorAll('[data-translate-meta]').forEach(el => {
+                const key = el.getAttribute('data-translate-meta');
+                if (translations[lang][key]) el.setAttribute('content', translations[lang][key]);
+            });
+            document.documentElement.lang = lang;
+        }
+
+        const savedLang = localStorage.getItem('selectedLang') || 'de';
+        updateLanguage(savedLang);
+
+        toggles.forEach(t => { t.checked = (savedLang === 'en'); });
+
+        toggles.forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const newLang = this.checked ? 'en' : 'de';
+                toggles.forEach(t => t.checked = this.checked);
+                localStorage.setItem('selectedLang', newLang);
+                updateLanguage(newLang);
+            });
+        });
+    </script>
+</body>
+</html>
