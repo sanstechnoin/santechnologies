@@ -7,65 +7,26 @@
     <meta name="description" content="The makers behind SAN Technologies. Strategy, technology, and premium design." data-translate-meta="team_meta_desc">
     <link rel="icon" type="image/png" href="favicon.png">
 
+    <link rel="stylesheet" href="global.css">
+
     <style>
-        /* --- CSS VARIABLES --- */
-        :root {
-            --primary: #006064;
-            --accent: #00BCD4;
-            --dark: #333333;
-            --light: #f8f9fa;
-            --white: #ffffff;
-            --bg-suite: #f0f4f8; 
-            --container-width: 1150px;
-        }
-
-        /* --- GLOBAL RESET & LAYOUT --- */
-        * { box-sizing: border-box; }
-        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: var(--dark); line-height: 1.6; background-color: var(--white); scroll-behavior: smooth; }
-        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; width: 100%; }
-        h1, h2, h3, h4 { font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; margin-top: 0; }
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        p { margin: 0 0 20px 0; }
-
-        /* --- HEADER --- */
-        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .logo img { height: 65px; width: auto; }
-        .nav-right { display: flex; align-items: center; gap: 30px; }
-        .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; }
-        .nav-desktop a:hover { color: var(--primary); }
-
-        /* --- LANG TOGGLE --- */
-        .lang-switch-container { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; }
-        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 2px solid #ddd; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 2px; background-color: var(--primary); transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #E0F7FA; border-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(20px); }
-        .flag-icon { height: 14px; width: auto; vertical-align: middle; }
-
-        /* --- SECTIONS --- */
+        /* --- TEAM SPECIFIC STYLES --- */
         section { padding: 80px 0; }
         .section-header { text-align: center; margin-bottom: 60px; max-width: 900px; margin-left: auto; margin-right: auto; }
 
-        /* --- HERO --- */
         .team-hero { background: linear-gradient(135deg, var(--primary) 0%, #003d40 100%); color: var(--white); text-align: center; padding: 100px 0; }
         .team-hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
         .hero-subline { font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 30px; }
         .trust-line { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.9); font-weight: 800; }
 
-        /* --- PHILOSOPHY BOX --- */
         .plain-box { background: var(--bg-suite); padding: 50px; border-radius: 25px; text-align: center; margin: 40px 0; border: 1px solid #e0e0e0; }
         .plain-box h2 { color: var(--primary); }
         .plain-box p { font-size: 1.1rem; max-width: 800px; margin: 0 auto; color: #444; }
 
-        /* --- TEAM VERTICAL STACK --- */
         .team-stack { display: flex; flex-direction: column; align-items: center; gap: 50px; margin-top: 20px; }
         .team-card { background: var(--white); border-radius: 20px; padding: 50px 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; border: 2px solid #eee; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; align-items: center; max-width: 750px; width: 100%; }
         .team-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--accent); }
         
-        /* Larger avatar for the top (CEO) card if desired, but kept uniform here for cleanliness */
         .team-avatar { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; margin-bottom: 25px; border: 4px solid var(--bg-suite); background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #999; }
         
         .role-tag { background: var(--primary); color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: inline-block;}
@@ -74,17 +35,10 @@
         .team-card h3 { margin-bottom: 5px; font-size: 1.8rem; }
         .team-card p { color: #666; font-size: 1rem; line-height: 1.7; }
 
-        /* --- CTA & FOOTER --- */
         .cta-section { text-align: center; background: #111; color: white; padding: 100px 0; }
-        .btn { display: inline-block; background: var(--accent); color: white; padding: 18px 45px; border-radius: 50px; font-weight: bold; margin-top: 30px; }
-        footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; }
+        .btn { margin-top: 30px; }
 
         @media (max-width: 600px) {
-            .logo img { height: 45px; } 
-            .nav-right { gap: 15px; } 
-            .nav-desktop a span[data-translate="nav_back"] { display: none; }
-            .nav-desktop a span:first-child { font-size: 1.8rem; line-height: 1; }
-            .header-content { padding: 0 15px; }
             .team-hero h1 { font-size: 2.5rem; }
             .team-card { padding: 40px 20px; }
         }
@@ -92,24 +46,8 @@
 </head>
 <body oncontextmenu="return false;">
 
-    <header>
-        <div class="container header-content">
-            <div class="logo"><a href="index.html"><img src="logo.png" alt="SAN Technologies"></a></div>
-            <div class="nav-right">
-                <nav class="nav-desktop">
-                    <a href="index.html">
-                        <span>←</span> 
-                        <span data-translate="nav_back">Startseite zurück</span>
-                    </a>
-                </nav>
-                <div class="lang-switch-container">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
-                    <label class="switch"><input type="checkbox" class="lang-toggle-input"><span class="slider"></span></label>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
-                </div>
-            </div>
-        </div>
-    </header>
+    <header id="san-header"></header>
+    <div id="san-mobile-menu"></div>
 
     <section class="team-hero">
         <div class="container">
@@ -130,12 +68,9 @@
 
     <section style="background-color: var(--bg-suite); border-top: 1px solid #e0e0e0;">
         <div class="container">
-            
             <div class="team-stack">
-                
                 <div class="team-card">
                     <img src="profile.jpg" alt="Founder & CEO" class="team-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23999\' viewBox=\'0 0 24 24\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'">
-                    
                     <span class="role-tag" data-translate="role_ceo">Founder & CEO</span>
                     <h3 data-translate="name_ceo">Geschäftsführung & Tech</h3>
                     <p data-translate="desc_ceo">Verantwortlich für die gesamte kaufmännische Strategie, Projektkalkulation und Kundenbetreuung vor Ort. Leitet die operative und technologische Ausrichtung von SAN Technologies und stellt sicher, dass jede IT-Lösung einen direkten geschäftlichen ROI für unsere Klienten liefert.</p>
@@ -143,14 +78,11 @@
 
                 <div class="team-card">
                     <img src="profile-creative.jpg" alt="Head of Studio" class="team-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23999\' viewBox=\'0 0 24 24\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'">
-                    
                     <span class="role-tag creative" data-translate="role_cd">Head of SAN Studio</span>
                     <h3 data-translate="name_cd">Creative Lead</h3>
                     <p data-translate="desc_cd">Leitet die kreative Vision, das UX/UI-Design und die visuelle Produktion für unsere Kundenprojekte. Sie verwandelt funktionale Plattformen in starke, konvertierende Marken durch hochwertige Fotografie, Videografie und visuelles Branding.</p>
                 </div>
-
             </div>
-
         </div>
     </section>
 
@@ -162,17 +94,8 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>
-                &copy; 2025 SAN Technologies. 
-                <span style="margin: 0 8px; color: #444;">|</span> 
-                <a href="datenschutz.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_privacy">Datenschutz</a>
-                <span style="margin: 0 8px; color: #444;">|</span> 
-                <a href="impressum.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_impressum">Impressum</a>
-            </p>
-        </div>
-    </footer>
+    <footer id="san-footer"></footer>
+    <div id="san-bot"></div>
 
     <script>
         const translations = {
@@ -180,23 +103,17 @@
                 'team_page_title': 'Unser Team | SAN Technologies',
                 'team_meta_desc': 'Die Köpfe hinter SAN Technologies. Strategie, Technologie und Premium-Design.',
                 'nav_back': 'Startseite zurück',
-                
                 'hero_trust': 'Strategie · Technologie · Design',
                 'hero_title': 'Die Köpfe',
                 'hero_sub': 'Die Expertise hinter SAN Technologies.',
-
-                
                 'phil_title': 'Direkter Kontakt. Keine Account Manager.',
                 'phil_desc': 'Wir glauben an kurze Wege und absolute Effizienz. Statt auf komplexe Hierarchien setzen wir auf direkte Zusammenarbeit. Sie sprechen unmittelbar mit uns – den Machern, die Ihre Software programmieren und Ihr Design entwerfen. Das Ergebnis: Skalierbare IT-Lösungen und Premium-Markenidentitäten ohne Reibungsverluste.',
-                
                 'role_ceo': 'Founder & CEO',
                 'name_ceo': 'Geschäftsführung & Tech',
                 'desc_ceo': 'Verantwortlich für die gesamte kaufmännische Strategie, Projektkalkulation und Kundenbetreuung vor Ort. Leitet die operative und technologische Ausrichtung von SAN Technologies und stellt sicher, dass jede IT-Lösung einen direkten geschäftlichen ROI für unsere Klienten liefert.',
-                
                 'role_cd': 'Head of SAN Studio',
                 'name_cd': 'Creative Lead',
                 'desc_cd': 'Leitet die kreative Vision, das UX/UI-Design und die visuelle Produktion für unsere Kundenprojekte. Sie verwandelt funktionale Plattformen in starke, konvertierende Marken durch hochwertige Fotografie, Videografie und visuelles Branding.',
-                
                 'cta_title': 'Bereit für den nächsten Schritt?',
                 'cta_sub': 'Sprechen Sie direkt mit uns über Ihr Projekt.',
                 'cta_btn': 'Kontakt aufnehmen',
@@ -207,23 +124,17 @@
                 'team_page_title': 'Our Team | SAN Technologies',
                 'team_meta_desc': 'The makers behind SAN Technologies. Strategy, technology, and premium design.',
                 'nav_back': 'Back to Home',
-                
                 'hero_trust': 'Strategy · Technology · Design',
                 'hero_title': 'The Makers',
                 'hero_sub': 'The expertise behind SAN Technologies.',
-
-                
                 'phil_title': 'Direct Contact. Zero Middlemen.',
                 'phil_desc': 'We believe in direct communication and absolute efficiency. Instead of complex hierarchies, we rely on direct collaboration. You speak directly with us—the makers coding your software and designing your brand. The result: scalable IT solutions and premium brand identities without any friction.',
-                
                 'role_ceo': 'Founder & CEO',
                 'name_ceo': 'Managing Director & Tech',
                 'desc_ceo': 'Responsible for overall business strategy, project calculation, and on-site client relations. Leads the operational and technological direction of SAN Technologies, ensuring every IT solution delivers direct business ROI for our clients.',
-                
                 'role_cd': 'Head of SAN Studio',
                 'name_cd': 'Creative Lead',
                 'desc_cd': 'Leads the creative vision, UX/UI design, and visual production for our client projects. She transforms functional platforms into strong, converting brands through high-quality photography, videography, and visual branding.',
-                
                 'cta_title': 'Ready for the next step?',
                 'cta_sub': 'Speak directly with us about your project.',
                 'cta_btn': 'Get in Touch',
@@ -231,35 +142,9 @@
                 'footer_impressum': 'Legal Notice'
             }
         };
-
-        const toggles = document.querySelectorAll('.lang-toggle-input');
-        document.addEventListener('contextmenu', event => event.preventDefault());
-
-        function updateLanguage(lang) {
-            document.querySelectorAll('[data-translate]').forEach(el => {
-                const key = el.getAttribute('data-translate');
-                if (translations[lang][key]) el.innerHTML = translations[lang][key];
-            });
-            document.querySelectorAll('[data-translate-meta]').forEach(el => {
-                const key = el.getAttribute('data-translate-meta');
-                if (translations[lang][key]) el.setAttribute('content', translations[lang][key]);
-            });
-            document.documentElement.lang = lang;
-        }
-
-        const savedLang = localStorage.getItem('selectedLang') || 'de';
-        updateLanguage(savedLang);
-
-        toggles.forEach(t => { t.checked = (savedLang === 'en'); });
-
-        toggles.forEach(toggle => {
-            toggle.addEventListener('change', function() {
-                const newLang = this.checked ? 'en' : 'de';
-                toggles.forEach(t => t.checked = this.checked);
-                localStorage.setItem('selectedLang', newLang);
-                updateLanguage(newLang);
-            });
-        });
     </script>
+
+    <script src="global.js"></script>
+
 </body>
 </html>
