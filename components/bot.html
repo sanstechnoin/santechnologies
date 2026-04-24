@@ -1,0 +1,28 @@
+<div id="chat-widget">
+    <div id="chat-prompt" onclick="toggleChat()">
+        <span>👋🏽</span> <span id="prompt-text">Ask SAN Laxa</span>
+    </div>
+
+    <div id="chat-window">
+        <div class="chat-header">
+            <span style="display:flex; align-items:center; gap:10px;">
+                <img src="bot-icon.gif" style="width:28px; height:28px; border-radius:50%; background:white;"> 
+                SAN Laxa
+            </span>
+            <span class="close-chat" onclick="closeAndResetChat()">×</span>
+        </div>
+        
+        <div class="chat-messages" id="messages"></div>
+        <div class="typing" id="typing-indicator">typing...</div>
+        <div class="chat-footer-disclaimer" id="disclaimer-text">AI Assistant</div>
+        
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="..." onkeypress="handleEnter(event)">
+            <button id="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+    
+    <button id="chat-btn" onclick="toggleChat()">
+        <img src="bot-icon.gif" alt="Chat" style="width: 100%; height: 100%; object-fit: cover;">
+    </button>
+</div>
