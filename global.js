@@ -4,7 +4,6 @@
 
 const CACHE_VERSION = 'v1.1';
 
-// --- 1. GLOBAL DICTIONARY (For Header, Footer, and Common Elements) ---
 const GLOBAL_TRANSLATIONS = {
     'de': {
         'nav_work': 'Referenzen',
@@ -48,7 +47,7 @@ async function injectComponent(elementId, componentPath) {
     if (!target) return;
 
     const cacheKey = `san_comp_${componentPath}_${CACHE_VERSION}`;
-    const cachedHTML = sessionStorage.getItem(cacheKey); 
+    const cachedHTML = localStorage.getItem(cacheKey);
 
     if (cachedHTML) {
         target.innerHTML = cachedHTML;
@@ -60,7 +59,7 @@ async function injectComponent(elementId, componentPath) {
         if (!response.ok) throw new Error(`Failed to load ${componentPath}`);
         const html = await response.text();
         target.innerHTML = html;
-        sessionStorage.setItem(cacheKey, html);
+        localStorage.setItem(cacheKey, html); 
     } catch (error) {
         console.error(error);
     }
@@ -84,7 +83,7 @@ window.toggleMenu = function() {
 };
 
 
-// --- 4. FOOLPROOF TRANSLATION ENGINE ---
+// --- 4. TRANSLATION ENGINE ---
 window.updateLanguage = function(lang) {
     // Update Text Elements
     document.querySelectorAll('[data-translate]').forEach(el => {
@@ -101,7 +100,6 @@ window.updateLanguage = function(lang) {
         if (text) el.innerHTML = text;
     });
 
-    // Update Meta Tags
     document.querySelectorAll('[data-translate-meta]').forEach(el => {
         const key = el.getAttribute('data-translate-meta');
         let text = '';
@@ -113,7 +111,6 @@ window.updateLanguage = function(lang) {
 
     document.documentElement.lang = lang;
 
-    // Sync toggle switches visually
     document.querySelectorAll('.lang-toggle-input').forEach(t => {
         t.checked = (lang === 'en');
     });
@@ -129,8 +126,8 @@ document.addEventListener('change', function(e) {
         // Sync the AI Bot language
         setTimeout(() => { 
             if(typeof window.updateChatUI === 'function') window.updateChatUI();
-            if (!sessionStorage.getItem('san_chat_context')) {
-                sessionStorage.removeItem('san_chat_html');
+            if (!localStorage.getItem('san_chat_context')) {
+                localStorage.removeItem('san_chat_html');
                 if(typeof window.initChat === 'function') window.initChat();
             }
         }, 100);
@@ -152,49 +149,93 @@ window.updateChatUI = function() {
     if(document.getElementById('chat-input')) document.getElementById('chat-input').placeholder = t.placeholder;
     if(document.getElementById('disclaimer-text')) document.getElementById('disclaimer-text').textContent = t.disclaimer;
 };
-window.getContext = function() { return sessionStorage.getItem('san_chat_context') || ""; };
-window.addToContext = function(role, text) { sessionStorage.setItem('san_chat_context', window.getContext() + `${role}: ${text}\n`); };
+
+window.getContext = function() { return localStorage.getItem('san_chat_context') || ""; };
+window.addToContext = function(role, text) { localStorage.setItem('san_chat_context', window.getContext() + `${role}: ${text}\n`); };
+
 window.initChat = function() {
     window.updateChatUI();
-    const savedHTML = sessionStorage.getItem('san_chat_html');
+    
+    const savedHTML = localStorage.getItem('san_chat_html');
     const msgBox = document.getElementById('messages');
     if (!msgBox) return; 
-    if (savedHTML && savedHTML.trim() !== "") { msgBox.innerHTML = savedHTML; msgBox.scrollTop = msgBox.scrollHeight; } 
-    else { const lang = window.getLang(); msgBox.innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`; }
+    
+    if (savedHTML && savedHTML.trim() !== "") { 
+        msgBox.innerHTML = savedHTML; 
+        msgBox.scrollTop = msgBox.scrollHeight; 
+    } else { 
+        const lang = window.getLang(); 
+        msgBox.innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`; 
+    }
 };
+
 window.toggleChat = function() {
     const win = document.getElementById('chat-window');
     const prompt = document.getElementById('chat-prompt');
     if (!win || !prompt) return;
-    if (win.style.display === 'flex') { win.style.display = 'none'; prompt.style.display = 'flex'; } 
-    else { win.style.display = 'flex'; prompt.style.display = 'none'; document.getElementById('chat-input').focus(); const mb = document.getElementById('messages'); mb.scrollTop = mb.scrollHeight; }
+    
+    if (win.style.display === 'flex') { 
+        win.style.display = 'none'; 
+        prompt.style.display = 'flex'; 
+    } else { 
+        win.style.display = 'flex'; 
+        prompt.style.display = 'none'; 
+        document.getElementById('chat-input').focus(); 
+        const mb = document.getElementById('messages'); 
+        mb.scrollTop = mb.scrollHeight; 
+    }
 };
+
 window.closeAndResetChat = function() {
-    document.getElementById('chat-window').style.display = 'none'; document.getElementById('chat-prompt').style.display = 'flex';
-    sessionStorage.removeItem('san_chat_html'); sessionStorage.removeItem('san_chat_context');
-    const lang = window.getLang(); document.getElementById('messages').innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
+    document.getElementById('chat-window').style.display = 'none'; 
+    document.getElementById('chat-prompt').style.display = 'flex';
+    
+    localStorage.removeItem('san_chat_html'); 
+    localStorage.removeItem('san_chat_context');
+    
+    const lang = window.getLang(); 
+    document.getElementById('messages').innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
 };
+
 window.handleEnter = function(e) { if (e.key === 'Enter') window.sendMessage(); };
+
 window.appendMsg = function(sender, text, isHtml) {
     const box = document.getElementById('messages');
     const div = document.createElement('div');
     div.className = `msg ${sender}`;
     if (isHtml) div.innerHTML = text; else div.textContent = text;
-    box.appendChild(div); box.scrollTop = box.scrollHeight;
-    sessionStorage.setItem('san_chat_html', box.innerHTML);
+    box.appendChild(div); 
+    box.scrollTop = box.scrollHeight;
+    
+    localStorage.setItem('san_chat_html', box.innerHTML);
 };
+
 window.sendMessage = async function() {
     const input = document.getElementById('chat-input');
     const text = input.value.trim();
     if (!text) return;
-    window.appendMsg('user', text, false); window.addToContext('User', text);
-    input.value = ''; document.getElementById('typing-indicator').style.display = 'block';
+    
+    window.appendMsg('user', text, false); 
+    window.addToContext('User', text);
+    input.value = ''; 
+    document.getElementById('typing-indicator').style.display = 'block';
+    
     try {
-        const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, history: window.getContext() }) });
+        const res = await fetch('/api/chat', { 
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({ message: text, history: window.getContext() }) 
+        });
         const data = await res.json();
+        
         document.getElementById('typing-indicator').style.display = 'none';
-        if (!res.ok) window.appendMsg('bot', `⚠️ ${data.reply}`, false);
-        else { window.appendMsg('bot', data.reply, true); window.addToContext('AI', data.reply); }
+        
+        if (!res.ok) {
+            window.appendMsg('bot', `⚠️ ${data.reply}`, false);
+        } else { 
+            window.appendMsg('bot', data.reply, true); 
+            window.addToContext('AI', data.reply); 
+        }
     } catch (err) {
         document.getElementById('typing-indicator').style.display = 'none';
         window.appendMsg('bot', "Offline Mode.", false);
