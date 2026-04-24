@@ -14,73 +14,24 @@
     <meta property="og:type" content="product">
     <link rel="icon" type="image/png" href="favicon.png">
 
+    <link rel="stylesheet" href="global.css">
+
     <style>
-        /* --- CSS VARIABLES (Synced with index.html) --- */
-        :root {
-            --primary: #006064;
-            --accent: #00BCD4;
-            --dark: #333333;
-            --light: #f8f9fa;
-            --white: #ffffff;
-            --bg-suite: #f0f4f8; 
-            --container-width: 1150px;
-        }
-
-        /* --- GLOBAL RESET & LAYOUT --- */
-        * { box-sizing: border-box; }
-        body { 
-            margin: 0; 
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-            color: var(--dark); 
-            line-height: 1.6; 
-            background-color: var(--white); 
-            scroll-behavior: smooth;
-        }
-        
-        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; width: 100%; }
-        h1, h2, h3, h4 { font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; margin-top: 0; }
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        p { margin: 0 0 20px 0; }
-
-        /* --- HEADER --- */
-        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .logo img { height: 65px; width: auto; }
-        .nav-right { display: flex; align-items: center; gap: 30px; }
-        .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; }
-        .nav-desktop a:hover { color: var(--primary); }
-
-        /* --- LANG TOGGLE --- */
-        .lang-switch-container { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; }
-        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 2px solid #ddd; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 2px; background-color: var(--primary); transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #E0F7FA; border-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(20px); }
-        .flag-icon { height: 14px; width: auto; vertical-align: middle; }
-
-        /* --- SECTIONS --- */
+        /* ==========================================================================
+           SAN-COMMERCE.HTML SPECIFIC STYLES
+           ========================================================================== */
+           
         section { padding: 80px 0; }
         .section-header { text-align: center; margin-bottom: 60px; max-width: 900px; margin-left: auto; margin-right: auto; }
 
-        /* --- HERO (UPDATED TO MATCH BRAND) --- */
+        /* --- HERO --- */
         .comm-hero { 
-            /* REVERTED TO SAN SUITE BRAND COLORS */
             background: linear-gradient(135deg, var(--primary) 0%, #003d40 100%); 
             color: var(--white); text-align: center; padding: 100px 0;
         }
         .comm-hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
         .hero-subline { font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 30px; }
-        
-        /* UPDATED VISIBILITY FOR TOP TEXT */
-        .trust-line { 
-            font-size: 0.85rem; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            color: rgba(255,255,255,0.9); /* Changed to White for better visibility */
-            font-weight: 800; 
-        }
+        .trust-line { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.9); font-weight: 800; }
 
         /* --- FILTER BLOCKS --- */
         .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
@@ -94,45 +45,25 @@
         .plain-box { background: var(--bg-suite); padding: 50px; border-radius: 25px; text-align: center; margin: 40px 0; }
         .integration-note { background: var(--white); padding: 20px 30px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; margin-top: 20px; }
 
-	/* --- IMAGE MODAL (LIGHTBOX) --- */
+        /* --- IMAGE MODAL (LIGHTBOX) --- */
         .img-modal { 
-            display: none; /* Hidden by default */
-            position: fixed; z-index: 10001; /* Sit on top of everything */
+            display: none; position: fixed; z-index: 10001; 
             left: 0; top: 0; width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.9); /* Black background with opacity */
+            background-color: rgba(0,0,0,0.9); 
         }
-        
-        /* The Image inside the Modal */
         .img-modal-content { 
-            margin: auto; display: block; 
-            max-width: 90%; max-height: 90vh; 
+            margin: auto; display: block; max-width: 90%; max-height: 90vh; 
             position: absolute; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); /* Perfectly centered */
-            border-radius: 5px; 
+            transform: translate(-50%, -50%); border-radius: 5px; 
             box-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
-
-        /* The Close Button (Top RIGHT) */
         .close-img { 
-            position: absolute; 
-            top: 20px; 
-            right: 30px; /* Changed from left to right */
-            color: #f1f1f1; 
-            font-size: 40px; 
-            font-weight: bold; 
-            transition: 0.3s; 
-            cursor: pointer; 
-            z-index: 10002;
+            position: absolute; top: 20px; right: 30px; color: #f1f1f1; 
+            font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; z-index: 10002;
         }
         .close-img:hover { color: var(--accent); }
-
-        /* Style for the Thumbnail in the page */
-        .zoom-trigger { 
-            cursor: zoom-in; transition: transform 0.2s; 
-        }
-        .zoom-trigger:hover { 
-            opacity: 0.9; transform: scale(1.02); 
-        }
+        .zoom-trigger { cursor: zoom-in; transition: transform 0.2s; }
+        .zoom-trigger:hover { opacity: 0.9; transform: scale(1.02); }
 
         /* --- TIER DEEP DIVE --- */
         .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 40px; }
@@ -141,13 +72,10 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: left;
             display: flex; flex-direction: column; border: 2px solid #eee; transition: all 0.3s ease-in-out;
         }
-        /* Highlight the PRIME card */
         .tier-card.prime { border: 2px solid var(--accent); background: #f0fbff; }
-        
         .tier-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         .tier-card:not(.prime):hover { border-color: var(--accent); }
         .tier-card:hover .tier-icon { transform: scale(1.05); transition: transform 0.3s ease; }
-
         .tier-icon { font-size: 3.5rem; margin-bottom: 20px; display: block; }
         .feature-list { list-style: none; padding: 0; margin: 30px 0; }
         .feature-list li { margin-bottom: 12px; display: flex; gap: 10px; }
@@ -166,41 +94,14 @@
 
         /* --- CTA --- */
         .cta-section { text-align: center; background: #111; color: white; padding: 100px 0; }
-        .btn { display: inline-block; background: var(--accent); color: white; padding: 18px 45px; border-radius: 50px; font-weight: bold; margin-top: 30px; }
 
-        footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; }
-
-        /* --- MOBILE HEADER FIX (From Index) --- */
-        @media (max-width: 600px) {
-            .logo img { height: 45px; } 
-            .nav-right { gap: 15px; } 
-            .nav-desktop a span[data-translate="nav_back"] { display: none; }
-            .nav-desktop a span:first-child { font-size: 1.8rem; line-height: 1; }
-            .header-content { padding: 0 15px; }
-        }
         @media (max-width: 900px) { .comm-hero h1 { font-size: 2.5rem; } .tier-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
-    <header>
-        <div class="container header-content">
-            <div class="logo"><a href="index.html"><img src="logo.png" alt="Logo"></a></div>
-            <div class="nav-right">
-                <nav class="nav-desktop">
-                    <a href="index.html">
-                        <span>←</span> 
-                        <span data-translate="nav_back">Startseite zurück</span>
-                    </a>
-                </nav>
-                <div class="lang-switch-container">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
-                    <label class="switch"><input type="checkbox" class="lang-toggle-input"><span class="slider"></span></label>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
-                </div>
-            </div>
-        </div>
-    </header>
+    <header id="san-header"></header>
+    <div id="san-mobile-menu"></div>
 
     <section class="comm-hero">
         <div class="container">
@@ -288,7 +189,7 @@
         </div>
     </section>
 
-<section style="background-color: var(--white); border-top: 1px solid #eee;">
+    <section style="background-color: var(--white); border-top: 1px solid #eee;">
         <div class="container">
             <div class="section-header">
                 <h2 data-translate="geo_comm_title">Warum Custom Commerce? (India & Germany Ready)</h2>
@@ -322,7 +223,7 @@
         </div>
     </section>
 
-<section style="background-color: var(--light); padding: 80px 0;">
+    <section style="background-color: var(--light); padding: 80px 0;">
         <div class="container">
             <div class="section-header">
                 <h2 data-translate="case_title">Case Study: Mom's Hair Oil</h2>
@@ -355,7 +256,6 @@
 
                 <div style="flex: 1; min-width: 300px;">
                     <div style="background: white; padding: 10px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #eee;">
-                        
                         <img 
                             src="admin-dashboard.jpg" 
                             alt="SAN Commerce Admin Panel (Click to Zoom)" 
@@ -363,14 +263,10 @@
                             onclick="openModal(this.src)"
                             style="width: 100%; height: auto; border-radius: 8px; display: block;"
                         >
-                        
                     </div>
                     <p style="text-align: center; font-size: 0.8rem; color: #999; margin-top: 10px; font-style: italic;">
                         <span style="cursor:pointer;" onclick="openModal('admin-dashboard.jpg')" data-translate="zoom_hint">🔍 Klick zum Vergrößern</span>
                     </p>
-                    </p>
-                </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -393,21 +289,21 @@
         </div>
     </section>
 
-	<section style="background-color: var(--light);">
-    <div class="container">
-        <div class="section-header">
-            <h2>Creative & Design Studio</h2>
-            <p>High-Conversion UX/UI & Visual Production for D2C Brands.</p>
+    <section style="background-color: var(--light);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Creative & Design Studio</h2>
+                <p>High-Conversion UX/UI & Visual Production for D2C Brands.</p>
+            </div>
+            <div class="ext-grid">
+                <div class="ext-card"><span>💎</span><p>Conversion-Optimized UX/UI</p></div>
+                <div class="ext-card"><span>📦</span><p>High-End Product Photography</p></div>
+                <div class="ext-card"><span>🎞️</span><p>Creative Ad Production</p></div>
+                <div class="ext-card"><span>🎨</span><p>Brand Strategy & Design</p></div>
+            </div>
         </div>
-        <div class="ext-grid">
-            <div class="ext-card"><span>💎</span><p>Conversion-Optimized UX/UI</p></div>
-            <div class="ext-card"><span>📦</span><p>High-End Product Photography</p></div>
-            <div class="ext-card"><span>🎞️</span><p>Creative Ad Production</p></div>
-            <div class="ext-card"><span>🎨</span><p>Brand Strategy & Design</p></div>
-        </div>
-    </div>
-	</section>
-	
+    </section>
+    
     <section style="background-color: var(--bg-suite);">
         <div class="container">
             <div class="section-header">
@@ -423,7 +319,7 @@
             </div>
         </div>
     </section>
-	
+    
     <section id="contact" class="cta-section">
         <div class="container">
             <h2 data-translate="ccta_t">Bereit für den nächsten Schritt?</h2>
@@ -432,21 +328,10 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>
-                &copy; 2025 SAN Technologies. 
-                <span style="margin: 0 8px; color: #444;">|</span> 
-                
-                <a href="datenschutz.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_privacy">Datenschutz</a>
-                
-                <span style="margin: 0 8px; color: #444;">|</span> 
-                
-                <a href="impressum.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_impressum">Impressum</a>
-            </p>
-        </div>
-    </footer>
-	<div id="imageModal" class="img-modal" onclick="closeModal()">
+    <footer id="san-footer"></footer>
+    <div id="san-bot"></div>
+
+    <div id="imageModal" class="img-modal" onclick="closeModal()">
         <span class="close-img" onclick="closeModal()">&times;</span>
         <img class="img-modal-content" id="imgExpanded">
     </div>
@@ -471,15 +356,16 @@
             if (event.key === "Escape") closeModal();
         });
     </script>
+
     <script>
         const translations = {
             'de': {
                 'nav_back': 'Startseite zurück',
                 'comm_page_title': 'D2C E-Commerce Agentur & Headless Shops | SAN Commerce',
-				'comm_meta_desc': 'High-Performance E-Commerce Lösungen für D2C Marken. Maßgeschneiderte Headless-Shops (React), Custom Admin-Panels und Daten-Migration weg von Shopify.',
-				'comm_keywords': 'D2C Shop Entwicklung, Headless Commerce, Shopify Alternative, E-Commerce Agentur, Custom Shop Software, React Shop',
-				'comm_og_title': 'SAN Commerce | High-Performance D2C Shops',
-				'comm_og_desc': 'Ladezeiten unter 1 Sekunde. Volle Kontrolle über ROI und Logistik. Die Alternative zum Baukasten.',
+                'comm_meta_desc': 'High-Performance E-Commerce Lösungen für D2C Marken. Maßgeschneiderte Headless-Shops (React), Custom Admin-Panels und Daten-Migration weg von Shopify.',
+                'comm_keywords': 'D2C Shop Entwicklung, Headless Commerce, Shopify Alternative, E-Commerce Agentur, Custom Shop Software, React Shop',
+                'comm_og_title': 'SAN Commerce | High-Performance D2C Shops',
+                'comm_og_desc': 'Ladezeiten unter 1 Sekunde. Volle Kontrolle über ROI und Logistik. Die Alternative zum Baukasten.',
                 'comm_trust_line': 'Performance First · Maßgeschneiderte Logik · Scalable',
                 'comm_hero_title': 'SAN Commerce',
                 'comm_hero_sub': 'Das Betriebssystem für Direct-to-Consumer (D2C) Marken',
@@ -495,22 +381,22 @@
                 'comm_plain_note': '💡 Das Ergebnis: Höhere Conversion-Rates durch Performance und massive Zeitersparnis im Backoffice.',                
                 'comm_edition_title': 'Zwei Säulen Ihres Erfolgs',
                 'geo_comm_title': 'Warum Custom Commerce? (India & Germany Ready)',
-				'geo_comm_sub': 'Einblicke in das SAN Commerce "Merchant OS" Backend.',
-				'geo_cq1': 'Das "Merchant OS": Volle Kontrolle über Inventar & ROI',
-				'geo_ca1': 'Vergessen Sie unübersichtliche Dashboards. Unser <strong>Custom Admin Panel</strong> zeigt Ihnen den echten Gewinn pro Bestellung. Verwalten Sie <strong>Lagerbestände (Inventory)</strong>, komplexe <strong>Versandregeln</strong> und Coupons zentral – ohne teure Zusatz-Apps.',
-				'geo_cq2': 'Verkaufen in Deutschland & Indien gleichzeitig?',
-				'geo_ca2': 'SAN Commerce ist "Cross-Border Ready". Wir unterstützen <strong>Multi-Currency (EUR / INR)</strong> und lokale Zahlungsarten: <strong>UPI & Razorpay</strong> für Indien sowie <strong>SEPA & PayPal</strong> für Deutschland. Bestellungen werden automatisch an das passende Lager geleitet.',
-				'geo_cq3': 'Warum ist "Headless" besser für SEO?',
-				'geo_ca3': 'Durch die Trennung von Frontend (React) und Backend laden Ihre Seiten in <strong>unter 1 Sekunde</strong>. Dies verbessert den <strong>Google Quality Score</strong> und senkt Ihre Werbekosten.',
-				'case_title': "Fallstudie: Mom's Hair Oil",
-				'case_sub': 'Vom lokalen Geschäft zur internationalen D2C-Marke.',
-				'case_h3': 'Die Herausforderung',
-				'case_p1': 'Der Kunde benötigte komplexe <strong>Versandregeln (Shipping Rules)</strong> basierend auf dem ROI und spezifische <strong>Coupon-Logiken</strong>, die Shopify nicht abbilden konnte.',
-				'case_h3_2': 'Die Lösung',
-				'case_p2': 'Wir entwickelten ein <strong>Custom Admin Panel</strong>, das Inventar und Verkäufe in Echtzeit synchronisiert. Das System berechnet automatisch den profitabelsten Versandweg.',
-				'case_stat1': 'Conversion Rate',
-				'case_stat2': 'Ladezeit (Web Vitals)',
-				'zoom_hint': '🔍 Klick zum Vergrößern',
+                'geo_comm_sub': 'Einblicke in das SAN Commerce "Merchant OS" Backend.',
+                'geo_cq1': 'Das "Merchant OS": Volle Kontrolle über Inventar & ROI',
+                'geo_ca1': 'Vergessen Sie unübersichtliche Dashboards. Unser <strong>Custom Admin Panel</strong> zeigt Ihnen den echten Gewinn pro Bestellung. Verwalten Sie <strong>Lagerbestände (Inventory)</strong>, komplexe <strong>Versandregeln</strong> und Coupons zentral – ohne teure Zusatz-Apps.',
+                'geo_cq2': 'Verkaufen in Deutschland & Indien gleichzeitig?',
+                'geo_ca2': 'SAN Commerce ist "Cross-Border Ready". Wir unterstützen <strong>Multi-Currency (EUR / INR)</strong> und lokale Zahlungsarten: <strong>UPI & Razorpay</strong> für Indien sowie <strong>SEPA & PayPal</strong> für Deutschland. Bestellungen werden automatisch an das passende Lager geleitet.',
+                'geo_cq3': 'Warum ist "Headless" besser für SEO?',
+                'geo_ca3': 'Durch die Trennung von Frontend (React) und Backend laden Ihre Seiten in <strong>unter 1 Sekunde</strong>. Dies verbessert den <strong>Google Quality Score</strong> und senkt Ihre Werbekosten.',
+                'case_title': "Fallstudie: Mom's Hair Oil",
+                'case_sub': 'Vom lokalen Geschäft zur internationalen D2C-Marke.',
+                'case_h3': 'Die Herausforderung',
+                'case_p1': 'Der Kunde benötigte komplexe <strong>Versandregeln (Shipping Rules)</strong> basierend auf dem ROI und spezifische <strong>Coupon-Logiken</strong>, die Shopify nicht abbilden konnte.',
+                'case_h3_2': 'Die Lösung',
+                'case_p2': 'Wir entwickelten ein <strong>Custom Admin Panel</strong>, das Inventar und Verkäufe in Echtzeit synchronisiert. Das System berechnet automatisch den profitabelsten Versandweg.',
+                'case_stat1': 'Conversion Rate',
+                'case_stat2': 'Ladezeit (Web Vitals)',
+                'zoom_hint': '🔍 Klick zum Vergrößern',
                 'tier_store_title': 'SAN Commerce CORE',
                 'tier_store_pos': 'Das Kundenerlebnis. Blitzschnell, mobil-optimiert und conversion-stark.',
                 'store_features': '<li>✓ Next-Gen Tech Stack (React/Node)</li><li>✓ < 1 Sekunde Ladezeit</li><li>✓ Individuelles UX/UI Design</li><li>✓ SEO-Optimierte Struktur</li>',
@@ -527,16 +413,16 @@
                 'cs1': 'Analyse', 'cs2': 'Architektur', 'cs3': 'Development', 'cs4': 'Migration', 'cs5': 'Launch', 'cs6': 'Scaling',                
                 'ccta_t': 'Bereit für den nächsten Schritt?',
                 'ccta_desc': 'Lassen Sie uns besprechen, wie wir Ihre manuellen Prozesse automatisieren können.',
-				'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
+                'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
                 'ccta_btn': 'Projekt anfragen'
             },
             'en': {
                 'nav_back': 'Back to Home',
                 'comm_page_title': 'D2C E-Commerce Agency & Headless Shops | SAN Commerce',
-				'comm_meta_desc': 'High-performance e-commerce solutions for D2C brands. Custom headless shops (React), bespoke admin panels, and data migration away from Shopify.',
-				'comm_keywords': 'D2C Shop Development, Headless Commerce, Shopify Alternative, E-Commerce Agency, Custom Shop Software, React Shop',
-				'comm_og_title': 'SAN Commerce | High-Performance D2C Shops',
-				'comm_og_desc': 'Load times under 1 second. Full control over ROI and logistics. The alternative to template builders.',
+                'comm_meta_desc': 'High-performance e-commerce solutions for D2C brands. Custom headless shops (React), bespoke admin panels, and data migration away from Shopify.',
+                'comm_keywords': 'D2C Shop Development, Headless Commerce, Shopify Alternative, E-Commerce Agency, Custom Shop Software, React Shop',
+                'comm_og_title': 'SAN Commerce | High-Performance D2C Shops',
+                'comm_og_desc': 'Load times under 1 second. Full control over ROI and logistics. The alternative to template builders.',
                 'comm_trust_line': 'Performance First · Custom Logic · Scalable',
                 'comm_hero_title': 'SAN Commerce',
                 'comm_hero_sub': 'The Operating System for Direct-to-Consumer (D2C) Brands',
@@ -552,22 +438,22 @@
                 'comm_plain_note': '💡 The result: Higher conversion rates through performance and massive time savings in the back office.',
                 'comm_edition_title': 'Two Pillars of Success',
                 'geo_comm_title': 'Why Custom Commerce? (India & Germany Ready)',
-				'geo_comm_sub': 'Insights into the SAN Commerce "Merchant OS" Backend.',
-				'geo_cq1': 'The "Merchant OS": Full Control over Inventory & ROI',
-				'geo_ca1': 'Forget cluttered standard dashboards. Our <strong>Custom Admin Panel</strong> shows you real-time profit per order. Manage <strong>Inventory</strong>, complex <strong>Shipping Rules</strong>, and Coupons centrally – without expensive plugin subscriptions.',
-				'geo_cq2': 'Selling in Germany & India simultaneously?',
-				'geo_ca2': 'SAN Commerce is "Cross-Border Ready". We support <strong>Multi-Currency (EUR / INR)</strong> and local payment gateways natively: <strong>UPI & Razorpay</strong> for India, and <strong>SEPA & PayPal</strong> for Germany. Orders are automatically routed to the correct local warehouse.',
-				'geo_cq3': 'Why is "Headless" better for SEO?',
-				'geo_ca3': 'By separating the Frontend (React) from the Backend, your pages load in <strong>under 1 second</strong>. This massively improves your <strong>Google Quality Score</strong> and lowers your CPC costs for ads.',
-				'case_title': "Case Study: Mom's Hair Oil",
-				'case_sub': 'From local business to international D2C brand.',
-				'case_h3': 'The Challenge',
-				'case_p1': 'The client needed complex <strong>Shipping Rules</strong> based on ROI and specific <strong>Coupon Logic</strong> that standard platforms could not handle.',
-				'case_h3_2': 'The Solution',
-				'case_p2': 'We developed a <strong>Custom Admin Panel</strong> that syncs inventory and sales in real-time. The system automatically calculates the most profitable shipping route.',
-				'case_stat1': 'Conversion Rate',
-				'case_stat2': 'Load Time (Web Vitals)',
-				'zoom_hint': '🔍 Click to Zoom',
+                'geo_comm_sub': 'Insights into the SAN Commerce "Merchant OS" Backend.',
+                'geo_cq1': 'The "Merchant OS": Full Control over Inventory & ROI',
+                'geo_ca1': 'Forget cluttered standard dashboards. Our <strong>Custom Admin Panel</strong> shows you real-time profit per order. Manage <strong>Inventory</strong>, complex <strong>Shipping Rules</strong>, and Coupons centrally – without expensive plugin subscriptions.',
+                'geo_cq2': 'Selling in Germany & India simultaneously?',
+                'geo_ca2': 'SAN Commerce is "Cross-Border Ready". We support <strong>Multi-Currency (EUR / INR)</strong> and local payment gateways natively: <strong>UPI & Razorpay</strong> for India, and <strong>SEPA & PayPal</strong> for Germany. Orders are automatically routed to the correct local warehouse.',
+                'geo_cq3': 'Why is "Headless" better for SEO?',
+                'geo_ca3': 'By separating the Frontend (React) from the Backend, your pages load in <strong>under 1 second</strong>. This massively improves your <strong>Google Quality Score</strong> and lowers your CPC costs for ads.',
+                'case_title': "Case Study: Mom's Hair Oil",
+                'case_sub': 'From local business to international D2C brand.',
+                'case_h3': 'The Challenge',
+                'case_p1': 'The client needed complex <strong>Shipping Rules</strong> based on ROI and specific <strong>Coupon Logic</strong> that standard platforms could not handle.',
+                'case_h3_2': 'The Solution',
+                'case_p2': 'We developed a <strong>Custom Admin Panel</strong> that syncs inventory and sales in real-time. The system automatically calculates the most profitable shipping route.',
+                'case_stat1': 'Conversion Rate',
+                'case_stat2': 'Load Time (Web Vitals)',
+                'zoom_hint': '🔍 Click to Zoom',
                 'tier_store_title': 'SAN Commerce CORE',
                 'tier_store_pos': 'The Customer Experience. Lightning fast, mobile-optimized, and conversion-strong.',
                 'store_features': '<li>✓ Next-Gen Tech Stack (React/Node)</li><li>✓ < 1 Second Load Time</li><li>✓ Custom UX/UI Design</li><li>✓ SEO-Optimized Structure</li>',
@@ -584,318 +470,13 @@
                 'cs1': 'Analysis', 'cs2': 'Architecture', 'cs3': 'Development', 'cs4': 'Migration', 'cs5': 'Launch', 'cs6': 'Scaling',
                 'ccta_t': 'Ready for the next step?',
                 'ccta_desc': 'Let\'s discuss how we can automate your manual processes.',
-				'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
+                'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
                 'ccta_btn': 'Request Project'
             }
         };
-
-        const toggles = document.querySelectorAll('.lang-toggle-input');
-		document.addEventListener('contextmenu', event => event.preventDefault());
-        function updateLanguage(lang) {
-            // 1. Text Elements (innerHTML)
-            document.querySelectorAll('[data-translate]').forEach(el => {
-                const key = el.getAttribute('data-translate');
-                if (translations[lang][key]) el.innerHTML = translations[lang][key];
-            });
-
-            // 2. Meta Tags (content attribute)
-            document.querySelectorAll('[data-translate-meta]').forEach(el => {
-                const key = el.getAttribute('data-translate-meta');
-                if (translations[lang][key]) el.setAttribute('content', translations[lang][key]);
-            });
-
-            document.documentElement.lang = lang;
-        }
-
-        // --- MEMORY LOGIC (localStorage) ---
-
-	// 1. Get the saved language (or default to 'de')
-		const savedLang = localStorage.getItem('selectedLang') || 'de';
-
-	// 2. Set the initial state based on memory
-		updateLanguage(savedLang);
-
-	// 3. Set the toggles correctly (Checked = English, Unchecked = German)
-	toggles.forEach(t => {
-    	t.checked = (savedLang === 'en');
-	});
-
-	// 4. Listen for changes and Save to memory
-	toggles.forEach(toggle => {
-    toggle.addEventListener('change', function() {
-        const isChecked = this.checked;
-        const newLang = isChecked ? 'en' : 'de';
-
-        // Sync all other toggles on the screen
-        toggles.forEach(t => t.checked = isChecked);
-        
-        // SAVE to browser memory
-        localStorage.setItem('selectedLang', newLang);
-        
-        // Update text immediately
-        updateLanguage(newLang);
-    });
-});
     </script>
-	<style>
-    /* 1. CONTAINER - HIDDEN INITIALLY */
-    #chat-widget {
-        position: fixed; bottom: 20px; right: 20px; z-index: 99999;
-        font-family: 'Helvetica Neue', Arial, sans-serif;
-        display: flex; flex-direction: column; align-items: flex-end;
-        /* HIDDEN FOR PULSING EFFECT */
-        opacity: 0; 
-        pointer-events: none; 
-        transition: opacity 1s ease;
-    }
 
-    /* 2. PROMPT */
-    #chat-prompt {
-        background: white; padding: 12px 20px; border-radius: 12px 12px 0 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 12px;
-        font-size: 14px; font-weight: bold; color: #333; cursor: pointer;
-        border: 1px solid #f0f0f0; display: flex; align-items: center; gap: 8px;
-    }
+    <script src="global.js"></script>
 
-    /* 3. WINDOW */
-    #chat-window {
-        display: none; flex-direction: column;
-        position: absolute; bottom: 85px; right: 0;
-        width: 350px; height: 500px;
-        background: white; border-radius: 12px;
-        box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-        border: 1px solid #eee; overflow: hidden;
-    }
-
-    /* 4. HEADER */
-    .chat-header {
-        background: linear-gradient(135deg, #006064 0%, #004d50 100%);
-        color: white; padding: 15px; font-size: 15px; font-weight: bold;
-        display: flex; align-items: center; justify-content: space-between;
-    }
-    .close-chat { cursor: pointer; font-size: 22px; line-height: 1; opacity: 0.8; }
-
-    /* 5. MESSAGES */
-    .chat-messages {
-        flex: 1; padding: 15px; overflow-y: auto;
-        font-size: 14px; background: #fafafa;
-        display: flex; flex-direction: column; gap: 10px;
-    }
-    .msg {
-        padding: 10px 14px; border-radius: 10px;
-        max-width: 80%; line-height: 1.5; font-size: 13.5px;
-        word-wrap: break-word; overflow-wrap: anywhere; 
-        white-space: normal;
-    }
-    .bot { background: #E0F2F1; color: #004d50; align-self: flex-start; border-bottom-left-radius: 2px; }
-    .user { background: #006064; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-    .msg a { color: #00838F; font-weight: bold; text-decoration: none; }
-
-    /* 6. INPUT */
-    .chat-input-area {
-        display: flex; border-top: 1px solid #eee; padding: 12px; background: white;
-    }
-    #chat-input {
-        flex: 1; border: 1px solid #ddd; padding: 10px 14px; border-radius: 20px;
-        outline: none; font-size: 14px; background: #f9f9f9;
-    }
-    #chat-input:focus { border-color: #006064; background: white; }
-    #send-btn {
-        background: #006064; color: white; border: none; width: 40px; height: 40px;
-        border-radius: 50%; margin-left: 8px; cursor: pointer;
-        display: flex; align-items: center; justify-content: center; font-size: 16px;
-    }
-
-    /* 7. FOOTER */
-    .typing { font-style: italic; color: #999; font-size: 12px; margin-left: 20px; margin-bottom: 5px; display: none; }
-    .chat-footer-disclaimer {
-        font-size: 10px; color: #aaa; text-align: center; padding: 6px;
-        background: #fdfdfd; border-top: 1px solid #f0f0f0;
-    }
-
-    /* 8. BUTTON */
-    #chat-btn {
-        background: white; border: none; padding: 0;
-        border-radius: 50%; cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        width: 60px; height: 60px; overflow: hidden;
-        transition: transform 0.2s;
-    }
-    #chat-btn:hover { transform: scale(1.05); }
-
-    @media (max-width: 450px) {
-        #chat-window { width: 90vw; right: 0; bottom: 85px; height: 65vh; }
-    }
-</style>
-
-<div id="chat-widget">
-    <div id="chat-prompt" onclick="toggleChat()">
-        <span>👋🏽</span> <span id="prompt-text">Ask SAN Laxa</span>
-    </div>
-
-    <div id="chat-window">
-        <div class="chat-header">
-            <span style="display:flex; align-items:center; gap:10px;">
-                <img src="bot-icon.gif" style="width:28px; height:28px; border-radius:50%; background:white;"> 
-                SAN Laxa
-            </span>
-            <span class="close-chat" onclick="closeAndResetChat()">×</span>
-        </div>
-        
-        <div class="chat-messages" id="messages"></div>
-        <div class="typing" id="typing-indicator">typing...</div>
-        <div class="chat-footer-disclaimer" id="disclaimer-text">AI Assistant</div>
-        
-        <div class="chat-input-area">
-            <input type="text" id="chat-input" placeholder="..." onkeypress="handleEnter(event)">
-            <button id="send-btn" onclick="sendMessage()">➤</button>
-        </div>
-    </div>
-    
-    <button id="chat-btn" onclick="toggleChat()">
-        <img src="bot-icon.gif" alt="Chat" style="width: 100%; height: 100%; object-fit: cover;">
-    </button>
-</div>
-
-<script>
-    const CHAT_TEXTS = {
-        en: {
-            prompt: "Ask SAN Laxa",
-            typing: "SAN Laxa is typing...",
-            placeholder: "Ask a question...",
-            disclaimer: "SAN Laxa provides general information and does not replace professional consultation.",
-            welcome: "🙏🏽 I’m SAN Laxa, your AI assistant.<br>I can help you with SAN Suite, E-Commerce solutions, or your project enquiry."
-        },
-        de: {
-            prompt: "Frag SAN Laxa",
-            typing: "SAN Laxa tippt...",
-            placeholder: "Stellen Sie eine Frage...",
-            disclaimer: "SAN Laxa stellt allgemeine Informationen bereit und ersetzt keine professionelle Beratung.",
-            welcome: "🙏🏽 Ich bin SAN Laxa, Ihr KI-Assistent.<br>Ich helfe Ihnen gerne bei Fragen zur SAN Suite, zu E-Commerce-Lösungen oder zu Ihrem Projekt."
-        }
-    };
-
-    function getLang() { return localStorage.getItem('selectedLang') || 'de'; }
-
-    function updateChatUI() {
-        const lang = getLang();
-        const t = CHAT_TEXTS[lang];
-        if(document.getElementById('prompt-text')) document.getElementById('prompt-text').textContent = t.prompt;
-        if(document.getElementById('typing-indicator')) document.getElementById('typing-indicator').textContent = t.typing;
-        if(document.getElementById('chat-input')) document.getElementById('chat-input').placeholder = t.placeholder;
-        if(document.getElementById('disclaimer-text')) document.getElementById('disclaimer-text').textContent = t.disclaimer;
-    }
-
-    function getContext() { return sessionStorage.getItem('san_chat_context') || ""; }
-    function addToContext(role, text) {
-        sessionStorage.setItem('san_chat_context', getContext() + `${role}: ${text}\n`);
-    }
-
-    function initChat() {
-        updateChatUI();
-        const savedHTML = sessionStorage.getItem('san_chat_html');
-        const msgBox = document.getElementById('messages');
-        
-        if (savedHTML && savedHTML.trim() !== "") {
-            msgBox.innerHTML = savedHTML;
-            msgBox.scrollTop = msgBox.scrollHeight;
-        } else {
-            const lang = getLang();
-            msgBox.innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
-        }
-    }
-
-    function toggleChat() {
-        const win = document.getElementById('chat-window');
-        if (win.style.display === 'flex') { win.style.display = 'none'; document.getElementById('chat-prompt').style.display = 'flex'; }
-        else { win.style.display = 'flex'; document.getElementById('chat-prompt').style.display = 'none'; document.getElementById('chat-input').focus(); const mb = document.getElementById('messages'); mb.scrollTop = mb.scrollHeight; }
-    }
-
-    function closeAndResetChat() {
-        document.getElementById('chat-window').style.display = 'none'; 
-        document.getElementById('chat-prompt').style.display = 'flex';
-        sessionStorage.removeItem('san_chat_html');
-        sessionStorage.removeItem('san_chat_context');
-        const lang = getLang();
-        document.getElementById('messages').innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
-    }
-
-    function handleEnter(e) { if (e.key === 'Enter') sendMessage(); }
-
-    function appendMsg(sender, text, isHtml) {
-        const box = document.getElementById('messages');
-        const div = document.createElement('div');
-        div.className = `msg ${sender}`;
-        if (isHtml) div.innerHTML = text; else div.textContent = text;
-        box.appendChild(div);
-        box.scrollTop = box.scrollHeight;
-        sessionStorage.setItem('san_chat_html', box.innerHTML);
-    }
-
-    async function sendMessage() {
-        const input = document.getElementById('chat-input');
-        const text = input.value.trim();
-        if (!text) return;
-
-        appendMsg('user', text, false);
-        addToContext('User', text);
-        input.value = '';
-        document.getElementById('typing-indicator').style.display = 'block';
-
-        try {
-            const res = await fetch('/api/chat', { 
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text, history: getContext() })
-            });
-            const data = await res.json();
-            
-            document.getElementById('typing-indicator').style.display = 'none';
-            
-            if (!res.ok) {
-                appendMsg('bot', `⚠️ ${data.reply}`, false);
-            } else {
-                appendMsg('bot', data.reply, true);
-                addToContext('AI', data.reply);
-            }
-        } catch (err) {
-            document.getElementById('typing-indicator').style.display = 'none';
-            appendMsg('bot', "Offline Mode.", false);
-        }
-    }
-
-    // --- INIT & PULSING SYNC ---
-    document.addEventListener("DOMContentLoaded", () => {
-        initChat();
-        
-        // ** SYNC WITH PAGE LOADING EFFECT (3 SECONDS) **
-        setTimeout(() => {
-            const widget = document.getElementById('chat-widget');
-            widget.style.opacity = '1';
-            widget.style.pointerEvents = 'auto'; 
-        }, 3000); 
-
-        // Language Listener
-        document.querySelectorAll('.lang-toggle-input').forEach(t => {
-            t.addEventListener('change', () => {
-                setTimeout(() => { 
-                    updateChatUI();
-                    if (!sessionStorage.getItem('san_chat_context')) {
-                        sessionStorage.removeItem('san_chat_html');
-                        initChat();
-                    }
-                }, 100);
-            });
-        });
-    });
-</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
