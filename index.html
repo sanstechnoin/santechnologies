@@ -366,62 +366,14 @@
             </div>
         </section>
 
-        <section id="contact" class="about-contact">
-            <div class="container ac-grid">
-                
-                <div class="ac-col" id="about">
-                    <h2 data-translate="about_title">Persönlich & Professionell</h2>
-                    
-                    <img src="profile.jpg" alt="Avinash Vivekananthan" class="profile-img">
-                    
-                    <div class="bio-text">
-                        <p data-translate="about_p1">Mit meiner Erfahrung als IT-Cluster Lead sorge ich für Stabilität und Sicherheit. Ich entwickle nicht nur Software, sondern digitale Effizienz – und verwandle komplexe Geschäftsprozesse in intuitive Webanwendungen.</p>
-                    </div>
-                    
-                    <div style="font-style: italic; border-left: 3px solid var(--accent); padding-left: 15px; margin-bottom: 30px; color: #bbb;" data-translate="about_quote">
-                        "Ich verbinde technologische Exzellenz mit einem tiefen Verständnis für geschäftliche Anforderungen."
-                    </div>
-                    
-                    <div>
-                        <div class="contact-item"><div class="contact-icon">📍</div><span data-translate="location">Euskirchen, Deutschland</span></div>
-                        <div class="contact-item"><div class="contact-icon">📞</div><a href="tel:+4922519599741">+49 2251 9599741</a></div>
-                        <div class="contact-item"><div class="contact-icon">📧</div><a href="mailto:avinash@santechnologies.de">avinash@santechnologies.de</a></div>
-                    </div>
-                </div>
-
-                <div class="ac-col">
-                    <h2 data-translate="form_title">Projektanfrage senden</h2>
-                    
-                    <form name="contact" method="POST" data-netlify="true" class="contact-form">
-                        <input type="hidden" name="form-name" value="contact">
-
-                        <div class="form-group">
-                            <label class="form-label" data-translate="form_name">Name / Firma</label>
-                            <input type="text" name="name" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" data-translate="form_email">E-Mail Adresse</label>
-                            <input type="email" name="email" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" data-translate="form_type">Projekttyp</label>
-                            <select name="project_type" class="form-select">
-                                <option value="Web Development" data-translate="opt_web">Web Entwicklung</option>
-                                <option value="POS/KDS System" data-translate="opt_pos">POS/KDS System</option>
-                                <option value="IT Consulting" data-translate="opt_it">IT Beratung</option>
-                                <option value="Other" data-translate="opt_other">Anderes</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" data-translate="form_msg">Nachricht</label>
-                            <textarea name="message" class="form-textarea" required></textarea>
-                        </div>
-                        <button type="submit" class="btn form-btn" data-translate="form_btn">Anfrage Absenden</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
+		<section class="cta-section" style="text-align: center; background: #111; color: white; padding: 100px 0;">
+    		<div class="container">
+        		<h2 data-translate="home_cta_title">Bereit für den nächsten Schritt?</h2>
+        		<p data-translate="home_cta_sub">Lassen Sie uns besprechen, wie wir Ihr Projekt umsetzen.</p>
+        		<a href="contact.html" class="btn" style="margin-top: 30px;" data-translate="home_cta_btn">Zum Kontakt</a>
+    		</div>
+		</section>
+		
 		<footer id="san-footer"></footer>
 		<div id="san-bot"></div>
 
@@ -437,37 +389,6 @@
 </div>
 
 <script>
-    // --- 1. FORMSPREE LOGIC ---
-    const FORMSPREE_URL = "https://formspree.io/f/xnjnzlya"; 
-    document.addEventListener("DOMContentLoaded", function() {
-        const modal = document.getElementById('successModal');
-        const contactForm = document.querySelector('.contact-form'); 
-        window.closeModal = function() { 
-            modal.classList.remove('show');
-            setTimeout(() => { modal.style.display = 'none'; }, 300);
-        }
-        window.onclick = function(event) {
-            if (event.target == modal) { window.closeModal(); }
-        }
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault(); 
-                const formData = new FormData(contactForm);
-                fetch(FORMSPREE_URL, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        modal.style.display = 'flex';
-                        setTimeout(() => { modal.classList.add('show'); }, 10); 
-                        contactForm.reset(); 
-                    } else { alert("Oops! There was a problem submitting your form."); }
-                }).catch(error => { alert("Error submitting form."); });
-            });
-        }
-    });
 
     // --- 2. PAGE LOADER & SLIDER LOGIC ---
     const loader = document.getElementById('page-loader');
@@ -588,7 +509,9 @@
             'modal_title': 'Vielen Dank!',
             'modal_text': 'Wir haben Ihre Anfrage erhalten und melden uns schnellstmöglich bei Ihnen.',
             'modal_close': 'Schließen',
-            'proprietary_note': 'SAN Suite ist ein proprietäres Restaurant-Management-System von SAN Technologies. Zahlungsabwicklung erfolgt über zertifizierte Drittanbieter.'
+            'proprietary_note': 'SAN Suite ist ein proprietäres Restaurant-Management-System von SAN Technologies. Zahlungsabwicklung erfolgt über zertifizierte Drittanbieter.',
+			'home_cta_title': 'Bereit für den nächsten Schritt?',
+            'home_cta_sub': 'Lassen Sie uns besprechen, wie wir Ihr Projekt umsetzen.'
         },
         'en': {
             'page_title': 'Software Engineer Euskirchen | Web & App Development | SAN Technologies',
@@ -663,7 +586,9 @@
             'modal_title': 'Thank You!',
             'modal_text': 'We have received your enquiry and will get back to you as soon as possible.',
             'modal_close': 'Close',
-            'proprietary_note': 'SAN Suite is a proprietary restaurant management system from SAN Technologies. Payment processing is handled through certified third-party providers.'
+            'proprietary_note': 'SAN Suite is a proprietary restaurant management system from SAN Technologies. Payment processing is handled through certified third-party providers.',
+			'home_cta_title': 'Ready for the next step?',
+            'home_cta_sub': 'Let\'s discuss how we can realize your project.'
         }
     };
 </script>
