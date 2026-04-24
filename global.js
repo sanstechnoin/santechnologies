@@ -2,15 +2,53 @@
 // SAN TECHNOLOGIES - COMPONENT INJECTOR ENGINE & GLOBAL LOGIC
 // ==========================================================================
 
-const CACHE_VERSION = 'v1.0'; // Update this to force clients to download new headers/footers
+const CACHE_VERSION = 'v1.1';
 
-// --- 1. COMPONENT INJECTOR ---
+// --- 1. GLOBAL DICTIONARY (For Header, Footer, and Common Elements) ---
+const GLOBAL_TRANSLATIONS = {
+    'de': {
+        'nav_work': 'Referenzen',
+        'nav_products': 'Produkte/Dienste',
+        'nav_services': 'Leistungen',
+        'nav_about': 'Team',
+        'nav_back': 'Startseite zurück',
+        'footer_header_san': 'SAN Technologies',
+        'footer_country': 'Deutschland',
+        'footer_header_contact': 'Kontakt & Inhaber',
+        'footer_rep_by': 'Vertreten durch:',
+        'footer_disclaimer': 'Haftungsausschluss: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links.',
+        'footer_rights': 'Alle Rechte vorbehalten.',
+        'footer_privacy': 'Datenschutz',
+        'footer_impressum': 'Impressum',
+        'cookie_text': 'Wir verwenden Cookies, um Ihre Erfahrung zu verbessern.',
+        'cookie_btn': 'Akzeptieren'
+    },
+    'en': {
+        'nav_work': 'Work',
+        'nav_products': 'Products/Services',
+        'nav_services': 'Services',
+        'nav_about': 'Team',
+        'nav_back': 'Back to Home',
+        'footer_header_san': 'SAN Technologies',
+        'footer_country': 'Germany',
+        'footer_header_contact': 'Contact & Owner',
+        'footer_rep_by': 'Represented by:',
+        'footer_disclaimer': 'Disclaimer: Despite careful content control, we assume no liability for the content of external links.',
+        'footer_rights': 'All rights reserved.',
+        'footer_privacy': 'Privacy Policy',
+        'footer_impressum': 'Legal Notice',
+        'cookie_text': 'We use cookies to improve your experience.',
+        'cookie_btn': 'Accept'
+    }
+};
+
+// --- 2. COMPONENT INJECTOR ---
 async function injectComponent(elementId, componentPath) {
     const target = document.getElementById(elementId);
     if (!target) return;
 
     const cacheKey = `san_comp_${componentPath}_${CACHE_VERSION}`;
-    const cachedHTML = localStorage.getItem(cacheKey);
+    const cachedHTML = sessionStorage.getItem(cacheKey); 
 
     if (cachedHTML) {
         target.innerHTML = cachedHTML;
@@ -22,13 +60,13 @@ async function injectComponent(elementId, componentPath) {
         if (!response.ok) throw new Error(`Failed to load ${componentPath}`);
         const html = await response.text();
         target.innerHTML = html;
-        localStorage.setItem(cacheKey, html);
+        sessionStorage.setItem(cacheKey, html);
     } catch (error) {
         console.error(error);
     }
 }
 
-// --- 2. GLOBAL UI UTILITIES (Attached to Window for HTML onclick support) ---
+// --- 3. GLOBAL UI UTILITIES ---
 window.topFunction = function() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
@@ -46,73 +84,66 @@ window.toggleMenu = function() {
 };
 
 
-// --- 3. GLOBAL TRANSLATION LOGIC ---
-function initGlobalTranslations() {
-    if (typeof translations === 'undefined') return;
-
-    const toggles = document.querySelectorAll('.lang-toggle-input');
-    
-    function updateLanguage(lang) {
-        document.querySelectorAll('[data-translate]').forEach(el => {
-            const key = el.getAttribute('data-translate');
-            if (translations[lang] && translations[lang][key]) {
-                el.innerHTML = translations[lang][key];
-            }
-        });
-        document.querySelectorAll('[data-translate-meta]').forEach(el => {
-            const key = el.getAttribute('data-translate-meta');
-            if (translations[lang] && translations[lang][key]) {
-                el.setAttribute('content', translations[lang][key]);
-            }
-        });
-        document.documentElement.lang = lang;
-    }
-
-    const savedLang = localStorage.getItem('selectedLang') || 'de';
-    updateLanguage(savedLang);
-
-    toggles.forEach(t => { t.checked = (savedLang === 'en'); });
-
-    toggles.forEach(toggle => {
-        toggle.addEventListener('change', function() {
-            const isChecked = this.checked;
-            const newLang = isChecked ? 'en' : 'de';
-            toggles.forEach(t => t.checked = isChecked);
-            localStorage.setItem('selectedLang', newLang);
-            updateLanguage(newLang);
-            
-            // Sync Bot if it's active
-            setTimeout(() => { 
-                if(typeof window.updateChatUI === 'function') window.updateChatUI();
-                if (!sessionStorage.getItem('san_chat_context')) {
-                    sessionStorage.removeItem('san_chat_html');
-                    if(typeof window.initChat === 'function') window.initChat();
-                }
-            }, 100);
-        });
+// --- 4. FOOLPROOF TRANSLATION ENGINE ---
+window.updateLanguage = function(lang) {
+    // Update Text Elements
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        let text = '';
+        
+        // Check local page dictionary first, fallback to Global dictionary
+        if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
+            text = translations[lang][key];
+        } else if (GLOBAL_TRANSLATIONS[lang] && GLOBAL_TRANSLATIONS[lang][key]) {
+            text = GLOBAL_TRANSLATIONS[lang][key];
+        }
+        
+        if (text) el.innerHTML = text;
     });
-}
 
-// --- 4. SAN LAXA AI BOT LOGIC ---
-const CHAT_TEXTS = {
-    en: {
-        prompt: "Ask SAN Laxa",
-        typing: "SAN Laxa is typing...",
-        placeholder: "Ask a question...",
-        disclaimer: "SAN Laxa provides general information and does not replace professional consultation.",
-        welcome: "🙏🏽 I’m SAN Laxa, your AI assistant.<br>I can help you with SAN Suite, E-Commerce solutions, or your project enquiry."
-    },
-    de: {
-        prompt: "Frag SAN Laxa",
-        typing: "SAN Laxa tippt...",
-        placeholder: "Stellen Sie eine Frage...",
-        disclaimer: "SAN Laxa stellt allgemeine Informationen bereit und ersetzt keine professionelle Beratung.",
-        welcome: "🙏🏽 Ich bin SAN Laxa, Ihr KI-Assistent.<br>Ich helfe Ihnen gerne bei Fragen zur SAN Suite, zu E-Commerce-Lösungen oder zu Ihrem Projekt."
-    }
+    // Update Meta Tags
+    document.querySelectorAll('[data-translate-meta]').forEach(el => {
+        const key = el.getAttribute('data-translate-meta');
+        let text = '';
+        if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
+            text = translations[lang][key];
+        }
+        if (text) el.setAttribute('content', text);
+    });
+
+    document.documentElement.lang = lang;
+
+    // Sync toggle switches visually
+    document.querySelectorAll('.lang-toggle-input').forEach(t => {
+        t.checked = (lang === 'en');
+    });
 };
 
-window.getLang = function() { return localStorage.getItem('selectedLang') || 'de'; };
+// Listen for clicks on the language toggle anywhere on the site
+document.addEventListener('change', function(e) {
+    if (e.target && e.target.classList.contains('lang-toggle-input')) {
+        const newLang = e.target.checked ? 'en' : 'de';
+        localStorage.setItem('selectedLang', newLang);
+        window.updateLanguage(newLang);
+        
+        // Sync the AI Bot language
+        setTimeout(() => { 
+            if(typeof window.updateChatUI === 'function') window.updateChatUI();
+            if (!sessionStorage.getItem('san_chat_context')) {
+                sessionStorage.removeItem('san_chat_html');
+                if(typeof window.initChat === 'function') window.initChat();
+            }
+        }, 100);
+    }
+});
 
+
+// --- 5. SAN LAXA AI BOT LOGIC ---
+const CHAT_TEXTS = {
+    en: { prompt: "Ask SAN Laxa", typing: "SAN Laxa is typing...", placeholder: "Ask a question...", disclaimer: "SAN Laxa provides general information and does not replace professional consultation.", welcome: "🙏🏽 I’m SAN Laxa, your AI assistant.<br>I can help you with SAN Suite, E-Commerce solutions, or your project enquiry." },
+    de: { prompt: "Frag SAN Laxa", typing: "SAN Laxa tippt...", placeholder: "Stellen Sie eine Frage...", disclaimer: "SAN Laxa stellt allgemeine Informationen bereit und ersetzt keine professionelle Beratung.", welcome: "🙏🏽 Ich bin SAN Laxa, Ihr KI-Assistent.<br>Ich helfe Ihnen gerne bei Fragen zur SAN Suite, zu E-Commerce-Lösungen oder zu Ihrem Projekt." }
+};
+window.getLang = function() { return localStorage.getItem('selectedLang') || 'de'; };
 window.updateChatUI = function() {
     const lang = window.getLang();
     const t = CHAT_TEXTS[lang];
@@ -121,125 +152,80 @@ window.updateChatUI = function() {
     if(document.getElementById('chat-input')) document.getElementById('chat-input').placeholder = t.placeholder;
     if(document.getElementById('disclaimer-text')) document.getElementById('disclaimer-text').textContent = t.disclaimer;
 };
-
 window.getContext = function() { return sessionStorage.getItem('san_chat_context') || ""; };
 window.addToContext = function(role, text) { sessionStorage.setItem('san_chat_context', window.getContext() + `${role}: ${text}\n`); };
-
 window.initChat = function() {
     window.updateChatUI();
     const savedHTML = sessionStorage.getItem('san_chat_html');
     const msgBox = document.getElementById('messages');
-    if (!msgBox) return; // Prevent errors if bot component isn't loaded
-    
-    if (savedHTML && savedHTML.trim() !== "") {
-        msgBox.innerHTML = savedHTML;
-        msgBox.scrollTop = msgBox.scrollHeight;
-    } else {
-        const lang = window.getLang();
-        msgBox.innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
-    }
+    if (!msgBox) return; 
+    if (savedHTML && savedHTML.trim() !== "") { msgBox.innerHTML = savedHTML; msgBox.scrollTop = msgBox.scrollHeight; } 
+    else { const lang = window.getLang(); msgBox.innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`; }
 };
-
 window.toggleChat = function() {
     const win = document.getElementById('chat-window');
     const prompt = document.getElementById('chat-prompt');
     if (!win || !prompt) return;
-
-    if (win.style.display === 'flex') { 
-        win.style.display = 'none'; 
-        prompt.style.display = 'flex'; 
-    } else { 
-        win.style.display = 'flex'; 
-        prompt.style.display = 'none'; 
-        document.getElementById('chat-input').focus(); 
-        const mb = document.getElementById('messages'); 
-        mb.scrollTop = mb.scrollHeight; 
-    }
+    if (win.style.display === 'flex') { win.style.display = 'none'; prompt.style.display = 'flex'; } 
+    else { win.style.display = 'flex'; prompt.style.display = 'none'; document.getElementById('chat-input').focus(); const mb = document.getElementById('messages'); mb.scrollTop = mb.scrollHeight; }
 };
-
 window.closeAndResetChat = function() {
-    document.getElementById('chat-window').style.display = 'none'; 
-    document.getElementById('chat-prompt').style.display = 'flex';
-    sessionStorage.removeItem('san_chat_html');
-    sessionStorage.removeItem('san_chat_context');
-    const lang = window.getLang();
-    document.getElementById('messages').innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
+    document.getElementById('chat-window').style.display = 'none'; document.getElementById('chat-prompt').style.display = 'flex';
+    sessionStorage.removeItem('san_chat_html'); sessionStorage.removeItem('san_chat_context');
+    const lang = window.getLang(); document.getElementById('messages').innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
 };
-
 window.handleEnter = function(e) { if (e.key === 'Enter') window.sendMessage(); };
-
 window.appendMsg = function(sender, text, isHtml) {
     const box = document.getElementById('messages');
     const div = document.createElement('div');
     div.className = `msg ${sender}`;
     if (isHtml) div.innerHTML = text; else div.textContent = text;
-    box.appendChild(div);
-    box.scrollTop = box.scrollHeight;
+    box.appendChild(div); box.scrollTop = box.scrollHeight;
     sessionStorage.setItem('san_chat_html', box.innerHTML);
 };
-
 window.sendMessage = async function() {
     const input = document.getElementById('chat-input');
     const text = input.value.trim();
     if (!text) return;
-
-    window.appendMsg('user', text, false);
-    window.addToContext('User', text);
-    input.value = '';
-    document.getElementById('typing-indicator').style.display = 'block';
-
+    window.appendMsg('user', text, false); window.addToContext('User', text);
+    input.value = ''; document.getElementById('typing-indicator').style.display = 'block';
     try {
-        const res = await fetch('/api/chat', { 
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text, history: window.getContext() })
-        });
+        const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, history: window.getContext() }) });
         const data = await res.json();
-        
         document.getElementById('typing-indicator').style.display = 'none';
-        
-        if (!res.ok) {
-            window.appendMsg('bot', `⚠️ ${data.reply}`, false);
-        } else {
-            window.appendMsg('bot', data.reply, true);
-            window.addToContext('AI', data.reply);
-        }
+        if (!res.ok) window.appendMsg('bot', `⚠️ ${data.reply}`, false);
+        else { window.appendMsg('bot', data.reply, true); window.addToContext('AI', data.reply); }
     } catch (err) {
         document.getElementById('typing-indicator').style.display = 'none';
         window.appendMsg('bot', "Offline Mode.", false);
     }
 };
 
-// --- 5. PAGE LOAD COMMANDER ---
+// --- 6. PAGE LOAD COMMANDER ---
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Inject the HTML Components
+    // 1. Inject HTML
     await injectComponent('san-header', 'components/header.html');
     await injectComponent('san-mobile-menu', 'components/mobile-menu.html');
     await injectComponent('san-footer', 'components/footer.html');
     await injectComponent('san-bot', 'components/bot.html');
 
-    // 2. Wire up the Hamburger Button
+    // 2. Wire UI
     const hamburgerBtn = document.getElementById('hamburgerBtn');
-    if (hamburgerBtn) {
-        hamburgerBtn.addEventListener('click', window.toggleMenu);
-    }
+    if (hamburgerBtn) hamburgerBtn.addEventListener('click', window.toggleMenu);
 
-    // 3. Check Cookie Status
     if (localStorage.getItem("cookiesAccepted") === "true") {
         const banner = document.getElementById("cookieBanner");
         if(banner) banner.style.display = "none";
     }
 
-    // 4. Initialize Translations & Bot
-    initGlobalTranslations();
-    window.initChat();
+    // 3. Init Translations from Global Script
+    const savedLang = localStorage.getItem('selectedLang') || 'de';
+    window.updateLanguage(savedLang);
 
-    // 5. Bot Load Animation (Wait 3 seconds)
+    // 4. Init Bot
+    window.initChat();
     setTimeout(() => {
         const widget = document.getElementById('chat-widget');
-        if (widget) {
-            widget.style.opacity = '1';
-            widget.style.pointerEvents = 'auto'; 
-        }
+        if (widget) { widget.style.opacity = '1'; widget.style.pointerEvents = 'auto'; }
     }, 3000);
 });
