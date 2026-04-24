@@ -4,141 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-translate="studio_page_title">Creative & Visual Production | SAN Studio</title>
-    
     <meta name="description" content="SAN Studio: End-to-end visual content creation for modern brands. Photography, videography, and social media content tailored for European businesses." data-translate-meta="studio_meta_desc">
     <link rel="icon" type="image/png" href="favicon.png">
 
+    <link rel="stylesheet" href="global.css">
+
     <style>
-        /* --- CSS VARIABLES (Strictly Synced with SAN Suite & Commerce) --- */
-        :root {
-            --primary: #006064;
-            --accent: #00BCD4;
-            --dark: #333333;
-            --light: #f8f9fa;
-            --white: #ffffff;
-            --bg-suite: #f0f4f8; 
-            --container-width: 1150px;
-        }
-
-        /* --- GLOBAL RESET & LAYOUT --- */
-        * { box-sizing: border-box; }
-        body { 
-            margin: 0; 
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-            color: var(--dark); 
-            line-height: 1.6; 
-            background-color: var(--white); 
-            scroll-behavior: smooth;
-        }
-        
-        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; width: 100%; }
-        h1, h2, h3, h4 { font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; margin-top: 0; }
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        p { margin: 0 0 20px 0; }
-
-        /* --- HEADER --- */
-        header { background: var(--white); height: 90px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .logo img { height: 65px; width: auto; }
-        .nav-right { display: flex; align-items: center; gap: 30px; }
-        .nav-desktop a { font-weight: 600; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; }
-        .nav-desktop a:hover { color: var(--primary); }
-
-        /* --- LANG TOGGLE --- */
-        .lang-switch-container { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; }
-        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #eee; transition: .4s; border-radius: 34px; border: 2px solid #ddd; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 2px; background-color: var(--primary); transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #E0F7FA; border-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(20px); }
-        .flag-icon { height: 14px; width: auto; vertical-align: middle; }
-
-        /* --- SECTIONS --- */
+        /* --- SAN-STUDIO.HTML SPECIFIC STYLES --- */
         section { padding: 80px 0; }
         .section-header { text-align: center; margin-bottom: 60px; max-width: 900px; margin-left: auto; margin-right: auto; }
 
-        /* --- HERO (Synced with SAN Ecosystem) --- */
-        .studio-hero { 
-            background: linear-gradient(135deg, var(--primary) 0%, #003d40 100%); 
-            color: var(--white); text-align: center; padding: 100px 0;
-        }
+        .studio-hero { background: linear-gradient(135deg, var(--primary) 0%, #003d40 100%); color: var(--white); text-align: center; padding: 100px 0; }
         .studio-hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
         .hero-subline { font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 30px; }
         .trust-line { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.9); font-weight: 800; }
 
-        /* --- PLAIN EXPLANATION (About) --- */
         .plain-box { background: var(--bg-suite); padding: 50px; border-radius: 25px; text-align: center; margin: 40px 0; }
         .integration-note { background: var(--white); padding: 20px 30px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; margin-top: 20px; }
 
-        /* --- EXTENSIONS GRID (For Services) --- */
         .ext-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; }
         .ext-card { padding: 30px; background: var(--light); border-radius: 15px; text-align: center; transition: 0.3s; }
         .ext-card:hover { transform: translateY(-5px); background: var(--white); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .ext-card span { font-size: 2.5rem; display: block; margin-bottom: 15px; }
 
-        /* --- PROCESS STEPS (Exact match to Suite) --- */
         .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; text-align: center; margin-top: 40px; }
         .step { padding: 20px; border-radius: 12px; background: var(--bg-suite); font-weight: bold; }
         .step span { color: var(--accent); display: block; font-size: 1.5rem; margin-bottom: 5px; }
 
-        /* --- PORTFOLIO GALLERY GRID --- */
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 40px; }
         .gallery-item { position: relative; overflow: hidden; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: zoom-in; aspect-ratio: 4/3; background: #eee; display: flex; align-items: center; justify-content: center; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
         .gallery-item:hover img { transform: scale(1.05); }
         .gallery-caption { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; padding: 20px 15px 10px; font-size: 0.9rem; font-weight: bold; opacity: 0; transition: opacity 0.3s ease; }
         .gallery-item:hover .gallery-caption { opacity: 1; }
-        .placeholder-text { color: #999; font-weight: bold; }
 
-        /* --- PORTFOLIO FILTERS --- */
         .portfolio-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
         .filter-btn { background: transparent; border: 2px solid var(--primary); color: var(--primary); padding: 8px 24px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.95rem; }
         .filter-btn:hover, .filter-btn.active { background: var(--primary); color: white; }
-        .gallery-item.hide { display: none; }
 
-        /* --- IMAGE MODAL (LIGHTBOX) --- */
         .img-modal { display: none; position: fixed; z-index: 10001; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
         .img-modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 5px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
         .close-img { position: absolute; top: 20px; right: 30px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; z-index: 10002; }
         .close-img:hover { color: var(--accent); }
 
-        /* --- CTA & FOOTER --- */
         .cta-section { text-align: center; background: #111; color: white; padding: 100px 0; }
-        .btn { display: inline-block; background: var(--accent); color: white; padding: 18px 45px; border-radius: 50px; font-weight: bold; margin-top: 30px; }
-        footer { background: #111; color: #666; padding: 60px 0; font-size: 0.85rem; border-top: 1px solid #333; text-align: center; }
+        .btn { margin-top: 30px; }
 
-        /* --- MOBILE TWEAKS --- */
-        @media (max-width: 600px) {
-            .logo img { height: 45px; } 
-            .nav-right { gap: 15px; } 
-            .nav-desktop a span[data-translate="nav_back"] { display: none; }
-            .nav-desktop a span:first-child { font-size: 1.8rem; line-height: 1; }
-            .header-content { padding: 0 15px; }
-        }
         @media (max-width: 900px) { .studio-hero h1 { font-size: 2.5rem; } }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
-    <header>
-        <div class="container header-content">
-            <div class="logo"><a href="index.html"><img src="logo.png" alt="SAN Technologies"></a></div>
-            <div class="nav-right">
-                <nav class="nav-desktop">
-                    <a href="index.html">
-                        <span>←</span> 
-                        <span data-translate="nav_back">Startseite zurück</span>
-                    </a>
-                </nav>
-                <div class="lang-switch-container">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
-                    <label class="switch"><input type="checkbox" class="lang-toggle-input"><span class="slider"></span></label>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
-                </div>
-            </div>
-        </div>
-    </header>
+    <header id="san-header"></header>
+    <div id="san-mobile-menu"></div>
 
     <section class="studio-hero">
         <div class="container">
@@ -176,27 +94,22 @@
             </div>
             
             <div class="gallery-grid" id="portfolio-grid">
-                
                 <div class="gallery-item" data-category="food" onclick="openModal('https://images.unsplash.com/photo-1728910156510-77488f19b152?q=80&w=1160&auto=format&fit=crop&w=600&q=80')">
                     <img src="https://images.unsplash.com/photo-1728910156510-77488f19b152?q=80&w=1160&auto=format&fit=crop&w=600&q=80" alt="Food Photography">
                     <div class="gallery-caption">Restaurant Menu Shoot</div>
                 </div>
-
                 <div class="gallery-item" data-category="ui" onclick="openModal('https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&w=800&q=80')">
                     <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&w=600&q=80" alt="UI Design">
                     <div class="gallery-caption">Mobile App Concept</div>
                 </div>
-
                 <div class="gallery-item" data-category="product" onclick="openModal('https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80')">
                     <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" alt="Product Photography">
                     <div class="gallery-caption">D2C Brand Product</div>
                 </div>
-
                 <div class="gallery-item" data-category="food" onclick="openModal('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80')">
                     <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" alt="Atmosphere">
                     <div class="gallery-caption">Interior Atmosphere</div>
                 </div>
-
             </div>
         </div>
     </section>    
@@ -248,8 +161,6 @@
         </div>
     </section>
 
-
-
     <section id="contact" class="cta-section">
         <div class="container">
             <h2 data-translate="cta_title">Inhalte schaffen, die Ihre Marke repräsentieren.</h2>
@@ -258,17 +169,8 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>
-                &copy; 2025 SAN Technologies. 
-                <span style="margin: 0 8px; color: #444;">|</span> 
-                <a href="datenschutz.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_privacy">Datenschutz</a>
-                <span style="margin: 0 8px; color: #444;">|</span> 
-                <a href="impressum.html" style="color: inherit; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='inherit'" data-translate="footer_impressum">Impressum</a>
-            </p>
-        </div>
-    </footer>
+    <footer id="san-footer"></footer>
+    <div id="san-bot"></div>
 
     <div id="imageModal" class="img-modal" onclick="closeModal()">
         <span class="close-img" onclick="closeModal()">&times;</span>
@@ -276,7 +178,6 @@
     </div>
 
     <script>
-        // --- 1. LIGHTBOX LOGIC ---
         function openModal(src) {
             if(!src) return;
             const modal = document.getElementById("imageModal");
@@ -291,33 +192,27 @@
         }
         document.addEventListener('keydown', function(event) { if (event.key === "Escape") closeModal(); });
 
-        // --- 2. FILTER LOGIC ---
         document.addEventListener("DOMContentLoaded", () => {
             const filterBtns = document.querySelectorAll('.filter-btn');
             const galleryItems = document.querySelectorAll('.gallery-item');
-
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Remove active from all buttons
                     filterBtns.forEach(b => b.classList.remove('active'));
-                    // Add active to the clicked button
                     btn.classList.add('active');
-
                     const filterValue = btn.getAttribute('data-filter');
-
-                    // Show or Hide gallery items
                     galleryItems.forEach(item => {
                         if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                            item.style.display = 'flex'; // Show item
+                            item.style.display = 'flex'; 
                         } else {
-                            item.style.display = 'none'; // Hide item
+                            item.style.display = 'none'; 
                         }
                     });
                 });
             });
         });
+    </script>
 
-        // --- 3. TRANSLATIONS DICTIONARY ---
+    <script>
         const translations = {
             'de': {
                 'studio_page_title': 'Creative & Visual Production | SAN Studio',
@@ -340,12 +235,7 @@
                 'work_title': 'Ausgewählte Arbeiten', 'work_sub': 'Einblick in aktuelle Produktionen und Brandings.',
                 'cta_title': 'Inhalte schaffen, die Ihre Marke repräsentieren.', 'cta_sub': 'Professionell. Zuverlässig. Auf den Punkt.', 'cta_btn': 'Projekt anfragen',
                 'footer_privacy': 'Datenschutz', 'footer_impressum': 'Impressum',
-                
-                /* FILTER BUTTONS */
-                'flt_all': 'Alle Projekte',
-                'flt_food': 'Food & Gastro',
-                'flt_product': 'Produkte',
-                'flt_ui': 'UX/UI Design'
+                'flt_all': 'Alle Projekte', 'flt_food': 'Food & Gastro', 'flt_product': 'Produkte', 'flt_ui': 'UX/UI Design'
             },
             'en': {
                 'studio_page_title': 'Creative & Visual Production | SAN Studio',
@@ -369,48 +259,12 @@
                 'work_title': 'Selected Work', 'work_sub': 'A glimpse into our recent productions and branding projects.',
                 'cta_title': 'Let’s create content that represents your brand.', 'cta_sub': 'Professional. Reliable. On point.', 'cta_btn': 'Request Project',
                 'footer_privacy': 'Privacy Policy', 'footer_impressum': 'Legal Notice',
-                
-                /* FILTER BUTTONS */
-                'flt_all': 'All Projects',
-                'flt_food': 'Food & Hospitality',
-                'flt_product': 'Products',
-                'flt_ui': 'UX/UI Design'
+                'flt_all': 'All Projects', 'flt_food': 'Food & Hospitality', 'flt_product': 'Products', 'flt_ui': 'UX/UI Design'
             }
         };
-
-        // --- 4. LANGUAGE TOGGLE LOGIC ---
-        const toggles = document.querySelectorAll('.lang-toggle-input');
-        document.addEventListener('contextmenu', event => event.preventDefault());
-
-        function updateLanguage(lang) {
-            document.querySelectorAll('[data-translate]').forEach(el => {
-                const key = el.getAttribute('data-translate');
-                if (translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
-                }
-            });
-            document.querySelectorAll('[data-translate-meta]').forEach(el => {
-                const key = el.getAttribute('data-translate-meta');
-                if (translations[lang][key]) {
-                    el.setAttribute('content', translations[lang][key]);
-                }
-            });
-            document.documentElement.lang = lang;
-        }
-
-        const savedLang = localStorage.getItem('selectedLang') || 'de';
-        updateLanguage(savedLang);
-
-        toggles.forEach(t => { t.checked = (savedLang === 'en'); });
-
-        toggles.forEach(toggle => {
-            toggle.addEventListener('change', function() {
-                const newLang = this.checked ? 'en' : 'de';
-                toggles.forEach(t => t.checked = this.checked);
-                localStorage.setItem('selectedLang', newLang);
-                updateLanguage(newLang);
-            });
-        });
     </script>
+
+    <script src="global.js"></script>
+
 </body>
 </html>
