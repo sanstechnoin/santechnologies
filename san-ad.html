@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+    <title>SAN Technologies - TV Signage</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            width: 1920px;
+            height: 1080px;
+            background: linear-gradient(135deg, #001f21 0%, #006064 100%);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 1700px;
+            height: 900px;
+            display: flex;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(0, 188, 212, 0.3);
+            border-radius: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .left-col {
+            flex: 1.2;
+            padding: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .right-col {
+            flex: 0.8;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a1a;
+            padding: 60px;
+        }
+
+        /* Branding */
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .logo-symbol {
+            font-size: 100px;
+            color: #00BCD4;
+            font-weight: bold;
+            text-shadow: 0 0 30px rgba(0, 188, 212, 0.6);
+        }
+
+        .logo-text {
+            font-size: 60px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+        
+        .logo-text span {
+            font-weight: 300;
+            color: #ccc;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 90px;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            background: linear-gradient(to right, #ffffff, #00BCD4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: 38px;
+            color: #b2ebf2;
+            line-height: 1.5;
+            margin-bottom: 60px;
+        }
+
+        /* Features */
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            font-size: 32px;
+            color: #e0f7fa;
+        }
+
+        .feature-item i {
+            color: #00BCD4;
+            font-size: 40px;
+        }
+
+        /* Right Column Details */
+        .cta-box {
+            text-align: center;
+        }
+
+        .cta-box h2 {
+            font-size: 55px;
+            color: #006064;
+            margin-bottom: 20px;
+        }
+
+        .cta-box p {
+            font-size: 30px;
+            color: #555;
+            margin-bottom: 50px;
+        }
+
+        .qr-placeholder {
+            width: 400px;
+            height: 400px;
+            background: #f0f0f0;
+            border: 10px solid #006064;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 40px auto;
+            position: relative;
+        }
+        
+        /* Using a dummy QR image url for layout - replace with real QR */
+        .qr-placeholder img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .contact-pill {
+            background: #006064;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 32px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Background Circuit Decoration */
+        .circuit-bg {
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 80%;
+            height: 120%;
+            background-image: radial-gradient(rgba(0, 188, 212, 0.1) 2px, transparent 2px);
+            background-size: 40px 40px;
+            opacity: 0.5;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="circuit-bg"></div>
+        
+        <div class="left-col">
+            <div class="logo-area">
+                <div class="logo-symbol">அ</div>
+                <div class="logo-text">SAN <span>Technologies</span></div>
+            </div>
+
+            <h1>The Engine Behind Zafran's Operations.</h1>
+            <p class="subtitle">Experience zero wait times and seamless orders. We build high-performance custom software for businesses that demand the best.</p>
+
+            <div class="features">
+                <div class="feature-item"><i class="fa-solid fa-microchip"></i> No Website Builders, Only Custom Code</div>
+                <div class="feature-item"><i class="fa-solid fa-bolt"></i> Lightning Fast Gastro & Retail OS</div>
+                <div class="feature-item"><i class="fa-solid fa-server"></i> Cloud Integration & IT Consulting</div>
+            </div>
+        </div>
+
+        <div class="right-col">
+            <div class="cta-box">
+                <h2>Upgrade Your Business</h2>
+                <p>Scan to chat with our Lead Architect</p>
+                
+                <div class="qr-placeholder">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://wa.me/4922519599741" alt="WhatsApp QR">
+                </div>
+
+                <div class="contact-pill">
+                    <i class="fa-brands fa-whatsapp"></i> +49 2251 9599741
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
