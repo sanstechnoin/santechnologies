@@ -13,99 +13,76 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Enforce exact 1080p rendering */
         body {
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, #001f21 0%, #006064 100%);
-            color: #ffffff;
+            width: 1920px;
+            height: 1080px;
+            background: #111; /* Dark background to frame the screen */
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            /* Forces browsers to render backgrounds if printed/saved to PDF */
             -webkit-print-color-adjust: exact !important; 
             print-color-adjust: exact !important;
         }
 
-        /* Wraps the content in strict 1080p dimensions */
         .tv-wrapper {
             width: 1920px;
             height: 1080px;
+            background: #e0f2f1; /* Subtle outer frame color */
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
         }
 
-        .circuit-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(rgba(0, 188, 212, 0.15) 2px, transparent 2px);
-            background-size: 40px 40px;
-            opacity: 0.5;
-            z-index: 1;
-            pointer-events: none;
-        }
-
+        /* The Main Ad Card */
         .container {
-            width: 1700px;
+            width: 1750px;
             height: 900px;
             display: flex;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(0, 188, 212, 0.3);
-            border-radius: 40px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            background: #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.2);
             overflow: hidden;
             z-index: 10;
         }
 
+        /* --- LEFT COLUMN (WHITE) --- */
         .left-col {
-            flex: 1.2;
-            padding: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .right-col {
-            flex: 0.8;
+            flex: 1.3;
             background: #ffffff;
+            padding: 90px 100px;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            color: #1a1a1a;
-            padding: 60px;
         }
 
-        /* Branding: Pulls from your repo */
         .logo-img {
-            max-height: 140px;
-            max-width: 100%;
+            height: 120px; /* Fixed height so it never crops */
+            width: auto;
             object-fit: contain;
             margin-bottom: 50px;
-            display: block;
+            align-self: flex-start; /* Keeps it left-aligned */
         }
 
-        /* Typography */
         h1 {
-            font-size: 90px;
-            line-height: 1.1;
-            margin-bottom: 40px;
-            background: linear-gradient(to right, #ffffff, #00BCD4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 80px;
+            line-height: 1.15;
+            margin-bottom: 30px;
+            color: #006064; /* SAN Primary */
+            font-weight: 800;
+            letter-spacing: -1px;
         }
 
         p.subtitle {
-            font-size: 38px;
-            color: #b2ebf2;
+            font-size: 34px;
+            color: #555555;
             line-height: 1.5;
             margin-bottom: 60px;
+            font-weight: 400;
         }
 
-        /* Features */
         .features {
             display: flex;
             flex-direction: column;
@@ -116,47 +93,71 @@
             display: flex;
             align-items: center;
             gap: 25px;
-            font-size: 32px;
-            color: #e0f7fa;
+            font-size: 28px;
+            color: #222;
+            font-weight: 600;
         }
 
         .feature-item i {
-            color: #00BCD4;
+            color: #00BCD4; /* SAN Accent */
             font-size: 40px;
             width: 50px;
             text-align: center;
         }
 
-        /* Right Column Details */
+        /* --- RIGHT COLUMN (TEAL) --- */
+        .right-col {
+            flex: 0.7;
+            background: linear-gradient(145deg, #006064 0%, #00363a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            position: relative;
+        }
+
+        /* Subtle background pattern on the teal side */
+        .right-col::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+            background-size: 30px 30px;
+            pointer-events: none;
+        }
+
         .cta-box {
             text-align: center;
             width: 100%;
+            z-index: 2;
         }
 
         .cta-box h2 {
-            font-size: 55px;
-            color: #006064;
-            margin-bottom: 20px;
+            font-size: 52px;
+            color: #ffffff;
+            margin-bottom: 15px;
         }
 
         .cta-box p {
-            font-size: 30px;
-            color: #555;
+            font-size: 26px;
+            color: #b2ebf2;
             margin-bottom: 50px;
             font-weight: 500;
         }
 
         .qr-placeholder {
-            width: 400px;
-            height: 400px;
+            width: 360px;
+            height: 360px;
             background: #fff;
-            border: 10px solid #006064;
+            border: 12px solid #00BCD4; /* Accent Border */
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 40px auto;
+            margin: 0 auto 50px auto;
             overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
         
         .qr-placeholder img {
@@ -166,34 +167,33 @@
         }
 
         .contact-pill {
-            background: #006064;
-            color: white;
-            padding: 20px 40px;
+            background: #ffffff;
+            color: #006064;
+            padding: 18px 40px;
             border-radius: 50px;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: bold;
             display: inline-flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 10px 20px rgba(0,96,100,0.2);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        /* Forces exact 1920x1080 Landscape if saved to PDF via Browser */
+        /* Fixes print-to-pdf layout */
         @media print {
             @page { size: 1920px 1080px landscape; margin: 0; }
             body { margin: 0; padding: 0; width: 1920px; height: 1080px; }
-            .tv-wrapper { transform: scale(1); }
+            .tv-wrapper { width: 1920px; height: 1080px; }
         }
     </style>
 </head>
 <body>
 
     <div class="tv-wrapper">
-        <div class="circuit-bg"></div>
         <div class="container">
             
             <div class="left-col">
-                <img src="https://santechnologies.de/card_with_logo.png" alt="SAN Technologies" class="logo-img" onerror="this.src='https://santechnologies.de/logo.png'">
+                <img src="https://santechnologies.de/card_with_logo.png" alt="SAN Technologies" class="logo-img">
 
                 <h1>The Engine Behind Zafran's Operations.</h1>
                 <p class="subtitle">Experience zero wait times and seamless orders. We build high-performance custom software for businesses that demand the best.</p>
