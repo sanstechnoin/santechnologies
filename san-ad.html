@@ -14,27 +14,50 @@
         }
 
         body {
-            width: 1920px;
-            height: 1080px;
+            width: 100vw;
+            height: 100vh;
             background: linear-gradient(135deg, #001f21 0%, #006064 100%);
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            /* Forces browsers to render backgrounds if printed/saved to PDF */
+            -webkit-print-color-adjust: exact !important; 
+            print-color-adjust: exact !important;
+        }
+
+        /* Wraps the content in strict 1080p dimensions */
+        .tv-wrapper {
+            width: 1920px;
+            height: 1080px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .circuit-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(0, 188, 212, 0.15) 2px, transparent 2px);
+            background-size: 40px 40px;
+            opacity: 0.5;
+            z-index: 1;
+            pointer-events: none;
         }
 
         .container {
             width: 1700px;
             height: 900px;
             display: flex;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border: 2px solid rgba(0, 188, 212, 0.3);
             border-radius: 40px;
             backdrop-filter: blur(10px);
             box-shadow: 0 30px 60px rgba(0,0,0,0.5);
             overflow: hidden;
-            position: relative;
+            z-index: 10;
         }
 
         .left-col {
@@ -43,7 +66,6 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            z-index: 2;
         }
 
         .right-col {
@@ -57,30 +79,13 @@
             padding: 60px;
         }
 
-        /* Branding */
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 30px;
+        /* Branding: Pulls from your repo */
+        .logo-img {
+            max-height: 140px;
+            max-width: 100%;
+            object-fit: contain;
             margin-bottom: 50px;
-        }
-
-        .logo-symbol {
-            font-size: 100px;
-            color: #00BCD4;
-            font-weight: bold;
-            text-shadow: 0 0 30px rgba(0, 188, 212, 0.6);
-        }
-
-        .logo-text {
-            font-size: 60px;
-            font-weight: 800;
-            letter-spacing: 2px;
-        }
-        
-        .logo-text span {
-            font-weight: 300;
-            color: #ccc;
+            display: block;
         }
 
         /* Typography */
@@ -118,11 +123,14 @@
         .feature-item i {
             color: #00BCD4;
             font-size: 40px;
+            width: 50px;
+            text-align: center;
         }
 
         /* Right Column Details */
         .cta-box {
             text-align: center;
+            width: 100%;
         }
 
         .cta-box h2 {
@@ -135,26 +143,25 @@
             font-size: 30px;
             color: #555;
             margin-bottom: 50px;
+            font-weight: 500;
         }
 
         .qr-placeholder {
             width: 400px;
             height: 400px;
-            background: #f0f0f0;
+            background: #fff;
             border: 10px solid #006064;
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 40px auto;
-            position: relative;
+            overflow: hidden;
         }
         
-        /* Using a dummy QR image url for layout - replace with real QR */
         .qr-placeholder img {
             width: 100%;
             height: 100%;
-            border-radius: 10px;
             object-fit: cover;
         }
 
@@ -168,56 +175,51 @@
             display: inline-flex;
             align-items: center;
             gap: 15px;
+            box-shadow: 0 10px 20px rgba(0,96,100,0.2);
         }
 
-        /* Background Circuit Decoration */
-        .circuit-bg {
-            position: absolute;
-            top: -20%;
-            left: -10%;
-            width: 80%;
-            height: 120%;
-            background-image: radial-gradient(rgba(0, 188, 212, 0.1) 2px, transparent 2px);
-            background-size: 40px 40px;
-            opacity: 0.5;
-            z-index: 1;
+        /* Forces exact 1920x1080 Landscape if saved to PDF via Browser */
+        @media print {
+            @page { size: 1920px 1080px landscape; margin: 0; }
+            body { margin: 0; padding: 0; width: 1920px; height: 1080px; }
+            .tv-wrapper { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="tv-wrapper">
         <div class="circuit-bg"></div>
-        
-        <div class="left-col">
-            <div class="logo-area">
-                <div class="logo-symbol">அ</div>
-                <div class="logo-text">SAN <span>Technologies</span></div>
-            </div>
+        <div class="container">
+            
+            <div class="left-col">
+                <img src="https://santechnologies.de/card_with_logo.png" alt="SAN Technologies" class="logo-img" onerror="this.src='https://santechnologies.de/logo.png'">
 
-            <h1>The Engine Behind Zafran's Operations.</h1>
-            <p class="subtitle">Experience zero wait times and seamless orders. We build high-performance custom software for businesses that demand the best.</p>
+                <h1>The Engine Behind Zafran's Operations.</h1>
+                <p class="subtitle">Experience zero wait times and seamless orders. We build high-performance custom software for businesses that demand the best.</p>
 
-            <div class="features">
-                <div class="feature-item"><i class="fa-solid fa-microchip"></i> No Website Builders, Only Custom Code</div>
-                <div class="feature-item"><i class="fa-solid fa-bolt"></i> Lightning Fast Gastro & Retail OS</div>
-                <div class="feature-item"><i class="fa-solid fa-server"></i> Cloud Integration & IT Consulting</div>
-            </div>
-        </div>
-
-        <div class="right-col">
-            <div class="cta-box">
-                <h2>Upgrade Your Business</h2>
-                <p>Scan to chat with our Lead Architect</p>
-                
-                <div class="qr-placeholder">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://wa.me/4922519599741" alt="WhatsApp QR">
-                </div>
-
-                <div class="contact-pill">
-                    <i class="fa-brands fa-whatsapp"></i> +49 2251 9599741
+                <div class="features">
+                    <div class="feature-item"><i class="fa-solid fa-microchip"></i> No Website Builders, Only Custom Code</div>
+                    <div class="feature-item"><i class="fa-solid fa-bolt"></i> Lightning Fast Gastro & Retail OS</div>
+                    <div class="feature-item"><i class="fa-solid fa-server"></i> Cloud Integration & IT Consulting</div>
                 </div>
             </div>
+
+            <div class="right-col">
+                <div class="cta-box">
+                    <h2>Upgrade Your Business</h2>
+                    <p>Scan to connect & get your DigiCard</p>
+                    
+                    <div class="qr-placeholder">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://santechnologies.de/digicard.html" alt="DigiCard QR">
+                    </div>
+
+                    <div class="contact-pill">
+                        <i class="fa-brands fa-whatsapp"></i> +49 2251 9599741
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
