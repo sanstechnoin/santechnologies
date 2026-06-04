@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAN Folio Engine | High-Performance Digital Archive OS</title>
+    <title data-translate="page_title">SAN Folio Engine | High-Performance Digital Archive OS</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="global.css">
 
     <style>
         /* ==========================================================================
-           SAN-FOLIO SPECIFIC STYLES (Mirrored from SAN-Commerce)
+           SAN-FOLIO SPECIFIC STYLES
            ========================================================================== */
         
         :root {
@@ -37,16 +37,6 @@
         .comm-hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
         .hero-subline { font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 30px; }
         .trust-line { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.9); font-weight: 800; }
-
-        /* --- PRICING / FILTER BLOCKS --- */
-        .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .filter-card { padding: 40px; border-radius: 20px; background: var(--light); text-align: center; border: 1px solid #eee; }
-        .filter-card.ideal { border-top: 5px solid #4CAF50; background: #f0fbfc; }
-        .filter-card.setup { border-top: 5px solid var(--primary); }
-        .filter-card.addon { border-top: 5px solid var(--accent); }
-        
-        .price-val { font-size: 3.5rem; font-weight: 800; color: var(--primary); margin: 20px 0; }
-        .price-val span { font-size: 1.2rem; color: #888; font-weight: 500; }
 
         /* --- PLAIN EXPLANATION (CONTRACT) --- */
         .plain-box { background: var(--bg-suite); padding: 50px; border-radius: 25px; text-align: center; margin: 40px 0; }
@@ -82,55 +72,54 @@
         @media (max-width: 900px) { .comm-hero h1 { font-size: 2.5rem; } .tier-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <header id="san-header"></header>
+    <div id="san-mobile-menu"></div>
 
     <section class="comm-hero">
         <div class="container">
-            <span class="trust-line">Highly Professional · Scalable · Whitelabel-Ready</span>
-            <h1>SAN Folio Engine</h1>
-            <p class="hero-subline">High-Performance Digital Archive & Gallery OS</p>
-            <p>Designed to transform standard directories into enterprise-level, interactive experiences.</p>
+            <span class="trust-line" data-translate="hero_trust">Highly Professional · Scalable · Custom Built</span>
+            <h1 data-translate="hero_title">SAN Folio Engine</h1>
+            <p class="hero-subline" data-translate="hero_sub">High-Performance Digital Archive & Gallery OS</p>
+            <p data-translate="hero_desc">Designed to transform standard directories into enterprise-level, interactive experiences.</p>
         </div>
     </section>
 
     <section>
         <div class="container">
             <div class="section-header">
-                <h2>Architecture & Feature Matrix</h2>
-                <p>Choose the core engine that powers your digital archive.</p>
+                <h2 data-translate="matrix_title">Architecture & Feature Matrix</h2>
+                <p data-translate="matrix_sub">Choose the core engine that powers your digital archive.</p>
             </div>
             <div class="tier-grid">
                 
                 <div class="tier-card">
                     <span class="tier-icon">📁</span>
-                    <h3>SAN Folio CORE</h3>
-                    <p><strong>The Foundation.</strong> A reliable, structured digital archive for standard portfolios.</p>
+                    <h3 data-translate="core_title">SAN Folio CORE</h3>
+                    <p><strong data-translate="core_pos_strong">The Foundation.</strong> <span data-translate="core_pos">A reliable, structured digital archive for standard portfolios.</span></p>
                     <ul class="feature-list">
-                        <li><i class="fa-solid fa-folder-tree" style="color:var(--primary)"></i> Directory OS: Basic (Artist/Year)</li>
-                        <li><i class="fa-regular fa-image" style="color:var(--primary)"></i> Media Support: Images</li>
-                        <li><i class="fa-solid fa-magnifying-glass" style="color:var(--primary)"></i> Search: Name/Keyword</li>
-                        <li><i class="fa-regular fa-calendar" style="color:var(--primary)"></i> Events: Static Listing</li>
-                        <li><i class="fa-solid fa-palette" style="color:var(--primary)"></i> Whitelabeling: Standard</li>
-                        <li><i class="fa-solid fa-xmark" style="color:#aaa"></i> Commerce Add-on: N/A</li>
+                        <li><i class="fa-solid fa-folder-tree" style="color:var(--primary)"></i> <span data-translate="core_dir">Directory OS: Basic (Artist/Year)</span></li>
+                        <li><i class="fa-regular fa-image" style="color:var(--primary)"></i> <span data-translate="core_media">Media Support: Images</span></li>
+                        <li><i class="fa-solid fa-magnifying-glass" style="color:var(--primary)"></i> <span data-translate="core_search">Search: Name/Keyword</span></li>
+                        <li><i class="fa-regular fa-calendar" style="color:var(--primary)"></i> <span data-translate="core_events">Events: Static Listing</span></li>
+                        <li><i class="fa-solid fa-xmark" style="color:#aaa"></i> <span data-translate="core_comm">Commerce Add-on: N/A</span></li>
                     </ul>
-                    <span class="legal-tag">Perfect for essential cataloging.</span>
+                    <span class="legal-tag" data-translate="core_tag">Perfect for essential cataloging.</span>
                 </div>
 
                 <div class="tier-card prime">
                     <span class="tier-icon">💎</span>
-                    <h3>SAN Folio PRIME</h3>
-                    <p><strong>The Enterprise OS.</strong> Fully interactive, custom-branded, and commerce-ready.</p>
+                    <h3 data-translate="prime_title">SAN Folio PRIME</h3>
+                    <p><strong data-translate="prime_pos_strong">The Enterprise OS.</strong> <span data-translate="prime_pos">Fully interactive, custom-branded, and commerce-ready.</span></p>
                     <ul class="feature-list">
-                        <li><i class="fa-solid fa-sitemap" style="color:var(--accent)"></i> Directory OS: Advanced (Multi-level/Series)</li>
-                        <li><i class="fa-solid fa-photo-film" style="color:var(--accent)"></i> Media: Images, Video, Audio</li>
-                        <li><i class="fa-solid fa-filter" style="color:var(--accent)"></i> Search: Advanced Metadata Filters</li>
-                        <li><i class="fa-solid fa-timeline" style="color:var(--accent)"></i> Events: Interactive Timeline</li>
-                        <li><i class="fa-solid fa-fill-drip" style="color:var(--accent)"></i> Whitelabeling: Custom Branding & CSS</li>
-                        <li><i class="fa-solid fa-cart-shopping" style="color:var(--success)"></i> <strong>Commerce: Full Gateway Integration</strong></li>
+                        <li><i class="fa-solid fa-sitemap" style="color:var(--accent)"></i> <span data-translate="prime_dir">Directory OS: Advanced (Multi-level/Series)</span></li>
+                        <li><i class="fa-solid fa-photo-film" style="color:var(--accent)"></i> <span data-translate="prime_media">Media: Images, Video, Audio</span></li>
+                        <li><i class="fa-solid fa-filter" style="color:var(--accent)"></i> <span data-translate="prime_search">Search: Advanced Metadata Filters</span></li>
+                        <li><i class="fa-solid fa-timeline" style="color:var(--accent)"></i> <span data-translate="prime_events">Events: Interactive Timeline</span></li>
+                        <li><i class="fa-solid fa-cart-shopping" style="color:var(--success)"></i> <strong data-translate="prime_comm">Commerce: Full Gateway Integration</strong></li>
                     </ul>
-                    <span class="legal-tag">The ultimate gallery experience.</span>
+                    <span class="legal-tag" data-translate="prime_tag">The ultimate gallery experience.</span>
                 </div>
 
             </div>
@@ -140,16 +129,16 @@
     <section style="background-color: var(--bg-suite);">
         <div class="container">
             <div class="section-header">
-                <h2>Engine Capabilities</h2>
-                <p>Features that elevate your archive into a revenue-generating platform.</p>
+                <h2 data-translate="ext_title">Engine Capabilities</h2>
+                <p data-translate="ext_sub">Features that elevate your archive into a revenue-generating platform.</p>
             </div>
             <div class="ext-grid">
-                <div class="ext-card"><span>🗂️</span><p>Advanced Directory OS</p></div>
-                <div class="ext-card"><span>🎥</span><p>Rich Media Support</p></div>
-                <div class="ext-card"><span>🔍</span><p>Metadata Filters</p></div>
-                <div class="ext-card"><span>⏳</span><p>Interactive Timeline</p></div>
-                <div class="ext-card"><span>🎨</span><p>Custom Whitelabeling</p></div>
-                <div class="ext-card"><span>💳</span><p>Commerce Gateway</p></div>
+                <div class="ext-card"><span>🗂️</span><p data-translate="ext1">Advanced Directory OS</p></div>
+                <div class="ext-card"><span>🎥</span><p data-translate="ext2">Rich Media Support</p></div>
+                <div class="ext-card"><span>🔍</span><p data-translate="ext3">Metadata Filters</p></div>
+                <div class="ext-card"><span>⏳</span><p data-translate="ext4">Interactive Timeline</p></div>
+                <div class="ext-card"><span>🎨</span><p data-translate="ext5">Custom Brand Integration</p></div>
+                <div class="ext-card"><span>💳</span><p data-translate="ext6">Commerce Gateway</p></div>
             </div>
         </div>
     </section>
@@ -157,12 +146,12 @@
     <section>
         <div class="container">
             <div class="plain-box">
-                <h2>Commerce & Payment Integration</h2>
-                <p>Upgrade your digital archive into a seamless revenue generator with the SAN Commerce Gateway.</p>
+                <h2 data-translate="contract_title">Commerce & Payment Integration</h2>
+                <p data-translate="contract_sub">Upgrade your digital archive into a seamless revenue generator with the SAN Commerce Gateway.</p>
                 
                 <div class="integration-note">
-                    <h3 style="color: var(--primary); margin-top: 0; font-size: 1.2rem;">§ 6 Optional Add-ons & Commerce Integration</h3>
-                    <p style="font-style: italic; color: #555; line-height: 1.6; margin-bottom: 0;">
+                    <h3 style="color: var(--primary); margin-top: 0; font-size: 1.2rem;" data-translate="contract_h3">§ 6 Optional Add-ons & Commerce Integration</h3>
+                    <p style="font-style: italic; color: #555; line-height: 1.6; margin-bottom: 0;" data-translate="contract_p">
                         "Commerce Gateway: Clients may opt for the SAN Commerce Integration, which links individual artwork entries directly to a secure payment gateway. This allows end-users to initiate purchase inquiries or transactions directly from the SAN Folio interface, processed via the SAN Commerce infrastructure."
                     </p>
                 </div>
@@ -170,45 +159,105 @@
         </div>
     </section>
 
-    <section style="background-color: var(--light); border-top: 1px solid #eee;">
-        <div class="container">
-            <div class="section-header">
-                <h2>Investment Summary</h2>
-                <p>Enterprise software for your gallery. Clear, scalable pricing.</p>
-            </div>
-            
-            <div class="filter-grid">
-                <div class="filter-card setup">
-                    <h4 style="color: var(--text); font-size: 1.2rem; margin:0;">SAN Folio Prime (Setup)</h4>
-                    <div class="price-val">€1,950<span>.00</span></div>
-                    <p style="color: #666; font-size: 0.95rem;">One-time System Architecture Fee</p>
-                </div>
-                
-                <div class="filter-card addon">
-                    <h4 style="color: var(--text); font-size: 1.2rem; margin:0;">Commerce Gateway</h4>
-                    <div class="price-val">€450<span>.00</span></div>
-                    <p style="color: #666; font-size: 0.95rem;">One-time Integration Fee</p>
-                </div>
-                
-                <div class="filter-card ideal">
-                    <h4 style="color: var(--text); font-size: 1.2rem; margin:0;">Monthly SaaS</h4>
-                    <div class="price-val" style="color: #2e7d32;">€145<span>.00 / mo</span></div>
-                    <p style="color: #666; font-size: 0.95rem;">Prime + Commerce Infrastructure</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section id="contact" class="cta-section">
         <div class="container">
-            <h2>Ready to Upgrade Your Archive?</h2>
-            <p>Let's discuss the deployment of your custom SAN Folio Engine.</p>
-            <a href="index.html#contact" class="btn">Request Deployment</a>
+            <h2 data-translate="cta_title">Ready to Upgrade Your Archive?</h2>
+            <p data-translate="cta_sub">Let's discuss the deployment of your custom SAN Folio Engine.</p>
+            <a href="index.html#contact" class="btn" data-translate="cta_btn">Request Deployment</a>
         </div>
     </section>
 
     <footer id="san-footer"></footer>
     <div id="san-bot"></div>
+
+    <script>
+        const translations = {
+            'de': {
+                'page_title': 'SAN Folio Engine | High-Performance Digital Archive OS',
+                'hero_trust': 'Hochprofessionell · Skalierbar · Maßgeschneidert',
+                'hero_title': 'SAN Folio Engine',
+                'hero_sub': 'High-Performance Digital Archive & Gallery OS',
+                'hero_desc': 'Entwickelt, um Standard-Verzeichnisse in interaktive Enterprise-Erlebnisse zu verwandeln.',
+                'matrix_title': 'Architektur & Feature-Matrix',
+                'matrix_sub': 'Wählen Sie die Core-Engine für Ihr digitales Archiv.',
+                'core_title': 'SAN Folio CORE',
+                'core_pos_strong': 'Das Fundament.',
+                'core_pos': 'Ein zuverlässiges, strukturiertes Digitalarchiv für Standard-Portfolios.',
+                'core_dir': 'Directory OS: Basis (Künstler/Jahr)',
+                'core_media': 'Media Support: Bilder',
+                'core_search': 'Suche: Name/Schlüsselwort',
+                'core_events': 'Events: Statische Liste',
+                'core_comm': 'Commerce Add-on: N/A',
+                'core_tag': 'Perfekt für essenzielle Katalogisierung.',
+                'prime_title': 'SAN Folio PRIME',
+                'prime_pos_strong': 'Das Enterprise OS.',
+                'prime_pos': 'Voll interaktiv, markenspezifisch und bereit für E-Commerce.',
+                'prime_dir': 'Directory OS: Erweitert (Multi-Level/Serien)',
+                'prime_media': 'Media: Bilder, Video, Audio',
+                'prime_search': 'Suche: Erweiterte Metadaten-Filter',
+                'prime_events': 'Events: Interaktive Timeline',
+                'prime_comm': 'Commerce: Volle Gateway-Integration',
+                'prime_tag': 'Das ultimative Galerie-Erlebnis.',
+                'ext_title': 'Engine-Fähigkeiten',
+                'ext_sub': 'Features, die Ihr Archiv in eine umsatzstarke Plattform verwandeln.',
+                'ext1': 'Advanced Directory OS',
+                'ext2': 'Rich Media Support',
+                'ext3': 'Metadaten-Filter',
+                'ext4': 'Interaktive Timeline',
+                'ext5': 'Custom Brand Integration',
+                'ext6': 'Commerce Gateway',
+                'contract_title': 'Commerce & Payment Integration',
+                'contract_sub': 'Erweitern Sie Ihr digitales Archiv mit dem SAN Commerce Gateway zu einem nahtlosen Umsatzgenerator.',
+                'contract_h3': '§ 6 Optionale Add-ons & Commerce Integration',
+                'contract_p': '"Commerce Gateway: Kunden können sich für die SAN Commerce-Integration entscheiden, die einzelne Kunstwerke direkt mit einem sicheren Zahlungs-Gateway verknüpft. Dies ermöglicht Endnutzern, Kaufanfragen oder Transaktionen direkt über die SAN Folio-Oberfläche zu initiieren, abgewickelt über die sichere SAN Commerce-Infrastruktur."',
+                'cta_title': 'Bereit für das Upgrade Ihres Archivs?',
+                'cta_sub': 'Lassen Sie uns den Einsatz Ihrer maßgeschneiderten SAN Folio Engine besprechen.',
+                'cta_btn': 'Deployment anfragen'
+            },
+            'en': {
+                'page_title': 'SAN Folio Engine | High-Performance Digital Archive OS',
+                'hero_trust': 'Highly Professional · Scalable · Custom Built',
+                'hero_title': 'SAN Folio Engine',
+                'hero_sub': 'High-Performance Digital Archive & Gallery OS',
+                'hero_desc': 'Designed to transform standard directories into enterprise-level, interactive experiences.',
+                'matrix_title': 'Architecture & Feature Matrix',
+                'matrix_sub': 'Choose the core engine that powers your digital archive.',
+                'core_title': 'SAN Folio CORE',
+                'core_pos_strong': 'The Foundation.',
+                'core_pos': 'A reliable, structured digital archive for standard portfolios.',
+                'core_dir': 'Directory OS: Basic (Artist/Year)',
+                'core_media': 'Media Support: Images',
+                'core_search': 'Search: Name/Keyword',
+                'core_events': 'Events: Static Listing',
+                'core_comm': 'Commerce Add-on: N/A',
+                'core_tag': 'Perfect for essential cataloging.',
+                'prime_title': 'SAN Folio PRIME',
+                'prime_pos_strong': 'The Enterprise OS.',
+                'prime_pos': 'Fully interactive, custom-branded, and commerce-ready.',
+                'prime_dir': 'Directory OS: Advanced (Multi-level/Series)',
+                'prime_media': 'Media: Images, Video, Audio',
+                'prime_search': 'Search: Advanced Metadata Filters',
+                'prime_events': 'Events: Interactive Timeline',
+                'prime_comm': 'Commerce: Full Gateway Integration',
+                'prime_tag': 'The ultimate gallery experience.',
+                'ext_title': 'Engine Capabilities',
+                'ext_sub': 'Features that elevate your archive into a revenue-generating platform.',
+                'ext1': 'Advanced Directory OS',
+                'ext2': 'Rich Media Support',
+                'ext3': 'Metadata Filters',
+                'ext4': 'Interactive Timeline',
+                'ext5': 'Custom Brand Integration',
+                'ext6': 'Commerce Gateway',
+                'contract_title': 'Commerce & Payment Integration',
+                'contract_sub': 'Upgrade your digital archive into a seamless revenue generator with the SAN Commerce Gateway.',
+                'contract_h3': '§ 6 Optional Add-ons & Commerce Integration',
+                'contract_p': '"Commerce Gateway: Clients may opt for the SAN Commerce Integration, which links individual artwork entries directly to a secure payment gateway. This allows end-users to initiate purchase inquiries or transactions directly from the SAN Folio interface, processed via the SAN Commerce infrastructure."',
+                'cta_title': 'Ready to Upgrade Your Archive?',
+                'cta_sub': 'Let\'s discuss the deployment of your custom SAN Folio Engine.',
+                'cta_btn': 'Request Deployment'
+            }
+        };
+    </script>
 
     <script src="global.js"></script>
 </body>
