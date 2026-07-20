@@ -7,8 +7,8 @@ const CACHE_VERSION = 'v1.1';
 const GLOBAL_TRANSLATIONS = {
     'de': {
         'nav_work': 'Referenzen',
-        'nav_products': 'Produkte/Dienste',
-        'nav_services': 'Leistungen',
+        'nav_products': 'Produkte',
+        'nav_services': 'Expertise',
         'nav_about': 'Team',
         'nav_back': 'Startseite zurück',
         'nav_contact': 'Zum Kontakt',
@@ -25,8 +25,8 @@ const GLOBAL_TRANSLATIONS = {
     },
     'en': {
         'nav_work': 'Work',
-        'nav_products': 'Products/Services',
-        'nav_services': 'Services',
+        'nav_products': 'Solutions',
+        'nav_services': 'Expertise',
         'nav_about': 'Team',
         'nav_back': 'Back to Home',
         'nav_contact': 'Contact Us',
