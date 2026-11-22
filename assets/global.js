@@ -2,7 +2,12 @@
 // SAN TECHNOLOGIES - COMPONENT INJECTOR ENGINE & GLOBAL LOGIC
 // ==========================================================================
 
-const CACHE_VERSION = 'v1.1';
+const CACHE_VERSION = 'v1.3';
+
+// Auto-detect India domain (sanstechno.in) vs Germany domain (santechnologies.de)
+const IS_INDIA = window.location.hostname.includes('sanstechno.in') || window.location.pathname.startsWith('/in/');
+const DEFAULT_LANG = IS_INDIA ? 'en' : 'de';
+const ALT_LANG = IS_INDIA ? 'ta' : 'en';
 
 const GLOBAL_TRANSLATIONS = {
     'de': {
@@ -31,8 +36,8 @@ const GLOBAL_TRANSLATIONS = {
         'nav_back': 'Back to Home',
         'nav_contact': 'Contact Us',
         'footer_header_san': 'SAN Technologies',
-        'footer_country': 'Germany',
-        'footer_header_contact': 'Contact & Owner',
+        'footer_country': 'Germany & India',
+        'footer_header_contact': 'Contact & Founder',
         'footer_rep_by': 'Represented by:',
         'footer_disclaimer': 'Disclaimer: Despite careful content control, we assume no liability for the content of external links.',
         'footer_rights': 'All rights reserved.',
@@ -40,6 +45,24 @@ const GLOBAL_TRANSLATIONS = {
         'footer_impressum': 'Legal Notice',
         'cookie_text': 'We use cookies to improve your experience.',
         'cookie_btn': 'Accept'
+    },
+    'ta': {
+        'nav_work': 'படைப்புகள்',
+        'nav_products': 'தீர்வுகள்',
+        'nav_services': 'சேவைகள்',
+        'nav_about': 'குழு',
+        'nav_back': 'முகப்புக்குத் திரும்பு',
+        'nav_contact': 'தொடர்பு கொள்ள',
+        'footer_header_san': 'SAN Technologies',
+        'footer_country': 'ஜெர்மனி & இந்தியா',
+        'footer_header_contact': 'தொடர்பு & நிறுவனர்',
+        'footer_rep_by': 'நிறுவனர்:',
+        'footer_disclaimer': 'பொறுப்புத் துறப்பு: வெளிப்புற இணையதள இணைப்புகளின் உள்ளடக்கத்திற்கு நாங்கள் பொறுப்பேற்க மாட்டோம்.',
+        'footer_rights': 'அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.',
+        'footer_privacy': 'தனியுரிமைக் கொள்கை',
+        'footer_impressum': 'சட்ட அறிவிப்பு',
+        'cookie_text': 'உங்கள் அனுபவத்தை மேம்படுத்த நாங்கள் குக்கீகளைப் பயன்படுத்துகிறோம்.',
+        'cookie_btn': 'ஏற்கவும்'
     }
 };
 
@@ -48,7 +71,7 @@ async function injectComponent(elementId, componentPath) {
     const target = document.getElementById(elementId);
     if (!target) return;
 
-    const cacheKey = `san_comp_${componentPath}_${CACHE_VERSION}`;
+    const cacheKey = `san_comp_${IS_INDIA ? 'in' : 'de'}_${componentPath}_${CACHE_VERSION}`;
     const cachedHTML = localStorage.getItem(cacheKey);
 
     if (cachedHTML) {
@@ -84,19 +107,28 @@ window.toggleMenu = function() {
     if (mobileMenu) mobileMenu.classList.toggle('active');
 };
 
-
 // --- 4. TRANSLATION ENGINE ---
+window.getLang = function() {
+    const saved = localStorage.getItem('selectedLang');
+    return [DEFAULT_LANG, ALT_LANG].includes(saved) ? saved : DEFAULT_LANG;
+};
+
 window.updateLanguage = function(lang) {
-    // Update Text Elements
+    const fallbackLang = IS_INDIA ? 'en' : 'de';
+
     document.querySelectorAll('[data-translate]').forEach(el => {
         const key = el.getAttribute('data-translate');
         let text = '';
         
-        // Check local page dictionary first, fallback to Global dictionary
-        if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
-            text = translations[lang][key];
-        } else if (GLOBAL_TRANSLATIONS[lang] && GLOBAL_TRANSLATIONS[lang][key]) {
-            text = GLOBAL_TRANSLATIONS[lang][key];
+        if (typeof translations !== 'undefined') {
+            text = (translations[lang] && translations[lang][key]) 
+                || (translations[fallbackLang] && translations[fallbackLang][key]) 
+                || '';
+        }
+        if (!text) {
+            text = (GLOBAL_TRANSLATIONS[lang] && GLOBAL_TRANSLATIONS[lang][key]) 
+                || (GLOBAL_TRANSLATIONS[fallbackLang] && GLOBAL_TRANSLATIONS[fallbackLang][key]) 
+                || '';
         }
         
         if (text) el.innerHTML = text;
@@ -105,8 +137,10 @@ window.updateLanguage = function(lang) {
     document.querySelectorAll('[data-translate-meta]').forEach(el => {
         const key = el.getAttribute('data-translate-meta');
         let text = '';
-        if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
-            text = translations[lang][key];
+        if (typeof translations !== 'undefined') {
+            text = (translations[lang] && translations[lang][key]) 
+                || (translations[fallbackLang] && translations[fallbackLang][key]) 
+                || '';
         }
         if (text) el.setAttribute('content', text);
     });
@@ -114,42 +148,40 @@ window.updateLanguage = function(lang) {
     document.documentElement.lang = lang;
 
     document.querySelectorAll('.lang-toggle-input').forEach(t => {
-        t.checked = (lang === 'en');
+        t.checked = (lang === ALT_LANG);
     });
 };
 
-// Listen for clicks on the language toggle anywhere on the site
 document.addEventListener('change', function(e) {
     if (e.target && e.target.classList.contains('lang-toggle-input')) {
-        const newLang = e.target.checked ? 'en' : 'de';
+        const newLang = e.target.checked ? ALT_LANG : DEFAULT_LANG;
         localStorage.setItem('selectedLang', newLang);
         window.updateLanguage(newLang);
         
-        // Sync the AI Bot language
         setTimeout(() => { 
-            if(typeof window.updateChatUI === 'function') window.updateChatUI();
+            if (typeof window.updateChatUI === 'function') window.updateChatUI();
             if (!localStorage.getItem('san_chat_context')) {
                 localStorage.removeItem('san_chat_html');
-                if(typeof window.initChat === 'function') window.initChat();
+                if (typeof window.initChat === 'function') window.initChat();
             }
         }, 100);
     }
 });
 
-
 // --- 5. SAN LAXA AI BOT LOGIC ---
 const CHAT_TEXTS = {
     en: { prompt: "Ask SAN Laxa", typing: "SAN Laxa is typing...", placeholder: "Ask a question...", disclaimer: "SAN Laxa provides general information and does not replace professional consultation.", welcome: "🙏🏽 I’m SAN Laxa, your AI assistant.<br>I can help you with SAN Suite, E-Commerce solutions, or your project enquiry." },
-    de: { prompt: "Frag SAN Laxa", typing: "SAN Laxa tippt...", placeholder: "Stellen Sie eine Frage...", disclaimer: "SAN Laxa stellt allgemeine Informationen bereit und ersetzt keine professionelle Beratung.", welcome: "🙏🏽 Ich bin SAN Laxa, Ihr KI-Assistent.<br>Ich helfe Ihnen gerne bei Fragen zur SAN Suite, zu E-Commerce-Lösungen oder zu Ihrem Projekt." }
+    de: { prompt: "Frag SAN Laxa", typing: "SAN Laxa tippt...", placeholder: "Stellen Sie eine Frage...", disclaimer: "SAN Laxa stellt allgemeine Informationen bereit und ersetzt keine professionelle Beratung.", welcome: "🙏🏽 Ich bin SAN Laxa, Ihr KI-Assistent.<br>Ich helfe Ihnen gerne bei Fragen zur SAN Suite, zu E-Commerce-Lösungen oder zu Ihrem Projekt." },
+    ta: { prompt: "SAN Laxa-விடம் கேளுங்கள்", typing: "SAN Laxa தட்டச்சு செய்கிறது...", placeholder: "உங்கள் கேள்வியைக் கேளுங்கள்...", disclaimer: "SAN Laxa பொதுவான தகவல்களை மட்டுமே வழங்குகிறது.", welcome: "🙏🏽 வணக்கம்! நான் SAN Laxa, உங்கள் AI உதவியாளர்.<br>SAN Suite (உணவக மென்பொருள்), E-Commerce அல்லது உங்கள் புதிய திட்டம் குறித்து கேளுங்கள்." }
 };
-window.getLang = function() { return localStorage.getItem('selectedLang') || 'de'; };
+
 window.updateChatUI = function() {
     const lang = window.getLang();
-    const t = CHAT_TEXTS[lang];
-    if(document.getElementById('prompt-text')) document.getElementById('prompt-text').textContent = t.prompt;
-    if(document.getElementById('typing-indicator')) document.getElementById('typing-indicator').textContent = t.typing;
-    if(document.getElementById('chat-input')) document.getElementById('chat-input').placeholder = t.placeholder;
-    if(document.getElementById('disclaimer-text')) document.getElementById('disclaimer-text').textContent = t.disclaimer;
+    const t = CHAT_TEXTS[lang] || CHAT_TEXTS.en;
+    if (document.getElementById('prompt-text')) document.getElementById('prompt-text').textContent = t.prompt;
+    if (document.getElementById('typing-indicator')) document.getElementById('typing-indicator').textContent = t.typing;
+    if (document.getElementById('chat-input')) document.getElementById('chat-input').placeholder = t.placeholder;
+    if (document.getElementById('disclaimer-text')) document.getElementById('disclaimer-text').textContent = t.disclaimer;
 };
 
 window.getContext = function() { return localStorage.getItem('san_chat_context') || ""; };
@@ -166,8 +198,9 @@ window.initChat = function() {
         msgBox.innerHTML = savedHTML; 
         msgBox.scrollTop = msgBox.scrollHeight; 
     } else { 
-        const lang = window.getLang(); 
-        msgBox.innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`; 
+        const lang = window.getLang();
+        const t = CHAT_TEXTS[lang] || CHAT_TEXTS.en;
+        msgBox.innerHTML = `<div class="msg bot">${t.welcome}</div>`; 
     }
 };
 
@@ -195,8 +228,9 @@ window.closeAndResetChat = function() {
     localStorage.removeItem('san_chat_html'); 
     localStorage.removeItem('san_chat_context');
     
-    const lang = window.getLang(); 
-    document.getElementById('messages').innerHTML = `<div class="msg bot">${CHAT_TEXTS[lang].welcome}</div>`;
+    const lang = window.getLang();
+    const t = CHAT_TEXTS[lang] || CHAT_TEXTS.en;
+    document.getElementById('messages').innerHTML = `<div class="msg bot">${t.welcome}</div>`;
 };
 
 window.handleEnter = function(e) { if (e.key === 'Enter') window.sendMessage(); };
@@ -246,26 +280,22 @@ window.sendMessage = async function() {
 
 // --- 6. PAGE LOAD COMMANDER ---
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Inject HTML
     await injectComponent('san-header', 'components/header.html');
     await injectComponent('san-mobile-menu', 'components/mobile-menu.html');
     await injectComponent('san-footer', 'components/footer.html');
     await injectComponent('san-bot', 'components/bot.html');
 
-    // 2. Wire UI
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     if (hamburgerBtn) hamburgerBtn.addEventListener('click', window.toggleMenu);
 
     if (localStorage.getItem("cookiesAccepted") === "true") {
         const banner = document.getElementById("cookieBanner");
-        if(banner) banner.style.display = "none";
+        if (banner) banner.style.display = "none";
     }
 
-    // 3. Init Translations from Global Script
-    const savedLang = localStorage.getItem('selectedLang') || 'de';
+    const savedLang = window.getLang();
     window.updateLanguage(savedLang);
 
-    // 4. Init Bot
     window.initChat();
     setTimeout(() => {
         const widget = document.getElementById('chat-widget');
