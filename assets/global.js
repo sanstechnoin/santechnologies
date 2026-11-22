@@ -2,7 +2,7 @@
 // SAN TECHNOLOGIES - COMPONENT INJECTOR ENGINE & GLOBAL LOGIC
 // ==========================================================================
 
-const CACHE_VERSION = 'v1.3';
+const CACHE_VERSION = 'v1.4';
 
 // Auto-detect India domain (sanstechno.in) vs Germany domain (santechnologies.de)
 const IS_INDIA = window.location.hostname.includes('sanstechno.in') || window.location.pathname.startsWith('/in/');
@@ -280,6 +280,7 @@ window.sendMessage = async function() {
 
 // --- 6. PAGE LOAD COMMANDER ---
 document.addEventListener('DOMContentLoaded', async () => {
+    const compPrefix = IS_INDIA ? '/in/components' : '/components';
     await injectComponent('san-header', 'components/header.html');
     await injectComponent('san-mobile-menu', 'components/mobile-menu.html');
     await injectComponent('san-footer', 'components/footer.html');

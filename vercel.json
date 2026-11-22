@@ -6,9 +6,17 @@
       "destination": "/in/index.html"
     },
     {
-      "source": "/:path((?!api/).*\\.html)",
+      "source": "/:path*",
       "has": [{ "type": "host", "value": "sanstechno.in" }],
-      "destination": "/in/:path"
+      "destination": "/in/:path*"
+    },
+    {
+      "source": "/",
+      "destination": "/de/index.html"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/de/:path*"
     }
   ]
 }
