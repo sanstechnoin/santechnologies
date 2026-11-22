@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+    <title>SAN Technologies - TV Signage</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { width: 1920px; height: 1080px; background: #e0f2f1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+        .container { width: 1750px; height: 900px; display: flex; background: #ffffff; border-radius: 30px; box-shadow: 0 40px 80px rgba(0,0,0,0.15); overflow: hidden; }
+
+        /* --- LEFT COLUMN (WHITE) --- */
+        .left-col { flex: 1.3; background: #ffffff; padding: 80px 100px; display: flex; flex-direction: column; justify-content: center; }
+        .logo-img { height: 100px; width: auto; object-fit: contain; margin-bottom: 40px; align-self: flex-start; }
+
+        /* The Hierarchy */
+        .hook { font-size: 45px; color: #d32f2f; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; }
+        h1 { font-size: 70px; line-height: 1.1; margin-bottom: 25px; color: #006064; font-weight: 800; }
+        p.subtitle { font-size: 32px; color: #555; line-height: 1.4; margin-bottom: 50px; font-weight: 500; }
+
+        .features { display: flex; flex-direction: column; gap: 20px; }
+        .feature-item { display: flex; align-items: center; gap: 20px; font-size: 26px; color: #222; font-weight: 600; }
+        .feature-item i { color: #00BCD4; font-size: 35px; width: 45px; text-align: center; }
+
+        /* --- RIGHT COLUMN (TEAL) --- */
+        .right-col { flex: 0.7; background: linear-gradient(145deg, #006064 0%, #00363a 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px; position: relative; }
+        
+        .cta-box { text-align: center; width: 100%; color: white; }
+        .cta-box h2 { font-size: 45px; margin-bottom: 30px; }
+        
+        .qr-placeholder { width: 340px; height: 340px; background: #fff; border: 10px solid #00BCD4; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px auto; }
+        .qr-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+
+        .contact-pill { background: #ffffff; color: #006064; padding: 15px 30px; border-radius: 50px; font-size: 28px; font-weight: bold; display: inline-flex; align-items: center; gap: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-col">
+            <img src="https://santechnologies.de/assets/card_with_logo.png" alt="SAN Technologies" class="logo-img">
+            
+            <div class="hook">Schluss mit Standard-Software.</div>
+            <h1>Willst du echte Performance? Frag Zafran.</h1>
+            <p class="subtitle">Wir sind der Motor hinter ihrem schnellen Service. Maßgeschneiderte Software. Null Engpässe. Maximale Skalierung.</p>
+
+            <div class="features">
+                <div class="feature-item"><i class="fa-solid fa-microchip"></i> Keine Website-Baukästen – Nur Custom Code<</div>
+                <div class="feature-item"><i class="fa-solid fa-bolt"></i> Blitzschnelles Gastro & Retail OS</div>
+                <div class="feature-item"><i class="fa-solid fa-server"></i> Cloud-Integration & IT-Consulting</div>
+            </div>
+        </div>
+
+        <div class="right-col">
+            <div class="cta-box">
+                <h2>Scan für ein kostenloses<br>Beratungsgespräch</h2>
+                <div class="qr-placeholder">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://santechnologies.de/digicard.html" alt="DigiCard QR">
+                </div>
+                <div class="contact-pill">
+                    <i class="fa-brands fa-whatsapp"></i> +49 2251 9599741
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

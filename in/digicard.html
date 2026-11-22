@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avinash Vivekananthan | SAN Technologies</title>
+    
+    <meta property="og:title" content="Avinash Vivekananthan - Founder & Lead Architect">
+    <meta property="og:description" content="Click to save contact info & visit SAN Technologies.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/assets/card_with_logo.png">
+    
+    <style>
+        :root {
+            --primary: #006064;
+            --accent: #00BCD4;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .mobile-container {
+            width: 100%;
+            max-width: 400px;
+            background: var(--white);
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* 3-WAY LANGUAGE SWITCHER (ICON ONLY) */
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            padding: 4px;
+            border-radius: 25px;
+            display: flex;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.9);
+            padding: 6px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lang-btn:hover { background: rgba(255,255,255,0.2); }
+
+        .lang-btn.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .lang-btn.active .ta-letter { color: var(--primary); }
+
+        .flag-icon { height: 16px; width: auto; display: block; }
+        
+        .ta-letter { 
+            font-family: 'Arial', sans-serif; 
+            font-weight: 800; 
+            font-size: 16px; 
+            line-height: 1;
+            display: inline-block;
+            transform: translateY(1px);
+            color: white; 
+        }
+
+        /* HEADER */
+        .header-bg {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, #006064 0%, #004d50 100%);
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--white);
+            box-shadow: var(--shadow);
+            object-fit: cover;
+            margin-top: -60px;
+            background: #fff;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* INFO */
+        .info-section { padding: 20px; }
+        .name { font-size: 24px; font-weight: 800; color: #1a1a1a; margin: 10px 0 5px 0; }
+        .title { font-size: 14px; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .company { font-size: 12px; color: #888; margin-bottom: 20px; }
+
+        /* BUTTONS */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 85%;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .btn:active { transform: scale(0.98); }
+
+        .btn-save { background: var(--primary); color: white; border: none; }
+        .btn-save svg { margin-right: 10px; fill: white; width: 20px; height: 20px; }
+
+        .btn-web { background: white; color: #333; border: 1px solid #eee; }
+        .btn-web svg { margin-right: 10px; fill: #333; width: 20px; height: 20px; }
+
+        /* LINKS GRID */
+        .grid-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            width: 85%;
+            margin-bottom: 30px;
+        }
+
+        .icon-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #555;
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        .icon-box:hover { background: #eef1f2; }
+        .icon-box svg { width: 24px; height: 24px; fill: var(--primary); }
+
+        /* SERVICES SECTION */
+        .services-container {
+            width: 85%;
+            text-align: left;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 5px;
+        }
+        
+        .srv-header {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #999;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .srv-header::before, .srv-header::after {
+            content: "";
+            height: 1px;
+            background: #eee;
+            flex: 1;
+        }
+
+        .srv-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .srv-item {
+            display: flex;
+            align-items: center;
+            background: #f4fcfd;
+            border: 1px solid #e0f7fa;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #444;
+            transition: 0.3s;
+        }
+        .srv-item:hover {
+            border-color: var(--accent);
+            transform: translateX(3px);
+        }
+        .srv-icon { margin-right: 12px; font-size: 16px; }
+
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 11px;
+            color: #aaa;
+            border-top: 1px solid #f0f0f0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        
+        <div class="lang-switch">
+            <button class="lang-btn" onclick="setLang('de')" data-lang="de" title="Deutsch">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="DE" class="flag-icon">
+            </button>
+            <button class="lang-btn" onclick="setLang('en')" data-lang="en" title="English">
+                <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="flag-icon">
+            </button>
+            <button class="lang-btn" onclick="setLang('ta')" data-lang="ta" title="Tamil">
+                <span class="ta-letter">த</span>
+            </button>
+        </div>
+
+        <div class="header-bg"></div>
+
+        <img src="https://raw.githubusercontent.com/sanstechnoin/santechnologies/main/assets/profile.jpg" alt="Avinash V." class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Avinash+V&background=006064&color=fff&size=256'">
+
+        <div class="info-section">
+            <div class="name" id="txt-name">Avinash Vivekananthan</div>
+            <div class="title" id="txt-title">Founder & Lead Architect</div>
+            <div class="company" id="txt-comp">SAN Technologies | Euskirchen</div>
+        </div>
+
+        <div class="btn-container">
+            <button onclick="downloadVCard()" class="btn btn-save">
+                <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span id="txt-save">Save Contact</span>
+            </button>
+
+            <a href="https://santechnologies.de" class="btn btn-web">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                <span id="txt-web">Open Website</span>
+            </a>
+        </div>
+
+        <div class="grid-links">
+            <a href="https://wa.me/4922519599741" class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                WhatsApp
+            </a>
+
+            <a href="tel:+491623757839" class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <span id="txt-call">Call</span>
+            </a>
+
+            <a href="mailto:avinash@santechnologies.de" class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                Email
+            </a>
+        </div>
+
+        <div class="services-container">
+            <div class="srv-header" id="txt-srv-header">Our Expertise</div>
+            <div class="srv-list">
+                <div class="srv-item">
+                    <span class="srv-icon">🖥️</span>
+                    <span id="txt-srv-1">Smart Kitchen Systems (KDS)</span>
+                </div>
+                <div class="srv-item">
+                    <span class="srv-icon">🛒</span>
+                    <span id="txt-srv-2">E-Commerce & Admin Panels</span>
+                </div>
+                <div class="srv-item">
+                    <span class="srv-icon">🌐</span>
+                    <span id="txt-srv-3">Websites for Startups & Business</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span id="txt-footer">Made with ❤ in India & Germany</span><br>
+            © SAN Technologies
+        </div>
+
+    </div>
+
+    <script>
+        // TRANSLATIONS
+        const translations = {
+            en: {
+                name: "Avinash Vivekananthan",
+                title: "Founder & Lead Architect",
+                comp: "SAN Technologies | Euskirchen",
+                save: "Save Contact",
+                web: "Open Website",
+                call: "Call",
+                srv_header: "Our Expertise",
+                srv_1: "Smart Kitchen Systems (KDS)",
+                srv_2: "E-Commerce & Admin Panels",
+                srv_3: "Websites for Startups & Business",
+                footer: "Made with ❤ in India & Germany"
+            },
+            de: {
+                name: "Avinash Vivekananthan",
+                title: "Gründer & Lead Architect",
+                comp: "SAN Technologies | Euskirchen",
+                save: "Kontakt Speichern",
+                web: "Website Öffnen",
+                call: "Anrufen",
+                srv_header: "Unsere Expertise",
+                srv_1: "Küchen-Display-Systeme (KDS)",
+                srv_2: "E-Commerce & Admin-Panels",
+                srv_3: "Webseiten für Startups & Firmen",
+                footer: "Gemacht mit ❤ in Indien & Deutschland"
+            },
+            ta: {
+                name: "அவினாஷ் விவேகானந்தன்",
+                title: "நிறுவனர் & தலைமை வடிவமைப்பாளர்",
+                comp: "SAN Technologies | யூஸ்கிர்சென்",
+                save: "தொடர்பைச் சேமிக்க",
+                web: "இணையதளம்",
+                call: "அழைக்க",
+                srv_header: "எங்கள் சேவைகள்",
+                srv_1: "சமையலறை திரை அமைப்புகள் (KDS)",
+                srv_2: "மின் வணிகம் & நிர்வாகம்",
+                srv_3: "ஸ்டார்ட்அப் & வணிக இணையதளங்கள்",
+                footer: "இந்தியா & ஜெர்மனியில் ❤ உடன் உருவாக்கப்பட்டது"
+            }
+        };
+
+        // 1. LANGUAGE TOGGLE LOGIC
+        function setLang(lang) {
+            // Update Text
+            const t = translations[lang];
+            document.getElementById('txt-name').innerText = t.name;
+            document.getElementById('txt-title').innerText = t.title;
+            document.getElementById('txt-comp').innerText = t.comp;
+            document.getElementById('txt-save').innerText = t.save;
+            document.getElementById('txt-web').innerText = t.web;
+            document.getElementById('txt-call').innerText = t.call;
+            document.getElementById('txt-footer').innerText = t.footer;
+            
+            // Update Services
+            document.getElementById('txt-srv-header').innerText = t.srv_header;
+            document.getElementById('txt-srv-1').innerText = t.srv_1;
+            document.getElementById('txt-srv-2').innerText = t.srv_2;
+            document.getElementById('txt-srv-3').innerText = t.srv_3;
+
+            // Update Buttons Style
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            const activeBtn = document.querySelector(`.lang-btn[data-lang="${lang}"]`);
+            if(activeBtn) activeBtn.classList.add('active');
+
+            // Save to memory
+            localStorage.setItem('vCardLang', lang);
+        }
+
+        // 2. DYNAMIC VCARD GENERATOR
+        function downloadVCard() {
+            // UPDATED TITLE IN VCARD
+            const vCardData = `BEGIN:VCARD
+VERSION:3.0
+N:Vivekananthan;Avinash;;;
+FN:Avinash Vivekananthan
+ORG:SAN Technologies
+TITLE:Founder & Lead Architect
+TEL;TYPE=WORK,VOICE:+491623757839
+EMAIL;TYPE=PREF,INTERNET:avinash@santechnologies.de
+URL:https://santechnologies.de
+ADR;TYPE=WORK:;;Euskirchen;;;;Germany
+NOTE:Digital Solutions for Hotels & Restaurants
+END:VCARD`;
+
+            const blob = new Blob([vCardData], { type: 'text/vcard' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'Avinash_SAN.vcf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 3. INITIAL LOAD
+        const savedLang = localStorage.getItem('vCardLang') || 'en';
+        setLang(savedLang);
+
+    </script>
+
+</body>
+</html>

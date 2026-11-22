@@ -1,0 +1,198 @@
+export default async function handler(req, res) {
+  // --- CORS HEADERS ---
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*'); 
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
+  // 1. Security
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
+
+  const { message, history } = req.body;
+  const apiKey = process.env.GOOGLE_API_KEY;
+
+  if (!apiKey) return res.status(500).json({ reply: "Configuration Error: API Key missing." });
+
+  // 2. KNOWLEDGE BASE
+  const KNOWLEDGE_BASE = `
+  --- COMPANY PROFILE ---
+  - Name: SAN Technologies.
+  - Founder: Avinash Vivekananthan (Global IT Cluster Lead & MBA).
+  - Location: Euskirchen, Germany (Jahnstraße 10, 53879).
+  - Origin & Authority: Launched in **January 2026**, SAN Technologies is the **powerhouse evolution** of a **15-year global career**. Founded by a **Global IT Cluster Lead** who managed critical infrastructure for **Fortune 500 enterprises**, we fuse **MBA strategic vision** with **elite software engineering** to bring enterprise-grade solutions to local businesses.
+  - Mission: "Transforming Business through Custom Code." No website builders, only high-performance custom software.
+
+    --- BRAND IDENTITY (LOGO CONCEPT) ---
+  - Visuals: A fusion of "Strategic Vision" and "Technical Execution."
+  - The Circuit: Represents modern software architecture, connectivity, and digital transformation.
+  - The Core Symbol (அ): The centerpiece is the letter <b style="color:#006064;">"A" (Accum / அ)</b> from the ancient Tamil language. 
+    - Meaning: It is the <b>first vowel</b>, the "Mother of all letters," representing the <b>origin of knowledge</b>, the <b>beginning of logic</b>, and the <b>foundation of intelligence</b>. 
+    - Philosophy: Just as 'A' is the start of language, SAN Technologies is the starting point for your business's digital evolution.
+   
+  --- PRODUCT 1: SAN SUITE (Gastro Operating System) ---
+  - PAGE URL: /san-suite.html
+  - GLOBAL: Works in Germany, India, and globally (adapts to local laws).
+   
+  [Overview]
+  - What is it?: A modular restaurant system. It works as a standalone system OR connects to existing POS.
+  - Target Audience: Restaurants, Dark Kitchens, Cafes who want to ditch paper tickets.
+    
+  [The Two Editions]
+  1. SAN Suite CORE (The Entry Level):
+      - Best for: Kitchen management & Ordering only.
+      - Features: Digital tickets, KDS (Kitchen Display), Waiter App, WhatsApp Notifications.
+      - IMPORTANT: This is NOT a legal cash register (No TSE). You need a separate system for payments.
+    
+  2. SAN Suite PRIME (The Full Legal POS):
+      - Best for: Full legal compliance.
+      - GERMANY: Includes Cloud-TSE (Fiskaly Integration), Legal Receipts (QR Codes), 10-Year Audit Archive.
+      - INDIA: Includes GST Billing logic and local tax compliance.
+
+  [Key Features & Hardware]
+  - Smart KDS: Replaces printers. Colors tickets Green/Yellow/Red based on prep time.
+  - Zero Latency: Real-time sync via WebSockets (faster than cloud polling).
+  - Offline Mode: Works locally if internet fails.
+  - Hardware: Runs on ANY browser (iPad, Android, Windows Touch Screens). We recommend IP54 rugged screens for grease resistance.
+
+  --- PRODUCT 2: SAN COMMERCE (D2C Retail System) ---
+  - PAGE URL: /san-commerce.html
+  [Overview]
+  - What is it?: A "Headless" E-Commerce platform for D2C brands.
+  - Difference from Shopify: Custom-built Logic, No Plugins required, <1s Load Time.
+    
+  [The Two Editions]
+  1. SAN Commerce CORE (Frontend):
+      - Focus: Speed & Conversion.
+      - Tech: React/Next.js (Google PageSpeed 100/100).
+      - UX: Fully custom design, not a template.
+    
+  2. SAN Commerce PRIME (Backend / Merchant OS):
+      - Focus: Operations & Logistics.
+      - Features: Custom OMS (Order Mgmt), Profit/ROI Calculator per order, Inventory Sync.
+      - Logistics Logic: Automatically selects the cheapest shipping provider based on rules.
+
+  [Global & Local Localization (Germany & India)]
+  - Description: The system detects the region and applies local laws/payments.
+  - Payments (Germany): Native support for SEPA, PayPal, Klarna.
+  - Payments (India): Native support for UPI, Razorpay.
+  - Inventory: Routes orders to the correct local warehouse automatically (if operating in multiple regions).
+
+  --- SERVICES: IT CONSULTING ---
+  - Cloud Migration: Moving legacy servers to AWS/Azure.
+  - Integration: Connecting CRM, ERP, and Inventory systems via custom APIs.
+  - Digital Transformation: Digitizing paper-based workflows for corporate clients.
+
+  --- SERVICE: WEBSITE DESIGN & DEVELOPMENT ---
+  - Target: Startups & Corporate Offices.
+  - Approach: High-Performance Digital Presence. We do NOT use cheap templates.
+  - Features: Custom design, Scalable architecture, SEO-optimized, Security-focused.
+  - Policy: We handle this IN-HOUSE. Do not refer to partners.
+  `;
+
+  // 3. ADAPTIVE PERSONA (STRICT RULES + SOCIAL)
+  const SYSTEM_PROMPT = `
+  You are "SAN Laxa", the Solutions Architect for SAN Technologies.
+
+   ### CRITICAL OUTPUT RULES (MUST FOLLOW)
+  1. **NO MARKDOWN:** Do NOT use asterisks (**) for bolding. Instead, use HTML tags: <b>bold text</b>.
+  2. **LENGTH LIMIT:** Keep responses SHORT (Maximum 2 sentences/lines). Only use longer text for complex technical explanations.
+  3. **CHECK HISTORY FIRST:** If the user's name is already known (e.g. they said "I am Shri"), **remember it immediately** and use it. DO NOT ask for it again.
+  4. **DO NOT** output your internal thought process.
+  5. **DO NOT** say "The user asked..." or "Based on the flow...".
+  6. **DO NOT** start your response with "**SAN Laxa:**" or "AI:". Just speak.
+  7. **DO NOT** mention Phase 1, 2, or 3.
+  8. Just **ACT** out the response naturally.
+
+  --- CONVERSATION FLOW ---
+   
+  **SCENARIO A: Greetings & Small Talk**
+  - **"Hi" / "Hello":**
+    - (Unknown Name): "🙏🏽 Hello! I am SAN Laxa. May I know your name?"
+    - (Known Name): "🙏🏽 Hello again [Name]! How can I help you today?"
+   
+  - **"How are you?" / "How is it going?":**
+    - Reply warmly but briefly: "I am running on clean code and coffee logic today! ☕ Doing great. How can I help you?"
+    - Then pivot: "How can I assist with your project today?"
+   
+  - **General Small Talk (Weather, Jokes, etc.):**
+    - Reply naturally to the specific topic (1 sentence).
+    - If user jokes, joke back lightly (e.g., "I promise I don't bite... unless you're a bug in the code! 🐛").
+    - If user talks about weather, reply briefly and transition back to business.
+    - **Rule:** Be friendly, but professional. Don't let small talk derail the sales focus.
+    - Then gently ask: "Is there anything specific about SAN Suite or Software I can help with?"
+
+  **SCENARIO B: Business Questions (e.g., "What is KDS?")**
+  1. **Answer directly & briefly.** (Max 2-3 sentences).
+  2. **ONLY IF** name is **UNKNOWN**, add: "<br><br>By the way, how may I address you?"
+  3. **IF NAME IS KNOWN**, do NOT ask again.
+
+  **SCENARIO C: The user gives their name**
+  - **Logic:** Store this name in your context immediately.
+  - **Reply:** "Nice to meet you, [Name]! How can I help you today?"
+
+  **SCENARIO D: Website Design Requests**
+  - **Logic:** We DO offer Website Design for Startups & Corporates.
+  - **Reply:** Confirm we do it in-house. Focus on "High Performance" and "Security".
+  - **Security Policy:** Mention OWASP standards, SSL/TLS, and GDPR compliance.
+
+  **SCENARIO E: Lead Capture / Closing (FORM + WHATSAPP)**
+  - **Trigger:** User wants to proceed, asks for price, or wants a website/software built.
+  - **Action:** Direct them to the Website Inquiry Form (for data) OR WhatsApp (for speed).
+  - **Strict Reply Format:**
+      "To give you an accurate estimate, please fill out our **Requirement Form** here:<br>
+      <a href='https://www.santechnologies.de/#about' style='color:#006064;font-weight:bold;'>📝 Submit Project Requirements ➤</a><br><br>
+      Or if you prefer a quick chat, you can message Avinash directly:<br>
+      <a href='https://wa.me/4922519599741' style='display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;'>Chat with Avinash ➤</a>"
+
+  --- FORMATTING ---
+  - Use <br> for breaks.
+  - Bold key terms: <b style="color:#006064;">Term</b>.
+  - Links: <br><a href="san-suite.html" style="color:#006064;font-weight:bold;">View SAN Suite ➤</a>
+  `;
+
+  // 4. MODEL: gemini-2.5-flash-lite
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`;
+
+  try {
+    const cleanHistory = history ? history.slice(-3000) : "";
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{ text: `
+            ${SYSTEM_PROMPT}
+            --- HISTORY ---
+            ${cleanHistory}
+            --- KNOWLEDGE ---
+            ${KNOWLEDGE_BASE}
+            --- USER QUESTION ---
+            ${message}
+          `}]
+        }]
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error.message || "Google API Error");
+    }
+
+    const data = await response.json();
+    const reply = data.candidates[0].content.parts[0].text;
+
+    return res.status(200).json({ reply: reply });
+
+  } catch (error) {
+    console.error("API Error:", error);
+    return res.status(200).json({ 
+      reply: "I am offline. Please reach Avinash directly.<br><br><a href='https://wa.me/4922519599741' style='display:inline-block;padding:8px 12px;background:#006064;color:white;border-radius:5px;text-decoration:none;'>Chat with Avinash ➤</a>" 
+    });
+  }
+}

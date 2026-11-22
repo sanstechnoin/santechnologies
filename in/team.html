@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="team_page_title">Our Team | SAN Technologies</title>
+    <meta name="description" content="The makers behind SAN Technologies. Strategy, technology, and premium design." data-translate-meta="team_meta_desc">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <link rel="stylesheet" href="/assets/global.css">
+
+    <style>
+        /* --- TEAM SPECIFIC STYLES --- */
+        section { padding: 80px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; max-width: 900px; margin-left: auto; margin-right: auto; }
+
+        .team-hero { background: linear-gradient(135deg, var(--primary) 0%, #003d40 100%); color: var(--white); text-align: center; padding: 100px 0; }
+        .team-hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        .hero-subline { font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 30px; }
+        .trust-line { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.9); font-weight: 800; }
+
+        .plain-box { background: var(--bg-suite); padding: 50px; border-radius: 25px; text-align: center; margin: 40px 0; border: 1px solid #e0e0e0; }
+        .plain-box h2 { color: var(--primary); }
+        .plain-box p { font-size: 1.1rem; max-width: 800px; margin: 0 auto; color: #444; }
+
+        .team-stack { display: flex; flex-direction: column; align-items: center; gap: 50px; margin-top: 20px; }
+        .team-card { background: var(--white); border-radius: 20px; padding: 50px 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; border: 2px solid #eee; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; align-items: center; max-width: 750px; width: 100%; }
+        .team-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--accent); }
+        
+        .team-avatar { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; margin-bottom: 25px; border: 4px solid var(--bg-suite); background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #999; }
+        
+        .role-tag { background: var(--primary); color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: inline-block;}
+        .role-tag.creative { background: var(--accent); color: #004d50; }
+        
+        .team-card h3 { margin-bottom: 5px; font-size: 1.8rem; }
+        .team-card p { color: #666; font-size: 1rem; line-height: 1.7; }
+
+        .cta-section { text-align: center; background: #111; color: white; padding: 100px 0; }
+        .btn { margin-top: 30px; }
+
+        @media (max-width: 600px) {
+            .team-hero h1 { font-size: 2.5rem; }
+            .team-card { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <header id="san-header"></header>
+    <div id="san-mobile-menu"></div>
+
+    <section class="team-hero">
+        <div class="container">
+            <span class="trust-line" data-translate="hero_trust">Strategie · Technologie · Design</span>
+            <h1 data-translate="hero_title">Die Köpfe</h1>
+            <p class="hero-subline" data-translate="hero_sub">Die Expertise hinter SAN Technologies.</p>
+        </div>
+    </section>
+
+    <section style="background-color: var(--white);">
+        <div class="container">
+            <div class="plain-box">
+                <h2 data-translate="phil_title">Agentur-Leistung ohne Agentur-Overhead</h2>
+                <p data-translate="phil_desc">SAN Technologies operiert nach einem strikten "Minimum Spend, Maximum Output"-Prinzip. Wir setzen auf einen klaren, inhabergeführten Ansatz, kombiniert mit spezialisierten Experten für kreative Produktionen. Das Ergebnis: Skalierbare Software, hochwertige Markenidentitäten und direkte Ansprechpartner ohne versteckte Agenturkosten.</p>
+            </div>
+        </div>
+    </section>
+
+    <section style="background-color: var(--bg-suite); border-top: 1px solid #e0e0e0;">
+        <div class="container">
+            <div class="team-stack">
+                <div class="team-card">
+                    <img src="assets/profile.jpg" alt="Founder & CEO" class="team-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23999\' viewBox=\'0 0 24 24\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'">
+                    <span class="role-tag" data-translate="role_ceo">Founder & CEO</span>
+                    <h3 data-translate="name_ceo">Geschäftsführung & Tech</h3>
+                    <p data-translate="desc_ceo">Verantwortlich für die gesamte kaufmännische Strategie, Projektkalkulation und Kundenbetreuung vor Ort. Leitet die operative und technologische Ausrichtung von SAN Technologies und stellt sicher, dass jede IT-Lösung einen direkten geschäftlichen ROI für unsere Klienten liefert.</p>
+                </div>
+
+                <div class="team-card">
+                    <img src="profilepic.png" alt="Head of Studio" class="team-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23999\' viewBox=\'0 0 24 24\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'">
+                    <span class="role-tag creative" data-translate="role_cd">Head of SAN Studio</span>
+                    <h3 data-translate="name_cd">Creative Lead</h3>
+                    <p data-translate="desc_cd">Leitet die kreative Vision, das UX/UI-Design und die visuelle Produktion für unsere Kundenprojekte. Sie verwandelt funktionale Plattformen in starke, konvertierende Marken durch hochwertige Fotografie, Videografie und visuelles Branding.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2 data-translate="cta_title">Bereit für den nächsten Schritt?</h2>
+            <p data-translate="cta_sub">Sprechen Sie direkt mit uns über Ihr Projekt.</p>
+            <a href="index.html#contact" class="btn" data-translate="cta_btn">Kontakt aufnehmen</a>
+        </div>
+    </section>
+
+    <footer id="san-footer"></footer>
+    <div id="san-bot"></div>
+
+    <script>
+        const translations = {
+            'de': {
+                'team_page_title': 'Unser Team | SAN Technologies',
+                'team_meta_desc': 'Die Köpfe hinter SAN Technologies. Strategie, Technologie und Premium-Design.',
+                'nav_back': 'Startseite zurück',
+                'hero_trust': 'Strategie · Technologie · Design',
+                'hero_title': 'Die Köpfe',
+                'hero_sub': 'Die Expertise hinter SAN Technologies.',
+                'phil_title': 'Direkter Kontakt. Keine Account Manager.',
+                'phil_desc': 'Wir glauben an kurze Wege und absolute Effizienz. Statt auf komplexe Hierarchien setzen wir auf direkte Zusammenarbeit. Sie sprechen unmittelbar mit uns – den Machern, die Ihre Software programmieren und Ihr Design entwerfen. Das Ergebnis: Skalierbare IT-Lösungen und Premium-Markenidentitäten ohne Reibungsverluste.',
+                'role_ceo': 'Founder & CEO',
+                'name_ceo': 'Geschäftsführung & Tech',
+                'desc_ceo': 'Verantwortlich für die gesamte kaufmännische Strategie, Projektkalkulation und Kundenbetreuung vor Ort. Leitet die operative und technologische Ausrichtung von SAN Technologies und stellt sicher, dass jede IT-Lösung einen direkten geschäftlichen ROI für unsere Klienten liefert.',
+                'role_cd': 'Head of SAN Studio',
+                'name_cd': 'Creative Lead',
+                'desc_cd': 'Leitet die kreative Vision, das UX/UI-Design und die visuelle Produktion für unsere Kundenprojekte. Sie verwandelt funktionale Plattformen in starke, konvertierende Marken durch hochwertige Fotografie, Videografie und visuelles Branding.',
+                'cta_title': 'Bereit für den nächsten Schritt?',
+                'cta_sub': 'Sprechen Sie direkt mit uns über Ihr Projekt.',
+                'cta_btn': 'Kontakt aufnehmen',
+                'footer_privacy': 'Datenschutz',
+                'footer_impressum': 'Impressum'
+            },
+            'en': {
+                'team_page_title': 'Our Team | SAN Technologies',
+                'team_meta_desc': 'The makers behind SAN Technologies. Strategy, technology, and premium design.',
+                'nav_back': 'Back to Home',
+                'hero_trust': 'Strategy · Technology · Design',
+                'hero_title': 'The Makers',
+                'hero_sub': 'The expertise behind SAN Technologies.',
+                'phil_title': 'Direct Contact. Zero Middlemen.',
+                'phil_desc': 'We believe in direct communication and absolute efficiency. Instead of complex hierarchies, we rely on direct collaboration. You speak directly with us—the makers coding your software and designing your brand. The result: scalable IT solutions and premium brand identities without any friction.',
+                'role_ceo': 'Founder & CEO',
+                'name_ceo': 'Managing Director & Tech',
+                'desc_ceo': 'Responsible for overall business strategy, project calculation, and on-site client relations. Leads the operational and technological direction of SAN Technologies, ensuring every IT solution delivers direct business ROI for our clients.',
+                'role_cd': 'Head of SAN Studio',
+                'name_cd': 'Creative Lead',
+                'desc_cd': 'Leads the creative vision, UX/UI design, and visual production for our client projects. She transforms functional platforms into strong, converting brands through high-quality photography, videography, and visual branding.',
+                'cta_title': 'Ready for the next step?',
+                'cta_sub': 'Speak directly with us about your project.',
+                'cta_btn': 'Get in Touch',
+                'footer_privacy': 'Privacy Policy',
+                'footer_impressum': 'Legal Notice'
+            }
+        };
+    </script>
+
+    <script src="/assets/global.js"></script>
+
+</body>
+</html>

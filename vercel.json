@@ -1,0 +1,14 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "sanstechno.in" }],
+      "destination": "/in/index.html"
+    },
+    {
+      "source": "/:path((?!api/).*\\.html)",
+      "has": [{ "type": "host", "value": "sanstechno.in" }],
+      "destination": "/in/:path"
+    }
+  ]
+}
