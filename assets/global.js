@@ -2,7 +2,7 @@
 // SAN TECHNOLOGIES - COMPONENT INJECTOR ENGINE & GLOBAL LOGIC
 // ==========================================================================
 
-const CACHE_VERSION = 'v1.5.0';
+const CACHE_VERSION = 'v1.6.0';
 
 // Auto-detect India domain (sanstechno.in) vs Germany domain (santechnologies.de)
 const IS_INDIA = window.location.hostname.includes('sanstechno.in') || window.location.pathname.startsWith('/in/');
@@ -36,7 +36,8 @@ const GLOBAL_TRANSLATIONS = {
         'nav_back': 'Back to Home',
         'nav_contact': 'Contact Us',
         'footer_header_san': 'SAN Technologies',
-        'footer_country': 'Germany & India',
+        'footer_country': 'Germany',
+        'footer_address_in': 'K K Pudur<br>Coimbatore 641038<br>India',
         'footer_header_contact': 'Contact & Founder',
         'footer_rep_by': 'Represented by:',
         'footer_disclaimer': 'Disclaimer: Despite careful content control, we assume no liability for the content of external links.',
@@ -54,7 +55,8 @@ const GLOBAL_TRANSLATIONS = {
         'nav_back': 'முகப்புக்குத் திரும்பு',
         'nav_contact': 'தொடர்பு கொள்ள',
         'footer_header_san': 'SAN Technologies',
-        'footer_country': 'ஜெர்மனி & இந்தியா',
+        'footer_country': 'இந்தியா',
+        'footer_address_in': 'கே.கே. புதூர்<br>கோயம்புத்தூர் 641038<br>இந்தியா',
         'footer_header_contact': 'தொடர்பு & நிறுவனர்',
         'footer_rep_by': 'நிறுவனர்:',
         'footer_disclaimer': 'பொறுப்புத் துறப்பு: வெளிப்புற இணையதள இணைப்புகளின் உள்ளடக்கத்திற்கு நாங்கள் பொறுப்பேற்க மாட்டோம்.',
